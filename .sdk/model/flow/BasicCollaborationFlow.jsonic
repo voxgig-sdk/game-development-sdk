@@ -1,0 +1,60 @@
+# BasicCollaborationFlow
+
+main: kit: flow: BasicCollaborationFlow:
+{
+  entity: "collaboration",
+  kind: "basic",
+  name: "BasicCollaborationFlow",
+  step: [
+    {
+      match: {
+        project_id: "project01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "collaboration_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "collaboration_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "collaboration01",
+        project_id: "project01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      match: {
+        project_id: "project01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "collaboration_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCollaborationFlow"
+}

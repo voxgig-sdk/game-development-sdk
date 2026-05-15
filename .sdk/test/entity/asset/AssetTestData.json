@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "asset": {
+      "ASSET00": {
+        "created_at": "s64",
+        "id": "ASSET00",
+        "mime_type": "s66",
+        "name": "s67",
+        "project_id": "PROJECT01",
+        "size": "s69",
+        "tag": [],
+        "type": "s6b",
+        "updated_at": "s6c",
+        "url": "s6d"
+      },
+      "ASSET01": {
+        "created_at": "sc8",
+        "id": "ASSET01",
+        "mime_type": "sca",
+        "name": "scb",
+        "project_id": "PROJECT01",
+        "size": "scd",
+        "tag": [],
+        "type": "scf",
+        "updated_at": "sd0",
+        "url": "sd1"
+      },
+      "ASSET02": {
+        "created_at": "s12c",
+        "id": "ASSET02",
+        "mime_type": "s12e",
+        "name": "s12f",
+        "project_id": "PROJECT01",
+        "size": "s131",
+        "tag": [],
+        "type": "s133",
+        "updated_at": "s134",
+        "url": "s135"
+      }
+    }
+  },
+  "new": {
+    "asset": {
+      "asset_ref01": {
+        "created_at": "s190",
+        "mime_type": "s192",
+        "name": "s193",
+        "project_id": "PROJECT01",
+        "size": "s195",
+        "tag": [],
+        "type": "s197",
+        "updated_at": "s198",
+        "url": "s199"
+      }
+    }
+  }
+}

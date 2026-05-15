@@ -1,0 +1,161 @@
+# Entity: collaboration
+
+main: kit: entity: collaboration: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "added_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "email"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "last_active"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "role"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "collaboration"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/collaborators"
+          parts: [
+            "projects"
+            "{project_id}"
+            "collaborators"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_id"
+                orig: "user_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/projects/{projectId}/collaborators/{userId}"
+          parts: [
+            "projects"
+            "{project_id}"
+            "collaborators"
+            "{user_id}"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+              userId: "user_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+      [
+        "project"
+        "collaborator"
+      ]
+    ]
+  }
+
+
+
+}

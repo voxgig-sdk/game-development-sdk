@@ -1,0 +1,24 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        name: "API Support"
+        url: "https://jenil-ai.vercel.app"
+      }
+      description: "This API provides game developers with access to tools and resources for building, testing, and deploying their games. It includes features for asset management, real-time collaboration, and analytics."
+      servers: [
+        {
+          description: "Production server"
+          url: "https://jenil-ai.vercel.app/api"
+        }
+      ]
+      title: "Game Development API"
+      version: "1.0.0"
+    }
+  }
+}
+
+}

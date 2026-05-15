@@ -1,0 +1,95 @@
+# BasicAssetFlow
+
+main: kit: flow: BasicAssetFlow:
+{
+  entity: "asset",
+  kind: "basic",
+  name: "BasicAssetFlow",
+  step: [
+    {
+      input: {
+        ref: "asset_ref01"
+      }
+
+      match: {
+        project_id: "project01"
+      }
+
+      op: "create"
+    }
+
+    {
+      match: {
+        project_id: "project01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "asset_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "asset_ref01",
+        srcdatavar: "asset_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "asset01",
+        project_id: "project01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-asset_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "asset_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "asset01",
+        project_id: "project01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      match: {
+        project_id: "project01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "asset_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAssetFlow"
+}

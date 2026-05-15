@@ -1,0 +1,100 @@
+# BasicProjectFlow
+
+main: kit: flow: BasicProjectFlow:
+{
+  entity: "project",
+  kind: "basic",
+  name: "BasicProjectFlow",
+  step: [
+    {
+      input: {
+        ref: "project_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "project_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "project_ref01",
+        srcdatavar: "project_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-project_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "project_ref01",
+        srcdatavar: "project_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "project01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-project_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "project_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "project01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "project_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicProjectFlow"
+}

@@ -1,0 +1,73 @@
+{
+  "existing": {
+    "deployment": {
+      "DEPLOYMENT00": {
+        "build_version": "s8c",
+        "completed_at": "s8d",
+        "configuration": "s8e",
+        "created_at": "s8f",
+        "deployment_url": "s90",
+        "download_url": "s91",
+        "environment": "s92",
+        "id": "DEPLOYMENT00",
+        "platform": "s94",
+        "project_id": "PROJECT01",
+        "release_note": "s96",
+        "size": "s97",
+        "status": "s98",
+        "version": "s99"
+      },
+      "DEPLOYMENT01": {
+        "build_version": "s118",
+        "completed_at": "s119",
+        "configuration": "s11a",
+        "created_at": "s11b",
+        "deployment_url": "s11c",
+        "download_url": "s11d",
+        "environment": "s11e",
+        "id": "DEPLOYMENT01",
+        "platform": "s120",
+        "project_id": "PROJECT01",
+        "release_note": "s122",
+        "size": "s123",
+        "status": "s124",
+        "version": "s125"
+      },
+      "DEPLOYMENT02": {
+        "build_version": "s1a4",
+        "completed_at": "s1a5",
+        "configuration": "s1a6",
+        "created_at": "s1a7",
+        "deployment_url": "s1a8",
+        "download_url": "s1a9",
+        "environment": "s1aa",
+        "id": "DEPLOYMENT02",
+        "platform": "s1ac",
+        "project_id": "PROJECT01",
+        "release_note": "s1ae",
+        "size": "s1af",
+        "status": "s1b0",
+        "version": "s1b1"
+      }
+    }
+  },
+  "new": {
+    "deployment": {
+      "deployment_ref01": {
+        "build_version": "s230",
+        "completed_at": "s231",
+        "configuration": "s232",
+        "created_at": "s233",
+        "deployment_url": "s234",
+        "download_url": "s235",
+        "environment": "s236",
+        "platform": "s238",
+        "project_id": "PROJECT01",
+        "release_note": "s23a",
+        "size": "s23b",
+        "status": "s23c",
+        "version": "s23d"
+      }
+    }
+  }
+}

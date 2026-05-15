@@ -1,0 +1,240 @@
+# Entity: test
+
+main: kit: entity: test: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "completed_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "environment"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "platform"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "project_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "result"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "started_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "test_suite"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "test"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/projects/{projectId}/tests"
+          parts: [
+            "projects"
+            "{project_id}"
+            "tests"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/tests"
+          parts: [
+            "projects"
+            "{project_id}"
+            "tests"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+              "status"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "test_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/tests/{testId}"
+          parts: [
+            "projects"
+            "{project_id}"
+            "tests"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+              testId: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+    ]
+  }
+
+
+
+}

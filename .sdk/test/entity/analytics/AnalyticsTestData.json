@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "analytics": {
+      "ANALYTICS00": {
+        "count": "s3c",
+        "event_name": "s3d",
+        "event_type": "s3e",
+        "name": "s3f",
+        "property": {},
+        "timestamp": "s41",
+        "project_id": "PROJECT01"
+      },
+      "ANALYTICS01": {
+        "count": "s78",
+        "event_name": "s79",
+        "event_type": "s7a",
+        "name": "s7b",
+        "property": {},
+        "timestamp": "s7d",
+        "project_id": "PROJECT01"
+      },
+      "ANALYTICS02": {
+        "count": "sb4",
+        "event_name": "sb5",
+        "event_type": "sb6",
+        "name": "sb7",
+        "property": {},
+        "timestamp": "sb9",
+        "project_id": "PROJECT01"
+      }
+    }
+  },
+  "new": {
+    "analytics": {
+      "analytics_ref01": {
+        "count": "sf0",
+        "event_name": "sf1",
+        "event_type": "sf2",
+        "name": "sf3",
+        "property": {},
+        "timestamp": "sf5"
+      }
+    }
+  }
+}

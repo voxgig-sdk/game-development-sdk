@@ -1,0 +1,160 @@
+# Entity: analytics
+
+main: kit: entity: analytics: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "count"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "event_name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "event_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "property"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "timestamp"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "analytics"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/projects/{projectId}/analytics/events"
+          parts: [
+            "projects"
+            "{project_id}"
+            "analytics"
+            "events"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            "$action": "event"
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "end_date"
+                orig: "end_date"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "metric"
+                orig: "metric"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "start_date"
+                orig: "start_date"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/analytics"
+          parts: [
+            "projects"
+            "{project_id}"
+            "analytics"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "end_date"
+              "metric"
+              "project_id"
+              "start_date"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+    ]
+  }
+
+
+
+}

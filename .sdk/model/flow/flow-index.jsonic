@@ -1,0 +1,10 @@
+# Flows
+
+@"BasicAnalyticsFlow.jsonic"
+@"BasicAssetFlow.jsonic"
+@"BasicBuildFlow.jsonic"
+@"BasicCollaborationFlow.jsonic"
+@"BasicCollaboratorFlow.jsonic"
+@"BasicDeploymentFlow.jsonic"
+@"BasicProjectFlow.jsonic"
+@"BasicTestFlow.jsonic"

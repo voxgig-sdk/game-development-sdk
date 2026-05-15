@@ -1,0 +1,1929 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Game Development API",
+    "description": "This API provides game developers with access to tools and resources for building, testing, and deploying their games. It includes features for asset management, real-time collaboration, and analytics.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "url": "https://jenil-ai.vercel.app"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://jenil-ai.vercel.app/api",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Assets",
+      "description": "Asset management operations"
+    },
+    {
+      "name": "Projects",
+      "description": "Game project management"
+    },
+    {
+      "name": "Collaboration",
+      "description": "Real-time collaboration features"
+    },
+    {
+      "name": "Analytics",
+      "description": "Game analytics and metrics"
+    },
+    {
+      "name": "Deployment",
+      "description": "Game deployment and distribution"
+    },
+    {
+      "name": "Testing",
+      "description": "Game testing and quality assurance"
+    }
+  ],
+  "paths": {
+    "/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "List all game projects",
+        "description": "Retrieve a list of all game projects associated with the authenticated user",
+        "operationId": "listProjects",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of projects to return",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of projects to skip",
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter projects by status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "archived",
+                "in_development",
+                "deployed"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "projects": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "limit": {
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create a new game project",
+        "description": "Create a new game development project",
+        "operationId": "createProject",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Project created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Get project details",
+        "description": "Retrieve detailed information about a specific game project",
+        "operationId": "getProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the project",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Update project",
+        "description": "Update an existing game project",
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the project",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Delete project",
+        "description": "Delete a game project",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the project",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Project deleted successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/assets": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "List project assets",
+        "description": "Retrieve all assets associated with a game project",
+        "operationId": "listAssets",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the project",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter assets by type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "image",
+                "audio",
+                "video",
+                "model",
+                "texture",
+                "script",
+                "font",
+                "config"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assets": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Asset"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Upload asset",
+        "description": "Upload a new asset to a game project",
+        "operationId": "uploadAsset",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the project",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Asset file to upload"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Display name for the asset"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image",
+                      "audio",
+                      "video",
+                      "model",
+                      "texture",
+                      "script",
+                      "font",
+                      "config"
+                    ]
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "file",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Asset uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/assets/{assetId}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Get asset details",
+        "description": "Retrieve detailed information about a specific asset",
+        "operationId": "getAsset",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Asset"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Delete asset",
+        "description": "Delete an asset from a project",
+        "operationId": "deleteAsset",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Asset deleted successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/collaborators": {
+      "get": {
+        "tags": [
+          "Collaboration"
+        ],
+        "summary": "List project collaborators",
+        "description": "Get all collaborators for a project",
+        "operationId": "listCollaborators",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "collaborators": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Collaborator"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Collaboration"
+        ],
+        "summary": "Add collaborator",
+        "description": "Add a new collaborator to the project",
+        "operationId": "addCollaborator",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "owner",
+                      "editor",
+                      "viewer"
+                    ]
+                  }
+                },
+                "required": [
+                  "email",
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Collaborator added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collaborator"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/collaborators/{userId}": {
+      "delete": {
+        "tags": [
+          "Collaboration"
+        ],
+        "summary": "Remove collaborator",
+        "description": "Remove a collaborator from the project",
+        "operationId": "removeCollaborator",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Collaborator removed successfully"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/analytics": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Get project analytics",
+        "description": "Retrieve analytics data for a game project",
+        "operationId": "getProjectAnalytics",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start date for analytics period (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date for analytics period (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "metrics",
+            "in": "query",
+            "description": "Comma-separated list of metrics to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Analytics"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/analytics/events": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Track analytics event",
+        "description": "Send a custom analytics event for tracking",
+        "operationId": "trackAnalyticsEvent",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "eventName": {
+                    "type": "string"
+                  },
+                  "eventType": {
+                    "type": "string",
+                    "enum": [
+                      "gameplay",
+                      "ui_interaction",
+                      "error",
+                      "performance",
+                      "custom"
+                    ]
+                  },
+                  "properties": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "eventName",
+                  "eventType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Event accepted for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "eventId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/tests": {
+      "get": {
+        "tags": [
+          "Testing"
+        ],
+        "summary": "List test runs",
+        "description": "Get all test runs for a project",
+        "operationId": "listTestRuns",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by test status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "running",
+                "passed",
+                "failed",
+                "cancelled"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tests": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TestRun"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Testing"
+        ],
+        "summary": "Create test run",
+        "description": "Start a new test run for the project",
+        "operationId": "createTestRun",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "testSuite": {
+                    "type": "string"
+                  },
+                  "environment": {
+                    "type": "string",
+                    "enum": [
+                      "development",
+                      "staging",
+                      "production"
+                    ]
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "windows",
+                      "macos",
+                      "linux",
+                      "android",
+                      "ios",
+                      "web"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "testSuite",
+                  "environment",
+                  "platform"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Test run created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestRun"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/tests/{testId}": {
+      "get": {
+        "tags": [
+          "Testing"
+        ],
+        "summary": "Get test run details",
+        "description": "Retrieve detailed results of a test run",
+        "operationId": "getTestRun",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "testId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestRun"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/deployments": {
+      "get": {
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "List deployments",
+        "description": "Get all deployments for a project",
+        "operationId": "listDeployments",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "building",
+                "deploying",
+                "success",
+                "failed",
+                "cancelled"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deployments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Deployment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "Create deployment",
+        "description": "Deploy a game build to a target environment",
+        "operationId": "createDeployment",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "environment": {
+                    "type": "string",
+                    "enum": [
+                      "development",
+                      "staging",
+                      "production"
+                    ]
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "windows",
+                      "macos",
+                      "linux",
+                      "android",
+                      "ios",
+                      "web",
+                      "console"
+                    ]
+                  },
+                  "buildVersion": {
+                    "type": "string"
+                  },
+                  "releaseNotes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "environment",
+                  "platform",
+                  "buildVersion"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Deployment created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Deployment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/deployments/{deploymentId}": {
+      "get": {
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "Get deployment details",
+        "description": "Retrieve detailed information about a deployment",
+        "operationId": "getDeployment",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deploymentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Deployment"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{projectId}/builds": {
+      "get": {
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "List builds",
+        "description": "Get all builds for a project",
+        "operationId": "listBuilds",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "builds": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Build"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Deployment"
+        ],
+        "summary": "Create build",
+        "description": "Create a new build of the game",
+        "operationId": "createBuild",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "windows",
+                      "macos",
+                      "linux",
+                      "android",
+                      "ios",
+                      "web",
+                      "console"
+                    ]
+                  },
+                  "configuration": {
+                    "type": "string",
+                    "enum": [
+                      "debug",
+                      "release"
+                    ]
+                  }
+                },
+                "required": [
+                  "version",
+                  "platform",
+                  "configuration"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Build created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Build"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the project"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the game project"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the project"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived",
+              "in_development",
+              "deployed"
+            ],
+            "description": "Current status of the project"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "gameEngine": {
+                "type": "string"
+              },
+              "targetPlatforms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProjectCreate": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "gameEngine": {
+                "type": "string"
+              },
+              "targetPlatforms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProjectUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived",
+              "in_development",
+              "deployed"
+            ]
+          },
+          "settings": {
+            "type": "object"
+          }
+        }
+      },
+      "Asset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "audio",
+              "video",
+              "model",
+              "texture",
+              "script",
+              "font",
+              "config"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "size": {
+            "type": "integer",
+            "description": "File size in bytes"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Collaborator": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "editor",
+              "viewer"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "pending",
+              "inactive"
+            ]
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastActive": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Analytics": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "period": {
+            "type": "object",
+            "properties": {
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "totalPlays": {
+                "type": "integer"
+              },
+              "uniquePlayers": {
+                "type": "integer"
+              },
+              "averageSessionDuration": {
+                "type": "number",
+                "description": "Average session duration in seconds"
+              },
+              "retentionRate": {
+                "type": "number",
+                "description": "Percentage of returning players"
+              },
+              "crashRate": {
+                "type": "number",
+                "description": "Percentage of sessions with crashes"
+              }
+            }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "TestRun": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "testSuite": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "development",
+              "staging",
+              "production"
+            ]
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux",
+              "android",
+              "ios",
+              "web"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "passed",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "results": {
+            "type": "object",
+            "properties": {
+              "totalTests": {
+                "type": "integer"
+              },
+              "passed": {
+                "type": "integer"
+              },
+              "failed": {
+                "type": "integer"
+              },
+              "skipped": {
+                "type": "integer"
+              },
+              "duration": {
+                "type": "number",
+                "description": "Test duration in seconds"
+              }
+            }
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Deployment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "development",
+              "staging",
+              "production"
+            ]
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux",
+              "android",
+              "ios",
+              "web",
+              "console"
+            ]
+          },
+          "buildVersion": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "building",
+              "deploying",
+              "success",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "releaseNotes": {
+            "type": "string"
+          },
+          "deploymentUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Build": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux",
+              "android",
+              "ios",
+              "web",
+              "console"
+            ]
+          },
+          "configuration": {
+            "type": "string",
+            "enum": [
+              "debug",
+              "release"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "building",
+              "success",
+              "failed"
+            ]
+          },
+          "size": {
+            "type": "integer",
+            "description": "Build size in bytes"
+          },
+          "downloadUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication information is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "The requested resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "BadRequestError": {
+        "description": "The request was malformed or contains invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}

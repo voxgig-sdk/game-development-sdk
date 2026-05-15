@@ -1,0 +1,61 @@
+# BasicDeploymentFlow
+
+main: kit: flow: BasicDeploymentFlow:
+{
+  entity: "deployment",
+  kind: "basic",
+  name: "BasicDeploymentFlow",
+  step: [
+    {
+      input: {
+        ref: "deployment_ref01"
+      }
+
+      match: {
+        project_id: "project01"
+      }
+
+      op: "create"
+    }
+
+    {
+      match: {
+        project_id: "project01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "deployment_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "deployment_ref01",
+        srcdatavar: "deployment_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "deployment01",
+        project_id: "project01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-deployment_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicDeploymentFlow"
+}

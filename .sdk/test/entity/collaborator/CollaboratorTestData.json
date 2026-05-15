@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "collaborator": {
+      "COLLABORATOR00": {
+        "email": "s14",
+        "role": "s15",
+        "project_id": "PROJECT01"
+      },
+      "COLLABORATOR01": {
+        "email": "s28",
+        "role": "s29",
+        "project_id": "PROJECT01"
+      },
+      "COLLABORATOR02": {
+        "email": "s3c",
+        "role": "s3d",
+        "project_id": "PROJECT01"
+      }
+    }
+  },
+  "new": {
+    "collaborator": {
+      "collaborator_ref01": {
+        "email": "s50",
+        "role": "s51"
+      }
+    }
+  }
+}

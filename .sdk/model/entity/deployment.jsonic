@@ -1,0 +1,288 @@
+# Entity: deployment
+
+main: kit: entity: deployment: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "build_version"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "completed_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "configuration"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "deployment_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "download_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "environment"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "platform"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "project_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "release_note"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "size"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "version"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "deployment"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/projects/{projectId}/deployments"
+          parts: [
+            "projects"
+            "{project_id}"
+            "deployments"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/deployments"
+          parts: [
+            "projects"
+            "{project_id}"
+            "deployments"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+              "status"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/builds"
+          parts: [
+            "projects"
+            "{project_id}"
+            "builds"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "deployment_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/projects/{projectId}/deployments/{deploymentId}"
+          parts: [
+            "projects"
+            "{project_id}"
+            "deployments"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              deploymentId: "id"
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+    ]
+  }
+
+
+
+}

@@ -1,0 +1,73 @@
+# Entity: collaborator
+
+main: kit: entity: collaborator: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "email"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "role"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "collaborator"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/projects/{projectId}/collaborators"
+          parts: [
+            "projects"
+            "{project_id}"
+            "collaborators"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+    ]
+  }
+
+
+
+}

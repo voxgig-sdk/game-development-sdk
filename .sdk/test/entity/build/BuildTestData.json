@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "build": {
+      "BUILD00": {
+        "configuration": "s1e",
+        "platform": "s1f",
+        "version": "s20",
+        "project_id": "PROJECT01"
+      },
+      "BUILD01": {
+        "configuration": "s3c",
+        "platform": "s3d",
+        "version": "s3e",
+        "project_id": "PROJECT01"
+      },
+      "BUILD02": {
+        "configuration": "s5a",
+        "platform": "s5b",
+        "version": "s5c",
+        "project_id": "PROJECT01"
+      }
+    }
+  },
+  "new": {
+    "build": {
+      "build_ref01": {
+        "configuration": "s78",
+        "platform": "s79",
+        "version": "s7a"
+      }
+    }
+  }
+}

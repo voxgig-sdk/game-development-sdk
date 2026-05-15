@@ -1,0 +1,52 @@
+{
+  "existing": {
+    "collaboration": {
+      "COLLABORATION00": {
+        "added_at": "s50",
+        "email": "s51",
+        "id": "COLLABORATION00",
+        "last_active": "s53",
+        "name": "s54",
+        "role": "s55",
+        "status": "s56",
+        "user_id": "USER01",
+        "project_id": "PROJECT01"
+      },
+      "COLLABORATION01": {
+        "added_at": "sa0",
+        "email": "sa1",
+        "id": "COLLABORATION01",
+        "last_active": "sa3",
+        "name": "sa4",
+        "role": "sa5",
+        "status": "sa6",
+        "user_id": "USER01",
+        "project_id": "PROJECT01"
+      },
+      "COLLABORATION02": {
+        "added_at": "sf0",
+        "email": "sf1",
+        "id": "COLLABORATION02",
+        "last_active": "sf3",
+        "name": "sf4",
+        "role": "sf5",
+        "status": "sf6",
+        "user_id": "USER01",
+        "project_id": "PROJECT01"
+      }
+    }
+  },
+  "new": {
+    "collaboration": {
+      "collaboration_ref01": {
+        "added_at": "s140",
+        "email": "s141",
+        "last_active": "s143",
+        "name": "s144",
+        "role": "s145",
+        "status": "s146",
+        "user_id": "USER01"
+      }
+    }
+  }
+}

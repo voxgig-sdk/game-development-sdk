@@ -1,0 +1,103 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 8
+  metrics: count: path: 13
+  metrics: count: method: 22
+
+  entity: analytics: {
+    path: "/projects/{projectId}/analytics": {
+      rename: param: "projectId": *"project_id"
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/analytics/events": {
+      action: "event": {}
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+    }
+  }
+
+  entity: asset: {
+    path: "/projects/{projectId}/assets": {
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/assets/{assetId}": {
+      rename: param: "assetId": *"id"
+      rename: param: "projectId": *"project_id"
+      op: load: method: *GET
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: build: {
+    path: "/projects/{projectId}/builds": {
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+    }
+  }
+
+  entity: collaboration: {
+    path: "/projects/{projectId}/collaborators": {
+      rename: param: "projectId": *"project_id"
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/collaborators/{userId}": {
+      rename: param: "projectId": *"project_id"
+      rename: param: "userId": *"user_id"
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: collaborator: {
+    path: "/projects/{projectId}/collaborators": {
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+    }
+  }
+
+  entity: deployment: {
+    path: "/projects/{projectId}/builds": {
+      rename: param: "projectId": *"project_id"
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/deployments": {
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/deployments/{deploymentId}": {
+      rename: param: "deploymentId": *"id"
+      rename: param: "projectId": *"project_id"
+      op: load: method: *GET
+    }
+  }
+
+  entity: project: {
+    path: "/projects": {
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}": {
+      rename: param: "projectId": *"id"
+      op: load: method: *GET
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+    }
+  }
+
+  entity: test: {
+    path: "/projects/{projectId}/tests": {
+      rename: param: "projectId": *"project_id"
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/projects/{projectId}/tests/{testId}": {
+      rename: param: "projectId": *"project_id"
+      rename: param: "testId": *"id"
+      op: load: method: *GET
+    }
+  }
+
+}

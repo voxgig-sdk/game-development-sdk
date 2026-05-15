@@ -1,0 +1,10 @@
+# Entity Models
+
+@"analytics.jsonic"
+@"asset.jsonic"
+@"build.jsonic"
+@"collaboration.jsonic"
+@"collaborator.jsonic"
+@"deployment.jsonic"
+@"project.jsonic"
+@"test.jsonic"

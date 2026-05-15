@@ -1,0 +1,22 @@
+# BasicBuildFlow
+
+main: kit: flow: BasicBuildFlow:
+{
+  entity: "build",
+  kind: "basic",
+  name: "BasicBuildFlow",
+  step: [
+    {
+      input: {
+        ref: "build_ref01"
+      }
+
+      match: {
+        project_id: "project01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicBuildFlow"
+}

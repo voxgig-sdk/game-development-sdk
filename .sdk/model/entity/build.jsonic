@@ -1,0 +1,78 @@
+# Entity: build
+
+main: kit: entity: build: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "configuration"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "platform"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "version"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "build"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                kind: "param"
+                name: "project_id"
+                orig: "project_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/projects/{projectId}/builds"
+          parts: [
+            "projects"
+            "{project_id}"
+            "builds"
+          ]
+          rename: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          select: {
+            exist: [
+              "project_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "project"
+      ]
+    ]
+  }
+
+
+
+}
