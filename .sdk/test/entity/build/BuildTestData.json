@@ -5,19 +5,22 @@
         "configuration": "s1e",
         "platform": "s1f",
         "version": "s20",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "BUILD00"
       },
       "BUILD01": {
         "configuration": "s3c",
         "platform": "s3d",
         "version": "s3e",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "BUILD01"
       },
       "BUILD02": {
         "configuration": "s5a",
         "platform": "s5b",
         "version": "s5c",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "BUILD02"
       }
     }
   },

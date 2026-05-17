@@ -1,10 +1,10 @@
 package voxgiggamedevelopmentsdk
 
 import (
-	"github.com/voxgig-sdk/game-development-sdk/core"
-	"github.com/voxgig-sdk/game-development-sdk/entity"
-	"github.com/voxgig-sdk/game-development-sdk/feature"
-	_ "github.com/voxgig-sdk/game-development-sdk/utility"
+	"github.com/voxgig-sdk/game-development-sdk/go/core"
+	"github.com/voxgig-sdk/game-development-sdk/go/entity"
+	"github.com/voxgig-sdk/game-development-sdk/go/feature"
+	_ "github.com/voxgig-sdk/game-development-sdk/go/utility"
 )
 
 // Type aliases preserve external API.

@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/game-development-sdk"
-	"github.com/voxgig-sdk/game-development-sdk/core"
+	sdk "github.com/voxgig-sdk/game-development-sdk/go"
+	"github.com/voxgig-sdk/game-development-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/game-development-sdk/go/utility/struct"
 )
 
 func TestCollaborationEntity(t *testing.T) {

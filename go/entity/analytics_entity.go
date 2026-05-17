@@ -1,9 +1,9 @@
 package entity
 
 import (
-	"github.com/voxgig-sdk/game-development-sdk/core"
+	"github.com/voxgig-sdk/game-development-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/game-development-sdk/go/utility/struct"
 )
 
 type AnalyticsEntity struct {

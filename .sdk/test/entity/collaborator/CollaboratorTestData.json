@@ -4,17 +4,20 @@
       "COLLABORATOR00": {
         "email": "s14",
         "role": "s15",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "COLLABORATOR00"
       },
       "COLLABORATOR01": {
         "email": "s28",
         "role": "s29",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "COLLABORATOR01"
       },
       "COLLABORATOR02": {
         "email": "s3c",
         "role": "s3d",
-        "project_id": "PROJECT01"
+        "project_id": "PROJECT01",
+        "id": "COLLABORATOR02"
       }
     }
   },

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/game-development-sdk"
-	"github.com/voxgig-sdk/game-development-sdk/core"
+	sdk "github.com/voxgig-sdk/game-development-sdk/go"
+	"github.com/voxgig-sdk/game-development-sdk/go/core"
 )
 
 func TestProjectDirect(t *testing.T) {
