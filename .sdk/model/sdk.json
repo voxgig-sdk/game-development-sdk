@@ -17,7 +17,21 @@
           }
         ],
         "title": "Game Development API",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "tagline": "Build, test, and deploy games with project, asset, and collaboration endpoints",
+        "homepage": "https://jenil-ai.vercel.app/api",
+        "about_md": "The Game Development API at `https://jenil-ai.vercel.app/api` exposes a set of endpoints aimed at the game-building workflow: managing projects and their assets, coordinating collaborators, running tests, producing builds, and tracking deployments and analytics.\n\nThe SDK is generated from the API's OpenAPI description, which groups operations around game projects and the resources attached to them — assets, builds, deployments, tests, collaborators, collaboration activity, and analytics events.\n\nThe upstream API does not publish a separate documentation page or licence statement that this SDK can mirror, so authentication, rate limits, and terms of use should be confirmed directly with the API host before relying on it in production.",
+        "entity_desc": {
+          "analytics": "Analytics data captured for a game project, such as usage or performance metrics surfaced by the API.",
+          "asset": "A game asset (art, audio, data, or other content) associated with a project.",
+          "build": "A build artefact produced from a project's source and assets.",
+          "collaboration": "A collaboration record or activity stream tracking shared work on a project.",
+          "collaborator": "A user who has access to contribute to a project.",
+          "deployment": "A deployment of a build to a target environment.",
+          "project": "A game project, the top-level container that owns assets, builds, collaborators, tests, deployments, and analytics.",
+          "test": "A test run or test definition associated with a project's build."
+        },
+        "auth": false
       },
       "config": {
         "auth": {
@@ -25,7 +39,15 @@
         },
         "headers": {
           "content-type": "application/json"
-        }
+        },
+        "docs_order": [
+          "ts",
+          "py",
+          "php",
+          "go",
+          "rb",
+          "lua"
+        ]
       },
       "entity": {
         "analytics": {

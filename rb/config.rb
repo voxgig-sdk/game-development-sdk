@@ -15,9 +15,6 @@ module GameDevelopmentConfig
       },
       "options" => {
         "base" => "https://jenil-ai.vercel.app/api",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },

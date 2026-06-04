@@ -194,14 +194,12 @@ func projectDirectSetup(mockres any) *projectDirectSetupResult {
 	env := envOverride(map[string]any{
 		"GAMEDEVELOPMENT_TEST_PROJECT_ENTID": map[string]any{},
 		"GAMEDEVELOPMENT_TEST_LIVE":    "FALSE",
-		"GAMEDEVELOPMENT_APIKEY":       "NONE",
 	})
 
 	live := env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
-			"apikey": env["GAMEDEVELOPMENT_APIKEY"],
 		}
 		client := sdk.NewGameDevelopmentSDK(mergedOpts)
 
