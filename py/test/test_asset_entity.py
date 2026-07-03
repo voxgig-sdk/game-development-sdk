@@ -134,6 +134,7 @@ def _asset_basic_setup(extra):
         "GAMEDEVELOPMENT_TEST_ASSET_ENTID": idmap,
         "GAMEDEVELOPMENT_TEST_LIVE": "FALSE",
         "GAMEDEVELOPMENT_TEST_EXPLAIN": "FALSE",
+        "GAMEDEVELOPMENT_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -144,6 +145,7 @@ def _asset_basic_setup(extra):
     if env.get("GAMEDEVELOPMENT_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
+                "apikey": env.get("GAMEDEVELOPMENT_APIKEY"),
             },
             extra or {},
         ])

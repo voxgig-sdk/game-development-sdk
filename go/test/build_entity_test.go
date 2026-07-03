@@ -111,6 +111,7 @@ func buildBasicSetup(extra map[string]any) *entityTestSetup {
 		"GAMEDEVELOPMENT_TEST_BUILD_ENTID": idmap,
 		"GAMEDEVELOPMENT_TEST_LIVE":      "FALSE",
 		"GAMEDEVELOPMENT_TEST_EXPLAIN":   "FALSE",
+		"GAMEDEVELOPMENT_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["GAMEDEVELOPMENT_TEST_BUILD_ENTID"])
@@ -121,6 +122,7 @@ func buildBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
+				"apikey": env["GAMEDEVELOPMENT_APIKEY"],
 			},
 			extra,
 		})

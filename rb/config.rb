@@ -15,6 +15,9 @@ module GameDevelopmentConfig
       },
       "options" => {
         "base" => "https://jenil-ai.vercel.app/api",
+        "auth" => {
+          "prefix" => "Bearer",
+        },
         "headers" => {
           "content-type" => "application/json",
         },
@@ -33,63 +36,65 @@ module GameDevelopmentConfig
         "analytics" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "count",
               "req" => false,
               "type" => "`$INTEGER`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "event_name",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "event_type",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "name",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "property",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "timestamp",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 5,
             },
           ],
           "name" => "analytics",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -116,52 +121,52 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                     "query" => [
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "end_date",
                         "orig" => "end_date",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "metric",
                         "orig" => "metric",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "start_date",
                         "orig" => "start_date",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -189,11 +194,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
           },
@@ -208,91 +211,93 @@ module GameDevelopmentConfig
         "asset" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "created_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "mime_type",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "name",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "project_id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "size",
               "req" => false,
               "type" => "`$INTEGER`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "tag",
               "req" => false,
               "type" => "`$ARRAY`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "type",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 7,
             },
             {
+              "active" => true,
               "name" => "updated_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 8,
             },
             {
+              "active" => true,
               "name" => "url",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 9,
             },
           ],
           "name" => "asset",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -317,45 +322,45 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                     "query" => [
                       {
+                        "active" => true,
                         "example" => 50,
                         "kind" => "query",
                         "name" => "limit",
                         "orig" => "limit",
                         "reqd" => false,
                         "type" => "`$INTEGER`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "type",
                         "orig" => "type",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -382,34 +387,34 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
             "load" => {
+              "input" => "data",
               "name" => "load",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "asset_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -437,34 +442,34 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "load",
             },
             "remove" => {
+              "input" => "data",
               "name" => "remove",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "asset_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -492,11 +497,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "remove",
             },
           },
@@ -511,42 +514,44 @@ module GameDevelopmentConfig
         "build" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "configuration",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "platform",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "version",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
           ],
           "name" => "build",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -571,11 +576,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
           },
@@ -590,77 +593,79 @@ module GameDevelopmentConfig
         "collaboration" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "added_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "email",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "last_active",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "name",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "role",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "status",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "user_id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 7,
             },
           ],
           "name" => "collaboration",
           "op" => {
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -685,34 +690,34 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
             "remove" => {
+              "input" => "data",
               "name" => "remove",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "user_id",
                         "orig" => "user_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -740,11 +745,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "remove",
             },
           },
@@ -763,35 +766,37 @@ module GameDevelopmentConfig
         "collaborator" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "email",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "role",
               "req" => true,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
           ],
           "name" => "collaborator",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -816,11 +821,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
           },
@@ -835,6 +838,7 @@ module GameDevelopmentConfig
         "deployment" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "build_version",
               "op" => {
                 "create" => {
@@ -844,45 +848,45 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "completed_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "configuration",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "created_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "deployment_url",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "download_url",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "environment",
               "op" => {
                 "create" => {
@@ -892,17 +896,17 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 7,
             },
             {
+              "active" => true,
               "name" => "platform",
               "op" => {
                 "create" => {
@@ -912,60 +916,61 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 8,
             },
             {
+              "active" => true,
               "name" => "project_id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 9,
             },
             {
+              "active" => true,
               "name" => "release_note",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 10,
             },
             {
+              "active" => true,
               "name" => "size",
               "req" => false,
               "type" => "`$INTEGER`",
-              "active" => true,
               "index$" => 11,
             },
             {
+              "active" => true,
               "name" => "status",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 12,
             },
             {
+              "active" => true,
               "name" => "version",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 13,
             },
           ],
           "name" => "deployment",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -990,36 +995,36 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                     "query" => [
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "status",
                         "orig" => "status",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1045,19 +1050,19 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1082,34 +1087,34 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 1,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
             "load" => {
+              "input" => "data",
               "name" => "load",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "deployment_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1137,11 +1142,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "load",
             },
           },
@@ -1156,27 +1159,28 @@ module GameDevelopmentConfig
         "project" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "created_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "description",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "name",
               "op" => {
                 "create" => {
@@ -1186,93 +1190,94 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "owner",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "setting",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "status",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "updated_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 7,
             },
           ],
           "name" => "project",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
+                  "args" => {},
                   "method" => "POST",
                   "orig" => "/projects",
                   "parts" => [
                     "projects",
                   ],
+                  "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
-                  "args" => {},
-                  "select" => {},
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "query" => [
                       {
+                        "active" => true,
                         "example" => 20,
                         "kind" => "query",
                         "name" => "limit",
                         "orig" => "limit",
                         "reqd" => false,
                         "type" => "`$INTEGER`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "example" => 0,
                         "kind" => "query",
                         "name" => "offset",
                         "orig" => "offset",
                         "reqd" => false,
                         "type" => "`$INTEGER`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "status",
                         "orig" => "status",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1292,26 +1297,26 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
             "load" => {
+              "input" => "data",
               "name" => "load",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1335,26 +1340,26 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "load",
             },
             "remove" => {
+              "input" => "data",
               "name" => "remove",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1378,26 +1383,26 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "remove",
             },
             "update" => {
+              "input" => "data",
               "name" => "update",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1421,11 +1426,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "update",
             },
           },
@@ -1436,13 +1439,14 @@ module GameDevelopmentConfig
         "test" => {
           "fields" => [
             {
+              "active" => true,
               "name" => "completed_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 0,
             },
             {
+              "active" => true,
               "name" => "environment",
               "op" => {
                 "create" => {
@@ -1452,17 +1456,17 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 1,
             },
             {
+              "active" => true,
               "name" => "id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 2,
             },
             {
+              "active" => true,
               "name" => "name",
               "op" => {
                 "create" => {
@@ -1472,10 +1476,10 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 3,
             },
             {
+              "active" => true,
               "name" => "platform",
               "op" => {
                 "create" => {
@@ -1485,38 +1489,38 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 4,
             },
             {
+              "active" => true,
               "name" => "project_id",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 5,
             },
             {
+              "active" => true,
               "name" => "result",
               "req" => false,
               "type" => "`$OBJECT`",
-              "active" => true,
               "index$" => 6,
             },
             {
+              "active" => true,
               "name" => "started_at",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 7,
             },
             {
+              "active" => true,
               "name" => "status",
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 8,
             },
             {
+              "active" => true,
               "name" => "test_suite",
               "op" => {
                 "create" => {
@@ -1526,25 +1530,26 @@ module GameDevelopmentConfig
               },
               "req" => false,
               "type" => "`$STRING`",
-              "active" => true,
               "index$" => 9,
             },
           ],
           "name" => "test",
           "op" => {
             "create" => {
+              "input" => "data",
               "name" => "create",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1569,36 +1574,36 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "create",
             },
             "list" => {
+              "input" => "data",
               "name" => "list",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                     "query" => [
                       {
+                        "active" => true,
                         "kind" => "query",
                         "name" => "status",
                         "orig" => "status",
                         "reqd" => false,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1624,34 +1629,34 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "list",
             },
             "load" => {
+              "input" => "data",
               "name" => "load",
               "points" => [
                 {
+                  "active" => true,
                   "args" => {
                     "params" => [
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "id",
                         "orig" => "test_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                       {
+                        "active" => true,
                         "kind" => "param",
                         "name" => "project_id",
                         "orig" => "project_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
-                        "active" => true,
                       },
                     ],
                   },
@@ -1679,11 +1684,9 @@ module GameDevelopmentConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "active" => true,
                   "index$" => 0,
                 },
               ],
-              "input" => "data",
               "key$" => "load",
             },
           },

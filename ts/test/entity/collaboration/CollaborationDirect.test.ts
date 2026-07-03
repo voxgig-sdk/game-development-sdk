@@ -86,12 +86,14 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID': {},
     'GAMEDEVELOPMENT_TEST_LIVE': 'FALSE',
+    'GAMEDEVELOPMENT_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.GAMEDEVELOPMENT_TEST_LIVE
 
   if (live) {
     const client = new GameDevelopmentSDK({
+      apikey: env.GAMEDEVELOPMENT_APIKEY,
     })
 
     let idmap: any = env['GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID']

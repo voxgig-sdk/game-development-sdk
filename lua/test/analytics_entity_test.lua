@@ -101,6 +101,7 @@ function analytics_basic_setup(extra)
     ["GAMEDEVELOPMENT_TEST_ANALYTICS_ENTID"] = idmap,
     ["GAMEDEVELOPMENT_TEST_LIVE"] = "FALSE",
     ["GAMEDEVELOPMENT_TEST_EXPLAIN"] = "FALSE",
+    ["GAMEDEVELOPMENT_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
@@ -112,6 +113,7 @@ function analytics_basic_setup(extra)
   if env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
+        apikey = env["GAMEDEVELOPMENT_APIKEY"],
       },
       extra or {},
     })

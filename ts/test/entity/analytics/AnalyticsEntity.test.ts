@@ -123,6 +123,7 @@ function basicSetup(extra?: any) {
     'GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID': idmap,
     'GAME_DEVELOPMENT_TEST_LIVE': 'FALSE',
     'GAME_DEVELOPMENT_TEST_EXPLAIN': 'FALSE',
+    'GAME_DEVELOPMENT_APIKEY': 'NONE',
   })
 
   idmap = env['GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID']
@@ -132,6 +133,7 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new GameDevelopmentSDK(merge([
       {
+        apikey: env.GAME_DEVELOPMENT_APIKEY,
       },
       extra
     ]))

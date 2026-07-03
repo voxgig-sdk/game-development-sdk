@@ -81,6 +81,7 @@ function build_basic_setup($extra)
         "GAMEDEVELOPMENT_TEST_BUILD_ENTID" => $idmap,
         "GAMEDEVELOPMENT_TEST_LIVE" => "FALSE",
         "GAMEDEVELOPMENT_TEST_EXPLAIN" => "FALSE",
+        "GAMEDEVELOPMENT_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -92,6 +93,7 @@ function build_basic_setup($extra)
     if ($env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
+                "apikey" => $env["GAMEDEVELOPMENT_APIKEY"],
             ],
             $extra ?? [],
         ]);

@@ -122,12 +122,14 @@ def _asset_direct_setup(mockres):
     env = runner.env_override({
         "GAMEDEVELOPMENT_TEST_ASSET_ENTID": {},
         "GAMEDEVELOPMENT_TEST_LIVE": "FALSE",
+        "GAMEDEVELOPMENT_APIKEY": "NONE",
     })
 
     live = env.get("GAMEDEVELOPMENT_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
+            "apikey": env.get("GAMEDEVELOPMENT_APIKEY"),
         }
         client = GameDevelopmentSDK(merged_opts)
         return {
