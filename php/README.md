@@ -10,7 +10,7 @@ The PHP SDK for the GameDevelopment API — an entity-oriented client using PHP 
 
 ## Install
 ```bash
-composer require voxgig/game-development-sdk
+composer require voxgig-sdk/game-development
 ```
 
 

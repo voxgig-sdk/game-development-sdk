@@ -10,7 +10,7 @@ The Python SDK for the GameDevelopment API — an entity-oriented client followi
 
 ## Install
 ```bash
-pip install game-development-sdk
+pip install voxgig-sdk-game-development
 ```
 
 Or install from source:

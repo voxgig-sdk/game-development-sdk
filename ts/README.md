@@ -10,7 +10,7 @@ The TypeScript SDK for the GameDevelopment API — a type-safe, entity-oriented 
 
 ## Install
 ```bash
-npm install game-development
+npm install @voxgig-sdk/game-development
 ```
 ## Tutorial: your first API call
 

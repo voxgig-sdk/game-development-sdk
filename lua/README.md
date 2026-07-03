@@ -10,7 +10,7 @@ The Lua SDK for the GameDevelopment API — an entity-oriented client using Lua 
 
 ## Install
 ```bash
-luarocks install game-development-sdk
+luarocks install voxgig-sdk-game-development
 ```
 
 If the module is not yet published, add the source directory to

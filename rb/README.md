@@ -10,13 +10,13 @@ The Ruby SDK for the GameDevelopment API — an entity-oriented client using idi
 
 ## Install
 ```bash
-gem install game-development-sdk
+gem install voxgig-sdk-game-development
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "game-development-sdk"
+gem "voxgig-sdk-game-development"
 ```
 
 Then run:
