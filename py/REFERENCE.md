@@ -109,7 +109,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## AnalyticsEntity
 
 ```python
-analytics = client.analytics
+analytics = client.Analytics()
 ```
 
 ### Fields
@@ -130,9 +130,9 @@ analytics = client.analytics
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.analytics.create({
-    "event_name": # `$STRING`,
-    "event_type": # `$STRING`,
+result = client.Analytics().create({
+    "event_name": ...,  # `$STRING`
+    "event_type": ...,  # `$STRING`
 })
 ```
 
@@ -141,7 +141,9 @@ result = client.analytics.create({
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.analytics.list({})
+results = client.Analytics().list({})
+for analytics in results:
+    print(analytics)
 ```
 
 ### Common Methods
@@ -176,7 +178,7 @@ Return the entity name.
 ## AssetEntity
 
 ```python
-asset = client.asset
+asset = client.Asset()
 ```
 
 ### Fields
@@ -201,7 +203,7 @@ asset = client.asset
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.asset.create({
+result = client.Asset().create({
 })
 ```
 
@@ -210,7 +212,9 @@ result = client.asset.create({
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.asset.list({})
+results = client.Asset().list({})
+for asset in results:
+    print(asset)
 ```
 
 #### `load(reqmatch, ctrl=None) -> dict`
@@ -218,7 +222,7 @@ results = client.asset.list({})
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.asset.load({"id": "asset_id"})
+result = client.Asset().load({"id": "asset_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -226,7 +230,7 @@ result = client.asset.load({"id": "asset_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.asset.remove({"id": "asset_id"})
+result = client.Asset().remove({"id": "asset_id"})
 ```
 
 ### Common Methods
@@ -261,7 +265,7 @@ Return the entity name.
 ## BuildEntity
 
 ```python
-build = client.build
+build = client.Build()
 ```
 
 ### Fields
@@ -279,10 +283,10 @@ build = client.build
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.build.create({
-    "configuration": # `$STRING`,
-    "platform": # `$STRING`,
-    "version": # `$STRING`,
+result = client.Build().create({
+    "configuration": ...,  # `$STRING`
+    "platform": ...,  # `$STRING`
+    "version": ...,  # `$STRING`
 })
 ```
 
@@ -318,7 +322,7 @@ Return the entity name.
 ## CollaborationEntity
 
 ```python
-collaboration = client.collaboration
+collaboration = client.Collaboration()
 ```
 
 ### Fields
@@ -341,7 +345,9 @@ collaboration = client.collaboration
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.collaboration.list({})
+results = client.Collaboration().list({})
+for collaboration in results:
+    print(collaboration)
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -349,7 +355,7 @@ results = client.collaboration.list({})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.collaboration.remove({"id": "collaboration_id"})
+result = client.Collaboration().remove({"id": "collaboration_id"})
 ```
 
 ### Common Methods
@@ -384,7 +390,7 @@ Return the entity name.
 ## CollaboratorEntity
 
 ```python
-collaborator = client.collaborator
+collaborator = client.Collaborator()
 ```
 
 ### Fields
@@ -401,9 +407,9 @@ collaborator = client.collaborator
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.collaborator.create({
-    "email": # `$STRING`,
-    "role": # `$STRING`,
+result = client.Collaborator().create({
+    "email": ...,  # `$STRING`
+    "role": ...,  # `$STRING`
 })
 ```
 
@@ -439,7 +445,7 @@ Return the entity name.
 ## DeploymentEntity
 
 ```python
-deployment = client.deployment
+deployment = client.Deployment()
 ```
 
 ### Fields
@@ -487,7 +493,7 @@ deployment = client.deployment
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.deployment.create({
+result = client.Deployment().create({
 })
 ```
 
@@ -496,7 +502,9 @@ result = client.deployment.create({
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.deployment.list({})
+results = client.Deployment().list({})
+for deployment in results:
+    print(deployment)
 ```
 
 #### `load(reqmatch, ctrl=None) -> dict`
@@ -504,7 +512,7 @@ results = client.deployment.list({})
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.deployment.load({"id": "deployment_id"})
+result = client.Deployment().load({"id": "deployment_id"})
 ```
 
 ### Common Methods
@@ -539,7 +547,7 @@ Return the entity name.
 ## ProjectEntity
 
 ```python
-project = client.project
+project = client.Project()
 ```
 
 ### Fields
@@ -575,7 +583,7 @@ project = client.project
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.project.create({
+result = client.Project().create({
 })
 ```
 
@@ -584,7 +592,9 @@ result = client.project.create({
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.project.list({})
+results = client.Project().list({})
+for project in results:
+    print(project)
 ```
 
 #### `load(reqmatch, ctrl=None) -> dict`
@@ -592,7 +602,7 @@ results = client.project.list({})
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.project.load({"id": "project_id"})
+result = client.Project().load({"id": "project_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -600,7 +610,7 @@ result = client.project.load({"id": "project_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.project.remove({"id": "project_id"})
+result = client.Project().remove({"id": "project_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> dict`
@@ -608,7 +618,7 @@ result = client.project.remove({"id": "project_id"})
 Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
 
 ```python
-result = client.project.update({
+result = client.Project().update({
     "id": "project_id",
     # Fields to update
 })
@@ -646,7 +656,7 @@ Return the entity name.
 ## TestEntity
 
 ```python
-test = client.test
+test = client.Test()
 ```
 
 ### Fields
@@ -686,7 +696,7 @@ test = client.test
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.test.create({
+result = client.Test().create({
 })
 ```
 
@@ -695,7 +705,9 @@ result = client.test.create({
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.test.list({})
+results = client.Test().list({})
+for test in results:
+    print(test)
 ```
 
 #### `load(reqmatch, ctrl=None) -> dict`
@@ -703,7 +715,7 @@ results = client.test.list({})
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.test.load({"id": "test_id"})
+result = client.Test().load({"id": "test_id"})
 ```
 
 ### Common Methods

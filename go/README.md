@@ -30,7 +30,12 @@ go mod edit -replace github.com/voxgig-sdk/game-development-sdk/go=../game-devel
 This tutorial walks through creating a client, listing entities, and
 loading a specific record.
 
-### 1. Create a client
+### Quickstart
+
+A complete program: create a client, then call the entity operations.
+Each operation returns `(value, error)` — the value is the data itself
+(there is no `{ok, data}` wrapper), so check `err` and use the value
+directly.
 
 ```go
 package main
@@ -38,44 +43,30 @@ package main
 import (
     "fmt"
     "os"
-
     sdk "github.com/voxgig-sdk/game-development-sdk/go"
-    "github.com/voxgig-sdk/game-development-sdk/go/core"
 )
 
 func main() {
     client := sdk.NewGameDevelopmentSDK(map[string]any{
         "apikey": os.Getenv("GAME_DEVELOPMENT_APIKEY"),
     })
-```
 
-### 2. List analyticss
-
-```go
-    result, err := client.Analytics(nil).List(nil, nil)
+    // List analytics records — the value is the array of records itself.
+    analyticss, err := client.Analytics(nil).List(nil, nil)
     if err != nil {
         panic(err)
     }
-
-    rm := core.ToMapAny(result)
-    if rm["ok"] == true {
-        for _, item := range rm["data"].([]any) {
-            p := core.ToMapAny(item)
-            fmt.Println(p["id"], p["name"])
-        }
+    for _, item := range analyticss.([]any) {
+        fmt.Println(item)
     }
-```
 
-### 4. Create, update, and remove
-
-```go
-// Create
-created, _ := client.Analytics(nil).Create(
-    map[string]any{"name": "Example"}, nil,
-)
-cm := core.ToMapAny(created)
-newID := core.ToMapAny(cm["data"])["id"]
-
+    // Create a analytics.
+    created, err := client.Analytics(nil).Create(map[string]any{"name": "Example"}, nil)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(created)
+}
 ```
 
 
@@ -125,10 +116,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-result, err := client.Analytics(nil).Load(
+analytics, err := client.Analytics(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
-// result contains mock response data
+if err != nil {
+    panic(err)
+}
+fmt.Println(analytics) // the loaded mock data
 ```
 
 ### Use a custom fetch function
@@ -207,8 +201,8 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `GetUtility` | `() *Utility` | Copy of the SDK utility object. |
 | `Prepare` | `(fetchargs map[string]any) (map[string]any, error)` | Build an HTTP request definition without sending. |
 | `Direct` | `(fetchargs map[string]any) (map[string]any, error)` | Build and send an HTTP request. |
-| `Analytics` | `(data map[string]any) GameDevelopmentEntity` | Create a Analytics entity instance. |
-| `Asset` | `(data map[string]any) GameDevelopmentEntity` | Create a Asset entity instance. |
+| `Analytics` | `(data map[string]any) GameDevelopmentEntity` | Create an Analytics entity instance. |
+| `Asset` | `(data map[string]any) GameDevelopmentEntity` | Create an Asset entity instance. |
 | `Build` | `(data map[string]any) GameDevelopmentEntity` | Create a Build entity instance. |
 | `Collaboration` | `(data map[string]any) GameDevelopmentEntity` | Create a Collaboration entity instance. |
 | `Collaborator` | `(data map[string]any) GameDevelopmentEntity` | Create a Collaborator entity instance. |
@@ -234,17 +228,24 @@ All entities implement the `GameDevelopmentEntity` interface.
 
 ### Result shape
 
-Entity operations return `(any, error)`. The `any` value is a
-`map[string]any` with these keys:
+Entity operations return `(value, error)`. The `value` is the
+operation's data **directly** — there is no wrapper:
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `"ok"` | `bool` | `true` if the HTTP status is 2xx. |
-| `"status"` | `int` | HTTP status code. |
-| `"headers"` | `map[string]any` | Response headers. |
-| `"data"` | `any` | Parsed JSON response body. |
+| Operation | `value` |
+| --- | --- |
+| `Load` / `Create` / `Update` / `Remove` | the entity record (`map[string]any`) |
+| `List` | a `[]any` of entity records |
 
-On error, `"ok"` is `false` and `"err"` contains the error value.
+Check `err` first, then use the value directly (or the typed
+`...Typed` variants, which return the entity's model struct and a typed
+slice):
+
+    analytics, err := client.Analytics(nil).Load(map[string]any{"id": "example_id"}, nil)
+    if err != nil { /* handle */ }
+    // analytics is the loaded record
+
+Only `Direct()` returns a response envelope — a `map[string]any` with
+`"ok"`, `"status"`, `"headers"`, and `"data"` keys.
 
 ### Entities
 
@@ -411,7 +412,11 @@ Create an instance: `analytics := client.Analytics(nil)`
 #### Example: List
 
 ```go
-results, err := client.Analytics(nil).List(nil, nil)
+analyticss, err := client.Analytics(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(analyticss) // the array of records
 ```
 
 #### Example: Create
@@ -455,13 +460,21 @@ Create an instance: `asset := client.Asset(nil)`
 #### Example: Load
 
 ```go
-result, err := client.Asset(nil).Load(map[string]any{"id": "asset_id"}, nil)
+asset, err := client.Asset(nil).Load(map[string]any{"id": "asset_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(asset) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-results, err := client.Asset(nil).List(nil, nil)
+assets, err := client.Asset(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(assets) // the array of records
 ```
 
 #### Example: Create
@@ -528,7 +541,11 @@ Create an instance: `collaboration := client.Collaboration(nil)`
 #### Example: List
 
 ```go
-results, err := client.Collaboration(nil).List(nil, nil)
+collaborations, err := client.Collaboration(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(collaborations) // the array of records
 ```
 
 
@@ -593,13 +610,21 @@ Create an instance: `deployment := client.Deployment(nil)`
 #### Example: Load
 
 ```go
-result, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id"}, nil)
+deployment, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(deployment) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-results, err := client.Deployment(nil).List(nil, nil)
+deployments, err := client.Deployment(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(deployments) // the array of records
 ```
 
 #### Example: Create
@@ -640,13 +665,21 @@ Create an instance: `project := client.Project(nil)`
 #### Example: Load
 
 ```go
-result, err := client.Project(nil).Load(map[string]any{"id": "project_id"}, nil)
+project, err := client.Project(nil).Load(map[string]any{"id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(project) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-results, err := client.Project(nil).List(nil, nil)
+projects, err := client.Project(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(projects) // the array of records
 ```
 
 #### Example: Create
@@ -687,13 +720,21 @@ Create an instance: `test := client.Test(nil)`
 #### Example: Load
 
 ```go
-result, err := client.Test(nil).Load(map[string]any{"id": "test_id"}, nil)
+test, err := client.Test(nil).Load(map[string]any{"id": "test_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(test) // the loaded record
 ```
 
 #### Example: List
 
 ```go
-results, err := client.Test(nil).List(nil, nil)
+tests, err := client.Test(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(tests) // the array of records
 ```
 
 #### Example: Create

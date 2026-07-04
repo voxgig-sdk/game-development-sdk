@@ -220,137 +220,57 @@ class GameDevelopmentSDK:
         }
 
 
-    @property
-    def analytics(self):
-        """Idiomatic facade: client.analytics.list() / client.analytics.load({"id": ...})."""
-        from entity.analytics_entity import AnalyticsEntity
-        cached = getattr(self, "_analytics", None)
-        if cached is None:
-            cached = AnalyticsEntity(self, None)
-            self._analytics = cached
-        return cached
-
-    def Analytics(self, data=None):
-        # Deprecated: use client.analytics instead.
+    def Analytics(self, data=None) -> "AnalyticsEntity":
+        """Entity factory: client.Analytics().list({}) / client.Analytics().load({"id": ...})."""
         from entity.analytics_entity import AnalyticsEntity
         return AnalyticsEntity(self, data)
 
 
-    @property
-    def asset(self):
-        """Idiomatic facade: client.asset.list() / client.asset.load({"id": ...})."""
-        from entity.asset_entity import AssetEntity
-        cached = getattr(self, "_asset", None)
-        if cached is None:
-            cached = AssetEntity(self, None)
-            self._asset = cached
-        return cached
-
-    def Asset(self, data=None):
-        # Deprecated: use client.asset instead.
+    def Asset(self, data=None) -> "AssetEntity":
+        """Entity factory: client.Asset().list({}) / client.Asset().load({"id": ...})."""
         from entity.asset_entity import AssetEntity
         return AssetEntity(self, data)
 
 
-    @property
-    def build(self):
-        """Idiomatic facade: client.build.list() / client.build.load({"id": ...})."""
-        from entity.build_entity import BuildEntity
-        cached = getattr(self, "_build", None)
-        if cached is None:
-            cached = BuildEntity(self, None)
-            self._build = cached
-        return cached
-
-    def Build(self, data=None):
-        # Deprecated: use client.build instead.
+    def Build(self, data=None) -> "BuildEntity":
+        """Entity factory: client.Build().list({}) / client.Build().load({"id": ...})."""
         from entity.build_entity import BuildEntity
         return BuildEntity(self, data)
 
 
-    @property
-    def collaboration(self):
-        """Idiomatic facade: client.collaboration.list() / client.collaboration.load({"id": ...})."""
-        from entity.collaboration_entity import CollaborationEntity
-        cached = getattr(self, "_collaboration", None)
-        if cached is None:
-            cached = CollaborationEntity(self, None)
-            self._collaboration = cached
-        return cached
-
-    def Collaboration(self, data=None):
-        # Deprecated: use client.collaboration instead.
+    def Collaboration(self, data=None) -> "CollaborationEntity":
+        """Entity factory: client.Collaboration().list({}) / client.Collaboration().load({"id": ...})."""
         from entity.collaboration_entity import CollaborationEntity
         return CollaborationEntity(self, data)
 
 
-    @property
-    def collaborator(self):
-        """Idiomatic facade: client.collaborator.list() / client.collaborator.load({"id": ...})."""
-        from entity.collaborator_entity import CollaboratorEntity
-        cached = getattr(self, "_collaborator", None)
-        if cached is None:
-            cached = CollaboratorEntity(self, None)
-            self._collaborator = cached
-        return cached
-
-    def Collaborator(self, data=None):
-        # Deprecated: use client.collaborator instead.
+    def Collaborator(self, data=None) -> "CollaboratorEntity":
+        """Entity factory: client.Collaborator().list({}) / client.Collaborator().load({"id": ...})."""
         from entity.collaborator_entity import CollaboratorEntity
         return CollaboratorEntity(self, data)
 
 
-    @property
-    def deployment(self):
-        """Idiomatic facade: client.deployment.list() / client.deployment.load({"id": ...})."""
-        from entity.deployment_entity import DeploymentEntity
-        cached = getattr(self, "_deployment", None)
-        if cached is None:
-            cached = DeploymentEntity(self, None)
-            self._deployment = cached
-        return cached
-
-    def Deployment(self, data=None):
-        # Deprecated: use client.deployment instead.
+    def Deployment(self, data=None) -> "DeploymentEntity":
+        """Entity factory: client.Deployment().list({}) / client.Deployment().load({"id": ...})."""
         from entity.deployment_entity import DeploymentEntity
         return DeploymentEntity(self, data)
 
 
-    @property
-    def project(self):
-        """Idiomatic facade: client.project.list() / client.project.load({"id": ...})."""
-        from entity.project_entity import ProjectEntity
-        cached = getattr(self, "_project", None)
-        if cached is None:
-            cached = ProjectEntity(self, None)
-            self._project = cached
-        return cached
-
-    def Project(self, data=None):
-        # Deprecated: use client.project instead.
+    def Project(self, data=None) -> "ProjectEntity":
+        """Entity factory: client.Project().list({}) / client.Project().load({"id": ...})."""
         from entity.project_entity import ProjectEntity
         return ProjectEntity(self, data)
 
 
-    @property
-    def test(self):
-        """Idiomatic facade: client.test.list() / client.test.load({"id": ...})."""
-        from entity.test_entity import TestEntity
-        cached = getattr(self, "_test", None)
-        if cached is None:
-            cached = TestEntity(self, None)
-            self._test = cached
-        return cached
-
-    def Test(self, data=None):
-        # Deprecated: use client.test instead.
+    def Test(self, data=None) -> "TestEntity":
+        """Entity factory: client.Test().list({}) / client.Test().load({"id": ...})."""
         from entity.test_entity import TestEntity
         return TestEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "GameDevelopmentSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -370,3 +290,16 @@ class GameDevelopmentSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.analytics_entity import AnalyticsEntity
+    from entity.asset_entity import AssetEntity
+    from entity.build_entity import BuildEntity
+    from entity.collaboration_entity import CollaborationEntity
+    from entity.collaborator_entity import CollaboratorEntity
+    from entity.deployment_entity import DeploymentEntity
+    from entity.project_entity import ProjectEntity
+    from entity.test_entity import TestEntity

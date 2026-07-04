@@ -233,10 +233,10 @@ class GameDevelopmentSDK
 
     private $_analytics = null;
 
-    // Idiomatic facade: $client->analytics()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Analytics() (PHP method
-    // names are case-insensitive).
-    public function analytics($data = null)
+    // Canonical facade: $client->Analytics()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->analytics()
+    // resolves here too.
+    public function Analytics($data = null)
     {
         require_once __DIR__ . '/entity/analytics_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class GameDevelopmentSDK
 
     private $_asset = null;
 
-    // Idiomatic facade: $client->asset()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Asset() (PHP method
-    // names are case-insensitive).
-    public function asset($data = null)
+    // Canonical facade: $client->Asset()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->asset()
+    // resolves here too.
+    public function Asset($data = null)
     {
         require_once __DIR__ . '/entity/asset_entity.php';
         if ($data === null) {
@@ -269,10 +269,10 @@ class GameDevelopmentSDK
 
     private $_build = null;
 
-    // Idiomatic facade: $client->build()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Build() (PHP method
-    // names are case-insensitive).
-    public function build($data = null)
+    // Canonical facade: $client->Build()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->build()
+    // resolves here too.
+    public function Build($data = null)
     {
         require_once __DIR__ . '/entity/build_entity.php';
         if ($data === null) {
@@ -287,10 +287,10 @@ class GameDevelopmentSDK
 
     private $_collaboration = null;
 
-    // Idiomatic facade: $client->collaboration()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Collaboration() (PHP method
-    // names are case-insensitive).
-    public function collaboration($data = null)
+    // Canonical facade: $client->Collaboration()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->collaboration()
+    // resolves here too.
+    public function Collaboration($data = null)
     {
         require_once __DIR__ . '/entity/collaboration_entity.php';
         if ($data === null) {
@@ -305,10 +305,10 @@ class GameDevelopmentSDK
 
     private $_collaborator = null;
 
-    // Idiomatic facade: $client->collaborator()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Collaborator() (PHP method
-    // names are case-insensitive).
-    public function collaborator($data = null)
+    // Canonical facade: $client->Collaborator()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->collaborator()
+    // resolves here too.
+    public function Collaborator($data = null)
     {
         require_once __DIR__ . '/entity/collaborator_entity.php';
         if ($data === null) {
@@ -323,10 +323,10 @@ class GameDevelopmentSDK
 
     private $_deployment = null;
 
-    // Idiomatic facade: $client->deployment()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Deployment() (PHP method
-    // names are case-insensitive).
-    public function deployment($data = null)
+    // Canonical facade: $client->Deployment()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->deployment()
+    // resolves here too.
+    public function Deployment($data = null)
     {
         require_once __DIR__ . '/entity/deployment_entity.php';
         if ($data === null) {
@@ -341,10 +341,10 @@ class GameDevelopmentSDK
 
     private $_project = null;
 
-    // Idiomatic facade: $client->project()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Project() (PHP method
-    // names are case-insensitive).
-    public function project($data = null)
+    // Canonical facade: $client->Project()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->project()
+    // resolves here too.
+    public function Project($data = null)
     {
         require_once __DIR__ . '/entity/project_entity.php';
         if ($data === null) {
@@ -359,10 +359,10 @@ class GameDevelopmentSDK
 
     private $_test = null;
 
-    // Idiomatic facade: $client->test_()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Test() (PHP method
-    // names are case-insensitive).
-    public function test_($data = null)
+    // Canonical facade: $client->Test_()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->test()
+    // resolves here too.
+    public function Test_($data = null)
     {
         require_once __DIR__ . '/entity/test_entity.php';
         if ($data === null) {

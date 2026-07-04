@@ -33,17 +33,17 @@ local client = sdk.new({
 })
 ```
 
-### 2. List analyticss
+### 2. List analytics records
+
+Entity operations return `(value, err)`. For `list`, `value` is the
+array of records itself — iterate it directly (there is no wrapper).
 
 ```lua
-local result, err = client:analytics():list()
+local analyticss, err = client:Analytics():list()
 if err then error(err) end
 
-if type(result) == "table" then
-  for _, item in ipairs(result) do
-    local d = item:data_get()
-    print(d["id"], d["name"])
-  end
+for _, item in ipairs(analyticss) do
+  print(item["id"], item["name"])
 end
 ```
 
@@ -51,7 +51,8 @@ end
 
 ```lua
 -- Create
-local created, _ = client:analytics():create({ name = "Example" })
+local created, err = client:Analytics():create({ name = "Example" })
+if err then error(err) end
 
 ```
 
@@ -98,8 +99,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:analytics():load({ id = "test01" })
--- result contains mock response data
+local result, err = client:Analytics():load({ id = "test01" })
+-- result is the loaded data; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -179,8 +180,8 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `get_utility` | `() -> Utility` | Copy of the SDK utility object. |
 | `prepare` | `(fetchargs) -> table, err` | Build an HTTP request definition without sending. |
 | `direct` | `(fetchargs) -> table, err` | Build and send an HTTP request. |
-| `Analytics` | `(data) -> AnalyticsEntity` | Create a Analytics entity instance. |
-| `Asset` | `(data) -> AssetEntity` | Create a Asset entity instance. |
+| `Analytics` | `(data) -> AnalyticsEntity` | Create an Analytics entity instance. |
+| `Asset` | `(data) -> AssetEntity` | Create an Asset entity instance. |
 | `Build` | `(data) -> BuildEntity` | Create a Build entity instance. |
 | `Collaboration` | `(data) -> CollaborationEntity` | Create a Collaboration entity instance. |
 | `Collaborator` | `(data) -> CollaboratorEntity` | Create a Collaborator entity instance. |
@@ -208,17 +209,22 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(any, err)`. The first value is a
-`table` with these keys:
+Entity operations return `(value, err)`. The `value` is the operation's
+data **directly** — there is no wrapper:
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `ok` | `boolean` | `true` if the HTTP status is 2xx. |
-| `status` | `number` | HTTP status code. |
-| `headers` | `table` | Response headers. |
-| `data` | `any` | Parsed JSON response body. |
+| Operation | `value` |
+| --- | --- |
+| `load` / `create` / `update` / `remove` | the entity record (a `table`) |
+| `list` | an array (`table`) of entity records |
 
-On error, `ok` is `false` and `err` contains the error value.
+Check `err` first (it is non-`nil` on failure), then use `value`:
+
+    local analytics, err = client:Analytics():load({ id = "example_id" })
+    if err then error(err) end
+    -- analytics is the loaded record
+
+Only `direct()` returns a response envelope — a `table` with `ok`,
+`status`, `headers`, and `data` keys.
 
 ### Entities
 
@@ -362,7 +368,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.analytics`
+Create an instance: `local analytics = client:Analytics(nil)`
 
 #### Operations
 
@@ -384,23 +390,23 @@ Create an instance: `const analytics = client.analytics`
 
 #### Example: List
 
-```ts
-const analyticss = await client.analytics.list()
+```lua
+local analyticss, err = client:Analytics():list()
 ```
 
 #### Example: Create
 
-```ts
-const analytics = await client.analytics.create({
-  event_name: /* `$STRING` */,
-  event_type: /* `$STRING` */,
+```lua
+local analytics, err = client:Analytics():create({
+  event_name = nil, -- `$STRING`
+  event_type = nil, -- `$STRING`
 })
 ```
 
 
 ### Asset
 
-Create an instance: `const asset = client.asset`
+Create an instance: `local asset = client:Asset(nil)`
 
 #### Operations
 
@@ -428,27 +434,27 @@ Create an instance: `const asset = client.asset`
 
 #### Example: Load
 
-```ts
-const asset = await client.asset.load({ id: 'asset_id' })
+```lua
+local asset, err = client:Asset():load({ id = "asset_id" })
 ```
 
 #### Example: List
 
-```ts
-const assets = await client.asset.list()
+```lua
+local assets, err = client:Asset():list()
 ```
 
 #### Example: Create
 
-```ts
-const asset = await client.asset.create({
+```lua
+local asset, err = client:Asset():create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.build`
+Create an instance: `local build = client:Build(nil)`
 
 #### Operations
 
@@ -466,18 +472,18 @@ Create an instance: `const build = client.build`
 
 #### Example: Create
 
-```ts
-const build = await client.build.create({
-  configuration: /* `$STRING` */,
-  platform: /* `$STRING` */,
-  version: /* `$STRING` */,
+```lua
+local build, err = client:Build():create({
+  configuration = nil, -- `$STRING`
+  platform = nil, -- `$STRING`
+  version = nil, -- `$STRING`
 })
 ```
 
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.collaboration`
+Create an instance: `local collaboration = client:Collaboration(nil)`
 
 #### Operations
 
@@ -501,14 +507,14 @@ Create an instance: `const collaboration = client.collaboration`
 
 #### Example: List
 
-```ts
-const collaborations = await client.collaboration.list()
+```lua
+local collaborations, err = client:Collaboration():list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.collaborator`
+Create an instance: `local collaborator = client:Collaborator(nil)`
 
 #### Operations
 
@@ -525,17 +531,17 @@ Create an instance: `const collaborator = client.collaborator`
 
 #### Example: Create
 
-```ts
-const collaborator = await client.collaborator.create({
-  email: /* `$STRING` */,
-  role: /* `$STRING` */,
+```lua
+local collaborator, err = client:Collaborator():create({
+  email = nil, -- `$STRING`
+  role = nil, -- `$STRING`
 })
 ```
 
 
 ### Deployment
 
-Create an instance: `const deployment = client.deployment`
+Create an instance: `local deployment = client:Deployment(nil)`
 
 #### Operations
 
@@ -566,27 +572,27 @@ Create an instance: `const deployment = client.deployment`
 
 #### Example: Load
 
-```ts
-const deployment = await client.deployment.load({ id: 'deployment_id' })
+```lua
+local deployment, err = client:Deployment():load({ id = "deployment_id" })
 ```
 
 #### Example: List
 
-```ts
-const deployments = await client.deployment.list()
+```lua
+local deployments, err = client:Deployment():list()
 ```
 
 #### Example: Create
 
-```ts
-const deployment = await client.deployment.create({
+```lua
+local deployment, err = client:Deployment():create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.project`
+Create an instance: `local project = client:Project(nil)`
 
 #### Operations
 
@@ -613,27 +619,27 @@ Create an instance: `const project = client.project`
 
 #### Example: Load
 
-```ts
-const project = await client.project.load({ id: 'project_id' })
+```lua
+local project, err = client:Project():load({ id = "project_id" })
 ```
 
 #### Example: List
 
-```ts
-const projects = await client.project.list()
+```lua
+local projects, err = client:Project():list()
 ```
 
 #### Example: Create
 
-```ts
-const project = await client.project.create({
+```lua
+local project, err = client:Project():create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.test`
+Create an instance: `local test = client:Test(nil)`
 
 #### Operations
 
@@ -660,20 +666,20 @@ Create an instance: `const test = client.test`
 
 #### Example: Load
 
-```ts
-const test = await client.test.load({ id: 'test_id' })
+```lua
+local test, err = client:Test():load({ id = "test_id" })
 ```
 
 #### Example: List
 
-```ts
-const tests = await client.test.list()
+```lua
+local tests, err = client:Test():list()
 ```
 
 #### Example: Create
 
-```ts
-const test = await client.test.create({
+```lua
+local test, err = client:Test():create({
 })
 ```
 
@@ -749,7 +755,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local analytics = client:analytics()
+local analytics = client:Analytics()
 analytics:load({ id = "example_id" })
 
 -- analytics:data_get() now returns the loaded analytics data

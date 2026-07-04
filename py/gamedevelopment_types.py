@@ -4,226 +4,204 @@
 # params (op.<name>.points[].args.params[]). Field/param types come from the
 # canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 # @voxgig/apidef VALID_CANON). Do not edit by hand.
+#
+# These are TypedDicts, not dataclasses: the SDK ops return/accept plain dicts
+# at runtime, and a TypedDict IS a dict shape, so the types match the runtime.
+# Optional (req:false) keys are modelled as TypedDict key-optionality
+# (total=False), split into a required base + total=False subclass when a type
+# has both required and optional keys.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Optional, Any
+from typing import TypedDict, Any
 
 
-@dataclass
-class Analytics:
+class AnalyticsRequired(TypedDict):
     event_name: str
     event_type: str
-    count: Optional[int] = None
-    name: Optional[str] = None
-    property: Optional[dict] = None
-    timestamp: Optional[str] = None
 
 
-@dataclass
-class AnalyticsListMatch:
+class Analytics(AnalyticsRequired, total=False):
+    count: int
+    name: str
+    property: dict
+    timestamp: str
+
+
+class AnalyticsListMatch(TypedDict):
     project_id: str
 
 
-@dataclass
-class AnalyticsCreateData:
+class AnalyticsCreateData(TypedDict):
     project_id: str
 
 
-@dataclass
-class Asset:
-    created_at: Optional[str] = None
-    id: Optional[str] = None
-    mime_type: Optional[str] = None
-    name: Optional[str] = None
-    project_id: Optional[str] = None
-    size: Optional[int] = None
-    tag: Optional[list] = None
-    type: Optional[str] = None
-    updated_at: Optional[str] = None
-    url: Optional[str] = None
+class Asset(TypedDict, total=False):
+    created_at: str
+    id: str
+    mime_type: str
+    name: str
+    project_id: str
+    size: int
+    tag: list
+    type: str
+    updated_at: str
+    url: str
 
 
-@dataclass
-class AssetLoadMatch:
+class AssetLoadMatch(TypedDict):
     id: str
     project_id: str
 
 
-@dataclass
-class AssetListMatch:
+class AssetListMatch(TypedDict):
     project_id: str
 
 
-@dataclass
-class AssetCreateData:
+class AssetCreateData(TypedDict):
     project_id: str
 
 
-@dataclass
-class AssetRemoveMatch:
+class AssetRemoveMatch(TypedDict):
     id: str
     project_id: str
 
 
-@dataclass
-class Build:
+class Build(TypedDict):
     configuration: str
     platform: str
     version: str
 
 
-@dataclass
-class BuildCreateData:
+class BuildCreateData(TypedDict):
     project_id: str
 
 
-@dataclass
-class Collaboration:
-    added_at: Optional[str] = None
-    email: Optional[str] = None
-    id: Optional[str] = None
-    last_active: Optional[str] = None
-    name: Optional[str] = None
-    role: Optional[str] = None
-    status: Optional[str] = None
-    user_id: Optional[str] = None
+class Collaboration(TypedDict, total=False):
+    added_at: str
+    email: str
+    id: str
+    last_active: str
+    name: str
+    role: str
+    status: str
+    user_id: str
 
 
-@dataclass
-class CollaborationListMatch:
+class CollaborationListMatch(TypedDict):
     project_id: str
 
 
-@dataclass
-class CollaborationRemoveMatch:
+class CollaborationRemoveMatch(TypedDict):
     project_id: str
     user_id: str
 
 
-@dataclass
-class Collaborator:
+class Collaborator(TypedDict):
     email: str
     role: str
 
 
-@dataclass
-class CollaboratorCreateData:
+class CollaboratorCreateData(TypedDict):
     project_id: str
 
 
-@dataclass
-class Deployment:
-    build_version: Optional[str] = None
-    completed_at: Optional[str] = None
-    configuration: Optional[str] = None
-    created_at: Optional[str] = None
-    deployment_url: Optional[str] = None
-    download_url: Optional[str] = None
-    environment: Optional[str] = None
-    id: Optional[str] = None
-    platform: Optional[str] = None
-    project_id: Optional[str] = None
-    release_note: Optional[str] = None
-    size: Optional[int] = None
-    status: Optional[str] = None
-    version: Optional[str] = None
+class Deployment(TypedDict, total=False):
+    build_version: str
+    completed_at: str
+    configuration: str
+    created_at: str
+    deployment_url: str
+    download_url: str
+    environment: str
+    id: str
+    platform: str
+    project_id: str
+    release_note: str
+    size: int
+    status: str
+    version: str
 
 
-@dataclass
-class DeploymentLoadMatch:
+class DeploymentLoadMatch(TypedDict):
     id: str
     project_id: str
 
 
-@dataclass
-class DeploymentListMatch:
+class DeploymentListMatch(TypedDict):
     project_id: str
 
 
-@dataclass
-class DeploymentCreateData:
+class DeploymentCreateData(TypedDict):
     project_id: str
 
 
-@dataclass
-class Project:
-    created_at: Optional[str] = None
-    description: Optional[str] = None
-    id: Optional[str] = None
-    name: Optional[str] = None
-    owner: Optional[dict] = None
-    setting: Optional[dict] = None
-    status: Optional[str] = None
-    updated_at: Optional[str] = None
+class Project(TypedDict, total=False):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    owner: dict
+    setting: dict
+    status: str
+    updated_at: str
 
 
-@dataclass
-class ProjectLoadMatch:
+class ProjectLoadMatch(TypedDict):
     id: str
 
 
-@dataclass
-class ProjectListMatch:
-    created_at: Optional[str] = None
-    description: Optional[str] = None
-    id: Optional[str] = None
-    name: Optional[str] = None
-    owner: Optional[dict] = None
-    setting: Optional[dict] = None
-    status: Optional[str] = None
-    updated_at: Optional[str] = None
+class ProjectListMatch(TypedDict, total=False):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    owner: dict
+    setting: dict
+    status: str
+    updated_at: str
 
 
-@dataclass
-class ProjectCreateData:
-    created_at: Optional[str] = None
-    description: Optional[str] = None
-    id: Optional[str] = None
-    name: Optional[str] = None
-    owner: Optional[dict] = None
-    setting: Optional[dict] = None
-    status: Optional[str] = None
-    updated_at: Optional[str] = None
+class ProjectCreateData(TypedDict, total=False):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    owner: dict
+    setting: dict
+    status: str
+    updated_at: str
 
 
-@dataclass
-class ProjectUpdateData:
+class ProjectUpdateData(TypedDict):
     id: str
 
 
-@dataclass
-class ProjectRemoveMatch:
+class ProjectRemoveMatch(TypedDict):
     id: str
 
 
-@dataclass
-class Test:
-    completed_at: Optional[str] = None
-    environment: Optional[str] = None
-    id: Optional[str] = None
-    name: Optional[str] = None
-    platform: Optional[str] = None
-    project_id: Optional[str] = None
-    result: Optional[dict] = None
-    started_at: Optional[str] = None
-    status: Optional[str] = None
-    test_suite: Optional[str] = None
+class Test(TypedDict, total=False):
+    completed_at: str
+    environment: str
+    id: str
+    name: str
+    platform: str
+    project_id: str
+    result: dict
+    started_at: str
+    status: str
+    test_suite: str
 
 
-@dataclass
-class TestLoadMatch:
+class TestLoadMatch(TypedDict):
     id: str
     project_id: str
 
 
-@dataclass
-class TestListMatch:
+class TestListMatch(TypedDict):
     project_id: str
 
 
-@dataclass
-class TestCreateData:
+class TestCreateData(TypedDict):
     project_id: str
-

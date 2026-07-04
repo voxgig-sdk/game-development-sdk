@@ -114,7 +114,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## AnalyticsEntity
 
 ```php
-$analytics = $client->analytics();
+$analytics = $client->Analytics();
 ```
 
 ### Fields
@@ -135,7 +135,7 @@ $analytics = $client->analytics();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->analytics()->create([
+$result = $client->Analytics()->create([
   "event_name" => /* `$STRING` */,
   "event_type" => /* `$STRING` */,
 ]);
@@ -146,7 +146,7 @@ $result = $client->analytics()->create([
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->analytics()->list([]);
+$results = $client->Analytics()->list([]);
 ```
 
 ### Common Methods
@@ -182,7 +182,7 @@ Return the entity name.
 ## AssetEntity
 
 ```php
-$asset = $client->asset();
+$asset = $client->Asset();
 ```
 
 ### Fields
@@ -207,7 +207,7 @@ $asset = $client->asset();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->asset()->create([
+$result = $client->Asset()->create([
 ]);
 ```
 
@@ -216,7 +216,7 @@ $result = $client->asset()->create([
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->asset()->list([]);
+$results = $client->Asset()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -224,7 +224,7 @@ $results = $client->asset()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->asset()->load(["id" => "asset_id"]);
+$result = $client->Asset()->load(["id" => "asset_id"]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -232,7 +232,7 @@ $result = $client->asset()->load(["id" => "asset_id"]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->asset()->remove(["id" => "asset_id"]);
+$result = $client->Asset()->remove(["id" => "asset_id"]);
 ```
 
 ### Common Methods
@@ -268,7 +268,7 @@ Return the entity name.
 ## BuildEntity
 
 ```php
-$build = $client->build();
+$build = $client->Build();
 ```
 
 ### Fields
@@ -286,7 +286,7 @@ $build = $client->build();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->build()->create([
+$result = $client->Build()->create([
   "configuration" => /* `$STRING` */,
   "platform" => /* `$STRING` */,
   "version" => /* `$STRING` */,
@@ -326,7 +326,7 @@ Return the entity name.
 ## CollaborationEntity
 
 ```php
-$collaboration = $client->collaboration();
+$collaboration = $client->Collaboration();
 ```
 
 ### Fields
@@ -349,7 +349,7 @@ $collaboration = $client->collaboration();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->collaboration()->list([]);
+$results = $client->Collaboration()->list([]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -357,7 +357,7 @@ $results = $client->collaboration()->list([]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->collaboration()->remove(["id" => "collaboration_id"]);
+$result = $client->Collaboration()->remove(["id" => "collaboration_id"]);
 ```
 
 ### Common Methods
@@ -393,7 +393,7 @@ Return the entity name.
 ## CollaboratorEntity
 
 ```php
-$collaborator = $client->collaborator();
+$collaborator = $client->Collaborator();
 ```
 
 ### Fields
@@ -410,7 +410,7 @@ $collaborator = $client->collaborator();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->collaborator()->create([
+$result = $client->Collaborator()->create([
   "email" => /* `$STRING` */,
   "role" => /* `$STRING` */,
 ]);
@@ -449,7 +449,7 @@ Return the entity name.
 ## DeploymentEntity
 
 ```php
-$deployment = $client->deployment();
+$deployment = $client->Deployment();
 ```
 
 ### Fields
@@ -497,7 +497,7 @@ $deployment = $client->deployment();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->deployment()->create([
+$result = $client->Deployment()->create([
 ]);
 ```
 
@@ -506,7 +506,7 @@ $result = $client->deployment()->create([
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->deployment()->list([]);
+$results = $client->Deployment()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -514,7 +514,7 @@ $results = $client->deployment()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->deployment()->load(["id" => "deployment_id"]);
+$result = $client->Deployment()->load(["id" => "deployment_id"]);
 ```
 
 ### Common Methods
@@ -550,7 +550,7 @@ Return the entity name.
 ## ProjectEntity
 
 ```php
-$project = $client->project();
+$project = $client->Project();
 ```
 
 ### Fields
@@ -586,7 +586,7 @@ $project = $client->project();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->project()->create([
+$result = $client->Project()->create([
 ]);
 ```
 
@@ -595,7 +595,7 @@ $result = $client->project()->create([
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->project()->list([]);
+$results = $client->Project()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -603,7 +603,7 @@ $results = $client->project()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->project()->load(["id" => "project_id"]);
+$result = $client->Project()->load(["id" => "project_id"]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -611,7 +611,7 @@ $result = $client->project()->load(["id" => "project_id"]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->project()->remove(["id" => "project_id"]);
+$result = $client->Project()->remove(["id" => "project_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -619,7 +619,7 @@ $result = $client->project()->remove(["id" => "project_id"]);
 Update an existing entity. The data must include the entity `id`. Throws on error.
 
 ```php
-$result = $client->project()->update([
+$result = $client->Project()->update([
   "id" => "project_id",
   // Fields to update
 ]);
@@ -658,7 +658,7 @@ Return the entity name.
 ## TestEntity
 
 ```php
-$test = $client->test();
+$test = $client->Test();
 ```
 
 ### Fields
@@ -698,7 +698,7 @@ $test = $client->test();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->test()->create([
+$result = $client->Test()->create([
 ]);
 ```
 
@@ -707,7 +707,7 @@ $result = $client->test()->create([
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->test()->list([]);
+$results = $client->Test()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -715,7 +715,7 @@ $results = $client->test()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->test()->load(["id" => "test_id"]);
+$result = $client->Test()->load(["id" => "test_id"]);
 ```
 
 ### Common Methods

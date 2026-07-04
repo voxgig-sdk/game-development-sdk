@@ -244,8 +244,9 @@ end
 
 
 
--- Idiomatic facade: client:analytics():list() / client:analytics():load({ id = ... })
-function GameDevelopmentSDK:analytics(data)
+-- Idiomatic facade: client:Analytics():list() / client:Analytics():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Analytics(data)
   local EntityMod = require("entity.analytics_entity")
   if data == nil then
     if self._analytics == nil then
@@ -256,15 +257,10 @@ function GameDevelopmentSDK:analytics(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:analytics() instead.
-function GameDevelopmentSDK:Analytics(data)
-  local EntityMod = require("entity.analytics_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:asset():list() / client:asset():load({ id = ... })
-function GameDevelopmentSDK:asset(data)
+-- Idiomatic facade: client:Asset():list() / client:Asset():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Asset(data)
   local EntityMod = require("entity.asset_entity")
   if data == nil then
     if self._asset == nil then
@@ -275,15 +271,10 @@ function GameDevelopmentSDK:asset(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:asset() instead.
-function GameDevelopmentSDK:Asset(data)
-  local EntityMod = require("entity.asset_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:build():list() / client:build():load({ id = ... })
-function GameDevelopmentSDK:build(data)
+-- Idiomatic facade: client:Build():list() / client:Build():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Build(data)
   local EntityMod = require("entity.build_entity")
   if data == nil then
     if self._build == nil then
@@ -294,15 +285,10 @@ function GameDevelopmentSDK:build(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:build() instead.
-function GameDevelopmentSDK:Build(data)
-  local EntityMod = require("entity.build_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:collaboration():list() / client:collaboration():load({ id = ... })
-function GameDevelopmentSDK:collaboration(data)
+-- Idiomatic facade: client:Collaboration():list() / client:Collaboration():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Collaboration(data)
   local EntityMod = require("entity.collaboration_entity")
   if data == nil then
     if self._collaboration == nil then
@@ -313,15 +299,10 @@ function GameDevelopmentSDK:collaboration(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:collaboration() instead.
-function GameDevelopmentSDK:Collaboration(data)
-  local EntityMod = require("entity.collaboration_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:collaborator():list() / client:collaborator():load({ id = ... })
-function GameDevelopmentSDK:collaborator(data)
+-- Idiomatic facade: client:Collaborator():list() / client:Collaborator():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Collaborator(data)
   local EntityMod = require("entity.collaborator_entity")
   if data == nil then
     if self._collaborator == nil then
@@ -332,15 +313,10 @@ function GameDevelopmentSDK:collaborator(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:collaborator() instead.
-function GameDevelopmentSDK:Collaborator(data)
-  local EntityMod = require("entity.collaborator_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:deployment():list() / client:deployment():load({ id = ... })
-function GameDevelopmentSDK:deployment(data)
+-- Idiomatic facade: client:Deployment():list() / client:Deployment():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Deployment(data)
   local EntityMod = require("entity.deployment_entity")
   if data == nil then
     if self._deployment == nil then
@@ -351,15 +327,10 @@ function GameDevelopmentSDK:deployment(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:deployment() instead.
-function GameDevelopmentSDK:Deployment(data)
-  local EntityMod = require("entity.deployment_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:project():list() / client:project():load({ id = ... })
-function GameDevelopmentSDK:project(data)
+-- Idiomatic facade: client:Project():list() / client:Project():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Project(data)
   local EntityMod = require("entity.project_entity")
   if data == nil then
     if self._project == nil then
@@ -370,15 +341,10 @@ function GameDevelopmentSDK:project(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:project() instead.
-function GameDevelopmentSDK:Project(data)
-  local EntityMod = require("entity.project_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:test():list() / client:test():load({ id = ... })
-function GameDevelopmentSDK:test(data)
+-- Idiomatic facade: client:Test():list() / client:Test():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function GameDevelopmentSDK:Test(data)
   local EntityMod = require("entity.test_entity")
   if data == nil then
     if self._test == nil then
@@ -386,12 +352,6 @@ function GameDevelopmentSDK:test(data)
     end
     return self._test
   end
-  return EntityMod.new(self, data)
-end
-
--- Deprecated: use client:test() instead.
-function GameDevelopmentSDK:Test(data)
-  local EntityMod = require("entity.test_entity")
   return EntityMod.new(self, data)
 end
 

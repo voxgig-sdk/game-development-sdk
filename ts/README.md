@@ -30,23 +30,23 @@ const client = new GameDevelopmentSDK({
 })
 ```
 
-### 2. List analyticss
+### 2. List analytics records
+
+`list()` resolves to an array of Analytics objects — iterate it directly:
 
 ```ts
-const result = await client.analytics.list()
+const analyticss = await client.Analytics().list()
 
-if (result.ok) {
-  for (const item of result.data) {
-    console.log(item.id, item.name)
-  }
+for (const analytics of analyticss) {
+  console.log(analytics)
 }
 ```
 
 ### 4. Create, update, and remove
 
 ```ts
-// Create
-const created = await client.analytics.create({
+// Create — returns the created Analytics
+const created = await client.Analytics().create({
   name: 'Example',
 })
 
@@ -66,6 +66,9 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
+if (result instanceof Error) {
+  throw result
+}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -94,9 +97,9 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = GameDevelopmentSDK.test()
 
-const result = await client.analytics.load({ id: 'test01' })
-// result.ok === true
-// result.data contains mock response data
+const analytics = await client.Analytics().load({ id: 'test01' })
+// analytics is a bare entity populated with mock response data
+console.log(analytics)
 ```
 
 You can also use the instance method:
@@ -111,7 +114,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.analytics
+const entity = client.Analytics()
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -193,8 +196,8 @@ new GameDevelopmentSDK(options?: {
 | `utility()` | `Utility` | Deep copy of the SDK utility object. |
 | `prepare(fetchargs?)` | `Promise<FetchDef>` | Build an HTTP request definition without sending it. |
 | `direct(fetchargs?)` | `Promise<DirectResult>` | Build and send an HTTP request. |
-| `Analytics(data?)` | `AnalyticsEntity` | Create a Analytics entity instance. |
-| `Asset(data?)` | `AssetEntity` | Create a Asset entity instance. |
+| `Analytics(data?)` | `AnalyticsEntity` | Create an Analytics entity instance. |
+| `Asset(data?)` | `AssetEntity` | Create an Asset entity instance. |
 | `Build(data?)` | `BuildEntity` | Create a Build entity instance. |
 | `Collaboration(data?)` | `CollaborationEntity` | Create a Collaboration entity instance. |
 | `Collaborator(data?)` | `CollaboratorEntity` | Create a Collaborator entity instance. |
@@ -217,29 +220,30 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `load(reqmatch?, ctrl?): Promise<Result>` | Load a single entity by match criteria. |
-| `list` | `list(reqmatch?, ctrl?): Promise<Result>` | List entities matching the criteria. |
-| `create` | `create(reqdata?, ctrl?): Promise<Result>` | Create a new entity. |
-| `update` | `update(reqdata?, ctrl?): Promise<Result>` | Update an existing entity. |
-| `remove` | `remove(reqmatch?, ctrl?): Promise<Result>` | Remove an entity. |
+| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |
+| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |
+| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
+| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |
+| `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |
 | `data` | `data(data?): any` | Get or set entity data. |
 | `match` | `match(match?): any` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
 | `client` | `client(): GameDevelopmentSDK` | Return the parent SDK client. |
 | `entopts` | `entopts(): object` | Return a copy of the entity options. |
 
-#### Result shape
+#### Return values
 
-All entity operations return a Result object:
+Entity operations resolve to the entity data directly — there is no
+result envelope:
 
-```ts
-{
-  ok: boolean      // true if the HTTP status is 2xx
-  status: number   // HTTP status code
-  headers: object  // response headers
-  data: any        // parsed JSON response body
-}
-```
+- `load`, `create` and `update` resolve to a single entity object.
+- `list` resolves to an **array** of entity objects (iterate it directly;
+  there is no `.data` and no `.ok`).
+- `remove` resolves to `void`.
+
+On a failed request these methods **throw**, so wrap calls in
+`try`/`catch` to handle errors. Only `direct()` returns the result
+envelope described below.
 
 ### DirectResult shape
 
@@ -411,7 +415,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.analytics`
+Create an instance: `const analytics = client.Analytics()`
 
 #### Operations
 
@@ -434,13 +438,13 @@ Create an instance: `const analytics = client.analytics`
 #### Example: List
 
 ```ts
-const analyticss = await client.analytics.list()
+const analyticss = await client.Analytics().list()
 ```
 
 #### Example: Create
 
 ```ts
-const analytics = await client.analytics.create({
+const analytics = await client.Analytics().create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -449,7 +453,7 @@ const analytics = await client.analytics.create({
 
 ### Asset
 
-Create an instance: `const asset = client.asset`
+Create an instance: `const asset = client.Asset()`
 
 #### Operations
 
@@ -478,26 +482,26 @@ Create an instance: `const asset = client.asset`
 #### Example: Load
 
 ```ts
-const asset = await client.asset.load({ id: 'asset_id' })
+const asset = await client.Asset().load({ id: 'asset_id' })
 ```
 
 #### Example: List
 
 ```ts
-const assets = await client.asset.list()
+const assets = await client.Asset().list()
 ```
 
 #### Example: Create
 
 ```ts
-const asset = await client.asset.create({
+const asset = await client.Asset().create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.build`
+Create an instance: `const build = client.Build()`
 
 #### Operations
 
@@ -516,7 +520,7 @@ Create an instance: `const build = client.build`
 #### Example: Create
 
 ```ts
-const build = await client.build.create({
+const build = await client.Build().create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -526,7 +530,7 @@ const build = await client.build.create({
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.collaboration`
+Create an instance: `const collaboration = client.Collaboration()`
 
 #### Operations
 
@@ -551,13 +555,13 @@ Create an instance: `const collaboration = client.collaboration`
 #### Example: List
 
 ```ts
-const collaborations = await client.collaboration.list()
+const collaborations = await client.Collaboration().list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.collaborator`
+Create an instance: `const collaborator = client.Collaborator()`
 
 #### Operations
 
@@ -575,7 +579,7 @@ Create an instance: `const collaborator = client.collaborator`
 #### Example: Create
 
 ```ts
-const collaborator = await client.collaborator.create({
+const collaborator = await client.Collaborator().create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -584,7 +588,7 @@ const collaborator = await client.collaborator.create({
 
 ### Deployment
 
-Create an instance: `const deployment = client.deployment`
+Create an instance: `const deployment = client.Deployment()`
 
 #### Operations
 
@@ -616,26 +620,26 @@ Create an instance: `const deployment = client.deployment`
 #### Example: Load
 
 ```ts
-const deployment = await client.deployment.load({ id: 'deployment_id' })
+const deployment = await client.Deployment().load({ id: 'deployment_id' })
 ```
 
 #### Example: List
 
 ```ts
-const deployments = await client.deployment.list()
+const deployments = await client.Deployment().list()
 ```
 
 #### Example: Create
 
 ```ts
-const deployment = await client.deployment.create({
+const deployment = await client.Deployment().create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.project`
+Create an instance: `const project = client.Project()`
 
 #### Operations
 
@@ -663,26 +667,26 @@ Create an instance: `const project = client.project`
 #### Example: Load
 
 ```ts
-const project = await client.project.load({ id: 'project_id' })
+const project = await client.Project().load({ id: 'project_id' })
 ```
 
 #### Example: List
 
 ```ts
-const projects = await client.project.list()
+const projects = await client.Project().list()
 ```
 
 #### Example: Create
 
 ```ts
-const project = await client.project.create({
+const project = await client.Project().create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.test`
+Create an instance: `const test = client.Test()`
 
 #### Operations
 
@@ -710,19 +714,19 @@ Create an instance: `const test = client.test`
 #### Example: Load
 
 ```ts
-const test = await client.test.load({ id: 'test_id' })
+const test = await client.Test().load({ id: 'test_id' })
 ```
 
 #### Example: List
 
 ```ts
-const tests = await client.test.list()
+const tests = await client.Test().list()
 ```
 
 #### Example: Create
 
 ```ts
-const test = await client.test.create({
+const test = await client.Test().create({
 })
 ```
 
@@ -794,7 +798,7 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const analytics = client.analytics
+const analytics = client.Analytics()
 await analytics.load({ id: "example_id" })
 
 // analytics.data() now returns the loaded analytics data

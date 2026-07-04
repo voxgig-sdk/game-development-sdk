@@ -30,16 +30,14 @@ client = GameDevelopmentSDK.new({
 })
 ```
 
-### 2. List analyticss
+### 2. List analytics records
 
 ```ruby
 begin
-  result = client.analytics.list
-  if result.is_a?(Array)
-    result.each do |item|
-      d = item.data_get
-      puts "#{d["id"]} #{d["name"]}"
-    end
+  # list returns an Array of Analytics records — iterate directly.
+  analyticss = client.Analytics.list
+  analyticss.each do |item|
+    puts "#{item["id"]} #{item["name"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -49,8 +47,8 @@ end
 ### 4. Create, update, and remove
 
 ```ruby
-# Create
-created = client.analytics.create({ "name" => "Example" })
+# create returns the bare created Analytics record.
+created = client.Analytics.create({ "name" => "Example" })
 
 ```
 
@@ -95,13 +93,17 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = GameDevelopmentSDK.test
+client = GameDevelopmentSDK.test({
+  "entity" => { "analytics" => { "test01" => { "id" => "test01" } } },
+})
 
-result = client.analytics.load({ "id" => "test01" })
-# result contains mock response data
+# load returns the bare mock record (raises on error).
+analytics = client.Analytics.load({ "id" => "test01" })
+puts analytics
 ```
 
 ### Use a custom fetch function
@@ -179,8 +181,8 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `get_utility` | `() -> Utility` | Copy of the SDK utility object. |
 | `prepare` | `(fetchargs) -> Hash` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> Hash` | Build and send an HTTP request. Returns a result hash (`result["ok"]`); does not raise. |
-| `Analytics` | `(data) -> AnalyticsEntity` | Create a Analytics entity instance. |
-| `Asset` | `(data) -> AssetEntity` | Create a Asset entity instance. |
+| `Analytics` | `(data) -> AnalyticsEntity` | Create an Analytics entity instance. |
+| `Asset` | `(data) -> AssetEntity` | Create an Asset entity instance. |
 | `Build` | `(data) -> BuildEntity` | Create a Build entity instance. |
 | `Collaboration` | `(data) -> CollaborationEntity` | Create a Collaboration entity instance. |
 | `Collaborator` | `(data) -> CollaboratorEntity` | Create a Collaborator entity instance. |
@@ -365,7 +367,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.analytics`
+Create an instance: `analytics = client.Analytics`
 
 #### Operations
 
@@ -387,23 +389,24 @@ Create an instance: `const analytics = client.analytics`
 
 #### Example: List
 
-```ts
-const analyticss = await client.analytics.list()
+```ruby
+# list returns an Array of Analytics records (raises on error).
+analyticss = client.Analytics.list
 ```
 
 #### Example: Create
 
-```ts
-const analytics = await client.analytics.create({
-  event_name: /* `$STRING` */,
-  event_type: /* `$STRING` */,
+```ruby
+analytics = client.Analytics.create({
+  "event_name" => nil, # `$STRING`
+  "event_type" => nil, # `$STRING`
 })
 ```
 
 
 ### Asset
 
-Create an instance: `const asset = client.asset`
+Create an instance: `asset = client.Asset`
 
 #### Operations
 
@@ -431,27 +434,29 @@ Create an instance: `const asset = client.asset`
 
 #### Example: Load
 
-```ts
-const asset = await client.asset.load({ id: 'asset_id' })
+```ruby
+# load returns the bare Asset record (raises on error).
+asset = client.Asset.load({ "id" => "asset_id" })
 ```
 
 #### Example: List
 
-```ts
-const assets = await client.asset.list()
+```ruby
+# list returns an Array of Asset records (raises on error).
+assets = client.Asset.list
 ```
 
 #### Example: Create
 
-```ts
-const asset = await client.asset.create({
+```ruby
+asset = client.Asset.create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.build`
+Create an instance: `build = client.Build`
 
 #### Operations
 
@@ -469,18 +474,18 @@ Create an instance: `const build = client.build`
 
 #### Example: Create
 
-```ts
-const build = await client.build.create({
-  configuration: /* `$STRING` */,
-  platform: /* `$STRING` */,
-  version: /* `$STRING` */,
+```ruby
+build = client.Build.create({
+  "configuration" => nil, # `$STRING`
+  "platform" => nil, # `$STRING`
+  "version" => nil, # `$STRING`
 })
 ```
 
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.collaboration`
+Create an instance: `collaboration = client.Collaboration`
 
 #### Operations
 
@@ -504,14 +509,15 @@ Create an instance: `const collaboration = client.collaboration`
 
 #### Example: List
 
-```ts
-const collaborations = await client.collaboration.list()
+```ruby
+# list returns an Array of Collaboration records (raises on error).
+collaborations = client.Collaboration.list
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.collaborator`
+Create an instance: `collaborator = client.Collaborator`
 
 #### Operations
 
@@ -528,17 +534,17 @@ Create an instance: `const collaborator = client.collaborator`
 
 #### Example: Create
 
-```ts
-const collaborator = await client.collaborator.create({
-  email: /* `$STRING` */,
-  role: /* `$STRING` */,
+```ruby
+collaborator = client.Collaborator.create({
+  "email" => nil, # `$STRING`
+  "role" => nil, # `$STRING`
 })
 ```
 
 
 ### Deployment
 
-Create an instance: `const deployment = client.deployment`
+Create an instance: `deployment = client.Deployment`
 
 #### Operations
 
@@ -569,27 +575,29 @@ Create an instance: `const deployment = client.deployment`
 
 #### Example: Load
 
-```ts
-const deployment = await client.deployment.load({ id: 'deployment_id' })
+```ruby
+# load returns the bare Deployment record (raises on error).
+deployment = client.Deployment.load({ "id" => "deployment_id" })
 ```
 
 #### Example: List
 
-```ts
-const deployments = await client.deployment.list()
+```ruby
+# list returns an Array of Deployment records (raises on error).
+deployments = client.Deployment.list
 ```
 
 #### Example: Create
 
-```ts
-const deployment = await client.deployment.create({
+```ruby
+deployment = client.Deployment.create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.project`
+Create an instance: `project = client.Project`
 
 #### Operations
 
@@ -616,27 +624,29 @@ Create an instance: `const project = client.project`
 
 #### Example: Load
 
-```ts
-const project = await client.project.load({ id: 'project_id' })
+```ruby
+# load returns the bare Project record (raises on error).
+project = client.Project.load({ "id" => "project_id" })
 ```
 
 #### Example: List
 
-```ts
-const projects = await client.project.list()
+```ruby
+# list returns an Array of Project records (raises on error).
+projects = client.Project.list
 ```
 
 #### Example: Create
 
-```ts
-const project = await client.project.create({
+```ruby
+project = client.Project.create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.test`
+Create an instance: `test = client.Test`
 
 #### Operations
 
@@ -663,20 +673,22 @@ Create an instance: `const test = client.test`
 
 #### Example: Load
 
-```ts
-const test = await client.test.load({ id: 'test_id' })
+```ruby
+# load returns the bare Test record (raises on error).
+test = client.Test.load({ "id" => "test_id" })
 ```
 
 #### Example: List
 
-```ts
-const tests = await client.test.list()
+```ruby
+# list returns an Array of Test records (raises on error).
+tests = client.Test.list
 ```
 
 #### Example: Create
 
-```ts
-const test = await client.test.create({
+```ruby
+test = client.Test.create({
 })
 ```
 
@@ -752,7 +764,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-analytics = client.analytics
+analytics = client.Analytics
 analytics.load({ "id" => "example_id" })
 
 # analytics.data_get now returns the loaded analytics data

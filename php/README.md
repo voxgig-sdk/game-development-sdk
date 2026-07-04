@@ -31,18 +31,16 @@ $client = new GameDevelopmentSDK([
 ]);
 ```
 
-### 2. List analyticss
+### 2. List analytics records
 
 ```php
 try {
-    $result = $client->analytics()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of Analytics records — iterate directly.
+    $analyticss = $client->Analytics()->list();
+    foreach ($analyticss as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -50,8 +48,8 @@ try {
 ### 4. Create, update, and remove
 
 ```php
-// Create
-$created = $client->analytics()->create(["name" => "Example"]);
+// create() returns the bare created Analytics record.
+$created = $client->Analytics()->create(["name" => "Example"]);
 
 ```
 
@@ -96,13 +94,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = GameDevelopmentSDK::test();
+$client = GameDevelopmentSDK::test([
+    "entity" => ["analytics" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->analytics()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$analytics = $client->Analytics()->load(["id" => "test01"]);
+print_r($analytics);
 ```
 
 ### Use a custom fetch function
@@ -183,8 +185,8 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `get_utility` | `(): Utility` | Copy of the SDK utility object. |
 | `prepare` | `(array $fetchargs): array` | Build an HTTP request definition without sending. |
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
-| `Analytics` | `($data): AnalyticsEntity` | Create a Analytics entity instance. |
-| `Asset` | `($data): AssetEntity` | Create a Asset entity instance. |
+| `Analytics` | `($data): AnalyticsEntity` | Create an Analytics entity instance. |
+| `Asset` | `($data): AssetEntity` | Create an Asset entity instance. |
 | `Build` | `($data): BuildEntity` | Create a Build entity instance. |
 | `Collaboration` | `($data): CollaborationEntity` | Create a Collaboration entity instance. |
 | `Collaborator` | `($data): CollaboratorEntity` | Create a Collaborator entity instance. |
@@ -370,7 +372,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.analytics`
+Create an instance: `$analytics = $client->Analytics();`
 
 #### Operations
 
@@ -392,23 +394,24 @@ Create an instance: `const analytics = client.analytics`
 
 #### Example: List
 
-```ts
-const analyticss = await client.analytics.list()
+```php
+// list() returns an array of Analytics records (throws on error).
+$analyticss = $client->Analytics()->list();
 ```
 
 #### Example: Create
 
-```ts
-const analytics = await client.analytics.create({
-  event_name: /* `$STRING` */,
-  event_type: /* `$STRING` */,
-})
+```php
+$analytics = $client->Analytics()->create([
+    "event_name" => null, // `$STRING`
+    "event_type" => null, // `$STRING`
+]);
 ```
 
 
 ### Asset
 
-Create an instance: `const asset = client.asset`
+Create an instance: `$asset = $client->Asset();`
 
 #### Operations
 
@@ -436,27 +439,29 @@ Create an instance: `const asset = client.asset`
 
 #### Example: Load
 
-```ts
-const asset = await client.asset.load({ id: 'asset_id' })
+```php
+// load() returns the bare Asset record (throws on error).
+$asset = $client->Asset()->load(["id" => "asset_id"]);
 ```
 
 #### Example: List
 
-```ts
-const assets = await client.asset.list()
+```php
+// list() returns an array of Asset records (throws on error).
+$assets = $client->Asset()->list();
 ```
 
 #### Example: Create
 
-```ts
-const asset = await client.asset.create({
-})
+```php
+$asset = $client->Asset()->create([
+]);
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.build`
+Create an instance: `$build = $client->Build();`
 
 #### Operations
 
@@ -474,18 +479,18 @@ Create an instance: `const build = client.build`
 
 #### Example: Create
 
-```ts
-const build = await client.build.create({
-  configuration: /* `$STRING` */,
-  platform: /* `$STRING` */,
-  version: /* `$STRING` */,
-})
+```php
+$build = $client->Build()->create([
+    "configuration" => null, // `$STRING`
+    "platform" => null, // `$STRING`
+    "version" => null, // `$STRING`
+]);
 ```
 
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.collaboration`
+Create an instance: `$collaboration = $client->Collaboration();`
 
 #### Operations
 
@@ -509,14 +514,15 @@ Create an instance: `const collaboration = client.collaboration`
 
 #### Example: List
 
-```ts
-const collaborations = await client.collaboration.list()
+```php
+// list() returns an array of Collaboration records (throws on error).
+$collaborations = $client->Collaboration()->list();
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.collaborator`
+Create an instance: `$collaborator = $client->Collaborator();`
 
 #### Operations
 
@@ -533,17 +539,17 @@ Create an instance: `const collaborator = client.collaborator`
 
 #### Example: Create
 
-```ts
-const collaborator = await client.collaborator.create({
-  email: /* `$STRING` */,
-  role: /* `$STRING` */,
-})
+```php
+$collaborator = $client->Collaborator()->create([
+    "email" => null, // `$STRING`
+    "role" => null, // `$STRING`
+]);
 ```
 
 
 ### Deployment
 
-Create an instance: `const deployment = client.deployment`
+Create an instance: `$deployment = $client->Deployment();`
 
 #### Operations
 
@@ -574,27 +580,29 @@ Create an instance: `const deployment = client.deployment`
 
 #### Example: Load
 
-```ts
-const deployment = await client.deployment.load({ id: 'deployment_id' })
+```php
+// load() returns the bare Deployment record (throws on error).
+$deployment = $client->Deployment()->load(["id" => "deployment_id"]);
 ```
 
 #### Example: List
 
-```ts
-const deployments = await client.deployment.list()
+```php
+// list() returns an array of Deployment records (throws on error).
+$deployments = $client->Deployment()->list();
 ```
 
 #### Example: Create
 
-```ts
-const deployment = await client.deployment.create({
-})
+```php
+$deployment = $client->Deployment()->create([
+]);
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.project`
+Create an instance: `$project = $client->Project();`
 
 #### Operations
 
@@ -621,27 +629,29 @@ Create an instance: `const project = client.project`
 
 #### Example: Load
 
-```ts
-const project = await client.project.load({ id: 'project_id' })
+```php
+// load() returns the bare Project record (throws on error).
+$project = $client->Project()->load(["id" => "project_id"]);
 ```
 
 #### Example: List
 
-```ts
-const projects = await client.project.list()
+```php
+// list() returns an array of Project records (throws on error).
+$projects = $client->Project()->list();
 ```
 
 #### Example: Create
 
-```ts
-const project = await client.project.create({
-})
+```php
+$project = $client->Project()->create([
+]);
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.test`
+Create an instance: `$test = $client->Test();`
 
 #### Operations
 
@@ -668,21 +678,23 @@ Create an instance: `const test = client.test`
 
 #### Example: Load
 
-```ts
-const test = await client.test.load({ id: 'test_id' })
+```php
+// load() returns the bare Test record (throws on error).
+$test = $client->Test()->load(["id" => "test_id"]);
 ```
 
 #### Example: List
 
-```ts
-const tests = await client.test.list()
+```php
+// list() returns an array of Test records (throws on error).
+$tests = $client->Test()->list();
 ```
 
 #### Example: Create
 
-```ts
-const test = await client.test.create({
-})
+```php
+$test = $client->Test()->create([
+]);
 ```
 
 
@@ -757,7 +769,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$analytics = $client->analytics();
+$analytics = $client->Analytics();
 $analytics->load(["id" => "example_id"]);
 
 // $analytics->dataGet() now returns the loaded analytics data

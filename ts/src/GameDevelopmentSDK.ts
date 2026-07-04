@@ -211,112 +211,56 @@ class GameDevelopmentSDK {
 
 
 
-  _analytics?: AnalyticsEntity
-
-  // Idiomatic facade: `client.analytics.list()` / `client.analytics.load({ id })`.
-  get analytics(): AnalyticsEntity {
-    return (this._analytics ??= new AnalyticsEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.analytics` instead. */
+  // Entity access: `client.Analytics().list()` / `client.Analytics().load({ id })`.
   Analytics(data?: any) {
     const self = this
     return new AnalyticsEntity(self,data)
   }
 
 
-  _asset?: AssetEntity
-
-  // Idiomatic facade: `client.asset.list()` / `client.asset.load({ id })`.
-  get asset(): AssetEntity {
-    return (this._asset ??= new AssetEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.asset` instead. */
+  // Entity access: `client.Asset().list()` / `client.Asset().load({ id })`.
   Asset(data?: any) {
     const self = this
     return new AssetEntity(self,data)
   }
 
 
-  _build?: BuildEntity
-
-  // Idiomatic facade: `client.build.list()` / `client.build.load({ id })`.
-  get build(): BuildEntity {
-    return (this._build ??= new BuildEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.build` instead. */
+  // Entity access: `client.Build().list()` / `client.Build().load({ id })`.
   Build(data?: any) {
     const self = this
     return new BuildEntity(self,data)
   }
 
 
-  _collaboration?: CollaborationEntity
-
-  // Idiomatic facade: `client.collaboration.list()` / `client.collaboration.load({ id })`.
-  get collaboration(): CollaborationEntity {
-    return (this._collaboration ??= new CollaborationEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.collaboration` instead. */
+  // Entity access: `client.Collaboration().list()` / `client.Collaboration().load({ id })`.
   Collaboration(data?: any) {
     const self = this
     return new CollaborationEntity(self,data)
   }
 
 
-  _collaborator?: CollaboratorEntity
-
-  // Idiomatic facade: `client.collaborator.list()` / `client.collaborator.load({ id })`.
-  get collaborator(): CollaboratorEntity {
-    return (this._collaborator ??= new CollaboratorEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.collaborator` instead. */
+  // Entity access: `client.Collaborator().list()` / `client.Collaborator().load({ id })`.
   Collaborator(data?: any) {
     const self = this
     return new CollaboratorEntity(self,data)
   }
 
 
-  _deployment?: DeploymentEntity
-
-  // Idiomatic facade: `client.deployment.list()` / `client.deployment.load({ id })`.
-  get deployment(): DeploymentEntity {
-    return (this._deployment ??= new DeploymentEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.deployment` instead. */
+  // Entity access: `client.Deployment().list()` / `client.Deployment().load({ id })`.
   Deployment(data?: any) {
     const self = this
     return new DeploymentEntity(self,data)
   }
 
 
-  _project?: ProjectEntity
-
-  // Idiomatic facade: `client.project.list()` / `client.project.load({ id })`.
-  get project(): ProjectEntity {
-    return (this._project ??= new ProjectEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.project` instead. */
+  // Entity access: `client.Project().list()` / `client.Project().load({ id })`.
   Project(data?: any) {
     const self = this
     return new ProjectEntity(self,data)
   }
 
 
-  _test?: TestEntity
-
-  // Idiomatic facade: `client.test.list()` / `client.test.load({ id })`.
-  get test(): TestEntity {
-    return (this._test ??= new TestEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.test` instead. */
+  // Entity access: `client.Test().list()` / `client.Test().load({ id })`.
   Test(data?: any) {
     const self = this
     return new TestEntity(self,data)

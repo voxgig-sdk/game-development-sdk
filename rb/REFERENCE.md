@@ -115,7 +115,7 @@ same parameters as `direct()`. Raises on error.
 ## AnalyticsEntity
 
 ```ruby
-analytics = client.analytics
+analytics = client.Analytics
 ```
 
 ### Fields
@@ -136,7 +136,7 @@ analytics = client.analytics
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.analytics.create({
+result = client.Analytics.create({
   "event_name" => # `$STRING`,
   "event_type" => # `$STRING`,
 })
@@ -147,7 +147,7 @@ result = client.analytics.create({
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.analytics.list(nil)
+results = client.Analytics.list(nil)
 ```
 
 ### Common Methods
@@ -183,7 +183,7 @@ Return the entity name.
 ## AssetEntity
 
 ```ruby
-asset = client.asset
+asset = client.Asset
 ```
 
 ### Fields
@@ -208,7 +208,7 @@ asset = client.asset
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.asset.create({
+result = client.Asset.create({
 })
 ```
 
@@ -217,7 +217,7 @@ result = client.asset.create({
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.asset.list(nil)
+results = client.Asset.list(nil)
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -225,7 +225,7 @@ results = client.asset.list(nil)
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.asset.load({ "id" => "asset_id" })
+result = client.Asset.load({ "id" => "asset_id" })
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -233,7 +233,7 @@ result = client.asset.load({ "id" => "asset_id" })
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.asset.remove({ "id" => "asset_id" })
+result = client.Asset.remove({ "id" => "asset_id" })
 ```
 
 ### Common Methods
@@ -269,7 +269,7 @@ Return the entity name.
 ## BuildEntity
 
 ```ruby
-build = client.build
+build = client.Build
 ```
 
 ### Fields
@@ -287,7 +287,7 @@ build = client.build
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.build.create({
+result = client.Build.create({
   "configuration" => # `$STRING`,
   "platform" => # `$STRING`,
   "version" => # `$STRING`,
@@ -327,7 +327,7 @@ Return the entity name.
 ## CollaborationEntity
 
 ```ruby
-collaboration = client.collaboration
+collaboration = client.Collaboration
 ```
 
 ### Fields
@@ -350,7 +350,7 @@ collaboration = client.collaboration
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.collaboration.list(nil)
+results = client.Collaboration.list(nil)
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -358,7 +358,7 @@ results = client.collaboration.list(nil)
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.collaboration.remove({ "id" => "collaboration_id" })
+result = client.Collaboration.remove({ "id" => "collaboration_id" })
 ```
 
 ### Common Methods
@@ -394,7 +394,7 @@ Return the entity name.
 ## CollaboratorEntity
 
 ```ruby
-collaborator = client.collaborator
+collaborator = client.Collaborator
 ```
 
 ### Fields
@@ -411,7 +411,7 @@ collaborator = client.collaborator
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.collaborator.create({
+result = client.Collaborator.create({
   "email" => # `$STRING`,
   "role" => # `$STRING`,
 })
@@ -450,7 +450,7 @@ Return the entity name.
 ## DeploymentEntity
 
 ```ruby
-deployment = client.deployment
+deployment = client.Deployment
 ```
 
 ### Fields
@@ -498,7 +498,7 @@ deployment = client.deployment
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.deployment.create({
+result = client.Deployment.create({
 })
 ```
 
@@ -507,7 +507,7 @@ result = client.deployment.create({
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.deployment.list(nil)
+results = client.Deployment.list(nil)
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -515,7 +515,7 @@ results = client.deployment.list(nil)
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.deployment.load({ "id" => "deployment_id" })
+result = client.Deployment.load({ "id" => "deployment_id" })
 ```
 
 ### Common Methods
@@ -551,7 +551,7 @@ Return the entity name.
 ## ProjectEntity
 
 ```ruby
-project = client.project
+project = client.Project
 ```
 
 ### Fields
@@ -587,7 +587,7 @@ project = client.project
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.project.create({
+result = client.Project.create({
 })
 ```
 
@@ -596,7 +596,7 @@ result = client.project.create({
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.project.list(nil)
+results = client.Project.list(nil)
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -604,7 +604,7 @@ results = client.project.list(nil)
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.project.load({ "id" => "project_id" })
+result = client.Project.load({ "id" => "project_id" })
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -612,7 +612,7 @@ result = client.project.load({ "id" => "project_id" })
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.project.remove({ "id" => "project_id" })
+result = client.Project.remove({ "id" => "project_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -620,7 +620,7 @@ result = client.project.remove({ "id" => "project_id" })
 Update an existing entity. The data must include the entity `id`. Raises on error.
 
 ```ruby
-result = client.project.update({
+result = client.Project.update({
   "id" => "project_id",
   # Fields to update
 })
@@ -659,7 +659,7 @@ Return the entity name.
 ## TestEntity
 
 ```ruby
-test = client.test
+test = client.Test
 ```
 
 ### Fields
@@ -699,7 +699,7 @@ test = client.test
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.test.create({
+result = client.Test.create({
 })
 ```
 
@@ -708,7 +708,7 @@ result = client.test.create({
 List entities matching the given criteria. Returns an array. Raises on error.
 
 ```ruby
-results = client.test.list(nil)
+results = client.Test.list(nil)
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -716,7 +716,7 @@ results = client.test.list(nil)
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.test.load({ "id" => "test_id" })
+result = client.Test.load({ "id" => "test_id" })
 ```
 
 ### Common Methods

@@ -28,9 +28,11 @@ const client = new GameDevelopmentSDK({
   apikey: process.env.GAME_DEVELOPMENT_APIKEY,
 })
 
-// List all analyticss
-const analyticss = await client.analytics.list()
-console.log(analyticss.data)
+// List all analyticss (returns Analytics[])
+const analyticss = await client.Analytics().list()
+for (const analytics of analyticss) {
+  console.log(analytics)
+}
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -95,9 +97,10 @@ client = GameDevelopmentSDK({
     "apikey": os.environ.get("GAME_DEVELOPMENT_APIKEY"),
 })
 
-# List all analyticss
-analyticss = client.analytics.list()
-print(analyticss)
+# List all analyticss (returns a list, raises on error)
+analyticss = client.Analytics().list({})
+for analytics in analyticss:
+    print(analytics)
 ```
 
 ### PHP
@@ -110,8 +113,8 @@ $client = new GameDevelopmentSDK([
     "apikey" => getenv("GAME_DEVELOPMENT_APIKEY"),
 ]);
 
-// List all analyticss (throws on error)
-$analyticss = $client->analytics()->list();
+// List all analyticss (returns an array; throws on error)
+$analyticss = $client->Analytics()->list();
 print_r($analyticss);
 ```
 
@@ -138,8 +141,8 @@ client = GameDevelopmentSDK.new({
   "apikey" => ENV["GAME_DEVELOPMENT_APIKEY"],
 })
 
-# List all analyticss
-analyticss = client.analytics.list
+# List all analyticss (returns an Array; raises on error)
+analyticss = client.Analytics.list
 puts analyticss
 ```
 
@@ -153,7 +156,7 @@ local client = sdk.new({
 })
 
 -- List all analyticss
-local analyticss, err = client:analytics():list()
+local analyticss, err = client:Analytics():list()
 print(analyticss)
 ```
 
@@ -166,22 +169,27 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = GameDevelopmentSDK.test()
-const result = await client.analytics.load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+const analytics = await client.Analytics().load({ id: 'test01' })
+// analytics is a bare Analytics populated with mock data
+console.log(analytics)
 ```
 
 ### Python
 
 ```python
 client = GameDevelopmentSDK.test()
-result = client.analytics.load({"id": "test01"})
+analytics = client.Analytics().load({"id": "test01"})
+print(analytics)
 ```
 
 ### PHP
 
 ```php
-$client = GameDevelopmentSDK::test();
-$result = $client->analytics()->load(["id" => "test01"]);
+// Seed fixture data so offline calls resolve without a live server.
+$client = GameDevelopmentSDK::test([
+    "entity" => ["analytics" => ["test01" => ["id" => "test01"]]],
+]);
+$analytics = $client->Analytics()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -196,15 +204,18 @@ result, err := client.Analytics(nil).Load(
 ### Ruby
 
 ```ruby
-client = GameDevelopmentSDK.test
-result = client.analytics.load({ "id" => "test01" })
+# Seed fixture data so offline calls resolve without a live server.
+client = GameDevelopmentSDK.test({
+  "entity" => { "analytics" => { "test01" => { "id" => "test01" } } },
+})
+analytics = client.Analytics.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:analytics():load({ id = "test01" })
+local result, err = client:Analytics():load({ id = "test01" })
 ```
 
 ## How it works
@@ -252,6 +263,9 @@ const result = await client.direct({
   method: 'GET',
   params: { id: 'example' },
 })
+if (result instanceof Error) {
+  throw result
+}
 console.log(result.data)
 ```
 

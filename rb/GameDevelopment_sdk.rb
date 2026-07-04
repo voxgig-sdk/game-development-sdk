@@ -208,104 +208,56 @@ class GameDevelopmentSDK
   end
 
 
-  # Idiomatic facade: client.analytics.list / client.analytics.load({ "id" => ... })
-  def analytics
-    require_relative 'entity/analytics_entity'
-    @analytics ||= AnalyticsEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.analytics instead.
+  # Canonical facade: client.Analytics.list / client.Analytics.load({ "id" => ... })
   def Analytics(data = nil)
     require_relative 'entity/analytics_entity'
     AnalyticsEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.asset.list / client.asset.load({ "id" => ... })
-  def asset
-    require_relative 'entity/asset_entity'
-    @asset ||= AssetEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.asset instead.
+  # Canonical facade: client.Asset.list / client.Asset.load({ "id" => ... })
   def Asset(data = nil)
     require_relative 'entity/asset_entity'
     AssetEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.build.list / client.build.load({ "id" => ... })
-  def build
-    require_relative 'entity/build_entity'
-    @build ||= BuildEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.build instead.
+  # Canonical facade: client.Build.list / client.Build.load({ "id" => ... })
   def Build(data = nil)
     require_relative 'entity/build_entity'
     BuildEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.collaboration.list / client.collaboration.load({ "id" => ... })
-  def collaboration
-    require_relative 'entity/collaboration_entity'
-    @collaboration ||= CollaborationEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.collaboration instead.
+  # Canonical facade: client.Collaboration.list / client.Collaboration.load({ "id" => ... })
   def Collaboration(data = nil)
     require_relative 'entity/collaboration_entity'
     CollaborationEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.collaborator.list / client.collaborator.load({ "id" => ... })
-  def collaborator
-    require_relative 'entity/collaborator_entity'
-    @collaborator ||= CollaboratorEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.collaborator instead.
+  # Canonical facade: client.Collaborator.list / client.Collaborator.load({ "id" => ... })
   def Collaborator(data = nil)
     require_relative 'entity/collaborator_entity'
     CollaboratorEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.deployment.list / client.deployment.load({ "id" => ... })
-  def deployment
-    require_relative 'entity/deployment_entity'
-    @deployment ||= DeploymentEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.deployment instead.
+  # Canonical facade: client.Deployment.list / client.Deployment.load({ "id" => ... })
   def Deployment(data = nil)
     require_relative 'entity/deployment_entity'
     DeploymentEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.project.list / client.project.load({ "id" => ... })
-  def project
-    require_relative 'entity/project_entity'
-    @project ||= ProjectEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.project instead.
+  # Canonical facade: client.Project.list / client.Project.load({ "id" => ... })
   def Project(data = nil)
     require_relative 'entity/project_entity'
     ProjectEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.test.list / client.test.load({ "id" => ... })
-  def test
-    require_relative 'entity/test_entity'
-    @test ||= TestEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.test instead.
+  # Canonical facade: client.Test.list / client.Test.load({ "id" => ... })
   def Test(data = nil)
     require_relative 'entity/test_entity'
     TestEntity.new(self, data)
