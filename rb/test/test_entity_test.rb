@@ -37,8 +37,7 @@ class TestEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.test"), "test_ref01"))
     test_ref01_data["project_id"] = setup[:idmap]["project01"]
 
-    test_ref01_data_result, err = test_ref01_ent.create(test_ref01_data, nil)
-    assert_nil err
+    test_ref01_data_result = test_ref01_ent.create(test_ref01_data, nil)
     test_ref01_data = Helpers.to_map(test_ref01_data_result)
     assert !test_ref01_data.nil?
     assert !test_ref01_data["id"].nil?
@@ -48,8 +47,7 @@ class TestEntityTest < Minitest::Test
       "project_id" => setup[:idmap]["project01"],
     }
 
-    test_ref01_list_result, err = test_ref01_ent.list(test_ref01_match, nil)
-    assert_nil err
+    test_ref01_list_result = test_ref01_ent.list(test_ref01_match, nil)
     assert test_ref01_list_result.is_a?(Array)
 
     found_item = Vs.select(
@@ -61,8 +59,7 @@ class TestEntityTest < Minitest::Test
     test_ref01_match_dt0 = {
       "id" => test_ref01_data["id"],
     }
-    test_ref01_data_dt0_loaded, err = test_ref01_ent.load(test_ref01_match_dt0, nil)
-    assert_nil err
+    test_ref01_data_dt0_loaded = test_ref01_ent.load(test_ref01_match_dt0, nil)
     test_ref01_data_dt0_load_result = Helpers.to_map(test_ref01_data_dt0_loaded)
     assert !test_ref01_data_dt0_load_result.nil?
     assert_equal test_ref01_data_dt0_load_result["id"], test_ref01_data["id"]

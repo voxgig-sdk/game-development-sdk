@@ -45,9 +45,7 @@ class TestAnalyticsEntity:
             vs.getpath(setup["data"], "new.analytics"), "analytics_ref01"))
         analytics_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        analytics_ref01_data_result, err = analytics_ref01_ent.create(analytics_ref01_data, None)
-        assert err is None
-        analytics_ref01_data = helpers.to_map(analytics_ref01_data_result)
+        analytics_ref01_data = helpers.to_map(analytics_ref01_ent.create(analytics_ref01_data, None))
         assert analytics_ref01_data is not None
 
         # LIST
@@ -55,8 +53,7 @@ class TestAnalyticsEntity:
             "project_id": setup["idmap"]["project01"],
         }
 
-        analytics_ref01_list_result, err = analytics_ref01_ent.list(analytics_ref01_match, None)
-        assert err is None
+        analytics_ref01_list_result = analytics_ref01_ent.list(analytics_ref01_match, None)
         assert isinstance(analytics_ref01_list_result, list)
 
         found_item = vs.select(

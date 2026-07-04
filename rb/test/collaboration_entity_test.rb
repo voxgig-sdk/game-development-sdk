@@ -45,24 +45,21 @@ class CollaborationEntityTest < Minitest::Test
       "project_id" => setup[:idmap]["project01"],
     }
 
-    collaboration_ref01_list_result, err = collaboration_ref01_ent.list(collaboration_ref01_match, nil)
-    assert_nil err
+    collaboration_ref01_list_result = collaboration_ref01_ent.list(collaboration_ref01_match, nil)
     assert collaboration_ref01_list_result.is_a?(Array)
 
     # REMOVE
     collaboration_ref01_match_rm0 = {
       "id" => collaboration_ref01_data["id"],
     }
-    _, err = collaboration_ref01_ent.remove(collaboration_ref01_match_rm0, nil)
-    assert_nil err
+    collaboration_ref01_ent.remove(collaboration_ref01_match_rm0, nil)
 
     # LIST
     collaboration_ref01_match_rt0 = {
       "project_id" => setup[:idmap]["project01"],
     }
 
-    collaboration_ref01_list_rt0_result, err = collaboration_ref01_ent.list(collaboration_ref01_match_rt0, nil)
-    assert_nil err
+    collaboration_ref01_list_rt0_result = collaboration_ref01_ent.list(collaboration_ref01_match_rt0, nil)
     assert collaboration_ref01_list_rt0_result.is_a?(Array)
 
   end

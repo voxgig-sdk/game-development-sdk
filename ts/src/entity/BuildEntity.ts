@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Build,
+  BuildCreateData,
+} from '../GameDevelopmentTypes'
 
 // TODO: needs Entity superclass
-class BuildEntity extends GameDevelopmentEntityBase {
+class BuildEntity extends GameDevelopmentEntityBase<Build> {
 
   constructor(client: GameDevelopmentSDK, entopts: any) {
     super(client, entopts)
@@ -34,7 +38,7 @@ class BuildEntity extends GameDevelopmentEntityBase {
 
 
 
-  async create(this: any, reqdata?: any, ctrl?: Control) {
+  async create(this: any, reqdata?: BuildCreateData, ctrl?: Control): Promise<Build> {
 
     const utility = this._utility
     const {
@@ -133,7 +137,9 @@ class BuildEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Build> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

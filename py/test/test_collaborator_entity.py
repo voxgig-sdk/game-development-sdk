@@ -45,9 +45,7 @@ class TestCollaboratorEntity:
             vs.getpath(setup["data"], "new.collaborator"), "collaborator_ref01"))
         collaborator_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        collaborator_ref01_data_result, err = collaborator_ref01_ent.create(collaborator_ref01_data, None)
-        assert err is None
-        collaborator_ref01_data = helpers.to_map(collaborator_ref01_data_result)
+        collaborator_ref01_data = helpers.to_map(collaborator_ref01_ent.create(collaborator_ref01_data, None))
         assert collaborator_ref01_data is not None
 
 

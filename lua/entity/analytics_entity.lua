@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch AnalyticsListMatch
+---@param ctrl? table
+---@return Analytics[]
+---@return string? err
 function AnalyticsEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -103,6 +107,10 @@ end
 
 
 
+---@param reqdata AnalyticsCreateData
+---@param ctrl? table
+---@return Analytics
+---@return string? err
 function AnalyticsEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

@@ -83,6 +83,10 @@ end
 
 
 
+---@param reqdata CollaboratorCreateData
+---@param ctrl? table
+---@return Collaborator
+---@return string? err
 function CollaboratorEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

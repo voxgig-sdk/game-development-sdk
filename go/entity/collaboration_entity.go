@@ -85,6 +85,27 @@ func (e *CollaborationEntity) Match(args ...any) any {
 	return out
 }
 
+// DataTyped is the statically-typed accessor for this entity's data. With no
+// argument it returns the current data as an Collaboration; with an argument it
+// sets the data and returns the stored value. It delegates to the untyped Data
+// (identical runtime) and converts at the typed boundary.
+func (e *CollaborationEntity) DataTyped(data ...Collaboration) Collaboration {
+	if len(data) > 0 {
+		return typedFrom[Collaboration](e.Data(asMap(data[0])))
+	}
+	return typedFrom[Collaboration](e.Data())
+}
+
+// MatchTyped mirrors DataTyped for the entity's match filter. The match is a
+// partial of the entity, so it round-trips through Collaboration (all fields
+// optional at the wire level).
+func (e *CollaborationEntity) MatchTyped(match ...Collaboration) Collaboration {
+	if len(match) > 0 {
+		return typedFrom[Collaboration](e.Match(asMap(match[0])))
+	}
+	return typedFrom[Collaboration](e.Match())
+}
+
 func (e *CollaborationEntity) Load(_ map[string]any, _ map[string]any) (any, error) {
 	return core.UnsupportedOp("load", e.name)
 }
@@ -108,6 +129,17 @@ func (e *CollaborationEntity) List(reqmatch map[string]any, ctrl map[string]any)
 			}
 		}
 	})
+}
+
+// ListTyped is the statically-typed variant of List: it takes an
+// CollaborationListMatch and returns []Collaboration. It delegates to the untyped
+// List (identical runtime) and converts at the typed boundary.
+func (e *CollaborationEntity) ListTyped(reqmatch CollaborationListMatch, ctrl map[string]any) ([]Collaboration, error) {
+	res, err := e.List(asMap(reqmatch), ctrl)
+	if err != nil {
+		return nil, err
+	}
+	return typedSliceFrom[Collaboration](res), nil
 }
 
 
@@ -146,6 +178,17 @@ func (e *CollaborationEntity) Remove(reqmatch map[string]any, ctrl map[string]an
 			}
 		}
 	})
+}
+
+// RemoveTyped is the statically-typed variant of Remove: it takes an
+// CollaborationRemoveMatch and returns an Collaboration. It delegates to the untyped
+// Remove (identical runtime) and converts at the typed boundary.
+func (e *CollaborationEntity) RemoveTyped(reqmatch CollaborationRemoveMatch, ctrl map[string]any) (Collaboration, error) {
+	res, err := e.Remove(asMap(reqmatch), ctrl)
+	if err != nil {
+		return Collaboration{}, err
+	}
+	return typedFrom[Collaboration](res), nil
 }
 
 

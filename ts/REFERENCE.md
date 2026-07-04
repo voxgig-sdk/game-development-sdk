@@ -194,7 +194,7 @@ Alias for `GameDevelopmentSDK.test()`.
 ## AnalyticsEntity
 
 ```ts
-const analytics = client.Analytics()
+const analytics = client.analytics
 ```
 
 ### Fields
@@ -215,7 +215,7 @@ const analytics = client.Analytics()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Analytics().create({
+const result = await client.analytics.create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -226,7 +226,7 @@ const result = await client.Analytics().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Analytics().list()
+const results = await client.analytics.list()
 ```
 
 ### Common Methods
@@ -260,7 +260,7 @@ Return a copy of the entity options.
 ## AssetEntity
 
 ```ts
-const asset = client.Asset()
+const asset = client.asset
 ```
 
 ### Fields
@@ -285,7 +285,7 @@ const asset = client.Asset()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Asset().create({
+const result = await client.asset.create({
 })
 ```
 
@@ -294,7 +294,7 @@ const result = await client.Asset().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Asset().list()
+const results = await client.asset.list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -302,7 +302,7 @@ const results = await client.Asset().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Asset().load({ id: 'asset_id' })
+const result = await client.asset.load({ id: 'asset_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -310,7 +310,7 @@ const result = await client.Asset().load({ id: 'asset_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Asset().remove({ id: 'asset_id' })
+const result = await client.asset.remove({ id: 'asset_id' })
 ```
 
 ### Common Methods
@@ -344,7 +344,7 @@ Return a copy of the entity options.
 ## BuildEntity
 
 ```ts
-const build = client.Build()
+const build = client.build
 ```
 
 ### Fields
@@ -362,7 +362,7 @@ const build = client.Build()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Build().create({
+const result = await client.build.create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -400,7 +400,7 @@ Return a copy of the entity options.
 ## CollaborationEntity
 
 ```ts
-const collaboration = client.Collaboration()
+const collaboration = client.collaboration
 ```
 
 ### Fields
@@ -423,7 +423,7 @@ const collaboration = client.Collaboration()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Collaboration().list()
+const results = await client.collaboration.list()
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -431,7 +431,7 @@ const results = await client.Collaboration().list()
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Collaboration().remove({ id: 'collaboration_id' })
+const result = await client.collaboration.remove({ id: 'collaboration_id' })
 ```
 
 ### Common Methods
@@ -465,7 +465,7 @@ Return a copy of the entity options.
 ## CollaboratorEntity
 
 ```ts
-const collaborator = client.Collaborator()
+const collaborator = client.collaborator
 ```
 
 ### Fields
@@ -482,7 +482,7 @@ const collaborator = client.Collaborator()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Collaborator().create({
+const result = await client.collaborator.create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -519,7 +519,7 @@ Return a copy of the entity options.
 ## DeploymentEntity
 
 ```ts
-const deployment = client.Deployment()
+const deployment = client.deployment
 ```
 
 ### Fields
@@ -567,7 +567,7 @@ const deployment = client.Deployment()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Deployment().create({
+const result = await client.deployment.create({
 })
 ```
 
@@ -576,7 +576,7 @@ const result = await client.Deployment().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Deployment().list()
+const results = await client.deployment.list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -584,7 +584,7 @@ const results = await client.Deployment().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Deployment().load({ id: 'deployment_id' })
+const result = await client.deployment.load({ id: 'deployment_id' })
 ```
 
 ### Common Methods
@@ -618,7 +618,7 @@ Return a copy of the entity options.
 ## ProjectEntity
 
 ```ts
-const project = client.Project()
+const project = client.project
 ```
 
 ### Fields
@@ -654,7 +654,7 @@ const project = client.Project()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Project().create({
+const result = await client.project.create({
 })
 ```
 
@@ -663,7 +663,7 @@ const result = await client.Project().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Project().list()
+const results = await client.project.list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -671,7 +671,7 @@ const results = await client.Project().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Project().load({ id: 'project_id' })
+const result = await client.project.load({ id: 'project_id' })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -679,7 +679,7 @@ const result = await client.Project().load({ id: 'project_id' })
 Remove the entity matching the given criteria.
 
 ```ts
-const result = await client.Project().remove({ id: 'project_id' })
+const result = await client.project.remove({ id: 'project_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -687,7 +687,7 @@ const result = await client.Project().remove({ id: 'project_id' })
 Update an existing entity. The data must include the entity `id`.
 
 ```ts
-const result = await client.Project().update({
+const result = await client.project.update({
   id: 'project_id',
   // Fields to update
 })
@@ -724,7 +724,7 @@ Return a copy of the entity options.
 ## TestEntity
 
 ```ts
-const test = client.Test()
+const test = client.test
 ```
 
 ### Fields
@@ -764,7 +764,7 @@ const test = client.Test()
 Create a new entity with the given data.
 
 ```ts
-const result = await client.Test().create({
+const result = await client.test.create({
 })
 ```
 
@@ -773,7 +773,7 @@ const result = await client.Test().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Test().list()
+const results = await client.test.list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -781,7 +781,7 @@ const results = await client.Test().list()
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Test().load({ id: 'test_id' })
+const result = await client.test.load({ id: 'test_id' })
 ```
 
 ### Common Methods

@@ -81,6 +81,10 @@ end
 
 
 
+---@param reqmatch CollaborationListMatch
+---@param ctrl? table
+---@return Collaboration[]
+---@return string? err
 function CollaborationEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -107,6 +111,10 @@ end
 
 
 
+---@param reqmatch CollaborationRemoveMatch
+---@param ctrl? table
+---@return Collaboration
+---@return string? err
 function CollaborationEntity:remove(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

@@ -37,8 +37,7 @@ class BuildEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.build"), "build_ref01"))
     build_ref01_data["project_id"] = setup[:idmap]["project01"]
 
-    build_ref01_data_result, err = build_ref01_ent.create(build_ref01_data, nil)
-    assert_nil err
+    build_ref01_data_result = build_ref01_ent.create(build_ref01_data, nil)
     build_ref01_data = Helpers.to_map(build_ref01_data_result)
     assert !build_ref01_data.nil?
 

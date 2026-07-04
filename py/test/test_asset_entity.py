@@ -45,9 +45,7 @@ class TestAssetEntity:
             vs.getpath(setup["data"], "new.asset"), "asset_ref01"))
         asset_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        asset_ref01_data_result, err = asset_ref01_ent.create(asset_ref01_data, None)
-        assert err is None
-        asset_ref01_data = helpers.to_map(asset_ref01_data_result)
+        asset_ref01_data = helpers.to_map(asset_ref01_ent.create(asset_ref01_data, None))
         assert asset_ref01_data is not None
         assert asset_ref01_data["id"] is not None
 
@@ -56,8 +54,7 @@ class TestAssetEntity:
             "project_id": setup["idmap"]["project01"],
         }
 
-        asset_ref01_list_result, err = asset_ref01_ent.list(asset_ref01_match, None)
-        assert err is None
+        asset_ref01_list_result = asset_ref01_ent.list(asset_ref01_match, None)
         assert isinstance(asset_ref01_list_result, list)
 
         found_item = vs.select(
@@ -69,8 +66,7 @@ class TestAssetEntity:
         asset_ref01_match_dt0 = {
             "id": asset_ref01_data["id"],
         }
-        asset_ref01_data_dt0_loaded, err = asset_ref01_ent.load(asset_ref01_match_dt0, None)
-        assert err is None
+        asset_ref01_data_dt0_loaded = asset_ref01_ent.load(asset_ref01_match_dt0, None)
         asset_ref01_data_dt0_load_result = helpers.to_map(asset_ref01_data_dt0_loaded)
         assert asset_ref01_data_dt0_load_result is not None
         assert asset_ref01_data_dt0_load_result["id"] == asset_ref01_data["id"]
@@ -79,16 +75,14 @@ class TestAssetEntity:
         asset_ref01_match_rm0 = {
             "id": asset_ref01_data["id"],
         }
-        _, err = asset_ref01_ent.remove(asset_ref01_match_rm0, None)
-        assert err is None
+        asset_ref01_ent.remove(asset_ref01_match_rm0, None)
 
         # LIST
         asset_ref01_match_rt0 = {
             "project_id": setup["idmap"]["project01"],
         }
 
-        asset_ref01_list_rt0_result, err = asset_ref01_ent.list(asset_ref01_match_rt0, None)
-        assert err is None
+        asset_ref01_list_rt0_result = asset_ref01_ent.list(asset_ref01_match_rt0, None)
         assert isinstance(asset_ref01_list_rt0_result, list)
 
         not_found_item = vs.select(

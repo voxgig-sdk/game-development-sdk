@@ -45,9 +45,7 @@ class TestTestEntity:
             vs.getpath(setup["data"], "new.test"), "test_ref01"))
         test_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        test_ref01_data_result, err = test_ref01_ent.create(test_ref01_data, None)
-        assert err is None
-        test_ref01_data = helpers.to_map(test_ref01_data_result)
+        test_ref01_data = helpers.to_map(test_ref01_ent.create(test_ref01_data, None))
         assert test_ref01_data is not None
         assert test_ref01_data["id"] is not None
 
@@ -56,8 +54,7 @@ class TestTestEntity:
             "project_id": setup["idmap"]["project01"],
         }
 
-        test_ref01_list_result, err = test_ref01_ent.list(test_ref01_match, None)
-        assert err is None
+        test_ref01_list_result = test_ref01_ent.list(test_ref01_match, None)
         assert isinstance(test_ref01_list_result, list)
 
         found_item = vs.select(
@@ -69,8 +66,7 @@ class TestTestEntity:
         test_ref01_match_dt0 = {
             "id": test_ref01_data["id"],
         }
-        test_ref01_data_dt0_loaded, err = test_ref01_ent.load(test_ref01_match_dt0, None)
-        assert err is None
+        test_ref01_data_dt0_loaded = test_ref01_ent.load(test_ref01_match_dt0, None)
         test_ref01_data_dt0_load_result = helpers.to_map(test_ref01_data_dt0_loaded)
         assert test_ref01_data_dt0_load_result is not None
         assert test_ref01_data_dt0_load_result["id"] == test_ref01_data["id"]

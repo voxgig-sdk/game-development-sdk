@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch TestLoadMatch
+---@param ctrl? table
+---@return Test
+---@return string? err
 function TestEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -104,6 +108,10 @@ end
 
 
 
+---@param reqmatch TestListMatch
+---@param ctrl? table
+---@return Test[]
+---@return string? err
 function TestEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -126,6 +134,10 @@ end
 
 
 
+---@param reqdata TestCreateData
+---@param ctrl? table
+---@return Test
+---@return string? err
 function TestEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

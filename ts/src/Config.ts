@@ -138,7 +138,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -184,7 +185,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ],
                 "query": [
@@ -341,7 +343,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -385,7 +388,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ],
                 "query": [
@@ -450,7 +454,8 @@ class Config {
                     "name": "id",
                     "orig": "asset_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -458,7 +463,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -505,7 +511,8 @@ class Config {
                     "name": "id",
                     "orig": "asset_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -513,7 +520,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -595,7 +603,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -709,7 +718,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -753,7 +763,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -761,7 +772,8 @@ class Config {
                     "name": "user_id",
                     "orig": "user_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -840,7 +852,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1014,7 +1027,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1058,7 +1072,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ],
                 "query": [
@@ -1106,7 +1121,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1150,7 +1166,8 @@ class Config {
                     "name": "id",
                     "orig": "deployment_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -1158,7 +1175,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },
@@ -1360,7 +1378,8 @@ class Config {
                     "name": "id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1403,7 +1422,8 @@ class Config {
                     "name": "id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1446,7 +1466,8 @@ class Config {
                     "name": "id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1593,7 +1614,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },
@@ -1637,7 +1659,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ],
                 "query": [
@@ -1692,7 +1715,8 @@ class Config {
                     "name": "id",
                     "orig": "test_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   },
                   {
                     "active": true,
@@ -1700,7 +1724,8 @@ class Config {
                     "name": "project_id",
                     "orig": "project_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 1
                   }
                 ]
               },

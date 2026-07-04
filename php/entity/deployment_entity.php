@@ -55,6 +55,9 @@ class DeploymentEntity
         return new DeploymentEntity($this->_client, $opts);
     }
 
+    /**
+     * @param Deployment|array $args Deployment data (assoc-array) to store.
+     */
     public function data_set($args): void
     {
         if ($args) {
@@ -63,12 +66,18 @@ class DeploymentEntity
         }
     }
 
+    /**
+     * @return Deployment|array The current Deployment data as an assoc-array.
+     */
     public function data_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetData");
         return Struct::clone($this->_data);
     }
 
+    /**
+     * @param array $args Match filter (any subset of Deployment fields).
+     */
     public function match_set($args): void
     {
         if ($args) {
@@ -77,6 +86,9 @@ class DeploymentEntity
         }
     }
 
+    /**
+     * @return array The current match filter (any subset of Deployment fields).
+     */
     public function match_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetMatch");
@@ -84,7 +96,16 @@ class DeploymentEntity
     }
 
     
-    public function load($reqmatch, $ctrl = null): array
+    /**
+     * Load a single Deployment.
+     *
+     * @param DeploymentLoadMatch|array|null $reqmatch Match criteria (id/query
+     *   fields) as an assoc-array; a typed DeploymentLoadMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Deployment|array The loaded Deployment as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function load(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -110,7 +131,16 @@ class DeploymentEntity
 
 
     
-    public function list($reqmatch, $ctrl = null): array
+    /**
+     * List Deployment items matching the given filter.
+     *
+     * @param DeploymentListMatch|array|null $reqmatch Match filter (any subset
+     *   of Deployment fields) as an assoc-array; DeploymentListMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Deployment[]|array A list of Deployment items as assoc-arrays at
+     *   the SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function list(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -133,7 +163,16 @@ class DeploymentEntity
 
 
     
-    public function create($reqdata, $ctrl = null): array
+    /**
+     * Create a new Deployment.
+     *
+     * @param DeploymentCreateData|array|null $reqdata Body data as an assoc-array;
+     *   a typed DeploymentCreateData names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Deployment|array The created Deployment as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function create(?array $reqdata = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -159,7 +198,7 @@ class DeploymentEntity
 
     
 
-    private function _run_op($ctx, callable $post_done): array
+    private function _run_op($ctx, callable $post_done): mixed
     {
         $utility = $this->_utility;
 

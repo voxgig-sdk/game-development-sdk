@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch ProjectLoadMatch
+---@param ctrl? table
+---@return Project
+---@return string? err
 function ProjectEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -104,6 +108,10 @@ end
 
 
 
+---@param reqmatch ProjectListMatch
+---@param ctrl? table
+---@return Project[]
+---@return string? err
 function ProjectEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -126,6 +134,10 @@ end
 
 
 
+---@param reqdata ProjectCreateData
+---@param ctrl? table
+---@return Project
+---@return string? err
 function ProjectEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -148,6 +160,10 @@ end
 
 
 
+---@param reqdata ProjectUpdateData
+---@param ctrl? table
+---@return Project
+---@return string? err
 function ProjectEntity:update(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -173,6 +189,10 @@ end
 
 
 
+---@param reqmatch ProjectRemoveMatch
+---@param ctrl? table
+---@return Project
+---@return string? err
 function ProjectEntity:remove(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

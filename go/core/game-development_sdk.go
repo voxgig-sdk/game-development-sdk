@@ -245,41 +245,65 @@ func (sdk *GameDevelopmentSDK) Direct(fetchargs map[string]any) (map[string]any,
 }
 
 
+// Analytics returns a Analytics entity bound to this client.
+// Idiomatic usage: client.Analytics(nil).List(nil, nil) or
+// client.Analytics(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Analytics(data map[string]any) GameDevelopmentEntity {
 	return NewAnalyticsEntityFunc(sdk, data)
 }
 
 
+// Asset returns a Asset entity bound to this client.
+// Idiomatic usage: client.Asset(nil).List(nil, nil) or
+// client.Asset(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Asset(data map[string]any) GameDevelopmentEntity {
 	return NewAssetEntityFunc(sdk, data)
 }
 
 
+// Build returns a Build entity bound to this client.
+// Idiomatic usage: client.Build(nil).List(nil, nil) or
+// client.Build(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Build(data map[string]any) GameDevelopmentEntity {
 	return NewBuildEntityFunc(sdk, data)
 }
 
 
+// Collaboration returns a Collaboration entity bound to this client.
+// Idiomatic usage: client.Collaboration(nil).List(nil, nil) or
+// client.Collaboration(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Collaboration(data map[string]any) GameDevelopmentEntity {
 	return NewCollaborationEntityFunc(sdk, data)
 }
 
 
+// Collaborator returns a Collaborator entity bound to this client.
+// Idiomatic usage: client.Collaborator(nil).List(nil, nil) or
+// client.Collaborator(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Collaborator(data map[string]any) GameDevelopmentEntity {
 	return NewCollaboratorEntityFunc(sdk, data)
 }
 
 
+// Deployment returns a Deployment entity bound to this client.
+// Idiomatic usage: client.Deployment(nil).List(nil, nil) or
+// client.Deployment(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Deployment(data map[string]any) GameDevelopmentEntity {
 	return NewDeploymentEntityFunc(sdk, data)
 }
 
 
+// Project returns a Project entity bound to this client.
+// Idiomatic usage: client.Project(nil).List(nil, nil) or
+// client.Project(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Project(data map[string]any) GameDevelopmentEntity {
 	return NewProjectEntityFunc(sdk, data)
 }
 
 
+// Test returns a Test entity bound to this client.
+// Idiomatic usage: client.Test(nil).List(nil, nil) or
+// client.Test(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *GameDevelopmentSDK) Test(data map[string]any) GameDevelopmentEntity {
 	return NewTestEntityFunc(sdk, data)
 }

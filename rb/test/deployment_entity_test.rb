@@ -37,8 +37,7 @@ class DeploymentEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.deployment"), "deployment_ref01"))
     deployment_ref01_data["project_id"] = setup[:idmap]["project01"]
 
-    deployment_ref01_data_result, err = deployment_ref01_ent.create(deployment_ref01_data, nil)
-    assert_nil err
+    deployment_ref01_data_result = deployment_ref01_ent.create(deployment_ref01_data, nil)
     deployment_ref01_data = Helpers.to_map(deployment_ref01_data_result)
     assert !deployment_ref01_data.nil?
     assert !deployment_ref01_data["id"].nil?
@@ -48,8 +47,7 @@ class DeploymentEntityTest < Minitest::Test
       "project_id" => setup[:idmap]["project01"],
     }
 
-    deployment_ref01_list_result, err = deployment_ref01_ent.list(deployment_ref01_match, nil)
-    assert_nil err
+    deployment_ref01_list_result = deployment_ref01_ent.list(deployment_ref01_match, nil)
     assert deployment_ref01_list_result.is_a?(Array)
 
     found_item = Vs.select(
@@ -61,8 +59,7 @@ class DeploymentEntityTest < Minitest::Test
     deployment_ref01_match_dt0 = {
       "id" => deployment_ref01_data["id"],
     }
-    deployment_ref01_data_dt0_loaded, err = deployment_ref01_ent.load(deployment_ref01_match_dt0, nil)
-    assert_nil err
+    deployment_ref01_data_dt0_loaded = deployment_ref01_ent.load(deployment_ref01_match_dt0, nil)
     deployment_ref01_data_dt0_load_result = Helpers.to_map(deployment_ref01_data_dt0_loaded)
     assert !deployment_ref01_data_dt0_load_result.nil?
     assert_equal deployment_ref01_data_dt0_load_result["id"], deployment_ref01_data["id"]

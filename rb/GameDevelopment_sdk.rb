@@ -13,6 +13,9 @@ require_relative 'config'
 require_relative 'feature/base_feature'
 require_relative 'features'
 
+# Load typed models (Struct value objects).
+require_relative 'GameDevelopment_types'
+
 
 class GameDevelopmentSDK
   attr_accessor :mode, :features, :options
@@ -131,7 +134,7 @@ class GameDevelopmentSDK
     end
 
     _, err = utility.prepare_auth.call(ctx)
-    return nil, err if err
+    raise err if err
 
     utility.make_fetch_def.call(ctx)
   end
@@ -139,8 +142,14 @@ class GameDevelopmentSDK
   def direct(fetchargs = {})
     utility = @_utility
 
-    fetchdef, err = prepare(fetchargs)
-    return { "ok" => false, "err" => err }, nil if err
+    # direct() is the raw-HTTP escape hatch: it always returns a result hash
+    # ({ "ok" => ..., ... }) and never raises. prepare() raises on error, so
+    # trap that and surface it in the hash.
+    begin
+      fetchdef = prepare(fetchargs)
+    rescue GameDevelopmentError => err
+      return { "ok" => false, "err" => err }
+    end
 
     fetchargs ||= {}
     ctrl = GameDevelopmentHelpers.to_map(VoxgigStruct.getprop(fetchargs, "ctrl")) || {}
@@ -153,13 +162,13 @@ class GameDevelopmentSDK
     url = fetchdef["url"] || ""
     fetched, fetch_err = utility.fetcher.call(ctx, url, fetchdef)
 
-    return { "ok" => false, "err" => fetch_err }, nil if fetch_err
+    return { "ok" => false, "err" => fetch_err } if fetch_err
 
     if fetched.nil?
       return {
         "ok" => false,
         "err" => ctx.make_error("direct_no_response", "response: undefined"),
-      }, nil
+      }
     end
 
     if fetched.is_a?(Hash)
@@ -189,58 +198,114 @@ class GameDevelopmentSDK
         "status" => status,
         "headers" => headers,
         "data" => json_data,
-      }, nil
+      }
     end
 
     return {
       "ok" => false,
       "err" => ctx.make_error("direct_invalid", "invalid response type"),
-    }, nil
+    }
   end
 
 
+  # Idiomatic facade: client.analytics.list / client.analytics.load({ "id" => ... })
+  def analytics
+    require_relative 'entity/analytics_entity'
+    @analytics ||= AnalyticsEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.analytics instead.
   def Analytics(data = nil)
     require_relative 'entity/analytics_entity'
     AnalyticsEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.asset.list / client.asset.load({ "id" => ... })
+  def asset
+    require_relative 'entity/asset_entity'
+    @asset ||= AssetEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.asset instead.
   def Asset(data = nil)
     require_relative 'entity/asset_entity'
     AssetEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.build.list / client.build.load({ "id" => ... })
+  def build
+    require_relative 'entity/build_entity'
+    @build ||= BuildEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.build instead.
   def Build(data = nil)
     require_relative 'entity/build_entity'
     BuildEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.collaboration.list / client.collaboration.load({ "id" => ... })
+  def collaboration
+    require_relative 'entity/collaboration_entity'
+    @collaboration ||= CollaborationEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.collaboration instead.
   def Collaboration(data = nil)
     require_relative 'entity/collaboration_entity'
     CollaborationEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.collaborator.list / client.collaborator.load({ "id" => ... })
+  def collaborator
+    require_relative 'entity/collaborator_entity'
+    @collaborator ||= CollaboratorEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.collaborator instead.
   def Collaborator(data = nil)
     require_relative 'entity/collaborator_entity'
     CollaboratorEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.deployment.list / client.deployment.load({ "id" => ... })
+  def deployment
+    require_relative 'entity/deployment_entity'
+    @deployment ||= DeploymentEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.deployment instead.
   def Deployment(data = nil)
     require_relative 'entity/deployment_entity'
     DeploymentEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.project.list / client.project.load({ "id" => ... })
+  def project
+    require_relative 'entity/project_entity'
+    @project ||= ProjectEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.project instead.
   def Project(data = nil)
     require_relative 'entity/project_entity'
     ProjectEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.test.list / client.test.load({ "id" => ... })
+  def test
+    require_relative 'entity/test_entity'
+    @test ||= TestEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.test instead.
   def Test(data = nil)
     require_relative 'entity/test_entity'
     TestEntity.new(self, data)

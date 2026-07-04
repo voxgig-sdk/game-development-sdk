@@ -45,6 +45,7 @@ class CollaboratorEntity
     end
   end
 
+  # @return [Collaborator, Hash] the current Collaborator data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class CollaboratorEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Collaborator fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -67,6 +69,11 @@ class CollaboratorEntity
   
 
   
+  # Create a new Collaborator.
+  #
+  # @param reqdata [CollaboratorCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Collaborator, Hash] the created Collaborator; raises GameDevelopmentError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

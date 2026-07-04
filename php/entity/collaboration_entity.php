@@ -55,6 +55,9 @@ class CollaborationEntity
         return new CollaborationEntity($this->_client, $opts);
     }
 
+    /**
+     * @param Collaboration|array $args Collaboration data (assoc-array) to store.
+     */
     public function data_set($args): void
     {
         if ($args) {
@@ -63,12 +66,18 @@ class CollaborationEntity
         }
     }
 
+    /**
+     * @return Collaboration|array The current Collaboration data as an assoc-array.
+     */
     public function data_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetData");
         return Struct::clone($this->_data);
     }
 
+    /**
+     * @param array $args Match filter (any subset of Collaboration fields).
+     */
     public function match_set($args): void
     {
         if ($args) {
@@ -77,6 +86,9 @@ class CollaborationEntity
         }
     }
 
+    /**
+     * @return array The current match filter (any subset of Collaboration fields).
+     */
     public function match_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetMatch");
@@ -86,7 +98,16 @@ class CollaborationEntity
     
 
     
-    public function list($reqmatch, $ctrl = null): array
+    /**
+     * List Collaboration items matching the given filter.
+     *
+     * @param CollaborationListMatch|array|null $reqmatch Match filter (any subset
+     *   of Collaboration fields) as an assoc-array; CollaborationListMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Collaboration[]|array A list of Collaboration items as assoc-arrays at
+     *   the SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function list(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -113,7 +134,16 @@ class CollaborationEntity
     
 
     
-    public function remove($reqmatch, $ctrl = null): array
+    /**
+     * Remove an Collaboration matching the given criteria.
+     *
+     * @param CollaborationRemoveMatch|array|null $reqmatch Match criteria (id/query
+     *   fields) as an assoc-array; CollaborationRemoveMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Collaboration|array The removed Collaboration as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function remove(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -138,7 +168,7 @@ class CollaborationEntity
 
 
 
-    private function _run_op($ctx, callable $post_done): array
+    private function _run_op($ctx, callable $post_done): mixed
     {
         $utility = $this->_utility;
 

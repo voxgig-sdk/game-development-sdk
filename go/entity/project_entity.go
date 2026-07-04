@@ -85,6 +85,27 @@ func (e *ProjectEntity) Match(args ...any) any {
 	return out
 }
 
+// DataTyped is the statically-typed accessor for this entity's data. With no
+// argument it returns the current data as an Project; with an argument it
+// sets the data and returns the stored value. It delegates to the untyped Data
+// (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) DataTyped(data ...Project) Project {
+	if len(data) > 0 {
+		return typedFrom[Project](e.Data(asMap(data[0])))
+	}
+	return typedFrom[Project](e.Data())
+}
+
+// MatchTyped mirrors DataTyped for the entity's match filter. The match is a
+// partial of the entity, so it round-trips through Project (all fields
+// optional at the wire level).
+func (e *ProjectEntity) MatchTyped(match ...Project) Project {
+	if len(match) > 0 {
+		return typedFrom[Project](e.Match(asMap(match[0])))
+	}
+	return typedFrom[Project](e.Match())
+}
+
 
 func (e *ProjectEntity) Load(reqmatch map[string]any, ctrl map[string]any) (any, error) {
 	utility := e.utility
@@ -111,6 +132,17 @@ func (e *ProjectEntity) Load(reqmatch map[string]any, ctrl map[string]any) (any,
 	})
 }
 
+// LoadTyped is the statically-typed variant of Load: it takes an
+// ProjectLoadMatch and returns an Project. It delegates to the untyped
+// Load (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) LoadTyped(reqmatch ProjectLoadMatch, ctrl map[string]any) (Project, error) {
+	res, err := e.Load(asMap(reqmatch), ctrl)
+	if err != nil {
+		return Project{}, err
+	}
+	return typedFrom[Project](res), nil
+}
+
 
 
 
@@ -131,6 +163,17 @@ func (e *ProjectEntity) List(reqmatch map[string]any, ctrl map[string]any) (any,
 			}
 		}
 	})
+}
+
+// ListTyped is the statically-typed variant of List: it takes an
+// ProjectListMatch and returns []Project. It delegates to the untyped
+// List (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) ListTyped(reqmatch ProjectListMatch, ctrl map[string]any) ([]Project, error) {
+	res, err := e.List(asMap(reqmatch), ctrl)
+	if err != nil {
+		return nil, err
+	}
+	return typedSliceFrom[Project](res), nil
 }
 
 
@@ -156,6 +199,17 @@ func (e *ProjectEntity) Create(reqdata map[string]any, ctrl map[string]any) (any
 			}
 		}
 	})
+}
+
+// CreateTyped is the statically-typed variant of Create: it takes an
+// ProjectCreateData and returns an Project. It delegates to the untyped
+// Create (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) CreateTyped(reqdata ProjectCreateData, ctrl map[string]any) (Project, error) {
+	res, err := e.Create(asMap(reqdata), ctrl)
+	if err != nil {
+		return Project{}, err
+	}
+	return typedFrom[Project](res), nil
 }
 
 
@@ -186,6 +240,17 @@ func (e *ProjectEntity) Update(reqdata map[string]any, ctrl map[string]any) (any
 	})
 }
 
+// UpdateTyped is the statically-typed variant of Update: it takes an
+// ProjectUpdateData and returns an Project. It delegates to the untyped
+// Update (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) UpdateTyped(reqdata ProjectUpdateData, ctrl map[string]any) (Project, error) {
+	res, err := e.Update(asMap(reqdata), ctrl)
+	if err != nil {
+		return Project{}, err
+	}
+	return typedFrom[Project](res), nil
+}
+
 
 
 
@@ -212,6 +277,17 @@ func (e *ProjectEntity) Remove(reqmatch map[string]any, ctrl map[string]any) (an
 			}
 		}
 	})
+}
+
+// RemoveTyped is the statically-typed variant of Remove: it takes an
+// ProjectRemoveMatch and returns an Project. It delegates to the untyped
+// Remove (identical runtime) and converts at the typed boundary.
+func (e *ProjectEntity) RemoveTyped(reqmatch ProjectRemoveMatch, ctrl map[string]any) (Project, error) {
+	res, err := e.Remove(asMap(reqmatch), ctrl)
+	if err != nil {
+		return Project{}, err
+	}
+	return typedFrom[Project](res), nil
 }
 
 

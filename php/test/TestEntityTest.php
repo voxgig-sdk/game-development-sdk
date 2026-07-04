@@ -44,8 +44,7 @@ class TestEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.test"), "test_ref01"));
         $test_ref01_data["project_id"] = $setup["idmap"]["project01"];
 
-        [$test_ref01_data_result, $err] = $test_ref01_ent->create($test_ref01_data, null);
-        $this->assertNull($err);
+        $test_ref01_data_result = $test_ref01_ent->create($test_ref01_data, null);
         $test_ref01_data = Helpers::to_map($test_ref01_data_result);
         $this->assertNotNull($test_ref01_data);
         $this->assertNotNull($test_ref01_data["id"]);
@@ -55,8 +54,7 @@ class TestEntityTest extends TestCase
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$test_ref01_list_result, $err] = $test_ref01_ent->list($test_ref01_match, null);
-        $this->assertNull($err);
+        $test_ref01_list_result = $test_ref01_ent->list($test_ref01_match, null);
         $this->assertIsArray($test_ref01_list_result);
 
         $found_item = sdk_select(
@@ -68,8 +66,7 @@ class TestEntityTest extends TestCase
         $test_ref01_match_dt0 = [
             "id" => $test_ref01_data["id"],
         ];
-        [$test_ref01_data_dt0_loaded, $err] = $test_ref01_ent->load($test_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $test_ref01_data_dt0_loaded = $test_ref01_ent->load($test_ref01_match_dt0, null);
         $test_ref01_data_dt0_load_result = Helpers::to_map($test_ref01_data_dt0_loaded);
         $this->assertNotNull($test_ref01_data_dt0_load_result);
         $this->assertEquals($test_ref01_data_dt0_load_result["id"], $test_ref01_data["id"]);

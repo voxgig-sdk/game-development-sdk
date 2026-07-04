@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch AssetLoadMatch
+---@param ctrl? table
+---@return Asset
+---@return string? err
 function AssetEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -104,6 +108,10 @@ end
 
 
 
+---@param reqmatch AssetListMatch
+---@param ctrl? table
+---@return Asset[]
+---@return string? err
 function AssetEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -126,6 +134,10 @@ end
 
 
 
+---@param reqdata AssetCreateData
+---@param ctrl? table
+---@return Asset
+---@return string? err
 function AssetEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -150,6 +162,10 @@ end
 
 
 
+---@param reqmatch AssetRemoveMatch
+---@param ctrl? table
+---@return Asset
+---@return string? err
 function AssetEntity:remove(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

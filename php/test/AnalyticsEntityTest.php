@@ -44,8 +44,7 @@ class AnalyticsEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.analytics"), "analytics_ref01"));
         $analytics_ref01_data["project_id"] = $setup["idmap"]["project01"];
 
-        [$analytics_ref01_data_result, $err] = $analytics_ref01_ent->create($analytics_ref01_data, null);
-        $this->assertNull($err);
+        $analytics_ref01_data_result = $analytics_ref01_ent->create($analytics_ref01_data, null);
         $analytics_ref01_data = Helpers::to_map($analytics_ref01_data_result);
         $this->assertNotNull($analytics_ref01_data);
 
@@ -54,8 +53,7 @@ class AnalyticsEntityTest extends TestCase
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$analytics_ref01_list_result, $err] = $analytics_ref01_ent->list($analytics_ref01_match, null);
-        $this->assertNull($err);
+        $analytics_ref01_list_result = $analytics_ref01_ent->list($analytics_ref01_match, null);
         $this->assertIsArray($analytics_ref01_list_result);
 
         $found_item = sdk_select(

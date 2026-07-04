@@ -112,7 +112,7 @@ same parameters as `direct()`.
 ## AnalyticsEntity
 
 ```lua
-local analytics = client:Analytics(nil)
+local analytics = client:analytics(nil)
 ```
 
 ### Fields
@@ -133,7 +133,7 @@ local analytics = client:Analytics(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Analytics():create({
+local result, err = client:analytics():create({
   event_name = --[[ `$STRING` ]],
   event_type = --[[ `$STRING` ]],
 })
@@ -144,7 +144,7 @@ local result, err = client:Analytics():create({
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Analytics():list()
+local results, err = client:analytics():list()
 ```
 
 ### Common Methods
@@ -180,7 +180,7 @@ Return the entity name.
 ## AssetEntity
 
 ```lua
-local asset = client:Asset(nil)
+local asset = client:asset(nil)
 ```
 
 ### Fields
@@ -205,7 +205,7 @@ local asset = client:Asset(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Asset():create({
+local result, err = client:asset():create({
 })
 ```
 
@@ -214,7 +214,7 @@ local result, err = client:Asset():create({
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Asset():list()
+local results, err = client:asset():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -222,7 +222,7 @@ local results, err = client:Asset():list()
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Asset():load({ id = "asset_id" })
+local result, err = client:asset():load({ id = "asset_id" })
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -230,7 +230,7 @@ local result, err = client:Asset():load({ id = "asset_id" })
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Asset():remove({ id = "asset_id" })
+local result, err = client:asset():remove({ id = "asset_id" })
 ```
 
 ### Common Methods
@@ -266,7 +266,7 @@ Return the entity name.
 ## BuildEntity
 
 ```lua
-local build = client:Build(nil)
+local build = client:build(nil)
 ```
 
 ### Fields
@@ -284,7 +284,7 @@ local build = client:Build(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Build():create({
+local result, err = client:build():create({
   configuration = --[[ `$STRING` ]],
   platform = --[[ `$STRING` ]],
   version = --[[ `$STRING` ]],
@@ -324,7 +324,7 @@ Return the entity name.
 ## CollaborationEntity
 
 ```lua
-local collaboration = client:Collaboration(nil)
+local collaboration = client:collaboration(nil)
 ```
 
 ### Fields
@@ -347,7 +347,7 @@ local collaboration = client:Collaboration(nil)
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Collaboration():list()
+local results, err = client:collaboration():list()
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -355,7 +355,7 @@ local results, err = client:Collaboration():list()
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Collaboration():remove({ id = "collaboration_id" })
+local result, err = client:collaboration():remove({ id = "collaboration_id" })
 ```
 
 ### Common Methods
@@ -391,7 +391,7 @@ Return the entity name.
 ## CollaboratorEntity
 
 ```lua
-local collaborator = client:Collaborator(nil)
+local collaborator = client:collaborator(nil)
 ```
 
 ### Fields
@@ -408,7 +408,7 @@ local collaborator = client:Collaborator(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Collaborator():create({
+local result, err = client:collaborator():create({
   email = --[[ `$STRING` ]],
   role = --[[ `$STRING` ]],
 })
@@ -447,7 +447,7 @@ Return the entity name.
 ## DeploymentEntity
 
 ```lua
-local deployment = client:Deployment(nil)
+local deployment = client:deployment(nil)
 ```
 
 ### Fields
@@ -495,7 +495,7 @@ local deployment = client:Deployment(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Deployment():create({
+local result, err = client:deployment():create({
 })
 ```
 
@@ -504,7 +504,7 @@ local result, err = client:Deployment():create({
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Deployment():list()
+local results, err = client:deployment():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -512,7 +512,7 @@ local results, err = client:Deployment():list()
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Deployment():load({ id = "deployment_id" })
+local result, err = client:deployment():load({ id = "deployment_id" })
 ```
 
 ### Common Methods
@@ -548,7 +548,7 @@ Return the entity name.
 ## ProjectEntity
 
 ```lua
-local project = client:Project(nil)
+local project = client:project(nil)
 ```
 
 ### Fields
@@ -584,7 +584,7 @@ local project = client:Project(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Project():create({
+local result, err = client:project():create({
 })
 ```
 
@@ -593,7 +593,7 @@ local result, err = client:Project():create({
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Project():list()
+local results, err = client:project():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -601,7 +601,7 @@ local results, err = client:Project():list()
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Project():load({ id = "project_id" })
+local result, err = client:project():load({ id = "project_id" })
 ```
 
 #### `remove(reqmatch, ctrl) -> any, err`
@@ -609,7 +609,7 @@ local result, err = client:Project():load({ id = "project_id" })
 Remove the entity matching the given criteria.
 
 ```lua
-local result, err = client:Project():remove({ id = "project_id" })
+local result, err = client:project():remove({ id = "project_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -617,7 +617,7 @@ local result, err = client:Project():remove({ id = "project_id" })
 Update an existing entity. The data must include the entity `id`.
 
 ```lua
-local result, err = client:Project():update({
+local result, err = client:project():update({
   id = "project_id",
   -- Fields to update
 })
@@ -656,7 +656,7 @@ Return the entity name.
 ## TestEntity
 
 ```lua
-local test = client:Test(nil)
+local test = client:test(nil)
 ```
 
 ### Fields
@@ -696,7 +696,7 @@ local test = client:Test(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Test():create({
+local result, err = client:test():create({
 })
 ```
 
@@ -705,7 +705,7 @@ local result, err = client:Test():create({
 List entities matching the given criteria. Returns an array.
 
 ```lua
-local results, err = client:Test():list()
+local results, err = client:test():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -713,7 +713,7 @@ local results, err = client:Test():list()
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Test():load({ id = "test_id" })
+local result, err = client:test():load({ id = "test_id" })
 ```
 
 ### Common Methods

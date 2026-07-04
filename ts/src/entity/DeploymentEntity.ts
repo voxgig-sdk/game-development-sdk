@@ -14,9 +14,15 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Deployment,
+  DeploymentLoadMatch,
+  DeploymentListMatch,
+  DeploymentCreateData,
+} from '../GameDevelopmentTypes'
 
 // TODO: needs Entity superclass
-class DeploymentEntity extends GameDevelopmentEntityBase {
+class DeploymentEntity extends GameDevelopmentEntityBase<Deployment> {
 
   constructor(client: GameDevelopmentSDK, entopts: any) {
     super(client, entopts)
@@ -32,7 +38,7 @@ class DeploymentEntity extends GameDevelopmentEntityBase {
 
 
 
-  async load(this: any, reqmatch?: any, ctrl?: Control) {
+  async load(this: any, reqmatch?: DeploymentLoadMatch, ctrl?: Control): Promise<Deployment> {
 
     const utility = this._utility
 
@@ -136,14 +142,16 @@ class DeploymentEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Deployment> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: DeploymentListMatch, ctrl?: Control): Promise<Deployment[]> {
 
     const utility = this._utility
 
@@ -243,14 +251,16 @@ class DeploymentEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Deployment[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
 
 
 
-  async create(this: any, reqdata?: any, ctrl?: Control) {
+  async create(this: any, reqdata?: DeploymentCreateData, ctrl?: Control): Promise<Deployment> {
 
     const utility = this._utility
     const {
@@ -349,7 +359,9 @@ class DeploymentEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Deployment> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

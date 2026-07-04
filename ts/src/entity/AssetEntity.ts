@@ -14,9 +14,16 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Asset,
+  AssetLoadMatch,
+  AssetListMatch,
+  AssetCreateData,
+  AssetRemoveMatch,
+} from '../GameDevelopmentTypes'
 
 // TODO: needs Entity superclass
-class AssetEntity extends GameDevelopmentEntityBase {
+class AssetEntity extends GameDevelopmentEntityBase<Asset> {
 
   constructor(client: GameDevelopmentSDK, entopts: any) {
     super(client, entopts)
@@ -32,7 +39,7 @@ class AssetEntity extends GameDevelopmentEntityBase {
 
 
 
-  async load(this: any, reqmatch?: any, ctrl?: Control) {
+  async load(this: any, reqmatch?: AssetLoadMatch, ctrl?: Control): Promise<Asset> {
 
     const utility = this._utility
 
@@ -136,14 +143,16 @@ class AssetEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Asset> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: AssetListMatch, ctrl?: Control): Promise<Asset[]> {
 
     const utility = this._utility
 
@@ -243,14 +252,16 @@ class AssetEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Asset[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
 
 
 
-  async create(this: any, reqdata?: any, ctrl?: Control) {
+  async create(this: any, reqdata?: AssetCreateData, ctrl?: Control): Promise<Asset> {
 
     const utility = this._utility
     const {
@@ -349,7 +360,9 @@ class AssetEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Asset> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
@@ -357,7 +370,7 @@ class AssetEntity extends GameDevelopmentEntityBase {
 
 
 
-  async remove(this: any, reqmatch?: any, ctrl?: Control) {
+  async remove(this: any, reqmatch?: AssetRemoveMatch, ctrl?: Control): Promise<Asset> {
 
     const utility = this._utility
 
@@ -462,7 +475,9 @@ class AssetEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Asset> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

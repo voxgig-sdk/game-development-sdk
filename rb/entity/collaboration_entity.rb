@@ -45,6 +45,7 @@ class CollaborationEntity
     end
   end
 
+  # @return [Collaboration, Hash] the current Collaboration data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class CollaborationEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Collaboration fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -65,6 +67,11 @@ class CollaborationEntity
   
 
   
+  # List Collaboration items matching the given filter.
+  #
+  # @param reqmatch [CollaborationListMatch, Hash, nil] match filter (any subset of Collaboration fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Collaboration>, Array] the matching Collaboration items; raises GameDevelopmentError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -89,6 +96,11 @@ class CollaborationEntity
   
 
   
+  # Remove an Collaboration matching the given criteria.
+  #
+  # @param reqmatch [CollaborationRemoveMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Collaboration, Hash] the removed Collaboration; raises GameDevelopmentError on failure
   def remove(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

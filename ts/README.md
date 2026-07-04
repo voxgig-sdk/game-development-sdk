@@ -9,9 +9,12 @@ The TypeScript SDK for the GameDevelopment API — a type-safe, entity-oriented 
 
 
 ## Install
-```bash
-npm install @voxgig-sdk/game-development
-```
+This package is not yet published to npm. Install it from the GitHub
+release tag (`ts/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/game-development-sdk/releases](https://github.com/voxgig-sdk/game-development-sdk/releases)
+
+
 ## Tutorial: your first API call
 
 This tutorial walks through creating a client, listing entities, and
@@ -20,17 +23,17 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { GameDevelopmentSDK } from 'game-development'
+import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
 
 const client = new GameDevelopmentSDK({
-  apikey: process.env.GAME-DEVELOPMENT_APIKEY,
+  apikey: process.env.GAME_DEVELOPMENT_APIKEY,
 })
 ```
 
 ### 2. List analyticss
 
 ```ts
-const result = await client.Analytics().list()
+const result = await client.analytics.list()
 
 if (result.ok) {
   for (const item of result.data) {
@@ -43,7 +46,7 @@ if (result.ok) {
 
 ```ts
 // Create
-const created = await client.Analytics().create({
+const created = await client.analytics.create({
   name: 'Example',
 })
 
@@ -91,7 +94,7 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = GameDevelopmentSDK.test()
 
-const result = await client.Planet().load({ id: 'test01' })
+const result = await client.analytics.load({ id: 'test01' })
 // result.ok === true
 // result.data contains mock response data
 ```
@@ -108,7 +111,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Planet()
+const entity = client.analytics
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -145,8 +148,8 @@ const client = new GameDevelopmentSDK({
 Create a `.env.local` file at the project root:
 
 ```
-GAME-DEVELOPMENT_TEST_LIVE=TRUE
-GAME-DEVELOPMENT_APIKEY=<your-key>
+GAME_DEVELOPMENT_TEST_LIVE=TRUE
+GAME_DEVELOPMENT_APIKEY=<your-key>
 ```
 
 Then run:
@@ -408,7 +411,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.Analytics()`
+Create an instance: `const analytics = client.analytics`
 
 #### Operations
 
@@ -431,13 +434,13 @@ Create an instance: `const analytics = client.Analytics()`
 #### Example: List
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.analytics.list()
 ```
 
 #### Example: Create
 
 ```ts
-const analytics = await client.Analytics().create({
+const analytics = await client.analytics.create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -446,7 +449,7 @@ const analytics = await client.Analytics().create({
 
 ### Asset
 
-Create an instance: `const asset = client.Asset()`
+Create an instance: `const asset = client.asset`
 
 #### Operations
 
@@ -475,26 +478,26 @@ Create an instance: `const asset = client.Asset()`
 #### Example: Load
 
 ```ts
-const asset = await client.Asset().load({ id: 'asset_id' })
+const asset = await client.asset.load({ id: 'asset_id' })
 ```
 
 #### Example: List
 
 ```ts
-const assets = await client.Asset().list()
+const assets = await client.asset.list()
 ```
 
 #### Example: Create
 
 ```ts
-const asset = await client.Asset().create({
+const asset = await client.asset.create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.Build()`
+Create an instance: `const build = client.build`
 
 #### Operations
 
@@ -513,7 +516,7 @@ Create an instance: `const build = client.Build()`
 #### Example: Create
 
 ```ts
-const build = await client.Build().create({
+const build = await client.build.create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -523,7 +526,7 @@ const build = await client.Build().create({
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.Collaboration()`
+Create an instance: `const collaboration = client.collaboration`
 
 #### Operations
 
@@ -548,13 +551,13 @@ Create an instance: `const collaboration = client.Collaboration()`
 #### Example: List
 
 ```ts
-const collaborations = await client.Collaboration().list()
+const collaborations = await client.collaboration.list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.Collaborator()`
+Create an instance: `const collaborator = client.collaborator`
 
 #### Operations
 
@@ -572,7 +575,7 @@ Create an instance: `const collaborator = client.Collaborator()`
 #### Example: Create
 
 ```ts
-const collaborator = await client.Collaborator().create({
+const collaborator = await client.collaborator.create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -581,7 +584,7 @@ const collaborator = await client.Collaborator().create({
 
 ### Deployment
 
-Create an instance: `const deployment = client.Deployment()`
+Create an instance: `const deployment = client.deployment`
 
 #### Operations
 
@@ -613,26 +616,26 @@ Create an instance: `const deployment = client.Deployment()`
 #### Example: Load
 
 ```ts
-const deployment = await client.Deployment().load({ id: 'deployment_id' })
+const deployment = await client.deployment.load({ id: 'deployment_id' })
 ```
 
 #### Example: List
 
 ```ts
-const deployments = await client.Deployment().list()
+const deployments = await client.deployment.list()
 ```
 
 #### Example: Create
 
 ```ts
-const deployment = await client.Deployment().create({
+const deployment = await client.deployment.create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.Project()`
+Create an instance: `const project = client.project`
 
 #### Operations
 
@@ -660,26 +663,26 @@ Create an instance: `const project = client.Project()`
 #### Example: Load
 
 ```ts
-const project = await client.Project().load({ id: 'project_id' })
+const project = await client.project.load({ id: 'project_id' })
 ```
 
 #### Example: List
 
 ```ts
-const projects = await client.Project().list()
+const projects = await client.project.list()
 ```
 
 #### Example: Create
 
 ```ts
-const project = await client.Project().create({
+const project = await client.project.create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.Test()`
+Create an instance: `const test = client.test`
 
 #### Operations
 
@@ -707,19 +710,19 @@ Create an instance: `const test = client.Test()`
 #### Example: Load
 
 ```ts
-const test = await client.Test().load({ id: 'test_id' })
+const test = await client.test.load({ id: 'test_id' })
 ```
 
 #### Example: List
 
 ```ts
-const tests = await client.Test().list()
+const tests = await client.test.list()
 ```
 
 #### Example: Create
 
 ```ts
-const test = await client.Test().create({
+const test = await client.test.create({
 })
 ```
 
@@ -781,7 +784,7 @@ game-development/
 Import the SDK from the package root:
 
 ```ts
-import { GameDevelopmentSDK } from 'game-development'
+import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
 ```
 
 ### Entity state
@@ -791,11 +794,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const moon = client.Moon()
-await moon.load({ planet_id: 'earth', id: 'luna' })
+const analytics = client.analytics
+await analytics.load({ id: "example_id" })
 
-// moon.data() now returns the loaded moon data
-// moon.match() returns { planet_id: 'earth', id: 'luna' }
+// analytics.data() now returns the loaded analytics data
+// analytics.match() returns { id: "example_id" }
 ```
 
 Call `make()` to create a fresh instance with the same configuration

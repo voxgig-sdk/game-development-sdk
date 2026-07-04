@@ -1,7 +1,16 @@
 # GameDevelopment SDK Asset entity
 
+from __future__ import annotations
+
 from utility.voxgig_struct import voxgig_struct as vs
 from core import helpers
+from gamedevelopment_types import (
+    Asset,
+    AssetLoadMatch,
+    AssetListMatch,
+    AssetCreateData,
+    AssetRemoveMatch,
+)
 
 
 class AssetEntity:
@@ -44,7 +53,7 @@ class AssetEntity:
             self._data = helpers.to_map(vs.clone(args)) or {}
             self._utility.feature_hook(self._entctx, "SetData")
 
-    def data_get(self):
+    def data_get(self) -> Asset:
         self._utility.feature_hook(self._entctx, "GetData")
         return vs.clone(self._data)
 
@@ -53,12 +62,12 @@ class AssetEntity:
             self._match = helpers.to_map(vs.clone(args)) or {}
             self._utility.feature_hook(self._entctx, "SetMatch")
 
-    def match_get(self):
+    def match_get(self) -> Asset:
         self._utility.feature_hook(self._entctx, "GetMatch")
         return vs.clone(self._match)
 
     
-    def load(self, reqmatch, ctrl=None):
+    def load(self, reqmatch: AssetLoadMatch, ctrl=None) -> Asset:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "load",
@@ -80,7 +89,7 @@ class AssetEntity:
 
 
     
-    def list(self, reqmatch, ctrl=None):
+    def list(self, reqmatch: AssetListMatch, ctrl=None) -> list[Asset]:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "list",
@@ -100,7 +109,7 @@ class AssetEntity:
 
 
     
-    def create(self, reqdata, ctrl=None):
+    def create(self, reqdata: AssetCreateData, ctrl=None) -> Asset:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "create",
@@ -122,7 +131,7 @@ class AssetEntity:
     
 
     
-    def remove(self, reqmatch, ctrl=None):
+    def remove(self, reqmatch: AssetRemoveMatch, ctrl=None) -> Asset:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "remove",

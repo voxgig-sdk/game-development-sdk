@@ -9,9 +9,10 @@ The PHP SDK for the GameDevelopment API — an entity-oriented client using PHP 
 
 
 ## Install
-```bash
-composer require voxgig-sdk/game-development
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/game-development-sdk/releases](https://github.com/voxgig-sdk/game-development-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -26,21 +27,23 @@ loading a specific record.
 require_once 'gamedevelopment_sdk.php';
 
 $client = new GameDevelopmentSDK([
-    "apikey" => getenv("GAME-DEVELOPMENT_APIKEY"),
+    "apikey" => getenv("GAME_DEVELOPMENT_APIKEY"),
 ]);
 ```
 
 ### 2. List analyticss
 
 ```php
-[$result, $err] = $client->Analytics()->list();
-if ($err) { throw new \Exception($err); }
-
-if (is_array($result)) {
-    foreach ($result as $item) {
-        $d = $item->data_get();
-        echo $d["id"] . " " . $d["name"] . "\n";
+try {
+    $result = $client->analytics()->list();
+    if (is_array($result)) {
+        foreach ($result as $item) {
+            $d = $item->data_get();
+            echo $d["id"] . " " . $d["name"] . "\n";
+        }
     }
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
 }
 ```
 
@@ -48,7 +51,7 @@ if (is_array($result)) {
 
 ```php
 // Create
-[$created, $_] = $client->Analytics()->create(["name" => "Example"]);
+$created = $client->analytics()->create(["name" => "Example"]);
 
 ```
 
@@ -60,28 +63,31 @@ if (is_array($result)) {
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -95,7 +101,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = GameDevelopmentSDK::test();
 
-[$result, $err] = $client->GameDevelopment()->load(["id" => "test01"]);
+$result = $client->analytics()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -129,8 +135,8 @@ $client = new GameDevelopmentSDK([
 Create a `.env.local` file at the project root:
 
 ```
-GAME-DEVELOPMENT_TEST_LIVE=TRUE
-GAME-DEVELOPMENT_APIKEY=<your-key>
+GAME_DEVELOPMENT_TEST_LIVE=TRUE
+GAME_DEVELOPMENT_APIKEY=<your-key>
 ```
 
 Then run:
@@ -206,8 +212,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -360,7 +370,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.Analytics()`
+Create an instance: `const analytics = client.analytics`
 
 #### Operations
 
@@ -383,13 +393,13 @@ Create an instance: `const analytics = client.Analytics()`
 #### Example: List
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.analytics.list()
 ```
 
 #### Example: Create
 
 ```ts
-const analytics = await client.Analytics().create({
+const analytics = await client.analytics.create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -398,7 +408,7 @@ const analytics = await client.Analytics().create({
 
 ### Asset
 
-Create an instance: `const asset = client.Asset()`
+Create an instance: `const asset = client.asset`
 
 #### Operations
 
@@ -427,26 +437,26 @@ Create an instance: `const asset = client.Asset()`
 #### Example: Load
 
 ```ts
-const asset = await client.Asset().load({ id: 'asset_id' })
+const asset = await client.asset.load({ id: 'asset_id' })
 ```
 
 #### Example: List
 
 ```ts
-const assets = await client.Asset().list()
+const assets = await client.asset.list()
 ```
 
 #### Example: Create
 
 ```ts
-const asset = await client.Asset().create({
+const asset = await client.asset.create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.Build()`
+Create an instance: `const build = client.build`
 
 #### Operations
 
@@ -465,7 +475,7 @@ Create an instance: `const build = client.Build()`
 #### Example: Create
 
 ```ts
-const build = await client.Build().create({
+const build = await client.build.create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -475,7 +485,7 @@ const build = await client.Build().create({
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.Collaboration()`
+Create an instance: `const collaboration = client.collaboration`
 
 #### Operations
 
@@ -500,13 +510,13 @@ Create an instance: `const collaboration = client.Collaboration()`
 #### Example: List
 
 ```ts
-const collaborations = await client.Collaboration().list()
+const collaborations = await client.collaboration.list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.Collaborator()`
+Create an instance: `const collaborator = client.collaborator`
 
 #### Operations
 
@@ -524,7 +534,7 @@ Create an instance: `const collaborator = client.Collaborator()`
 #### Example: Create
 
 ```ts
-const collaborator = await client.Collaborator().create({
+const collaborator = await client.collaborator.create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -533,7 +543,7 @@ const collaborator = await client.Collaborator().create({
 
 ### Deployment
 
-Create an instance: `const deployment = client.Deployment()`
+Create an instance: `const deployment = client.deployment`
 
 #### Operations
 
@@ -565,26 +575,26 @@ Create an instance: `const deployment = client.Deployment()`
 #### Example: Load
 
 ```ts
-const deployment = await client.Deployment().load({ id: 'deployment_id' })
+const deployment = await client.deployment.load({ id: 'deployment_id' })
 ```
 
 #### Example: List
 
 ```ts
-const deployments = await client.Deployment().list()
+const deployments = await client.deployment.list()
 ```
 
 #### Example: Create
 
 ```ts
-const deployment = await client.Deployment().create({
+const deployment = await client.deployment.create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.Project()`
+Create an instance: `const project = client.project`
 
 #### Operations
 
@@ -612,26 +622,26 @@ Create an instance: `const project = client.Project()`
 #### Example: Load
 
 ```ts
-const project = await client.Project().load({ id: 'project_id' })
+const project = await client.project.load({ id: 'project_id' })
 ```
 
 #### Example: List
 
 ```ts
-const projects = await client.Project().list()
+const projects = await client.project.list()
 ```
 
 #### Example: Create
 
 ```ts
-const project = await client.Project().create({
+const project = await client.project.create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.Test()`
+Create an instance: `const test = client.test`
 
 #### Operations
 
@@ -659,19 +669,19 @@ Create an instance: `const test = client.Test()`
 #### Example: Load
 
 ```ts
-const test = await client.Test().load({ id: 'test_id' })
+const test = await client.test.load({ id: 'test_id' })
 ```
 
 #### Example: List
 
 ```ts
-const tests = await client.Test().list()
+const tests = await client.test.list()
 ```
 
 #### Example: Create
 
 ```ts
-const test = await client.Test().create({
+const test = await client.test.create({
 })
 ```
 
@@ -747,11 +757,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$analytics = $client->analytics();
+$analytics->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $analytics->dataGet() now returns the loaded analytics data
+// $analytics->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

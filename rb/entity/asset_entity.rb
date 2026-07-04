@@ -45,6 +45,7 @@ class AssetEntity
     end
   end
 
+  # @return [Asset, Hash] the current Asset data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class AssetEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Asset fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Asset.
+  #
+  # @param reqmatch [AssetLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Asset, Hash] the loaded Asset; raises GameDevelopmentError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -86,6 +93,11 @@ class AssetEntity
 
 
   
+  # List Asset items matching the given filter.
+  #
+  # @param reqmatch [AssetListMatch, Hash, nil] match filter (any subset of Asset fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Asset>, Array] the matching Asset items; raises GameDevelopmentError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -106,6 +118,11 @@ class AssetEntity
 
 
   
+  # Create a new Asset.
+  #
+  # @param reqdata [AssetCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Asset, Hash] the created Asset; raises GameDevelopmentError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -130,6 +147,11 @@ class AssetEntity
   
 
   
+  # Remove an Asset matching the given criteria.
+  #
+  # @param reqmatch [AssetRemoveMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Asset, Hash] the removed Asset; raises GameDevelopmentError on failure
   def remove(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

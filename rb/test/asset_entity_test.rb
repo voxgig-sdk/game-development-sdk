@@ -37,8 +37,7 @@ class AssetEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.asset"), "asset_ref01"))
     asset_ref01_data["project_id"] = setup[:idmap]["project01"]
 
-    asset_ref01_data_result, err = asset_ref01_ent.create(asset_ref01_data, nil)
-    assert_nil err
+    asset_ref01_data_result = asset_ref01_ent.create(asset_ref01_data, nil)
     asset_ref01_data = Helpers.to_map(asset_ref01_data_result)
     assert !asset_ref01_data.nil?
     assert !asset_ref01_data["id"].nil?
@@ -48,8 +47,7 @@ class AssetEntityTest < Minitest::Test
       "project_id" => setup[:idmap]["project01"],
     }
 
-    asset_ref01_list_result, err = asset_ref01_ent.list(asset_ref01_match, nil)
-    assert_nil err
+    asset_ref01_list_result = asset_ref01_ent.list(asset_ref01_match, nil)
     assert asset_ref01_list_result.is_a?(Array)
 
     found_item = Vs.select(
@@ -61,8 +59,7 @@ class AssetEntityTest < Minitest::Test
     asset_ref01_match_dt0 = {
       "id" => asset_ref01_data["id"],
     }
-    asset_ref01_data_dt0_loaded, err = asset_ref01_ent.load(asset_ref01_match_dt0, nil)
-    assert_nil err
+    asset_ref01_data_dt0_loaded = asset_ref01_ent.load(asset_ref01_match_dt0, nil)
     asset_ref01_data_dt0_load_result = Helpers.to_map(asset_ref01_data_dt0_loaded)
     assert !asset_ref01_data_dt0_load_result.nil?
     assert_equal asset_ref01_data_dt0_load_result["id"], asset_ref01_data["id"]
@@ -71,16 +68,14 @@ class AssetEntityTest < Minitest::Test
     asset_ref01_match_rm0 = {
       "id" => asset_ref01_data["id"],
     }
-    _, err = asset_ref01_ent.remove(asset_ref01_match_rm0, nil)
-    assert_nil err
+    asset_ref01_ent.remove(asset_ref01_match_rm0, nil)
 
     # LIST
     asset_ref01_match_rt0 = {
       "project_id" => setup[:idmap]["project01"],
     }
 
-    asset_ref01_list_rt0_result, err = asset_ref01_ent.list(asset_ref01_match_rt0, nil)
-    assert_nil err
+    asset_ref01_list_rt0_result = asset_ref01_ent.list(asset_ref01_match_rt0, nil)
     assert asset_ref01_list_rt0_result.is_a?(Array)
 
     not_found_item = Vs.select(

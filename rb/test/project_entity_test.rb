@@ -36,8 +36,7 @@ class ProjectEntityTest < Minitest::Test
     project_ref01_data = Helpers.to_map(Vs.getprop(
       Vs.getpath(setup[:data], "new.project"), "project_ref01"))
 
-    project_ref01_data_result, err = project_ref01_ent.create(project_ref01_data, nil)
-    assert_nil err
+    project_ref01_data_result = project_ref01_ent.create(project_ref01_data, nil)
     project_ref01_data = Helpers.to_map(project_ref01_data_result)
     assert !project_ref01_data.nil?
     assert !project_ref01_data["id"].nil?
@@ -45,8 +44,7 @@ class ProjectEntityTest < Minitest::Test
     # LIST
     project_ref01_match = {}
 
-    project_ref01_list_result, err = project_ref01_ent.list(project_ref01_match, nil)
-    assert_nil err
+    project_ref01_list_result = project_ref01_ent.list(project_ref01_match, nil)
     assert project_ref01_list_result.is_a?(Array)
 
     found_item = Vs.select(
@@ -63,8 +61,7 @@ class ProjectEntityTest < Minitest::Test
     project_ref01_markdef_up0_value = "Mark01-project_ref01_#{setup[:now]}"
     project_ref01_data_up0_up[project_ref01_markdef_up0_name] = project_ref01_markdef_up0_value
 
-    project_ref01_resdata_up0_result, err = project_ref01_ent.update(project_ref01_data_up0_up, nil)
-    assert_nil err
+    project_ref01_resdata_up0_result = project_ref01_ent.update(project_ref01_data_up0_up, nil)
     project_ref01_resdata_up0 = Helpers.to_map(project_ref01_resdata_up0_result)
     assert !project_ref01_resdata_up0.nil?
     assert_equal project_ref01_resdata_up0["id"], project_ref01_data_up0_up["id"]
@@ -74,8 +71,7 @@ class ProjectEntityTest < Minitest::Test
     project_ref01_match_dt0 = {
       "id" => project_ref01_data["id"],
     }
-    project_ref01_data_dt0_loaded, err = project_ref01_ent.load(project_ref01_match_dt0, nil)
-    assert_nil err
+    project_ref01_data_dt0_loaded = project_ref01_ent.load(project_ref01_match_dt0, nil)
     project_ref01_data_dt0_load_result = Helpers.to_map(project_ref01_data_dt0_loaded)
     assert !project_ref01_data_dt0_load_result.nil?
     assert_equal project_ref01_data_dt0_load_result["id"], project_ref01_data["id"]
@@ -84,14 +80,12 @@ class ProjectEntityTest < Minitest::Test
     project_ref01_match_rm0 = {
       "id" => project_ref01_data["id"],
     }
-    _, err = project_ref01_ent.remove(project_ref01_match_rm0, nil)
-    assert_nil err
+    project_ref01_ent.remove(project_ref01_match_rm0, nil)
 
     # LIST
     project_ref01_match_rt0 = {}
 
-    project_ref01_list_rt0_result, err = project_ref01_ent.list(project_ref01_match_rt0, nil)
-    assert_nil err
+    project_ref01_list_rt0_result = project_ref01_ent.list(project_ref01_match_rt0, nil)
     assert project_ref01_list_rt0_result.is_a?(Array)
 
     not_found_item = Vs.select(

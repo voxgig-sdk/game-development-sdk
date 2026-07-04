@@ -9,12 +9,9 @@ The Lua SDK for the GameDevelopment API — an entity-oriented client using Lua 
 
 
 ## Install
-```bash
-luarocks install voxgig-sdk-game-development
-```
-
-If the module is not yet published, add the source directory to
-your `LUA_PATH`:
+This package is not yet published to LuaRocks. Install it from the
+GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/game-development-sdk/releases)),
+or add the source directory to your `LUA_PATH`:
 
 ```bash
 export LUA_PATH="path/to/lua/?.lua;path/to/lua/?/init.lua;;"
@@ -32,14 +29,14 @@ loading a specific record.
 local sdk = require("game-development_sdk")
 
 local client = sdk.new({
-  apikey = os.getenv("GAME-DEVELOPMENT_APIKEY"),
+  apikey = os.getenv("GAME_DEVELOPMENT_APIKEY"),
 })
 ```
 
 ### 2. List analyticss
 
 ```lua
-local result, err = client:Analytics():list()
+local result, err = client:analytics():list()
 if err then error(err) end
 
 if type(result) == "table" then
@@ -54,7 +51,7 @@ end
 
 ```lua
 -- Create
-local created, _ = client:Analytics():create({ name = "Example" })
+local created, _ = client:analytics():create({ name = "Example" })
 
 ```
 
@@ -101,7 +98,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:GameDevelopment():load({ id = "test01" })
+local result, err = client:analytics():load({ id = "test01" })
 -- result contains mock response data
 ```
 
@@ -134,8 +131,8 @@ local client = sdk.new({
 Create a `.env.local` file at the project root:
 
 ```
-GAME-DEVELOPMENT_TEST_LIVE=TRUE
-GAME-DEVELOPMENT_APIKEY=<your-key>
+GAME_DEVELOPMENT_TEST_LIVE=TRUE
+GAME_DEVELOPMENT_APIKEY=<your-key>
 ```
 
 Then run:
@@ -365,7 +362,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.Analytics()`
+Create an instance: `const analytics = client.analytics`
 
 #### Operations
 
@@ -388,13 +385,13 @@ Create an instance: `const analytics = client.Analytics()`
 #### Example: List
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.analytics.list()
 ```
 
 #### Example: Create
 
 ```ts
-const analytics = await client.Analytics().create({
+const analytics = await client.analytics.create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -403,7 +400,7 @@ const analytics = await client.Analytics().create({
 
 ### Asset
 
-Create an instance: `const asset = client.Asset()`
+Create an instance: `const asset = client.asset`
 
 #### Operations
 
@@ -432,26 +429,26 @@ Create an instance: `const asset = client.Asset()`
 #### Example: Load
 
 ```ts
-const asset = await client.Asset().load({ id: 'asset_id' })
+const asset = await client.asset.load({ id: 'asset_id' })
 ```
 
 #### Example: List
 
 ```ts
-const assets = await client.Asset().list()
+const assets = await client.asset.list()
 ```
 
 #### Example: Create
 
 ```ts
-const asset = await client.Asset().create({
+const asset = await client.asset.create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.Build()`
+Create an instance: `const build = client.build`
 
 #### Operations
 
@@ -470,7 +467,7 @@ Create an instance: `const build = client.Build()`
 #### Example: Create
 
 ```ts
-const build = await client.Build().create({
+const build = await client.build.create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -480,7 +477,7 @@ const build = await client.Build().create({
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.Collaboration()`
+Create an instance: `const collaboration = client.collaboration`
 
 #### Operations
 
@@ -505,13 +502,13 @@ Create an instance: `const collaboration = client.Collaboration()`
 #### Example: List
 
 ```ts
-const collaborations = await client.Collaboration().list()
+const collaborations = await client.collaboration.list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.Collaborator()`
+Create an instance: `const collaborator = client.collaborator`
 
 #### Operations
 
@@ -529,7 +526,7 @@ Create an instance: `const collaborator = client.Collaborator()`
 #### Example: Create
 
 ```ts
-const collaborator = await client.Collaborator().create({
+const collaborator = await client.collaborator.create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -538,7 +535,7 @@ const collaborator = await client.Collaborator().create({
 
 ### Deployment
 
-Create an instance: `const deployment = client.Deployment()`
+Create an instance: `const deployment = client.deployment`
 
 #### Operations
 
@@ -570,26 +567,26 @@ Create an instance: `const deployment = client.Deployment()`
 #### Example: Load
 
 ```ts
-const deployment = await client.Deployment().load({ id: 'deployment_id' })
+const deployment = await client.deployment.load({ id: 'deployment_id' })
 ```
 
 #### Example: List
 
 ```ts
-const deployments = await client.Deployment().list()
+const deployments = await client.deployment.list()
 ```
 
 #### Example: Create
 
 ```ts
-const deployment = await client.Deployment().create({
+const deployment = await client.deployment.create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.Project()`
+Create an instance: `const project = client.project`
 
 #### Operations
 
@@ -617,26 +614,26 @@ Create an instance: `const project = client.Project()`
 #### Example: Load
 
 ```ts
-const project = await client.Project().load({ id: 'project_id' })
+const project = await client.project.load({ id: 'project_id' })
 ```
 
 #### Example: List
 
 ```ts
-const projects = await client.Project().list()
+const projects = await client.project.list()
 ```
 
 #### Example: Create
 
 ```ts
-const project = await client.Project().create({
+const project = await client.project.create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.Test()`
+Create an instance: `const test = client.test`
 
 #### Operations
 
@@ -664,19 +661,19 @@ Create an instance: `const test = client.Test()`
 #### Example: Load
 
 ```ts
-const test = await client.Test().load({ id: 'test_id' })
+const test = await client.test.load({ id: 'test_id' })
 ```
 
 #### Example: List
 
 ```ts
-const tests = await client.Test().list()
+const tests = await client.test.list()
 ```
 
 #### Example: Create
 
 ```ts
-const test = await client.Test().create({
+const test = await client.test.create({
 })
 ```
 
@@ -752,11 +749,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local moon = client:Moon(nil)
-moon:load({ planet_id = "earth", id = "luna" }, nil)
+local analytics = client:analytics()
+analytics:load({ id = "example_id" })
 
--- moon:data_get() now returns the loaded moon data
--- moon:match_get() returns the last match criteria
+-- analytics:data_get() now returns the loaded analytics data
+-- analytics:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

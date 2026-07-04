@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Collaborator,
+  CollaboratorCreateData,
+} from '../GameDevelopmentTypes'
 
 // TODO: needs Entity superclass
-class CollaboratorEntity extends GameDevelopmentEntityBase {
+class CollaboratorEntity extends GameDevelopmentEntityBase<Collaborator> {
 
   constructor(client: GameDevelopmentSDK, entopts: any) {
     super(client, entopts)
@@ -34,7 +38,7 @@ class CollaboratorEntity extends GameDevelopmentEntityBase {
 
 
 
-  async create(this: any, reqdata?: any, ctrl?: Control) {
+  async create(this: any, reqdata?: CollaboratorCreateData, ctrl?: Control): Promise<Collaborator> {
 
     const utility = this._utility
     const {
@@ -133,7 +137,9 @@ class CollaboratorEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Collaborator> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

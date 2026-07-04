@@ -45,6 +45,7 @@ class DeploymentEntity
     end
   end
 
+  # @return [Deployment, Hash] the current Deployment data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class DeploymentEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Deployment fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Deployment.
+  #
+  # @param reqmatch [DeploymentLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Deployment, Hash] the loaded Deployment; raises GameDevelopmentError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -86,6 +93,11 @@ class DeploymentEntity
 
 
   
+  # List Deployment items matching the given filter.
+  #
+  # @param reqmatch [DeploymentListMatch, Hash, nil] match filter (any subset of Deployment fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Deployment>, Array] the matching Deployment items; raises GameDevelopmentError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -106,6 +118,11 @@ class DeploymentEntity
 
 
   
+  # Create a new Deployment.
+  #
+  # @param reqdata [DeploymentCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Deployment, Hash] the created Deployment; raises GameDevelopmentError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

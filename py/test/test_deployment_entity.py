@@ -45,9 +45,7 @@ class TestDeploymentEntity:
             vs.getpath(setup["data"], "new.deployment"), "deployment_ref01"))
         deployment_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        deployment_ref01_data_result, err = deployment_ref01_ent.create(deployment_ref01_data, None)
-        assert err is None
-        deployment_ref01_data = helpers.to_map(deployment_ref01_data_result)
+        deployment_ref01_data = helpers.to_map(deployment_ref01_ent.create(deployment_ref01_data, None))
         assert deployment_ref01_data is not None
         assert deployment_ref01_data["id"] is not None
 
@@ -56,8 +54,7 @@ class TestDeploymentEntity:
             "project_id": setup["idmap"]["project01"],
         }
 
-        deployment_ref01_list_result, err = deployment_ref01_ent.list(deployment_ref01_match, None)
-        assert err is None
+        deployment_ref01_list_result = deployment_ref01_ent.list(deployment_ref01_match, None)
         assert isinstance(deployment_ref01_list_result, list)
 
         found_item = vs.select(
@@ -69,8 +66,7 @@ class TestDeploymentEntity:
         deployment_ref01_match_dt0 = {
             "id": deployment_ref01_data["id"],
         }
-        deployment_ref01_data_dt0_loaded, err = deployment_ref01_ent.load(deployment_ref01_match_dt0, None)
-        assert err is None
+        deployment_ref01_data_dt0_loaded = deployment_ref01_ent.load(deployment_ref01_match_dt0, None)
         deployment_ref01_data_dt0_load_result = helpers.to_map(deployment_ref01_data_dt0_loaded)
         assert deployment_ref01_data_dt0_load_result is not None
         assert deployment_ref01_data_dt0_load_result["id"] == deployment_ref01_data["id"]

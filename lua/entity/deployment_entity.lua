@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch DeploymentLoadMatch
+---@param ctrl? table
+---@return Deployment
+---@return string? err
 function DeploymentEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -104,6 +108,10 @@ end
 
 
 
+---@param reqmatch DeploymentListMatch
+---@param ctrl? table
+---@return Deployment[]
+---@return string? err
 function DeploymentEntity:list(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -126,6 +134,10 @@ end
 
 
 
+---@param reqdata DeploymentCreateData
+---@param ctrl? table
+---@return Deployment
+---@return string? err
 function DeploymentEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

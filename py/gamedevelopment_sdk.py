@@ -144,16 +144,23 @@ class GameDevelopmentSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class GameDevelopmentSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,50 +212,138 @@ class GameDevelopmentSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def analytics(self):
+        """Idiomatic facade: client.analytics.list() / client.analytics.load({"id": ...})."""
+        from entity.analytics_entity import AnalyticsEntity
+        cached = getattr(self, "_analytics", None)
+        if cached is None:
+            cached = AnalyticsEntity(self, None)
+            self._analytics = cached
+        return cached
 
     def Analytics(self, data=None):
+        # Deprecated: use client.analytics instead.
         from entity.analytics_entity import AnalyticsEntity
         return AnalyticsEntity(self, data)
 
 
+    @property
+    def asset(self):
+        """Idiomatic facade: client.asset.list() / client.asset.load({"id": ...})."""
+        from entity.asset_entity import AssetEntity
+        cached = getattr(self, "_asset", None)
+        if cached is None:
+            cached = AssetEntity(self, None)
+            self._asset = cached
+        return cached
+
     def Asset(self, data=None):
+        # Deprecated: use client.asset instead.
         from entity.asset_entity import AssetEntity
         return AssetEntity(self, data)
 
 
+    @property
+    def build(self):
+        """Idiomatic facade: client.build.list() / client.build.load({"id": ...})."""
+        from entity.build_entity import BuildEntity
+        cached = getattr(self, "_build", None)
+        if cached is None:
+            cached = BuildEntity(self, None)
+            self._build = cached
+        return cached
+
     def Build(self, data=None):
+        # Deprecated: use client.build instead.
         from entity.build_entity import BuildEntity
         return BuildEntity(self, data)
 
 
+    @property
+    def collaboration(self):
+        """Idiomatic facade: client.collaboration.list() / client.collaboration.load({"id": ...})."""
+        from entity.collaboration_entity import CollaborationEntity
+        cached = getattr(self, "_collaboration", None)
+        if cached is None:
+            cached = CollaborationEntity(self, None)
+            self._collaboration = cached
+        return cached
+
     def Collaboration(self, data=None):
+        # Deprecated: use client.collaboration instead.
         from entity.collaboration_entity import CollaborationEntity
         return CollaborationEntity(self, data)
 
 
+    @property
+    def collaborator(self):
+        """Idiomatic facade: client.collaborator.list() / client.collaborator.load({"id": ...})."""
+        from entity.collaborator_entity import CollaboratorEntity
+        cached = getattr(self, "_collaborator", None)
+        if cached is None:
+            cached = CollaboratorEntity(self, None)
+            self._collaborator = cached
+        return cached
+
     def Collaborator(self, data=None):
+        # Deprecated: use client.collaborator instead.
         from entity.collaborator_entity import CollaboratorEntity
         return CollaboratorEntity(self, data)
 
 
+    @property
+    def deployment(self):
+        """Idiomatic facade: client.deployment.list() / client.deployment.load({"id": ...})."""
+        from entity.deployment_entity import DeploymentEntity
+        cached = getattr(self, "_deployment", None)
+        if cached is None:
+            cached = DeploymentEntity(self, None)
+            self._deployment = cached
+        return cached
+
     def Deployment(self, data=None):
+        # Deprecated: use client.deployment instead.
         from entity.deployment_entity import DeploymentEntity
         return DeploymentEntity(self, data)
 
 
+    @property
+    def project(self):
+        """Idiomatic facade: client.project.list() / client.project.load({"id": ...})."""
+        from entity.project_entity import ProjectEntity
+        cached = getattr(self, "_project", None)
+        if cached is None:
+            cached = ProjectEntity(self, None)
+            self._project = cached
+        return cached
+
     def Project(self, data=None):
+        # Deprecated: use client.project instead.
         from entity.project_entity import ProjectEntity
         return ProjectEntity(self, data)
 
 
+    @property
+    def test(self):
+        """Idiomatic facade: client.test.list() / client.test.load({"id": ...})."""
+        from entity.test_entity import TestEntity
+        cached = getattr(self, "_test", None)
+        if cached is None:
+            cached = TestEntity(self, None)
+            self._test = cached
+        return cached
+
     def Test(self, data=None):
+        # Deprecated: use client.test instead.
         from entity.test_entity import TestEntity
         return TestEntity(self, data)
 

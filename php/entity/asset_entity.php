@@ -55,6 +55,9 @@ class AssetEntity
         return new AssetEntity($this->_client, $opts);
     }
 
+    /**
+     * @param Asset|array $args Asset data (assoc-array) to store.
+     */
     public function data_set($args): void
     {
         if ($args) {
@@ -63,12 +66,18 @@ class AssetEntity
         }
     }
 
+    /**
+     * @return Asset|array The current Asset data as an assoc-array.
+     */
     public function data_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetData");
         return Struct::clone($this->_data);
     }
 
+    /**
+     * @param array $args Match filter (any subset of Asset fields).
+     */
     public function match_set($args): void
     {
         if ($args) {
@@ -77,6 +86,9 @@ class AssetEntity
         }
     }
 
+    /**
+     * @return array The current match filter (any subset of Asset fields).
+     */
     public function match_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetMatch");
@@ -84,7 +96,16 @@ class AssetEntity
     }
 
     
-    public function load($reqmatch, $ctrl = null): array
+    /**
+     * Load a single Asset.
+     *
+     * @param AssetLoadMatch|array|null $reqmatch Match criteria (id/query
+     *   fields) as an assoc-array; a typed AssetLoadMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Asset|array The loaded Asset as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function load(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -110,7 +131,16 @@ class AssetEntity
 
 
     
-    public function list($reqmatch, $ctrl = null): array
+    /**
+     * List Asset items matching the given filter.
+     *
+     * @param AssetListMatch|array|null $reqmatch Match filter (any subset
+     *   of Asset fields) as an assoc-array; AssetListMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Asset[]|array A list of Asset items as assoc-arrays at
+     *   the SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function list(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -133,7 +163,16 @@ class AssetEntity
 
 
     
-    public function create($reqdata, $ctrl = null): array
+    /**
+     * Create a new Asset.
+     *
+     * @param AssetCreateData|array|null $reqdata Body data as an assoc-array;
+     *   a typed AssetCreateData names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Asset|array The created Asset as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function create(?array $reqdata = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -158,7 +197,16 @@ class AssetEntity
     
 
     
-    public function remove($reqmatch, $ctrl = null): array
+    /**
+     * Remove an Asset matching the given criteria.
+     *
+     * @param AssetRemoveMatch|array|null $reqmatch Match criteria (id/query
+     *   fields) as an assoc-array; AssetRemoveMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Asset|array The removed Asset as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function remove(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -183,7 +231,7 @@ class AssetEntity
 
 
 
-    private function _run_op($ctx, callable $post_done): array
+    private function _run_op($ctx, callable $post_done): mixed
     {
         $utility = $this->_utility;
 

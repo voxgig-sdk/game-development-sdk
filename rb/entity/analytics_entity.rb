@@ -45,6 +45,7 @@ class AnalyticsEntity
     end
   end
 
+  # @return [Analytics, Hash] the current Analytics data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class AnalyticsEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Analytics fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -65,6 +67,11 @@ class AnalyticsEntity
   
 
   
+  # List Analytics items matching the given filter.
+  #
+  # @param reqmatch [AnalyticsListMatch, Hash, nil] match filter (any subset of Analytics fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Analytics>, Array] the matching Analytics items; raises GameDevelopmentError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -85,6 +92,11 @@ class AnalyticsEntity
 
 
   
+  # Create a new Analytics.
+  #
+  # @param reqdata [AnalyticsCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Analytics, Hash] the created Analytics; raises GameDevelopmentError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

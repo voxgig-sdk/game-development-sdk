@@ -55,6 +55,9 @@ class AnalyticsEntity
         return new AnalyticsEntity($this->_client, $opts);
     }
 
+    /**
+     * @param Analytics|array $args Analytics data (assoc-array) to store.
+     */
     public function data_set($args): void
     {
         if ($args) {
@@ -63,12 +66,18 @@ class AnalyticsEntity
         }
     }
 
+    /**
+     * @return Analytics|array The current Analytics data as an assoc-array.
+     */
     public function data_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetData");
         return Struct::clone($this->_data);
     }
 
+    /**
+     * @param array $args Match filter (any subset of Analytics fields).
+     */
     public function match_set($args): void
     {
         if ($args) {
@@ -77,6 +86,9 @@ class AnalyticsEntity
         }
     }
 
+    /**
+     * @return array The current match filter (any subset of Analytics fields).
+     */
     public function match_get()
     {
         ($this->_utility->feature_hook)($this->_entctx, "GetMatch");
@@ -86,7 +98,16 @@ class AnalyticsEntity
     
 
     
-    public function list($reqmatch, $ctrl = null): array
+    /**
+     * List Analytics items matching the given filter.
+     *
+     * @param AnalyticsListMatch|array|null $reqmatch Match filter (any subset
+     *   of Analytics fields) as an assoc-array; AnalyticsListMatch names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Analytics[]|array A list of Analytics items as assoc-arrays at
+     *   the SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function list(?array $reqmatch = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -109,7 +130,16 @@ class AnalyticsEntity
 
 
     
-    public function create($reqdata, $ctrl = null): array
+    /**
+     * Create a new Analytics.
+     *
+     * @param AnalyticsCreateData|array|null $reqdata Body data as an assoc-array;
+     *   a typed AnalyticsCreateData names the shape.
+     * @param mixed $ctrl Optional per-call control overrides.
+     * @return Analytics|array The created Analytics as an assoc-array at the
+     *   SDK boundary; throws GameDevelopmentError on failure (item-5 convention).
+     */
+    public function create(?array $reqdata = null, $ctrl = null): mixed
     {
         $utility = $this->_utility;
         $ctx = ($utility->make_context)([
@@ -135,7 +165,7 @@ class AnalyticsEntity
 
     
 
-    private function _run_op($ctx, callable $post_done): array
+    private function _run_op($ctx, callable $post_done): mixed
     {
         $utility = $this->_utility;
 

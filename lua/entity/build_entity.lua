@@ -83,6 +83,10 @@ end
 
 
 
+---@param reqdata BuildCreateData
+---@param ctrl? table
+---@return Build
+---@return string? err
 function BuildEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

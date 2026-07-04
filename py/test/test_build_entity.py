@@ -45,9 +45,7 @@ class TestBuildEntity:
             vs.getpath(setup["data"], "new.build"), "build_ref01"))
         build_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        build_ref01_data_result, err = build_ref01_ent.create(build_ref01_data, None)
-        assert err is None
-        build_ref01_data = helpers.to_map(build_ref01_data_result)
+        build_ref01_data = helpers.to_map(build_ref01_ent.create(build_ref01_data, None))
         assert build_ref01_data is not None
 
 

@@ -44,8 +44,7 @@ class CollaboratorEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.collaborator"), "collaborator_ref01"));
         $collaborator_ref01_data["project_id"] = $setup["idmap"]["project01"];
 
-        [$collaborator_ref01_data_result, $err] = $collaborator_ref01_ent->create($collaborator_ref01_data, null);
-        $this->assertNull($err);
+        $collaborator_ref01_data_result = $collaborator_ref01_ent->create($collaborator_ref01_data, null);
         $collaborator_ref01_data = Helpers::to_map($collaborator_ref01_data_result);
         $this->assertNotNull($collaborator_ref01_data);
 

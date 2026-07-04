@@ -45,6 +45,7 @@ class ProjectEntity
     end
   end
 
+  # @return [Project, Hash] the current Project data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class ProjectEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Project fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Project.
+  #
+  # @param reqmatch [ProjectLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Project, Hash] the loaded Project; raises GameDevelopmentError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -86,6 +93,11 @@ class ProjectEntity
 
 
   
+  # List Project items matching the given filter.
+  #
+  # @param reqmatch [ProjectListMatch, Hash, nil] match filter (any subset of Project fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<Project>, Array] the matching Project items; raises GameDevelopmentError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -106,6 +118,11 @@ class ProjectEntity
 
 
   
+  # Create a new Project.
+  #
+  # @param reqdata [ProjectCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Project, Hash] the created Project; raises GameDevelopmentError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -128,6 +145,11 @@ class ProjectEntity
 
 
   
+  # Update an existing Project.
+  #
+  # @param reqdata [ProjectUpdateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Project, Hash] the updated Project; raises GameDevelopmentError on failure
   def update(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -151,6 +173,11 @@ class ProjectEntity
 
 
   
+  # Remove an Project matching the given criteria.
+  #
+  # @param reqmatch [ProjectRemoveMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Project, Hash] the removed Project; raises GameDevelopmentError on failure
   def remove(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

@@ -44,8 +44,7 @@ class DeploymentEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.deployment"), "deployment_ref01"));
         $deployment_ref01_data["project_id"] = $setup["idmap"]["project01"];
 
-        [$deployment_ref01_data_result, $err] = $deployment_ref01_ent->create($deployment_ref01_data, null);
-        $this->assertNull($err);
+        $deployment_ref01_data_result = $deployment_ref01_ent->create($deployment_ref01_data, null);
         $deployment_ref01_data = Helpers::to_map($deployment_ref01_data_result);
         $this->assertNotNull($deployment_ref01_data);
         $this->assertNotNull($deployment_ref01_data["id"]);
@@ -55,8 +54,7 @@ class DeploymentEntityTest extends TestCase
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$deployment_ref01_list_result, $err] = $deployment_ref01_ent->list($deployment_ref01_match, null);
-        $this->assertNull($err);
+        $deployment_ref01_list_result = $deployment_ref01_ent->list($deployment_ref01_match, null);
         $this->assertIsArray($deployment_ref01_list_result);
 
         $found_item = sdk_select(
@@ -68,8 +66,7 @@ class DeploymentEntityTest extends TestCase
         $deployment_ref01_match_dt0 = [
             "id" => $deployment_ref01_data["id"],
         ];
-        [$deployment_ref01_data_dt0_loaded, $err] = $deployment_ref01_ent->load($deployment_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $deployment_ref01_data_dt0_loaded = $deployment_ref01_ent->load($deployment_ref01_match_dt0, null);
         $deployment_ref01_data_dt0_load_result = Helpers::to_map($deployment_ref01_data_dt0_loaded);
         $this->assertNotNull($deployment_ref01_data_dt0_load_result);
         $this->assertEquals($deployment_ref01_data_dt0_load_result["id"], $deployment_ref01_data["id"]);

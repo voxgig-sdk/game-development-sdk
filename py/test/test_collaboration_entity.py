@@ -52,24 +52,21 @@ class TestCollaborationEntity:
             "project_id": setup["idmap"]["project01"],
         }
 
-        collaboration_ref01_list_result, err = collaboration_ref01_ent.list(collaboration_ref01_match, None)
-        assert err is None
+        collaboration_ref01_list_result = collaboration_ref01_ent.list(collaboration_ref01_match, None)
         assert isinstance(collaboration_ref01_list_result, list)
 
         # REMOVE
         collaboration_ref01_match_rm0 = {
             "id": collaboration_ref01_data["id"],
         }
-        _, err = collaboration_ref01_ent.remove(collaboration_ref01_match_rm0, None)
-        assert err is None
+        collaboration_ref01_ent.remove(collaboration_ref01_match_rm0, None)
 
         # LIST
         collaboration_ref01_match_rt0 = {
             "project_id": setup["idmap"]["project01"],
         }
 
-        collaboration_ref01_list_rt0_result, err = collaboration_ref01_ent.list(collaboration_ref01_match_rt0, None)
-        assert err is None
+        collaboration_ref01_list_rt0_result = collaboration_ref01_ent.list(collaboration_ref01_match_rt0, None)
         assert isinstance(collaboration_ref01_list_rt0_result, list)
 
 

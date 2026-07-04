@@ -103,7 +103,7 @@ class GameDevelopmentSDK
         return $this->_rootctx;
     }
 
-    public function prepare(array $fetchargs = []): array
+    public function prepare(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
         $fetchargs = $fetchargs ?? [];
@@ -149,19 +149,27 @@ class GameDevelopmentSDK
 
         [$_, $err] = ($utility->prepare_auth)($ctx);
         if ($err) {
-            return [null, $err];
+            return ($utility->make_error)($ctx, $err);
         }
 
-        return ($utility->make_fetch_def)($ctx);
+        [$fetchdef, $fd_err] = ($utility->make_fetch_def)($ctx);
+        if ($fd_err) {
+            return ($utility->make_error)($ctx, $fd_err);
+        }
+        return $fetchdef;
     }
 
-    public function direct(array $fetchargs = []): array
+    public function direct(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
 
-        [$fetchdef, $err] = $this->prepare($fetchargs);
-        if ($err) {
-            return [["ok" => false, "err" => $err], null];
+        // direct() is the raw-HTTP escape hatch: it never throws, it returns
+        // an {ok, err, ...} dict. prepare() now raises on error, so catch it
+        // and surface the failure through the dict instead.
+        try {
+            $fetchdef = $this->prepare($fetchargs);
+        } catch (\Throwable $err) {
+            return ["ok" => false, "err" => $err];
         }
 
         $fetchargs = $fetchargs ?? [];
@@ -176,14 +184,14 @@ class GameDevelopmentSDK
         [$fetched, $fetch_err] = ($utility->fetcher)($ctx, $url, $fetchdef);
 
         if ($fetch_err) {
-            return [["ok" => false, "err" => $fetch_err], null];
+            return ["ok" => false, "err" => $fetch_err];
         }
 
         if ($fetched === null) {
-            return [[
+            return [
                 "ok" => false,
                 "err" => $ctx->make_error("direct_no_response", "response: undefined"),
-            ], null];
+            ];
         }
 
         if (is_array($fetched)) {
@@ -208,73 +216,161 @@ class GameDevelopmentSDK
                 }
             }
 
-            return [[
+            return [
                 "ok" => $status >= 200 && $status < 300,
                 "status" => $status,
                 "headers" => Struct::getprop($fetched, "headers"),
                 "data" => $json_data,
-            ], null];
+            ];
         }
 
-        return [[
+        return [
             "ok" => false,
             "err" => $ctx->make_error("direct_invalid", "invalid response type"),
-        ], null];
+        ];
     }
 
 
-    public function Analytics($data = null)
+    private $_analytics = null;
+
+    // Idiomatic facade: $client->analytics()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Analytics() (PHP method
+    // names are case-insensitive).
+    public function analytics($data = null)
     {
         require_once __DIR__ . '/entity/analytics_entity.php';
+        if ($data === null) {
+            if ($this->_analytics === null) {
+                $this->_analytics = new AnalyticsEntity($this, null);
+            }
+            return $this->_analytics;
+        }
         return new AnalyticsEntity($this, $data);
     }
 
 
-    public function Asset($data = null)
+    private $_asset = null;
+
+    // Idiomatic facade: $client->asset()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Asset() (PHP method
+    // names are case-insensitive).
+    public function asset($data = null)
     {
         require_once __DIR__ . '/entity/asset_entity.php';
+        if ($data === null) {
+            if ($this->_asset === null) {
+                $this->_asset = new AssetEntity($this, null);
+            }
+            return $this->_asset;
+        }
         return new AssetEntity($this, $data);
     }
 
 
-    public function Build($data = null)
+    private $_build = null;
+
+    // Idiomatic facade: $client->build()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Build() (PHP method
+    // names are case-insensitive).
+    public function build($data = null)
     {
         require_once __DIR__ . '/entity/build_entity.php';
+        if ($data === null) {
+            if ($this->_build === null) {
+                $this->_build = new BuildEntity($this, null);
+            }
+            return $this->_build;
+        }
         return new BuildEntity($this, $data);
     }
 
 
-    public function Collaboration($data = null)
+    private $_collaboration = null;
+
+    // Idiomatic facade: $client->collaboration()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Collaboration() (PHP method
+    // names are case-insensitive).
+    public function collaboration($data = null)
     {
         require_once __DIR__ . '/entity/collaboration_entity.php';
+        if ($data === null) {
+            if ($this->_collaboration === null) {
+                $this->_collaboration = new CollaborationEntity($this, null);
+            }
+            return $this->_collaboration;
+        }
         return new CollaborationEntity($this, $data);
     }
 
 
-    public function Collaborator($data = null)
+    private $_collaborator = null;
+
+    // Idiomatic facade: $client->collaborator()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Collaborator() (PHP method
+    // names are case-insensitive).
+    public function collaborator($data = null)
     {
         require_once __DIR__ . '/entity/collaborator_entity.php';
+        if ($data === null) {
+            if ($this->_collaborator === null) {
+                $this->_collaborator = new CollaboratorEntity($this, null);
+            }
+            return $this->_collaborator;
+        }
         return new CollaboratorEntity($this, $data);
     }
 
 
-    public function Deployment($data = null)
+    private $_deployment = null;
+
+    // Idiomatic facade: $client->deployment()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Deployment() (PHP method
+    // names are case-insensitive).
+    public function deployment($data = null)
     {
         require_once __DIR__ . '/entity/deployment_entity.php';
+        if ($data === null) {
+            if ($this->_deployment === null) {
+                $this->_deployment = new DeploymentEntity($this, null);
+            }
+            return $this->_deployment;
+        }
         return new DeploymentEntity($this, $data);
     }
 
 
-    public function Project($data = null)
+    private $_project = null;
+
+    // Idiomatic facade: $client->project()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Project() (PHP method
+    // names are case-insensitive).
+    public function project($data = null)
     {
         require_once __DIR__ . '/entity/project_entity.php';
+        if ($data === null) {
+            if ($this->_project === null) {
+                $this->_project = new ProjectEntity($this, null);
+            }
+            return $this->_project;
+        }
         return new ProjectEntity($this, $data);
     }
 
 
-    public function Test_($data = null)
+    private $_test = null;
+
+    // Idiomatic facade: $client->test_()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Test() (PHP method
+    // names are case-insensitive).
+    public function test_($data = null)
     {
         require_once __DIR__ . '/entity/test_entity.php';
+        if ($data === null) {
+            if ($this->_test === null) {
+                $this->_test = new TestEntity($this, null);
+            }
+            return $this->_test;
+        }
         return new TestEntity($this, $data);
     }
 

@@ -14,9 +14,14 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Collaboration,
+  CollaborationListMatch,
+  CollaborationRemoveMatch,
+} from '../GameDevelopmentTypes'
 
 // TODO: needs Entity superclass
-class CollaborationEntity extends GameDevelopmentEntityBase {
+class CollaborationEntity extends GameDevelopmentEntityBase<Collaboration> {
 
   constructor(client: GameDevelopmentSDK, entopts: any) {
     super(client, entopts)
@@ -33,7 +38,7 @@ class CollaborationEntity extends GameDevelopmentEntityBase {
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: CollaborationListMatch, ctrl?: Control): Promise<Collaboration[]> {
 
     const utility = this._utility
 
@@ -133,7 +138,9 @@ class CollaborationEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Collaboration[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
@@ -142,7 +149,7 @@ class CollaborationEntity extends GameDevelopmentEntityBase {
 
 
 
-  async remove(this: any, reqmatch?: any, ctrl?: Control) {
+  async remove(this: any, reqmatch?: CollaborationRemoveMatch, ctrl?: Control): Promise<Collaboration> {
 
     const utility = this._utility
 
@@ -247,7 +254,9 @@ class CollaborationEntity extends GameDevelopmentEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Collaboration> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

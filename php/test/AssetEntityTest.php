@@ -44,8 +44,7 @@ class AssetEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.asset"), "asset_ref01"));
         $asset_ref01_data["project_id"] = $setup["idmap"]["project01"];
 
-        [$asset_ref01_data_result, $err] = $asset_ref01_ent->create($asset_ref01_data, null);
-        $this->assertNull($err);
+        $asset_ref01_data_result = $asset_ref01_ent->create($asset_ref01_data, null);
         $asset_ref01_data = Helpers::to_map($asset_ref01_data_result);
         $this->assertNotNull($asset_ref01_data);
         $this->assertNotNull($asset_ref01_data["id"]);
@@ -55,8 +54,7 @@ class AssetEntityTest extends TestCase
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$asset_ref01_list_result, $err] = $asset_ref01_ent->list($asset_ref01_match, null);
-        $this->assertNull($err);
+        $asset_ref01_list_result = $asset_ref01_ent->list($asset_ref01_match, null);
         $this->assertIsArray($asset_ref01_list_result);
 
         $found_item = sdk_select(
@@ -68,8 +66,7 @@ class AssetEntityTest extends TestCase
         $asset_ref01_match_dt0 = [
             "id" => $asset_ref01_data["id"],
         ];
-        [$asset_ref01_data_dt0_loaded, $err] = $asset_ref01_ent->load($asset_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $asset_ref01_data_dt0_loaded = $asset_ref01_ent->load($asset_ref01_match_dt0, null);
         $asset_ref01_data_dt0_load_result = Helpers::to_map($asset_ref01_data_dt0_loaded);
         $this->assertNotNull($asset_ref01_data_dt0_load_result);
         $this->assertEquals($asset_ref01_data_dt0_load_result["id"], $asset_ref01_data["id"]);
@@ -78,16 +75,14 @@ class AssetEntityTest extends TestCase
         $asset_ref01_match_rm0 = [
             "id" => $asset_ref01_data["id"],
         ];
-        [$_, $err] = $asset_ref01_ent->remove($asset_ref01_match_rm0, null);
-        $this->assertNull($err);
+        $asset_ref01_ent->remove($asset_ref01_match_rm0, null);
 
         // LIST
         $asset_ref01_match_rt0 = [
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$asset_ref01_list_rt0_result, $err] = $asset_ref01_ent->list($asset_ref01_match_rt0, null);
-        $this->assertNull($err);
+        $asset_ref01_list_rt0_result = $asset_ref01_ent->list($asset_ref01_match_rt0, null);
         $this->assertIsArray($asset_ref01_list_rt0_result);
 
         $not_found_item = sdk_select(

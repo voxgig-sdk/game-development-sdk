@@ -9,11 +9,9 @@ The Python SDK for the GameDevelopment API — an entity-oriented client followi
 
 
 ## Install
-```bash
-pip install voxgig-sdk-game-development
-```
-
-Or install from source:
+This package is not yet published to PyPI. Install it from the GitHub
+release tag (`py/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/game-development-sdk/releases)) or
+from a source checkout:
 
 ```bash
 pip install -e .
@@ -32,28 +30,27 @@ import os
 from gamedevelopment_sdk import GameDevelopmentSDK
 
 client = GameDevelopmentSDK({
-    "apikey": os.environ.get("GAME-DEVELOPMENT_APIKEY"),
+    "apikey": os.environ.get("GAME_DEVELOPMENT_APIKEY"),
 })
 ```
 
 ### 2. List analyticss
 
 ```python
-result, err = client.Analytics().list()
-if err:
-    raise Exception(err)
-
-if isinstance(result, list):
+try:
+    result = client.analytics.list()
     for item in result:
         d = item.data_get()
         print(d["id"], d["name"])
+except Exception as err:
+    print(f"list failed: {err}")
 ```
 
 ### 4. Create, update, and remove
 
 ```python
 # Create
-created, _ = client.Analytics().create({"name": "Example"})
+created = client.analytics.create({"name": "Example"})
 
 ```
 
@@ -65,29 +62,28 @@ created, _ = client.Analytics().create({"name": "Example"})
 For endpoints not covered by entity methods:
 
 ```python
-result, err = client.direct({
+result = client.direct({
     "path": "/api/resource/{id}",
     "method": "GET",
     "params": {"id": "example"},
 })
-if err:
-    raise Exception(err)
 
 if result["ok"]:
     print(result["status"])  # 200
     print(result["data"])    # response body
+else:
+    print(result["err"])     # error value
 ```
 
 ### Prepare a request without sending it
 
 ```python
-fetchdef, err = client.prepare({
+# prepare() returns the fetch definition and raises on error.
+fetchdef = client.prepare({
     "path": "/api/resource/{id}",
     "method": "DELETE",
     "params": {"id": "example"},
 })
-if err:
-    raise Exception(err)
 
 print(fetchdef["url"])
 print(fetchdef["method"])
@@ -101,7 +97,7 @@ Create a mock client for unit testing — no server required:
 ```python
 client = GameDevelopmentSDK.test()
 
-result, err = client.GameDevelopment().load({"id": "test01"})
+result = client.analytics.load({"id": "test01"})
 # result contains mock response data
 ```
 
@@ -131,8 +127,8 @@ client = GameDevelopmentSDK({
 Create a `.env.local` file at the project root:
 
 ```
-GAME-DEVELOPMENT_TEST_LIVE=TRUE
-GAME-DEVELOPMENT_APIKEY=<your-key>
+GAME_DEVELOPMENT_TEST_LIVE=TRUE
+GAME_DEVELOPMENT_APIKEY=<your-key>
 ```
 
 Then run:
@@ -178,8 +174,8 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | --- | --- | --- |
 | `options_map` | `() -> dict` | Deep copy of current SDK options. |
 | `get_utility` | `() -> Utility` | Copy of the SDK utility object. |
-| `prepare` | `(fetchargs) -> (dict, err)` | Build an HTTP request definition without sending. |
-| `direct` | `(fetchargs) -> (dict, err)` | Build and send an HTTP request. |
+| `prepare` | `(fetchargs) -> dict` | Build an HTTP request definition without sending. Raises on error. |
+| `direct` | `(fetchargs) -> dict` | Build and send an HTTP request. Returns a result dict (branch on `ok`). |
 | `Analytics` | `(data) -> AnalyticsEntity` | Create a Analytics entity instance. |
 | `Asset` | `(data) -> AssetEntity` | Create a Asset entity instance. |
 | `Build` | `(data) -> BuildEntity` | Create a Build entity instance. |
@@ -195,11 +191,11 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> (any, err)` | Load a single entity by match criteria. |
-| `list` | `(reqmatch, ctrl) -> (any, err)` | List entities matching the criteria. |
-| `create` | `(reqdata, ctrl) -> (any, err)` | Create a new entity. |
-| `update` | `(reqdata, ctrl) -> (any, err)` | Update an existing entity. |
-| `remove` | `(reqmatch, ctrl) -> (any, err)` | Remove an entity. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria. Raises on error. |
+| `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria. Raises on error. |
+| `create` | `(reqdata, ctrl) -> any` | Create a new entity. Raises on error. |
+| `update` | `(reqdata, ctrl) -> any` | Update an existing entity. Raises on error. |
+| `remove` | `(reqmatch, ctrl) -> any` | Remove an entity. Raises on error. |
 | `data_get` | `() -> dict` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> dict` | Get entity match criteria. |
@@ -209,8 +205,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(any, err)`. The first value is a
-`dict` with these keys:
+Entity operations return the bare result data (a `dict` for single-entity
+ops, a `list` for `list`) and raise on error. Wrap calls in
+`try`/`except` to handle failures.
+
+The `direct()` escape hatch never raises — it returns a result `dict`
+you branch on via `result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -363,7 +363,7 @@ API path: `/projects/{projectId}/tests`
 
 ### Analytics
 
-Create an instance: `const analytics = client.Analytics()`
+Create an instance: `const analytics = client.analytics`
 
 #### Operations
 
@@ -386,13 +386,13 @@ Create an instance: `const analytics = client.Analytics()`
 #### Example: List
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.analytics.list()
 ```
 
 #### Example: Create
 
 ```ts
-const analytics = await client.Analytics().create({
+const analytics = await client.analytics.create({
   event_name: /* `$STRING` */,
   event_type: /* `$STRING` */,
 })
@@ -401,7 +401,7 @@ const analytics = await client.Analytics().create({
 
 ### Asset
 
-Create an instance: `const asset = client.Asset()`
+Create an instance: `const asset = client.asset`
 
 #### Operations
 
@@ -430,26 +430,26 @@ Create an instance: `const asset = client.Asset()`
 #### Example: Load
 
 ```ts
-const asset = await client.Asset().load({ id: 'asset_id' })
+const asset = await client.asset.load({ id: 'asset_id' })
 ```
 
 #### Example: List
 
 ```ts
-const assets = await client.Asset().list()
+const assets = await client.asset.list()
 ```
 
 #### Example: Create
 
 ```ts
-const asset = await client.Asset().create({
+const asset = await client.asset.create({
 })
 ```
 
 
 ### Build
 
-Create an instance: `const build = client.Build()`
+Create an instance: `const build = client.build`
 
 #### Operations
 
@@ -468,7 +468,7 @@ Create an instance: `const build = client.Build()`
 #### Example: Create
 
 ```ts
-const build = await client.Build().create({
+const build = await client.build.create({
   configuration: /* `$STRING` */,
   platform: /* `$STRING` */,
   version: /* `$STRING` */,
@@ -478,7 +478,7 @@ const build = await client.Build().create({
 
 ### Collaboration
 
-Create an instance: `const collaboration = client.Collaboration()`
+Create an instance: `const collaboration = client.collaboration`
 
 #### Operations
 
@@ -503,13 +503,13 @@ Create an instance: `const collaboration = client.Collaboration()`
 #### Example: List
 
 ```ts
-const collaborations = await client.Collaboration().list()
+const collaborations = await client.collaboration.list()
 ```
 
 
 ### Collaborator
 
-Create an instance: `const collaborator = client.Collaborator()`
+Create an instance: `const collaborator = client.collaborator`
 
 #### Operations
 
@@ -527,7 +527,7 @@ Create an instance: `const collaborator = client.Collaborator()`
 #### Example: Create
 
 ```ts
-const collaborator = await client.Collaborator().create({
+const collaborator = await client.collaborator.create({
   email: /* `$STRING` */,
   role: /* `$STRING` */,
 })
@@ -536,7 +536,7 @@ const collaborator = await client.Collaborator().create({
 
 ### Deployment
 
-Create an instance: `const deployment = client.Deployment()`
+Create an instance: `const deployment = client.deployment`
 
 #### Operations
 
@@ -568,26 +568,26 @@ Create an instance: `const deployment = client.Deployment()`
 #### Example: Load
 
 ```ts
-const deployment = await client.Deployment().load({ id: 'deployment_id' })
+const deployment = await client.deployment.load({ id: 'deployment_id' })
 ```
 
 #### Example: List
 
 ```ts
-const deployments = await client.Deployment().list()
+const deployments = await client.deployment.list()
 ```
 
 #### Example: Create
 
 ```ts
-const deployment = await client.Deployment().create({
+const deployment = await client.deployment.create({
 })
 ```
 
 
 ### Project
 
-Create an instance: `const project = client.Project()`
+Create an instance: `const project = client.project`
 
 #### Operations
 
@@ -615,26 +615,26 @@ Create an instance: `const project = client.Project()`
 #### Example: Load
 
 ```ts
-const project = await client.Project().load({ id: 'project_id' })
+const project = await client.project.load({ id: 'project_id' })
 ```
 
 #### Example: List
 
 ```ts
-const projects = await client.Project().list()
+const projects = await client.project.list()
 ```
 
 #### Example: Create
 
 ```ts
-const project = await client.Project().create({
+const project = await client.project.create({
 })
 ```
 
 
 ### Test
 
-Create an instance: `const test = client.Test()`
+Create an instance: `const test = client.test`
 
 #### Operations
 
@@ -662,19 +662,19 @@ Create an instance: `const test = client.Test()`
 #### Example: Load
 
 ```ts
-const test = await client.Test().load({ id: 'test_id' })
+const test = await client.test.load({ id: 'test_id' })
 ```
 
 #### Example: List
 
 ```ts
-const tests = await client.Test().list()
+const tests = await client.test.list()
 ```
 
 #### Example: Create
 
 ```ts
-const test = await client.Test().create({
+const test = await client.test.create({
 })
 ```
 
@@ -749,11 +749,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-moon = client.Moon()
-moon.load({"planet_id": "earth", "id": "luna"})
+analytics = client.analytics
+analytics.load({"id": "example_id"})
 
-# moon.data_get() now returns the loaded moon data
-# moon.match_get() returns the last match criteria
+# analytics.data_get() now returns the loaded analytics data
+# analytics.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

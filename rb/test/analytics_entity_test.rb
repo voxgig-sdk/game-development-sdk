@@ -37,8 +37,7 @@ class AnalyticsEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.analytics"), "analytics_ref01"))
     analytics_ref01_data["project_id"] = setup[:idmap]["project01"]
 
-    analytics_ref01_data_result, err = analytics_ref01_ent.create(analytics_ref01_data, nil)
-    assert_nil err
+    analytics_ref01_data_result = analytics_ref01_ent.create(analytics_ref01_data, nil)
     analytics_ref01_data = Helpers.to_map(analytics_ref01_data_result)
     assert !analytics_ref01_data.nil?
 
@@ -47,8 +46,7 @@ class AnalyticsEntityTest < Minitest::Test
       "project_id" => setup[:idmap]["project01"],
     }
 
-    analytics_ref01_list_result, err = analytics_ref01_ent.list(analytics_ref01_match, nil)
-    assert_nil err
+    analytics_ref01_list_result = analytics_ref01_ent.list(analytics_ref01_match, nil)
     assert analytics_ref01_list_result.is_a?(Array)
 
     found_item = Vs.select(

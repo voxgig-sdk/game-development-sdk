@@ -52,24 +52,21 @@ class CollaborationEntityTest extends TestCase
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$collaboration_ref01_list_result, $err] = $collaboration_ref01_ent->list($collaboration_ref01_match, null);
-        $this->assertNull($err);
+        $collaboration_ref01_list_result = $collaboration_ref01_ent->list($collaboration_ref01_match, null);
         $this->assertIsArray($collaboration_ref01_list_result);
 
         // REMOVE
         $collaboration_ref01_match_rm0 = [
             "id" => $collaboration_ref01_data["id"],
         ];
-        [$_, $err] = $collaboration_ref01_ent->remove($collaboration_ref01_match_rm0, null);
-        $this->assertNull($err);
+        $collaboration_ref01_ent->remove($collaboration_ref01_match_rm0, null);
 
         // LIST
         $collaboration_ref01_match_rt0 = [
             "project_id" => $setup["idmap"]["project01"],
         ];
 
-        [$collaboration_ref01_list_rt0_result, $err] = $collaboration_ref01_ent->list($collaboration_ref01_match_rt0, null);
-        $this->assertNull($err);
+        $collaboration_ref01_list_rt0_result = $collaboration_ref01_ent->list($collaboration_ref01_match_rt0, null);
         $this->assertIsArray($collaboration_ref01_list_rt0_result);
 
     }
