@@ -161,8 +161,7 @@ type ProjectLoadMatch struct {
 	Id string `json:"id"`
 }
 
-// ProjectListMatch mirrors the project fields as an all-optional match
-// filter (Go analog of Partial<Project>).
+// ProjectListMatch is the typed request payload for Project.ListTyped.
 type ProjectListMatch struct {
 	CreatedAt *string `json:"created_at,omitempty"`
 	Description *string `json:"description,omitempty"`
@@ -174,8 +173,7 @@ type ProjectListMatch struct {
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
-// ProjectCreateData mirrors the project fields as an all-optional match
-// filter (Go analog of Partial<Project>).
+// ProjectCreateData is the typed request payload for Project.CreateTyped.
 type ProjectCreateData struct {
 	CreatedAt *string `json:"created_at,omitempty"`
 	Description *string `json:"description,omitempty"`

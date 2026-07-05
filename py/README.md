@@ -4,6 +4,11 @@
 
 The Python SDK for the GameDevelopment API — an entity-oriented client following Pythonic conventions.
 
+The SDK exposes the API as capitalised, semantic **Entities** — for example `client.Analytics()` — each
+carrying a small, uniform set of operations (`list`, `load`, `create`, `update`, `remove`) instead of raw URL
+paths and query strings. You work with named resources and verbs, which
+keeps the cognitive load low.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -41,7 +46,7 @@ error — iterate it directly.
 
 ```python
 try:
-    analyticss = client.Analytics().list({})
+    analyticss = client.Analytics().list()
     for analytics in analyticss:
         print(analytics)
 except Exception as err:
@@ -52,8 +57,36 @@ except Exception as err:
 
 ```python
 # Create — returns the bare created record (a dict)
-created = client.Analytics().create({"name": "Example"})
+created = client.Analytics().create({"project_id": "example"})
 
+```
+
+
+## Error handling
+
+Entity operations raise on failure, so wrap them in `try` / `except`:
+
+```python
+try:
+    analyticss = client.Analytics().list()
+    print(analyticss)
+except Exception as err:
+    print(f"list failed: {err}")
+```
+
+`direct()` does **not** raise — it returns the result envelope. Branch
+on `ok`; on failure `status` holds the HTTP status (for error responses)
+and `err` holds a transport error, so read both defensively:
+
+```python
+result = client.direct({
+    "path": "/api/resource/{id}",
+    "method": "GET",
+    "params": {"id": "example_id"},
+})
+
+if not result["ok"]:
+    print("request failed:", result.get("status"), result.get("err"))
 ```
 
 
@@ -74,7 +107,10 @@ if result["ok"]:
     print(result["status"])  # 200
     print(result["data"])    # response body
 else:
-    print(result["err"])     # error value
+    # A non-2xx response carries status + data (the error body); a
+    # transport-level failure carries err instead. Only one is present, so
+    # read both with .get() rather than indexing a key that may be absent.
+    print(result.get("status"), result.get("err"))
 ```
 
 ### Prepare a request without sending it
@@ -100,7 +136,7 @@ Create a mock client for unit testing — no server required:
 client = GameDevelopmentSDK.test()
 
 # Entity ops return the bare record and raise on error.
-analytics = client.Analytics().load({"id": "test01"})
+analytics = client.Analytics().list()
 # analytics contains the mock response record
 ```
 
@@ -373,31 +409,31 @@ Create an instance: `analytics = client.Analytics()`
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `int` |  |
+| `event_name` | `str` |  |
+| `event_type` | `str` |  |
+| `name` | `str` |  |
+| `property` | `dict` |  |
+| `timestamp` | `str` |  |
 
 #### Example: List
 
 ```python
-analyticss = client.Analytics().list({})
+analyticss = client.Analytics().list()
 ```
 
 #### Example: Create
 
 ```python
 analytics = client.Analytics().create({
-    "event_name": ...,  # `$STRING`
-    "event_type": ...,  # `$STRING`
+    "event_name": "example",  # str
+    "event_type": "example",  # str
 })
 ```
 
@@ -411,7 +447,7 @@ Create an instance: `asset = client.Asset()`
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 
@@ -419,16 +455,16 @@ Create an instance: `asset = client.Asset()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `str` |  |
+| `id` | `str` |  |
+| `mime_type` | `str` |  |
+| `name` | `str` |  |
+| `project_id` | `str` |  |
+| `size` | `int` |  |
+| `tag` | `list` |  |
+| `type` | `str` |  |
+| `updated_at` | `str` |  |
+| `url` | `str` |  |
 
 #### Example: Load
 
@@ -439,7 +475,7 @@ asset = client.Asset().load({"id": "asset_id"})
 #### Example: List
 
 ```python
-assets = client.Asset().list({})
+assets = client.Asset().list()
 ```
 
 #### Example: Create
@@ -464,17 +500,17 @@ Create an instance: `build = client.Build()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `str` |  |
+| `platform` | `str` |  |
+| `version` | `str` |  |
 
 #### Example: Create
 
 ```python
 build = client.Build().create({
-    "configuration": ...,  # `$STRING`
-    "platform": ...,  # `$STRING`
-    "version": ...,  # `$STRING`
+    "configuration": "example",  # str
+    "platform": "example",  # str
+    "version": "example",  # str
 })
 ```
 
@@ -487,26 +523,26 @@ Create an instance: `collaboration = client.Collaboration()`
 
 | Method | Description |
 | --- | --- |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 | `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `str` |  |
+| `email` | `str` |  |
+| `id` | `str` |  |
+| `last_active` | `str` |  |
+| `name` | `str` |  |
+| `role` | `str` |  |
+| `status` | `str` |  |
+| `user_id` | `str` |  |
 
 #### Example: List
 
 ```python
-collaborations = client.Collaboration().list({})
+collaborations = client.Collaboration().list()
 ```
 
 
@@ -524,15 +560,15 @@ Create an instance: `collaborator = client.Collaborator()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `str` |  |
+| `role` | `str` |  |
 
 #### Example: Create
 
 ```python
 collaborator = client.Collaborator().create({
-    "email": ...,  # `$STRING`
-    "role": ...,  # `$STRING`
+    "email": "example",  # str
+    "role": "example",  # str
 })
 ```
 
@@ -546,27 +582,27 @@ Create an instance: `deployment = client.Deployment()`
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `str` |  |
+| `completed_at` | `str` |  |
+| `configuration` | `str` |  |
+| `created_at` | `str` |  |
+| `deployment_url` | `str` |  |
+| `download_url` | `str` |  |
+| `environment` | `str` |  |
+| `id` | `str` |  |
+| `platform` | `str` |  |
+| `project_id` | `str` |  |
+| `release_note` | `str` |  |
+| `size` | `int` |  |
+| `status` | `str` |  |
+| `version` | `str` |  |
 
 #### Example: Load
 
@@ -577,7 +613,7 @@ deployment = client.Deployment().load({"id": "deployment_id"})
 #### Example: List
 
 ```python
-deployments = client.Deployment().list({})
+deployments = client.Deployment().list()
 ```
 
 #### Example: Create
@@ -597,7 +633,7 @@ Create an instance: `project = client.Project()`
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 | `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
@@ -606,14 +642,14 @@ Create an instance: `project = client.Project()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `str` |  |
+| `description` | `str` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `owner` | `dict` |  |
+| `setting` | `dict` |  |
+| `status` | `str` |  |
+| `updated_at` | `str` |  |
 
 #### Example: Load
 
@@ -624,7 +660,7 @@ project = client.Project().load({"id": "project_id"})
 #### Example: List
 
 ```python
-projects = client.Project().list({})
+projects = client.Project().list()
 ```
 
 #### Example: Create
@@ -644,23 +680,23 @@ Create an instance: `test = client.Test()`
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
+| `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `str` |  |
+| `environment` | `str` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `platform` | `str` |  |
+| `project_id` | `str` |  |
+| `result` | `dict` |  |
+| `started_at` | `str` |  |
+| `status` | `str` |  |
+| `test_suite` | `str` |  |
 
 #### Example: Load
 
@@ -671,7 +707,7 @@ test = client.Test().load({"id": "test_id"})
 #### Example: List
 
 ```python
-tests = client.Test().list({})
+tests = client.Test().list()
 ```
 
 #### Example: Create
@@ -682,12 +718,16 @@ test = client.Test().create({
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -704,8 +744,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller as the second element in the return tuple.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -748,14 +789,14 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```python
 analytics = client.Analytics()
-analytics.load({"id": "example_id"})
+analytics.list()
 
-# analytics.data_get() now returns the loaded analytics data
+# analytics.data_get() now returns the analytics data from the last list
 # analytics.match_get() returns the last match criteria
 ```
 

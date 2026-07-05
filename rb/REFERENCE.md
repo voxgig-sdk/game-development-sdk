@@ -8,7 +8,7 @@ Complete API reference for the GameDevelopment Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'game-development_sdk'
+require_relative 'GameDevelopment_sdk'
 
 client = GameDevelopmentSDK.new(options)
 ```
@@ -122,12 +122,12 @@ analytics = client.Analytics
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `count` | ``$INTEGER`` | No |  |
-| `event_name` | ``$STRING`` | Yes |  |
-| `event_type` | ``$STRING`` | Yes |  |
-| `name` | ``$STRING`` | No |  |
-| `property` | ``$OBJECT`` | No |  |
-| `timestamp` | ``$STRING`` | No |  |
+| `count` | `Integer` | No |  |
+| `event_name` | `String` | Yes |  |
+| `event_type` | `String` | Yes |  |
+| `name` | `String` | No |  |
+| `property` | `Hash` | No |  |
+| `timestamp` | `String` | No |  |
 
 ### Operations
 
@@ -137,17 +137,17 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Analytics.create({
-  "event_name" => # `$STRING`,
-  "event_type" => # `$STRING`,
+  "event_name" => "example", # String
+  "event_type" => "example", # String
 })
 ```
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Analytics.list(nil)
+results = client.Analytics.list
 ```
 
 ### Common Methods
@@ -190,16 +190,16 @@ asset = client.Asset
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | ``$STRING`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `mime_type` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `project_id` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
-| `tag` | ``$ARRAY`` | No |  |
-| `type` | ``$STRING`` | No |  |
-| `updated_at` | ``$STRING`` | No |  |
-| `url` | ``$STRING`` | No |  |
+| `created_at` | `String` | No |  |
+| `id` | `String` | No |  |
+| `mime_type` | `String` | No |  |
+| `name` | `String` | No |  |
+| `project_id` | `String` | No |  |
+| `size` | `Integer` | No |  |
+| `tag` | `Array` | No |  |
+| `type` | `String` | No |  |
+| `updated_at` | `String` | No |  |
+| `url` | `String` | No |  |
 
 ### Operations
 
@@ -212,12 +212,12 @@ result = client.Asset.create({
 })
 ```
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Asset.list(nil)
+results = client.Asset.list
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -276,9 +276,9 @@ build = client.Build
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `configuration` | ``$STRING`` | Yes |  |
-| `platform` | ``$STRING`` | Yes |  |
-| `version` | ``$STRING`` | Yes |  |
+| `configuration` | `String` | Yes |  |
+| `platform` | `String` | Yes |  |
+| `version` | `String` | Yes |  |
 
 ### Operations
 
@@ -288,9 +288,9 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Build.create({
-  "configuration" => # `$STRING`,
-  "platform" => # `$STRING`,
-  "version" => # `$STRING`,
+  "configuration" => "example", # String
+  "platform" => "example", # String
+  "version" => "example", # String
 })
 ```
 
@@ -334,23 +334,23 @@ collaboration = client.Collaboration
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | ``$STRING`` | No |  |
-| `email` | ``$STRING`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `last_active` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `role` | ``$STRING`` | No |  |
-| `status` | ``$STRING`` | No |  |
-| `user_id` | ``$STRING`` | No |  |
+| `added_at` | `String` | No |  |
+| `email` | `String` | No |  |
+| `id` | `String` | No |  |
+| `last_active` | `String` | No |  |
+| `name` | `String` | No |  |
+| `role` | `String` | No |  |
+| `status` | `String` | No |  |
+| `user_id` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Collaboration.list(nil)
+results = client.Collaboration.list
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -358,7 +358,7 @@ results = client.Collaboration.list(nil)
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Collaboration.remove({ "id" => "collaboration_id" })
+result = client.Collaboration.remove()
 ```
 
 ### Common Methods
@@ -401,8 +401,8 @@ collaborator = client.Collaborator
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `email` | ``$STRING`` | Yes |  |
-| `role` | ``$STRING`` | Yes |  |
+| `email` | `String` | Yes |  |
+| `role` | `String` | Yes |  |
 
 ### Operations
 
@@ -412,8 +412,8 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Collaborator.create({
-  "email" => # `$STRING`,
-  "role" => # `$STRING`,
+  "email" => "example", # String
+  "role" => "example", # String
 })
 ```
 
@@ -457,39 +457,39 @@ deployment = client.Deployment
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | ``$STRING`` | No |  |
-| `completed_at` | ``$STRING`` | No |  |
-| `configuration` | ``$STRING`` | No |  |
-| `created_at` | ``$STRING`` | No |  |
-| `deployment_url` | ``$STRING`` | No |  |
-| `download_url` | ``$STRING`` | No |  |
-| `environment` | ``$STRING`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `platform` | ``$STRING`` | No |  |
-| `project_id` | ``$STRING`` | No |  |
-| `release_note` | ``$STRING`` | No |  |
-| `size` | ``$INTEGER`` | No |  |
-| `status` | ``$STRING`` | No |  |
-| `version` | ``$STRING`` | No |  |
+| `build_version` | `String` | No |  |
+| `completed_at` | `String` | No |  |
+| `configuration` | `String` | No |  |
+| `created_at` | `String` | No |  |
+| `deployment_url` | `String` | No |  |
+| `download_url` | `String` | No |  |
+| `environment` | `String` | No |  |
+| `id` | `String` | No |  |
+| `platform` | `String` | No |  |
+| `project_id` | `String` | No |  |
+| `release_note` | `String` | No |  |
+| `size` | `Integer` | No |  |
+| `status` | `String` | No |  |
+| `version` | `String` | No |  |
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `build_version` | - | - | Yes | - | - |
-| `completed_at` | - | - | - | - | - |
-| `configuration` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `deployment_url` | - | - | - | - | - |
-| `download_url` | - | - | - | - | - |
-| `environment` | - | - | Yes | - | - |
-| `id` | - | - | - | - | - |
-| `platform` | - | - | Yes | - | - |
-| `project_id` | - | - | - | - | - |
-| `release_note` | - | - | - | - | - |
-| `size` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `version` | - | - | - | - | - |
+| Field | load | list | create |
+| --- | --- | --- | --- |
+| `build_version` | - | - | Yes |
+| `completed_at` | - | - | - |
+| `configuration` | - | - | - |
+| `created_at` | - | - | - |
+| `deployment_url` | - | - | - |
+| `download_url` | - | - | - |
+| `environment` | - | - | Yes |
+| `id` | - | - | - |
+| `platform` | - | - | Yes |
+| `project_id` | - | - | - |
+| `release_note` | - | - | - |
+| `size` | - | - | - |
+| `status` | - | - | - |
+| `version` | - | - | - |
 
 ### Operations
 
@@ -502,12 +502,12 @@ result = client.Deployment.create({
 })
 ```
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Deployment.list(nil)
+results = client.Deployment.list
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -558,14 +558,14 @@ project = client.Project
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | ``$STRING`` | No |  |
-| `description` | ``$STRING`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `owner` | ``$OBJECT`` | No |  |
-| `setting` | ``$OBJECT`` | No |  |
-| `status` | ``$STRING`` | No |  |
-| `updated_at` | ``$STRING`` | No |  |
+| `created_at` | `String` | No |  |
+| `description` | `String` | No |  |
+| `id` | `String` | No |  |
+| `name` | `String` | No |  |
+| `owner` | `Hash` | No |  |
+| `setting` | `Hash` | No |  |
+| `status` | `String` | No |  |
+| `updated_at` | `String` | No |  |
 
 ### Field Usage by Operation
 
@@ -591,12 +591,12 @@ result = client.Project.create({
 })
 ```
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Project.list(nil)
+results = client.Project.list
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`
@@ -666,31 +666,31 @@ test = client.Test
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | ``$STRING`` | No |  |
-| `environment` | ``$STRING`` | No |  |
-| `id` | ``$STRING`` | No |  |
-| `name` | ``$STRING`` | No |  |
-| `platform` | ``$STRING`` | No |  |
-| `project_id` | ``$STRING`` | No |  |
-| `result` | ``$OBJECT`` | No |  |
-| `started_at` | ``$STRING`` | No |  |
-| `status` | ``$STRING`` | No |  |
-| `test_suite` | ``$STRING`` | No |  |
+| `completed_at` | `String` | No |  |
+| `environment` | `String` | No |  |
+| `id` | `String` | No |  |
+| `name` | `String` | No |  |
+| `platform` | `String` | No |  |
+| `project_id` | `String` | No |  |
+| `result` | `Hash` | No |  |
+| `started_at` | `String` | No |  |
+| `status` | `String` | No |  |
+| `test_suite` | `String` | No |  |
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `completed_at` | - | - | - | - | - |
-| `environment` | - | - | Yes | - | - |
-| `id` | - | - | - | - | - |
-| `name` | - | - | Yes | - | - |
-| `platform` | - | - | Yes | - | - |
-| `project_id` | - | - | - | - | - |
-| `result` | - | - | - | - | - |
-| `started_at` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `test_suite` | - | - | Yes | - | - |
+| Field | load | list | create |
+| --- | --- | --- | --- |
+| `completed_at` | - | - | - |
+| `environment` | - | - | Yes |
+| `id` | - | - | - |
+| `name` | - | - | Yes |
+| `platform` | - | - | Yes |
+| `project_id` | - | - | - |
+| `result` | - | - | - |
+| `started_at` | - | - | - |
+| `status` | - | - | - |
+| `test_suite` | - | - | Yes |
 
 ### Operations
 
@@ -703,12 +703,12 @@ result = client.Test.create({
 })
 ```
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Test.list(nil)
+results = client.Test.list
 ```
 
 #### `load(reqmatch, ctrl = nil) -> result`

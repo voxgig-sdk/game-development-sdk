@@ -389,7 +389,7 @@ ProjectLoadMatch = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Project#list (any subset of Project fields).
+# Request payload for Project#list.
 #
 # @!attribute [rw] created_at
 #   @return [String, nil]
@@ -426,7 +426,7 @@ ProjectListMatch = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Project#create (any subset of Project fields).
+# Request payload for Project#create.
 #
 # @!attribute [rw] created_at
 #   @return [String, nil]

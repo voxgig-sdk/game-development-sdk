@@ -118,8 +118,24 @@
 ---@field id string
 
 ---@class ProjectListMatch
+---@field created_at? string
+---@field description? string
+---@field id? string
+---@field name? string
+---@field owner? table
+---@field setting? table
+---@field status? string
+---@field updated_at? string
 
 ---@class ProjectCreateData
+---@field created_at? string
+---@field description? string
+---@field id? string
+---@field name? string
+---@field owner? table
+---@field setting? table
+---@field status? string
+---@field updated_at? string
 
 ---@class ProjectUpdateData
 ---@field id string

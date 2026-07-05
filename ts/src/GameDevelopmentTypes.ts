@@ -137,9 +137,27 @@ export interface ProjectLoadMatch {
   id: string
 }
 
-export type ProjectListMatch = Partial<Project>
+export interface ProjectListMatch {
+  created_at?: string
+  description?: string
+  id?: string
+  name?: string
+  owner?: Record<string, any>
+  setting?: Record<string, any>
+  status?: string
+  updated_at?: string
+}
 
-export type ProjectCreateData = Partial<Project>
+export interface ProjectCreateData {
+  created_at?: string
+  description?: string
+  id?: string
+  name?: string
+  owner?: Record<string, any>
+  setting?: Record<string, any>
+  status?: string
+  updated_at?: string
+}
 
 export interface ProjectUpdateData {
   id: string

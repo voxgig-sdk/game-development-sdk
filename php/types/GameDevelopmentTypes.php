@@ -186,7 +186,7 @@ class ProjectLoadMatch
     public string $id;
 }
 
-/** Match filter for Project#list (any subset of Project fields). */
+/** Request payload for Project#list. */
 class ProjectListMatch
 {
     public ?string $created_at = null;
@@ -199,7 +199,7 @@ class ProjectListMatch
     public ?string $updated_at = null;
 }
 
-/** Match filter for Project#create (any subset of Project fields). */
+/** Request payload for Project#create. */
 class ProjectCreateData
 {
     public ?string $created_at = null;

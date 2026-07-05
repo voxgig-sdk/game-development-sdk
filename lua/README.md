@@ -4,6 +4,8 @@
 
 The Lua SDK for the GameDevelopment API — an entity-oriented client using Lua conventions.
 
+It exposes the API as capitalised, semantic **Entities** — e.g. `client:Analytics()` — each with the same small set of operations (`list`, `load`, `create`, `update`, `remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -43,7 +45,7 @@ local analyticss, err = client:Analytics():list()
 if err then error(err) end
 
 for _, item in ipairs(analyticss) do
-  print(item["id"], item["name"])
+  print(item["event_name"])
 end
 ```
 
@@ -51,9 +53,31 @@ end
 
 ```lua
 -- Create
-local created, err = client:Analytics():create({ name = "Example" })
+local created, err = client:Analytics():create({ project_id = "example" })
 if err then error(err) end
 
+```
+
+
+## Error handling
+
+Entity operations return `(value, err)`. Check `err` before using
+the value:
+
+```lua
+local analyticss, err = client:Analytics():list()
+if err then error(err) end
+```
+
+`direct` follows the same `(value, err)` convention:
+
+```lua
+local result, err = client:direct({
+  path = "/api/resource/{id}",
+  method = "GET",
+  params = { id = "example_id" },
+})
+if err then error(err) end
 ```
 
 
@@ -99,8 +123,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Analytics():load({ id = "test01" })
--- result is the loaded data; err is set on failure
+local result, err = client:Analytics():list()
+-- result is the returned data; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -219,7 +243,7 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local analytics, err = client:Analytics():load({ id = "example_id" })
+    local analytics, err = client:Analytics():load()
     if err then error(err) end
     -- analytics is the loaded record
 
@@ -381,12 +405,12 @@ Create an instance: `local analytics = client:Analytics(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `number` |  |
+| `event_name` | `string` |  |
+| `event_type` | `string` |  |
+| `name` | `string` |  |
+| `property` | `table` |  |
+| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -398,8 +422,8 @@ local analyticss, err = client:Analytics():list()
 
 ```lua
 local analytics, err = client:Analytics():create({
-  event_name = nil, -- `$STRING`
-  event_type = nil, -- `$STRING`
+  event_name = nil, -- string
+  event_type = nil, -- string
 })
 ```
 
@@ -421,16 +445,16 @@ Create an instance: `local asset = client:Asset(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `mime_type` | `string` |  |
+| `name` | `string` |  |
+| `project_id` | `string` |  |
+| `size` | `number` |  |
+| `tag` | `table` |  |
+| `type` | `string` |  |
+| `updated_at` | `string` |  |
+| `url` | `string` |  |
 
 #### Example: Load
 
@@ -466,17 +490,17 @@ Create an instance: `local build = client:Build(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `string` |  |
+| `platform` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Create
 
 ```lua
 local build, err = client:Build():create({
-  configuration = nil, -- `$STRING`
-  platform = nil, -- `$STRING`
-  version = nil, -- `$STRING`
+  configuration = nil, -- string
+  platform = nil, -- string
+  version = nil, -- string
 })
 ```
 
@@ -496,14 +520,14 @@ Create an instance: `local collaboration = client:Collaboration(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `string` |  |
+| `email` | `string` |  |
+| `id` | `string` |  |
+| `last_active` | `string` |  |
+| `name` | `string` |  |
+| `role` | `string` |  |
+| `status` | `string` |  |
+| `user_id` | `string` |  |
 
 #### Example: List
 
@@ -526,15 +550,15 @@ Create an instance: `local collaborator = client:Collaborator(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `string` |  |
+| `role` | `string` |  |
 
 #### Example: Create
 
 ```lua
 local collaborator, err = client:Collaborator():create({
-  email = nil, -- `$STRING`
-  role = nil, -- `$STRING`
+  email = nil, -- string
+  role = nil, -- string
 })
 ```
 
@@ -555,20 +579,20 @@ Create an instance: `local deployment = client:Deployment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `string` |  |
+| `completed_at` | `string` |  |
+| `configuration` | `string` |  |
+| `created_at` | `string` |  |
+| `deployment_url` | `string` |  |
+| `download_url` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `release_note` | `string` |  |
+| `size` | `number` |  |
+| `status` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Load
 
@@ -608,14 +632,14 @@ Create an instance: `local project = client:Project(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `owner` | `table` |  |
+| `setting` | `table` |  |
+| `status` | `string` |  |
+| `updated_at` | `string` |  |
 
 #### Example: Load
 
@@ -653,16 +677,16 @@ Create an instance: `local test = client:Test(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `result` | `table` |  |
+| `started_at` | `string` |  |
+| `status` | `string` |  |
+| `test_suite` | `string` |  |
 
 #### Example: Load
 
@@ -684,12 +708,16 @@ local test, err = client:Test():create({
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -706,8 +734,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller as a second return value.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -751,14 +780,14 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
 local analytics = client:Analytics()
-analytics:load({ id = "example_id" })
+analytics:list()
 
--- analytics:data_get() now returns the loaded analytics data
+-- analytics:data_get() now returns the analytics data from the last list
 -- analytics:match_get() returns the last match criteria
 ```
 

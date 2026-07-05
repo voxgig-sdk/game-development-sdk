@@ -4,6 +4,8 @@
 
 The Ruby SDK for the GameDevelopment API — an entity-oriented client using idiomatic Ruby conventions.
 
+The SDK exposes the API as capitalised, semantic **Entities** — for example `client.Analytics` — with named operations (`list`/`load`/`create`/`update`/`remove`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -37,7 +39,7 @@ begin
   # list returns an Array of Analytics records — iterate directly.
   analyticss = client.Analytics.list
   analyticss.each do |item|
-    puts "#{item["id"]} #{item["name"]}"
+    puts "#{item["count"]}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -48,8 +50,35 @@ end
 
 ```ruby
 # create returns the bare created Analytics record.
-created = client.Analytics.create({ "name" => "Example" })
+created = client.Analytics.create({ "project_id" => "example" })
 
+```
+
+
+## Error handling
+
+Entity operations raise on failure, so rescue them:
+
+```ruby
+begin
+  analyticss = client.Analytics.list()
+rescue => err
+  warn "list failed: #{err}"
+end
+```
+
+`direct` does **not** raise — it returns the result hash. Branch on
+`ok`; on failure `status` holds the HTTP status (for error responses) and
+`err` holds a transport error, so read both defensively:
+
+```ruby
+result = client.direct({
+  "path" => "/api/resource/{id}",
+  "method" => "GET",
+  "params" => { "id" => "example_id" },
+})
+
+warn "request failed: #{result["err"] || "HTTP #{result["status"]}"}" unless result["ok"]
 ```
 
 
@@ -70,7 +99,9 @@ if result["ok"]
   puts result["status"]  # 200
   puts result["data"]    # response body
 else
-  warn result["err"]
+  # On an HTTP error status there is no err (only a transport failure sets
+  # it), so fall back to the status code.
+  warn(result["err"] || "HTTP #{result["status"]}")
 end
 ```
 
@@ -93,16 +124,13 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```ruby
-client = GameDevelopmentSDK.test({
-  "entity" => { "analytics" => { "test01" => { "id" => "test01" } } },
-})
+client = GameDevelopmentSDK.test
 
-# load returns the bare mock record (raises on error).
-analytics = client.Analytics.load({ "id" => "test01" })
+# Entity ops return the bare mock record (raises on error).
+analytics = client.Analytics.list()
 puts analytics
 ```
 
@@ -197,7 +225,7 @@ All entities share the same interface.
 | Method | Signature | Description |
 | --- | --- | --- |
 | `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria. Raises on error. |
-| `list` | `(reqmatch, ctrl) -> Array` | List entities matching the criteria. Raises on error. |
+| `list` | `(reqmatch = nil, ctrl) -> Array` | List entities matching the criteria (call with no argument to list all). Raises on error. |
 | `create` | `(reqdata, ctrl) -> any` | Create a new entity. Raises on error. |
 | `update` | `(reqdata, ctrl) -> any` | Update an existing entity. Raises on error. |
 | `remove` | `(reqmatch, ctrl) -> any` | Remove an entity. Raises on error. |
@@ -380,12 +408,12 @@ Create an instance: `analytics = client.Analytics`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `Integer` |  |
+| `event_name` | `String` |  |
+| `event_type` | `String` |  |
+| `name` | `String` |  |
+| `property` | `Hash` |  |
+| `timestamp` | `String` |  |
 
 #### Example: List
 
@@ -398,8 +426,8 @@ analyticss = client.Analytics.list
 
 ```ruby
 analytics = client.Analytics.create({
-  "event_name" => nil, # `$STRING`
-  "event_type" => nil, # `$STRING`
+  "event_name" => "example", # String
+  "event_type" => "example", # String
 })
 ```
 
@@ -421,16 +449,16 @@ Create an instance: `asset = client.Asset`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `String` |  |
+| `id` | `String` |  |
+| `mime_type` | `String` |  |
+| `name` | `String` |  |
+| `project_id` | `String` |  |
+| `size` | `Integer` |  |
+| `tag` | `Array` |  |
+| `type` | `String` |  |
+| `updated_at` | `String` |  |
+| `url` | `String` |  |
 
 #### Example: Load
 
@@ -468,17 +496,17 @@ Create an instance: `build = client.Build`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `String` |  |
+| `platform` | `String` |  |
+| `version` | `String` |  |
 
 #### Example: Create
 
 ```ruby
 build = client.Build.create({
-  "configuration" => nil, # `$STRING`
-  "platform" => nil, # `$STRING`
-  "version" => nil, # `$STRING`
+  "configuration" => "example", # String
+  "platform" => "example", # String
+  "version" => "example", # String
 })
 ```
 
@@ -498,14 +526,14 @@ Create an instance: `collaboration = client.Collaboration`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `String` |  |
+| `email` | `String` |  |
+| `id` | `String` |  |
+| `last_active` | `String` |  |
+| `name` | `String` |  |
+| `role` | `String` |  |
+| `status` | `String` |  |
+| `user_id` | `String` |  |
 
 #### Example: List
 
@@ -529,15 +557,15 @@ Create an instance: `collaborator = client.Collaborator`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `String` |  |
+| `role` | `String` |  |
 
 #### Example: Create
 
 ```ruby
 collaborator = client.Collaborator.create({
-  "email" => nil, # `$STRING`
-  "role" => nil, # `$STRING`
+  "email" => "example", # String
+  "role" => "example", # String
 })
 ```
 
@@ -558,20 +586,20 @@ Create an instance: `deployment = client.Deployment`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `String` |  |
+| `completed_at` | `String` |  |
+| `configuration` | `String` |  |
+| `created_at` | `String` |  |
+| `deployment_url` | `String` |  |
+| `download_url` | `String` |  |
+| `environment` | `String` |  |
+| `id` | `String` |  |
+| `platform` | `String` |  |
+| `project_id` | `String` |  |
+| `release_note` | `String` |  |
+| `size` | `Integer` |  |
+| `status` | `String` |  |
+| `version` | `String` |  |
 
 #### Example: Load
 
@@ -613,14 +641,14 @@ Create an instance: `project = client.Project`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `String` |  |
+| `description` | `String` |  |
+| `id` | `String` |  |
+| `name` | `String` |  |
+| `owner` | `Hash` |  |
+| `setting` | `Hash` |  |
+| `status` | `String` |  |
+| `updated_at` | `String` |  |
 
 #### Example: Load
 
@@ -660,16 +688,16 @@ Create an instance: `test = client.Test`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `String` |  |
+| `environment` | `String` |  |
+| `id` | `String` |  |
+| `name` | `String` |  |
+| `platform` | `String` |  |
+| `project_id` | `String` |  |
+| `result` | `Hash` |  |
+| `started_at` | `String` |  |
+| `status` | `String` |  |
+| `test_suite` | `String` |  |
 
 #### Example: Load
 
@@ -693,12 +721,16 @@ test = client.Test.create({
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -715,8 +747,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller as a second return value.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -760,14 +793,14 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
 analytics = client.Analytics
-analytics.load({ "id" => "example_id" })
+analytics.list()
 
-# analytics.data_get now returns the loaded analytics data
+# analytics.data_get now returns the analytics data from the last list
 # analytics.match_get returns the last match criteria
 ```
 

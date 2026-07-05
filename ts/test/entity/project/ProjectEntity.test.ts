@@ -79,12 +79,12 @@ describe('ProjectEntity', async () => {
     project_ref01_data_up0.id = project_ref01_data.id
 
     const project_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-project_ref01_' + setup.now }
-    project_ref01_data_up0 [project_ref01_markdef_up0.name] = project_ref01_markdef_up0.value
+    ;(project_ref01_data_up0 as any)[project_ref01_markdef_up0.name] = project_ref01_markdef_up0.value
 
     const project_ref01_resdata_up0 = await project_ref01_ent.update(project_ref01_data_up0)
     assert(project_ref01_resdata_up0.id === project_ref01_data_up0.id)
 
-    assert(project_ref01_resdata_up0[project_ref01_markdef_up0.name] === project_ref01_markdef_up0.value)
+    assert((project_ref01_resdata_up0 as any)[project_ref01_markdef_up0.name] === project_ref01_markdef_up0.value)
 
 
     // LOAD

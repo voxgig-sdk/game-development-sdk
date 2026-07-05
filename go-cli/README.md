@@ -17,8 +17,6 @@ go build -o game-development-cli ./...
 ```sh
 # One-shot: arguments form a single AQL expression
 ./game-development-cli list analytics
-./game-development-cli load 1 analytics
-./game-development-cli load '{id:1}' analytics
 
 # REPL
 ./game-development-cli

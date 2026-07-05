@@ -68,8 +68,13 @@ class ProjectEntity:
         return vs.clone(self._match)
 
     
-    def load(self, reqmatch: ProjectLoadMatch, ctrl=None) -> Project:
+    def load(self, reqmatch=None, ctrl=None) -> Project:
         utility = self._utility
+        # reqmatch is optional: an entity with no id-like key loads with no
+        # match. Treat None as an empty match so client.Project().load()
+        # works with no args.
+        if reqmatch is None:
+            reqmatch = {}
         ctx = utility.make_context({
             "opname": "load",
             "ctrl": ctrl,
@@ -90,8 +95,12 @@ class ProjectEntity:
 
 
     
-    def list(self, reqmatch: ProjectListMatch, ctrl=None) -> list[Project]:
+    def list(self, reqmatch=None, ctrl=None) -> list[Project]:
         utility = self._utility
+        # reqmatch is optional: an omitted match lists all records. Treat None
+        # as an empty match so client.Project().list() works with no args.
+        if reqmatch is None:
+            reqmatch = {}
         ctx = utility.make_context({
             "opname": "list",
             "ctrl": ctrl,
@@ -152,8 +161,13 @@ class ProjectEntity:
 
 
     
-    def remove(self, reqmatch: ProjectRemoveMatch, ctrl=None) -> Project:
+    def remove(self, reqmatch=None, ctrl=None) -> Project:
         utility = self._utility
+        # reqmatch is optional: an entity with no id-like key removes with no
+        # match. Treat None as an empty match so client.Project().remove()
+        # works with no args.
+        if reqmatch is None:
+            reqmatch = {}
         ctx = utility.make_context({
             "opname": "remove",
             "ctrl": ctrl,

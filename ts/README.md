@@ -4,6 +4,11 @@
 
 The TypeScript SDK for the GameDevelopment API — a type-safe, entity-oriented client with full async/await support.
 
+The API is exposed as capitalised, semantic **Entities** — e.g.
+`client.Analytics()` — each with a small set of operations (`list`, `load`, `create`, `update`, `remove`)
+instead of raw URL paths and query parameters. This keeps the surface
+predictable and low-friction for both humans and AI agents.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -47,9 +52,38 @@ for (const analytics of analyticss) {
 ```ts
 // Create — returns the created Analytics
 const created = await client.Analytics().create({
-  name: 'Example',
+  project_id: 'example_project_id',
 })
 
+```
+
+
+## Error handling
+
+Entity operations reject on failure, so wrap them in `try` / `catch`:
+
+```ts
+try {
+  const analyticss = await client.Analytics().list()
+  console.log(analyticss)
+} catch (err) {
+  console.error('list failed:', err)
+}
+```
+
+The low-level `direct()` method does **not** throw — it returns the
+value or an `Error`, so check the result before using it:
+
+```ts
+const result = await client.direct({
+  path: '/api/resource/{id}',
+  method: 'GET',
+  params: { id: 'example_id' },
+})
+
+if (result instanceof Error) {
+  throw result
+}
 ```
 
 
@@ -97,7 +131,7 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = GameDevelopmentSDK.test()
 
-const analytics = await client.Analytics().load({ id: 'test01' })
+const analytics = await client.Analytics().list()
 // analytics is a bare entity populated with mock response data
 console.log(analytics)
 ```
@@ -116,12 +150,12 @@ Entity instances remember their last match and data:
 ```ts
 const entity = client.Analytics()
 
-// First call sets internal match
-await entity.load({ id: 'example' })
+// First call runs the operation and stores its result
+await entity.list()
 
-// Subsequent calls reuse the stored match
+// Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id) // 'example'
+console.log(data)
 ```
 
 ### Add custom middleware
@@ -225,8 +259,8 @@ All entities share the same interface.
 | `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
 | `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |
 | `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |
-| `data` | `data(data?): any` | Get or set entity data. |
-| `match` | `match(match?): any` | Get or set entity match criteria. |
+| `data` | `data(data?: Partial<Entity>): Entity` | Get or set entity data. |
+| `match` | `match(match?: Partial<Entity>): Partial<Entity>` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
 | `client` | `client(): GameDevelopmentSDK` | Return the parent SDK client. |
 | `entopts` | `entopts(): object` | Return a copy of the entity options. |
@@ -428,12 +462,12 @@ Create an instance: `const analytics = client.Analytics()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `number` |  |
+| `event_name` | `string` |  |
+| `event_type` | `string` |  |
+| `name` | `string` |  |
+| `property` | `Record<string, any>` |  |
+| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -445,8 +479,8 @@ const analyticss = await client.Analytics().list()
 
 ```ts
 const analytics = await client.Analytics().create({
-  event_name: /* `$STRING` */,
-  event_type: /* `$STRING` */,
+  event_name: /* string */,
+  event_type: /* string */,
 })
 ```
 
@@ -468,16 +502,16 @@ Create an instance: `const asset = client.Asset()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `mime_type` | `string` |  |
+| `name` | `string` |  |
+| `project_id` | `string` |  |
+| `size` | `number` |  |
+| `tag` | `any[]` |  |
+| `type` | `string` |  |
+| `updated_at` | `string` |  |
+| `url` | `string` |  |
 
 #### Example: Load
 
@@ -513,17 +547,17 @@ Create an instance: `const build = client.Build()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `string` |  |
+| `platform` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Create
 
 ```ts
 const build = await client.Build().create({
-  configuration: /* `$STRING` */,
-  platform: /* `$STRING` */,
-  version: /* `$STRING` */,
+  configuration: /* string */,
+  platform: /* string */,
+  version: /* string */,
 })
 ```
 
@@ -543,14 +577,14 @@ Create an instance: `const collaboration = client.Collaboration()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `string` |  |
+| `email` | `string` |  |
+| `id` | `string` |  |
+| `last_active` | `string` |  |
+| `name` | `string` |  |
+| `role` | `string` |  |
+| `status` | `string` |  |
+| `user_id` | `string` |  |
 
 #### Example: List
 
@@ -573,15 +607,15 @@ Create an instance: `const collaborator = client.Collaborator()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `string` |  |
+| `role` | `string` |  |
 
 #### Example: Create
 
 ```ts
 const collaborator = await client.Collaborator().create({
-  email: /* `$STRING` */,
-  role: /* `$STRING` */,
+  email: /* string */,
+  role: /* string */,
 })
 ```
 
@@ -602,20 +636,20 @@ Create an instance: `const deployment = client.Deployment()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `string` |  |
+| `completed_at` | `string` |  |
+| `configuration` | `string` |  |
+| `created_at` | `string` |  |
+| `deployment_url` | `string` |  |
+| `download_url` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `release_note` | `string` |  |
+| `size` | `number` |  |
+| `status` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Load
 
@@ -655,14 +689,14 @@ Create an instance: `const project = client.Project()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `owner` | `Record<string, any>` |  |
+| `setting` | `Record<string, any>` |  |
+| `status` | `string` |  |
+| `updated_at` | `string` |  |
 
 #### Example: Load
 
@@ -700,16 +734,16 @@ Create an instance: `const test = client.Test()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `result` | `Record<string, any>` |  |
+| `started_at` | `string` |  |
+| `status` | `string` |  |
+| `test_suite` | `string` |  |
 
 #### Example: Load
 
@@ -731,12 +765,16 @@ const test = await client.Test().create({
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -753,11 +791,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller.
-
-An unexpected exception triggers the `PreUnexpected` hook before
-propagating.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -793,16 +829,16 @@ import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
 const analytics = client.Analytics()
-await analytics.load({ id: "example_id" })
+await analytics.list()
 
-// analytics.data() now returns the loaded analytics data
-// analytics.match() returns { id: "example_id" }
+// analytics.data() now returns the analytics data from the last `list`
+// analytics.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

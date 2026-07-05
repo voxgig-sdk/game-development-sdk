@@ -4,6 +4,8 @@
 
 The PHP SDK for the GameDevelopment API — an entity-oriented client using PHP conventions.
 
+The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->Analytics()` — with named operations (`list`/`load`/`create`/`update`/`remove`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -38,7 +40,7 @@ try {
     // list() returns an array of Analytics records — iterate directly.
     $analyticss = $client->Analytics()->list();
     foreach ($analyticss as $item) {
-        echo $item["id"] . " " . $item["name"] . "\n";
+        echo $item["count"] . "\n";
     }
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
@@ -49,8 +51,39 @@ try {
 
 ```php
 // create() returns the bare created Analytics record.
-$created = $client->Analytics()->create(["name" => "Example"]);
+$created = $client->Analytics()->create(["project_id" => "example"]);
 
+```
+
+
+## Error handling
+
+Entity operations throw a `\Throwable` on failure, so wrap them in
+`try` / `catch`:
+
+```php
+try {
+    $analyticss = $client->Analytics()->list();
+} catch (\Throwable $err) {
+    echo "Error: " . $err->getMessage();
+}
+```
+
+`direct()` does **not** throw — it returns the result array. Branch on
+`ok`; on failure `status` holds the HTTP status (for error responses) and
+`err` holds a transport error, so read both defensively:
+
+```php
+$result = $client->direct([
+    "path" => "/api/resource/{id}",
+    "method" => "GET",
+    "params" => ["id" => "example_id"],
+]);
+
+if (! $result["ok"]) {
+    $err = $result["err"] ?? null;
+    echo "request failed: " . ($err ? $err->getMessage() : "HTTP " . $result["status"]);
+}
 ```
 
 
@@ -73,7 +106,10 @@ if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
 } else {
-    echo "Error: " . $result["err"]->getMessage();
+    // On an HTTP error status there is no err (only a transport failure sets
+    // it), so fall back to the status code.
+    $err = $result["err"] ?? null;
+    echo "Error: " . ($err ? $err->getMessage() : "HTTP " . $result["status"]);
 }
 ```
 
@@ -94,16 +130,13 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```php
-$client = GameDevelopmentSDK::test([
-    "entity" => ["analytics" => ["test01" => ["id" => "test01"]]],
-]);
+$client = GameDevelopmentSDK::test();
 
-// load() returns the bare mock record (throws on error).
-$analytics = $client->Analytics()->load(["id" => "test01"]);
+// Entity ops return the bare mock record (throws on error).
+$analytics = $client->Analytics()->list();
 print_r($analytics);
 ```
 
@@ -201,7 +234,7 @@ All entities share the same interface.
 | Method | Signature | Description |
 | --- | --- | --- |
 | `load` | `($reqmatch, $ctrl): array` | Load a single entity by match criteria. |
-| `list` | `($reqmatch, $ctrl): array` | List entities matching the criteria. |
+| `list` | `(?array $reqmatch = null, $ctrl): array` | List entities matching the criteria (call with no argument to list all). |
 | `create` | `($reqdata, $ctrl): array` | Create a new entity. |
 | `update` | `($reqdata, $ctrl): array` | Update an existing entity. |
 | `remove` | `($reqmatch, $ctrl): array` | Remove an entity. |
@@ -385,12 +418,12 @@ Create an instance: `$analytics = $client->Analytics();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `int` |  |
+| `event_name` | `string` |  |
+| `event_type` | `string` |  |
+| `name` | `string` |  |
+| `property` | `array` |  |
+| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -403,8 +436,8 @@ $analyticss = $client->Analytics()->list();
 
 ```php
 $analytics = $client->Analytics()->create([
-    "event_name" => null, // `$STRING`
-    "event_type" => null, // `$STRING`
+    "event_name" => null, // string
+    "event_type" => null, // string
 ]);
 ```
 
@@ -426,16 +459,16 @@ Create an instance: `$asset = $client->Asset();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `mime_type` | `string` |  |
+| `name` | `string` |  |
+| `project_id` | `string` |  |
+| `size` | `int` |  |
+| `tag` | `array` |  |
+| `type` | `string` |  |
+| `updated_at` | `string` |  |
+| `url` | `string` |  |
 
 #### Example: Load
 
@@ -473,17 +506,17 @@ Create an instance: `$build = $client->Build();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `string` |  |
+| `platform` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Create
 
 ```php
 $build = $client->Build()->create([
-    "configuration" => null, // `$STRING`
-    "platform" => null, // `$STRING`
-    "version" => null, // `$STRING`
+    "configuration" => null, // string
+    "platform" => null, // string
+    "version" => null, // string
 ]);
 ```
 
@@ -503,14 +536,14 @@ Create an instance: `$collaboration = $client->Collaboration();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `string` |  |
+| `email` | `string` |  |
+| `id` | `string` |  |
+| `last_active` | `string` |  |
+| `name` | `string` |  |
+| `role` | `string` |  |
+| `status` | `string` |  |
+| `user_id` | `string` |  |
 
 #### Example: List
 
@@ -534,15 +567,15 @@ Create an instance: `$collaborator = $client->Collaborator();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `string` |  |
+| `role` | `string` |  |
 
 #### Example: Create
 
 ```php
 $collaborator = $client->Collaborator()->create([
-    "email" => null, // `$STRING`
-    "role" => null, // `$STRING`
+    "email" => null, // string
+    "role" => null, // string
 ]);
 ```
 
@@ -563,20 +596,20 @@ Create an instance: `$deployment = $client->Deployment();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `string` |  |
+| `completed_at` | `string` |  |
+| `configuration` | `string` |  |
+| `created_at` | `string` |  |
+| `deployment_url` | `string` |  |
+| `download_url` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `release_note` | `string` |  |
+| `size` | `int` |  |
+| `status` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Load
 
@@ -618,14 +651,14 @@ Create an instance: `$project = $client->Project();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `owner` | `array` |  |
+| `setting` | `array` |  |
+| `status` | `string` |  |
+| `updated_at` | `string` |  |
 
 #### Example: Load
 
@@ -665,16 +698,16 @@ Create an instance: `$test = $client->Test();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `result` | `array` |  |
+| `started_at` | `string` |  |
+| `status` | `string` |  |
+| `test_suite` | `string` |  |
 
 #### Example: Load
 
@@ -698,12 +731,16 @@ $test = $client->Test()->create([
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -720,8 +757,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller as the second element in the return array.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -765,15 +803,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
 $analytics = $client->Analytics();
-$analytics->load(["id" => "example_id"]);
+$analytics->list();
 
-// $analytics->dataGet() now returns the loaded analytics data
-// $analytics->matchGet() returns the last match criteria
+// $analytics->data_get() now returns the analytics data from the last list
+// $analytics->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

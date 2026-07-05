@@ -4,6 +4,8 @@
 
 The Golang SDK for the GameDevelopment API — an entity-oriented client using standard Go conventions. No generics required; data flows as `map[string]any`.
 
+It exposes the API as capitalised, semantic **Entities** — e.g. `client.Analytics(nil)` — each with the same small set of operations (`List`, `Load`, `Create`, `Update`, `Remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
+
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
 
@@ -61,12 +63,41 @@ func main() {
     }
 
     // Create a analytics.
-    created, err := client.Analytics(nil).Create(map[string]any{"name": "Example"}, nil)
+    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(created)
 }
+```
+
+
+## Error handling
+
+Every entity operation returns `(value, error)`. Check `err` before
+using the value — there is no exception to catch:
+
+```go
+analyticss, err := client.Analytics(nil).List(nil, nil)
+if err != nil {
+    // handle err
+    return
+}
+_ = analyticss
+```
+
+`Direct` follows the same `(value, error)` convention:
+
+```go
+result, err := client.Direct(map[string]any{
+    "path":   "/api/resource/{id}",
+    "method": "GET",
+    "params": map[string]any{"id": "example_id"},
+})
+if err != nil {
+    // handle err
+}
+_ = result
 ```
 
 
@@ -116,13 +147,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-analytics, err := client.Analytics(nil).Load(
-    map[string]any{"id": "test01"}, nil,
+analytics, err := client.Analytics(nil).List(
+    nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(analytics) // the loaded mock data
+fmt.Println(analytics) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -240,9 +271,9 @@ Check `err` first, then use the value directly (or the typed
 `...Typed` variants, which return the entity's model struct and a typed
 slice):
 
-    analytics, err := client.Analytics(nil).Load(map[string]any{"id": "example_id"}, nil)
+    analytics, err := client.Analytics(nil).List(map[string]any{/* fields */}, nil)
     if err != nil { /* handle */ }
-    // analytics is the loaded record
+    // analytics is the returned record
 
 Only `Direct()` returns a response envelope — a `map[string]any` with
 `"ok"`, `"status"`, `"headers"`, and `"data"` keys.
@@ -402,12 +433,12 @@ Create an instance: `analytics := client.Analytics(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `count` | ``$INTEGER`` |  |
-| `event_name` | ``$STRING`` |  |
-| `event_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `property` | ``$OBJECT`` |  |
-| `timestamp` | ``$STRING`` |  |
+| `count` | `int` |  |
+| `event_name` | `string` |  |
+| `event_type` | `string` |  |
+| `name` | `string` |  |
+| `property` | `map[string]any` |  |
+| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -423,8 +454,8 @@ fmt.Println(analyticss) // the array of records
 
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
-    "event_name": /* `$STRING` */,
-    "event_type": /* `$STRING` */,
+    "event_name": /* string */,
+    "event_type": /* string */,
 }, nil)
 ```
 
@@ -446,16 +477,16 @@ Create an instance: `asset := client.Asset(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `mime_type` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `tag` | ``$ARRAY`` |  |
-| `type` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
-| `url` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `mime_type` | `string` |  |
+| `name` | `string` |  |
+| `project_id` | `string` |  |
+| `size` | `int` |  |
+| `tag` | `[]any` |  |
+| `type` | `string` |  |
+| `updated_at` | `string` |  |
+| `url` | `string` |  |
 
 #### Example: Load
 
@@ -499,17 +530,17 @@ Create an instance: `build := client.Build(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `configuration` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `configuration` | `string` |  |
+| `platform` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Create
 
 ```go
 result, err := client.Build(nil).Create(map[string]any{
-    "configuration": /* `$STRING` */,
-    "platform": /* `$STRING` */,
-    "version": /* `$STRING` */,
+    "configuration": /* string */,
+    "platform": /* string */,
+    "version": /* string */,
 }, nil)
 ```
 
@@ -529,14 +560,14 @@ Create an instance: `collaboration := client.Collaboration(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | ``$STRING`` |  |
-| `email` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `last_active` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `user_id` | ``$STRING`` |  |
+| `added_at` | `string` |  |
+| `email` | `string` |  |
+| `id` | `string` |  |
+| `last_active` | `string` |  |
+| `name` | `string` |  |
+| `role` | `string` |  |
+| `status` | `string` |  |
+| `user_id` | `string` |  |
 
 #### Example: List
 
@@ -563,15 +594,15 @@ Create an instance: `collaborator := client.Collaborator(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `email` | ``$STRING`` |  |
-| `role` | ``$STRING`` |  |
+| `email` | `string` |  |
+| `role` | `string` |  |
 
 #### Example: Create
 
 ```go
 result, err := client.Collaborator(nil).Create(map[string]any{
-    "email": /* `$STRING` */,
-    "role": /* `$STRING` */,
+    "email": /* string */,
+    "role": /* string */,
 }, nil)
 ```
 
@@ -592,20 +623,20 @@ Create an instance: `deployment := client.Deployment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | ``$STRING`` |  |
-| `completed_at` | ``$STRING`` |  |
-| `configuration` | ``$STRING`` |  |
-| `created_at` | ``$STRING`` |  |
-| `deployment_url` | ``$STRING`` |  |
-| `download_url` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `release_note` | ``$STRING`` |  |
-| `size` | ``$INTEGER`` |  |
-| `status` | ``$STRING`` |  |
-| `version` | ``$STRING`` |  |
+| `build_version` | `string` |  |
+| `completed_at` | `string` |  |
+| `configuration` | `string` |  |
+| `created_at` | `string` |  |
+| `deployment_url` | `string` |  |
+| `download_url` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `release_note` | `string` |  |
+| `size` | `int` |  |
+| `status` | `string` |  |
+| `version` | `string` |  |
 
 #### Example: Load
 
@@ -653,14 +684,14 @@ Create an instance: `project := client.Project(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | ``$STRING`` |  |
-| `description` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `owner` | ``$OBJECT`` |  |
-| `setting` | ``$OBJECT`` |  |
-| `status` | ``$STRING`` |  |
-| `updated_at` | ``$STRING`` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `owner` | `map[string]any` |  |
+| `setting` | `map[string]any` |  |
+| `status` | `string` |  |
+| `updated_at` | `string` |  |
 
 #### Example: Load
 
@@ -706,16 +737,16 @@ Create an instance: `test := client.Test(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | ``$STRING`` |  |
-| `environment` | ``$STRING`` |  |
-| `id` | ``$STRING`` |  |
-| `name` | ``$STRING`` |  |
-| `platform` | ``$STRING`` |  |
-| `project_id` | ``$STRING`` |  |
-| `result` | ``$OBJECT`` |  |
-| `started_at` | ``$STRING`` |  |
-| `status` | ``$STRING`` |  |
-| `test_suite` | ``$STRING`` |  |
+| `completed_at` | `string` |  |
+| `environment` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `platform` | `string` |  |
+| `project_id` | `string` |  |
+| `result` | `map[string]any` |  |
+| `started_at` | `string` |  |
+| `status` | `string` |  |
+| `test_suite` | `string` |  |
 
 #### Example: Load
 
@@ -745,12 +776,16 @@ result, err := client.Test(nil).Create(map[string]any{
 ```
 
 
-## Explanation
+## Advanced
+
+> The sections above cover everyday use. The material below explains the
+> SDK's internals — useful when extending it with custom features, but not
+> needed for normal use.
 
 ### The operation pipeline
 
-Every entity operation (load, list, create, update, remove) follows a
-six-stage pipeline. Each stage fires a feature hook before executing:
+Every entity operation follows a six-stage pipeline. Each stage fires a
+feature hook before executing:
 
 ```
 PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
@@ -767,9 +802,9 @@ PrePoint → PreSpec → PreRequest → PreResponse → PreResult → PreDone
 - **PreDone**: Final stage before returning to the caller. Entity
   state (match, data) is updated here.
 
-If any stage returns an error, the pipeline short-circuits and the
-error is returned to the caller. An unexpected panic triggers the
-`PreUnexpected` hook.
+If any stage errors, the pipeline short-circuits and the error surfaces
+to the caller — see [Error handling](#error-handling) for how that looks
+in this language.
 
 ### Features and hooks
 
@@ -810,14 +845,14 @@ like `core.ToMapAny`.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `Load`, the entity
+Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
 analytics := client.Analytics(nil)
-analytics.Load(map[string]any{"id": "example_id"}, nil)
+analytics.List(nil, nil)
 
-// analytics.Data() now returns the loaded analytics data
+// analytics.Data() now returns the analytics data from the last list
 // analytics.Match() returns the last match criteria
 ```
 

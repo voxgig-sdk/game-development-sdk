@@ -221,49 +221,49 @@ class GameDevelopmentSDK:
 
 
     def Analytics(self, data=None) -> "AnalyticsEntity":
-        """Entity factory: client.Analytics().list({}) / client.Analytics().load({"id": ...})."""
+        """Entity factory: client.Analytics().list() / client.Analytics().load({"id": ...})."""
         from entity.analytics_entity import AnalyticsEntity
         return AnalyticsEntity(self, data)
 
 
     def Asset(self, data=None) -> "AssetEntity":
-        """Entity factory: client.Asset().list({}) / client.Asset().load({"id": ...})."""
+        """Entity factory: client.Asset().list() / client.Asset().load({"id": ...})."""
         from entity.asset_entity import AssetEntity
         return AssetEntity(self, data)
 
 
     def Build(self, data=None) -> "BuildEntity":
-        """Entity factory: client.Build().list({}) / client.Build().load({"id": ...})."""
+        """Entity factory: client.Build().list() / client.Build().load({"id": ...})."""
         from entity.build_entity import BuildEntity
         return BuildEntity(self, data)
 
 
     def Collaboration(self, data=None) -> "CollaborationEntity":
-        """Entity factory: client.Collaboration().list({}) / client.Collaboration().load({"id": ...})."""
+        """Entity factory: client.Collaboration().list() / client.Collaboration().load({"id": ...})."""
         from entity.collaboration_entity import CollaborationEntity
         return CollaborationEntity(self, data)
 
 
     def Collaborator(self, data=None) -> "CollaboratorEntity":
-        """Entity factory: client.Collaborator().list({}) / client.Collaborator().load({"id": ...})."""
+        """Entity factory: client.Collaborator().list() / client.Collaborator().load({"id": ...})."""
         from entity.collaborator_entity import CollaboratorEntity
         return CollaboratorEntity(self, data)
 
 
     def Deployment(self, data=None) -> "DeploymentEntity":
-        """Entity factory: client.Deployment().list({}) / client.Deployment().load({"id": ...})."""
+        """Entity factory: client.Deployment().list() / client.Deployment().load({"id": ...})."""
         from entity.deployment_entity import DeploymentEntity
         return DeploymentEntity(self, data)
 
 
     def Project(self, data=None) -> "ProjectEntity":
-        """Entity factory: client.Project().list({}) / client.Project().load({"id": ...})."""
+        """Entity factory: client.Project().list() / client.Project().load({"id": ...})."""
         from entity.project_entity import ProjectEntity
         return ProjectEntity(self, data)
 
 
     def Test(self, data=None) -> "TestEntity":
-        """Entity factory: client.Test().list({}) / client.Test().load({"id": ...})."""
+        """Entity factory: client.Test().list() / client.Test().load({"id": ...})."""
         from entity.test_entity import TestEntity
         return TestEntity(self, data)
 
