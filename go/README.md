@@ -63,7 +63,7 @@ func main() {
     }
 
     // Create a analytics.
-    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example"}, nil)
+    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example_project_id"}, nil)
     if err != nil {
         panic(err)
     }
@@ -426,8 +426,8 @@ Create an instance: `analytics := client.Analytics(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -454,9 +454,12 @@ fmt.Println(analyticss) // the array of records
 
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
-    "event_name": /* string */,
-    "event_type": /* string */,
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -468,9 +471,9 @@ Create an instance: `asset := client.Asset(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
@@ -491,7 +494,7 @@ Create an instance: `asset := client.Asset(nil)`
 #### Example: Load
 
 ```go
-asset, err := client.Asset(nil).Load(map[string]any{"id": "asset_id"}, nil)
+asset, err := client.Asset(nil).Load(map[string]any{"id": "asset_id", "project_id": "project_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -512,7 +515,12 @@ fmt.Println(assets) // the array of records
 
 ```go
 result, err := client.Asset(nil).Create(map[string]any{
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -538,10 +546,12 @@ Create an instance: `build := client.Build(nil)`
 
 ```go
 result, err := client.Build(nil).Create(map[string]any{
-    "configuration": /* string */,
-    "platform": /* string */,
-    "version": /* string */,
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -601,9 +611,12 @@ Create an instance: `collaborator := client.Collaborator(nil)`
 
 ```go
 result, err := client.Collaborator(nil).Create(map[string]any{
-    "email": /* string */,
-    "role": /* string */,
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -615,9 +628,9 @@ Create an instance: `deployment := client.Deployment(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -641,7 +654,7 @@ Create an instance: `deployment := client.Deployment(nil)`
 #### Example: Load
 
 ```go
-deployment, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id"}, nil)
+deployment, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id", "project_id": "project_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -662,7 +675,12 @@ fmt.Println(deployments) // the array of records
 
 ```go
 result, err := client.Deployment(nil).Create(map[string]any{
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -674,11 +692,11 @@ Create an instance: `project := client.Project(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
-| `Remove(match, ctrl)` | Remove the matching entity. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 #### Fields
 
@@ -718,6 +736,10 @@ fmt.Println(projects) // the array of records
 ```go
 result, err := client.Project(nil).Create(map[string]any{
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -729,9 +751,9 @@ Create an instance: `test := client.Test(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -751,7 +773,7 @@ Create an instance: `test := client.Test(nil)`
 #### Example: Load
 
 ```go
-test, err := client.Test(nil).Load(map[string]any{"id": "test_id"}, nil)
+test, err := client.Test(nil).Load(map[string]any{"id": "test_id", "project_id": "project_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -772,7 +794,12 @@ fmt.Println(tests) // the array of records
 
 ```go
 result, err := client.Test(nil).Create(map[string]any{
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 

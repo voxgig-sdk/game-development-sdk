@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -2226,14 +2223,24 @@
           "url": "https://jenil-ai.vercel.app"
         },
         "description": "This API provides game developers with access to tools and resources for building, testing, and deploying their games. It includes features for asset management, real-time collaboration, and analytics.",
+        "meta_source": "https://www.freepublicapis.com",
+        "security": {
+          "in": "header",
+          "name": "Authorization",
+          "prefix": "Bearer",
+          "scheme": "bearerAuth",
+          "type": "http"
+        },
         "servers": [
           {
             "description": "Production server",
             "url": "https://jenil-ai.vercel.app/api"
           }
         ],
+        "summary": "This API provides game developers with access to tools and resources for building, testing, and deploying their games.",
         "title": "Game Development API",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "website": "https://jenil-ai.vercel.app"
       },
       "option": {},
       "target": {
@@ -2286,6 +2293,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -2336,6 +2346,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },

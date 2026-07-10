@@ -136,8 +136,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Analytics()->create([
-  "event_name" => null, // string
-  "event_type" => null, // string
+  "project_id" => null, // string
 ]);
 ```
 
@@ -208,6 +207,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Asset()->create([
+  "project_id" => null, // string
 ]);
 ```
 
@@ -224,7 +224,7 @@ $results = $client->Asset()->list();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Asset()->load(["id" => "asset_id"]);
+$result = $client->Asset()->load(["id" => "asset_id", "project_id" => "project_id"]);
 ```
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
@@ -232,7 +232,7 @@ $result = $client->Asset()->load(["id" => "asset_id"]);
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Asset()->remove(["id" => "asset_id"]);
+$result = $client->Asset()->remove(["id" => "asset_id", "project_id" => "project_id"]);
 ```
 
 ### Common Methods
@@ -287,9 +287,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Build()->create([
-  "configuration" => null, // string
-  "platform" => null, // string
-  "version" => null, // string
+  "project_id" => null, // string
 ]);
 ```
 
@@ -357,7 +355,7 @@ $results = $client->Collaboration()->list();
 Remove the entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Collaboration()->remove();
+$result = $client->Collaboration()->remove(["project_id" => "project_id", "user_id" => "user_id"]);
 ```
 
 ### Common Methods
@@ -411,8 +409,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Collaborator()->create([
-  "email" => null, // string
-  "role" => null, // string
+  "project_id" => null, // string
 ]);
 ```
 
@@ -498,6 +495,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Deployment()->create([
+  "project_id" => null, // string
 ]);
 ```
 
@@ -514,7 +512,7 @@ $results = $client->Deployment()->list();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Deployment()->load(["id" => "deployment_id"]);
+$result = $client->Deployment()->load(["id" => "deployment_id", "project_id" => "project_id"]);
 ```
 
 ### Common Methods
@@ -699,6 +697,7 @@ Create a new entity with the given data. Throws on error.
 
 ```php
 $result = $client->Test()->create([
+  "project_id" => null, // string
 ]);
 ```
 
@@ -715,7 +714,7 @@ $results = $client->Test()->list();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Test()->load(["id" => "test_id"]);
+$result = $client->Test()->load(["id" => "test_id", "project_id" => "project_id"]);
 ```
 
 ### Common Methods

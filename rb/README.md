@@ -46,11 +46,25 @@ rescue => err
 end
 ```
 
+### 3. Load an asset
+
+Asset is nested under project, so provide the `project_id`.
+
+```ruby
+begin
+  # load returns the bare Asset record (raises on error).
+  asset = client.Asset.load({ "project_id" => "example_project_id", "id" => "example_id" })
+  puts asset
+rescue => err
+  warn "load failed: #{err}"
+end
+```
+
 ### 4. Create, update, and remove
 
 ```ruby
 # create returns the bare created Analytics record.
-created = client.Analytics.create({ "project_id" => "example" })
+created = client.Analytics.create({ "project_id" => "example_project_id" })
 
 ```
 
@@ -426,8 +440,7 @@ analyticss = client.Analytics.list
 
 ```ruby
 analytics = client.Analytics.create({
-  "event_name" => "example", # String
-  "event_type" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -464,7 +477,7 @@ Create an instance: `asset = client.Asset`
 
 ```ruby
 # load returns the bare Asset record (raises on error).
-asset = client.Asset.load({ "id" => "asset_id" })
+asset = client.Asset.load({ "id" => "asset_id", "project_id" => "project_id" })
 ```
 
 #### Example: List
@@ -478,6 +491,7 @@ assets = client.Asset.list
 
 ```ruby
 asset = client.Asset.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -504,9 +518,7 @@ Create an instance: `build = client.Build`
 
 ```ruby
 build = client.Build.create({
-  "configuration" => "example", # String
-  "platform" => "example", # String
-  "version" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -564,8 +576,7 @@ Create an instance: `collaborator = client.Collaborator`
 
 ```ruby
 collaborator = client.Collaborator.create({
-  "email" => "example", # String
-  "role" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -605,7 +616,7 @@ Create an instance: `deployment = client.Deployment`
 
 ```ruby
 # load returns the bare Deployment record (raises on error).
-deployment = client.Deployment.load({ "id" => "deployment_id" })
+deployment = client.Deployment.load({ "id" => "deployment_id", "project_id" => "project_id" })
 ```
 
 #### Example: List
@@ -619,6 +630,7 @@ deployments = client.Deployment.list
 
 ```ruby
 deployment = client.Deployment.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -703,7 +715,7 @@ Create an instance: `test = client.Test`
 
 ```ruby
 # load returns the bare Test record (raises on error).
-test = client.Test.load({ "id" => "test_id" })
+test = client.Test.load({ "id" => "test_id", "project_id" => "project_id" })
 ```
 
 #### Example: List
@@ -717,6 +729,7 @@ tests = client.Test.list
 
 ```ruby
 test = client.Test.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 

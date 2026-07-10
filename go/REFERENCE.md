@@ -120,6 +120,7 @@ same parameters as `Direct()`.
 
 ```go
 analytics := client.Analytics(nil)
+fmt.Println(analytics.GetName()) // "analytics"
 ```
 
 ### Fields
@@ -135,23 +136,30 @@ analytics := client.Analytics(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Analytics(nil).Create(map[string]any{
-    "event_name": /* string */,
-    "event_type": /* string */,
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Analytics(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Analytics(nil).Create(map[string]any{
+    "project_id": "example_project_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -182,6 +190,7 @@ Return the entity name.
 
 ```go
 asset := client.Asset(nil)
+fmt.Println(asset.GetName()) // "asset"
 ```
 
 ### Fields
@@ -201,21 +210,16 @@ asset := client.Asset(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Asset(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Asset(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -223,7 +227,25 @@ results, err := client.Asset(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Asset(nil).Load(map[string]any{"id": "asset_id"}, nil)
+result, err := client.Asset(nil).Load(map[string]any{"id": "asset_id", "project_id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Asset(nil).Create(map[string]any{
+    "project_id": "example_project_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
@@ -231,7 +253,11 @@ result, err := client.Asset(nil).Load(map[string]any{"id": "asset_id"}, nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.Asset(nil).Remove(map[string]any{"id": "asset_id"}, nil)
+result, err := client.Asset(nil).Remove(map[string]any{"id": "asset_id", "project_id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -262,6 +288,7 @@ Return the entity name.
 
 ```go
 build := client.Build(nil)
+fmt.Println(build.GetName()) // "build"
 ```
 
 ### Fields
@@ -280,10 +307,12 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Build(nil).Create(map[string]any{
-    "configuration": /* string */,
-    "platform": /* string */,
-    "version": /* string */,
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -314,6 +343,7 @@ Return the entity name.
 
 ```go
 collaboration := client.Collaboration(nil)
+fmt.Println(collaboration.GetName()) // "collaboration"
 ```
 
 ### Fields
@@ -337,6 +367,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Collaboration(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
@@ -344,7 +378,11 @@ results, err := client.Collaboration(nil).List(nil, nil)
 Remove the entity matching the given criteria.
 
 ```go
-result, err := client.Collaboration(nil).Remove(nil, nil)
+result, err := client.Collaboration(nil).Remove(map[string]any{"project_id": "project_id", "user_id": "user_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -375,6 +413,7 @@ Return the entity name.
 
 ```go
 collaborator := client.Collaborator(nil)
+fmt.Println(collaborator.GetName()) // "collaborator"
 ```
 
 ### Fields
@@ -392,9 +431,12 @@ Create a new entity with the given data.
 
 ```go
 result, err := client.Collaborator(nil).Create(map[string]any{
-    "email": /* string */,
-    "role": /* string */,
+    "project_id": "example_project_id",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -425,6 +467,7 @@ Return the entity name.
 
 ```go
 deployment := client.Deployment(nil)
+fmt.Println(deployment.GetName()) // "deployment"
 ```
 
 ### Fields
@@ -467,21 +510,16 @@ deployment := client.Deployment(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Deployment(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Deployment(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -489,7 +527,25 @@ results, err := client.Deployment(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id"}, nil)
+result, err := client.Deployment(nil).Load(map[string]any{"id": "deployment_id", "project_id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Deployment(nil).Create(map[string]any{
+    "project_id": "example_project_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -520,6 +576,7 @@ Return the entity name.
 
 ```go
 project := client.Project(nil)
+fmt.Println(project.GetName()) // "project"
 ```
 
 ### Fields
@@ -550,21 +607,16 @@ project := client.Project(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Project(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Project(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -573,14 +625,23 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Project(nil).Load(map[string]any{"id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Remove the entity matching the given criteria.
+Create a new entity with the given data.
 
 ```go
-result, err := client.Project(nil).Remove(map[string]any{"id": "project_id"}, nil)
+result, err := client.Project(nil).Create(map[string]any{
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
@@ -592,6 +653,22 @@ result, err := client.Project(nil).Update(map[string]any{
     "id": "project_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Project(nil).Remove(map[string]any{"id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -622,6 +699,7 @@ Return the entity name.
 
 ```go
 test := client.Test(nil)
+fmt.Println(test.GetName()) // "test"
 ```
 
 ### Fields
@@ -656,21 +734,16 @@ test := client.Test(nil)
 
 ### Operations
 
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data.
-
-```go
-result, err := client.Test(nil).Create(map[string]any{
-}, nil)
-```
-
 #### `List(reqmatch, ctrl map[string]any) (any, error)`
 
 List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Test(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
@@ -678,7 +751,25 @@ results, err := client.Test(nil).List(nil, nil)
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Test(nil).Load(map[string]any{"id": "test_id"}, nil)
+result, err := client.Test(nil).Load(map[string]any{"id": "test_id", "project_id": "project_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Test(nil).Create(map[string]any{
+    "project_id": "example_project_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods

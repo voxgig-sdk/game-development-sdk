@@ -9,15 +9,22 @@ main: {
         url: "https://jenil-ai.vercel.app"
       }
       description: "This API provides game developers with access to tools and resources for building, testing, and deploying their games. It includes features for asset management, real-time collaboration, and analytics."
+      security: {
+        in: "header"
+        name: "Authorization"
+        prefix: "Bearer"
+        scheme: "bearerAuth"
+        type: "http"
+      }
       servers: [
         {
           description: "Production server"
           url: "https://jenil-ai.vercel.app/api"
         }
       ]
+      summary: "This API provides game developers with access to tools and resources for building, testing, and deploying their games."
       title: "Game Development API"
       version: "1.0.0"
+      website: "https://jenil-ai.vercel.app"
     }
   }
-}
-

@@ -53,11 +53,24 @@ except Exception as err:
     print(f"list failed: {err}")
 ```
 
+### 3. Load an asset
+
+Asset is nested under project, so provide the `project_id`.
+`load()` returns the bare record (a `dict`) and raises on error.
+
+```python
+try:
+    asset = client.Asset().load({"project_id": "example_project_id", "id": "example_id"})
+    print(asset)
+except Exception as err:
+    print(f"load failed: {err}")
+```
+
 ### 4. Create, update, and remove
 
 ```python
 # Create — returns the bare created record (a dict)
-created = client.Analytics().create({"project_id": "example"})
+created = client.Analytics().create({"project_id": "example_project_id"})
 
 ```
 
@@ -432,8 +445,7 @@ analyticss = client.Analytics().list()
 
 ```python
 analytics = client.Analytics().create({
-    "event_name": "example",  # str
-    "event_type": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -469,7 +481,7 @@ Create an instance: `asset = client.Asset()`
 #### Example: Load
 
 ```python
-asset = client.Asset().load({"id": "asset_id"})
+asset = client.Asset().load({"id": "asset_id", "project_id": "project_id"})
 ```
 
 #### Example: List
@@ -482,6 +494,7 @@ assets = client.Asset().list()
 
 ```python
 asset = client.Asset().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -508,9 +521,7 @@ Create an instance: `build = client.Build()`
 
 ```python
 build = client.Build().create({
-    "configuration": "example",  # str
-    "platform": "example",  # str
-    "version": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -567,8 +578,7 @@ Create an instance: `collaborator = client.Collaborator()`
 
 ```python
 collaborator = client.Collaborator().create({
-    "email": "example",  # str
-    "role": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -607,7 +617,7 @@ Create an instance: `deployment = client.Deployment()`
 #### Example: Load
 
 ```python
-deployment = client.Deployment().load({"id": "deployment_id"})
+deployment = client.Deployment().load({"id": "deployment_id", "project_id": "project_id"})
 ```
 
 #### Example: List
@@ -620,6 +630,7 @@ deployments = client.Deployment().list()
 
 ```python
 deployment = client.Deployment().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -701,7 +712,7 @@ Create an instance: `test = client.Test()`
 #### Example: Load
 
 ```python
-test = client.Test().load({"id": "test_id"})
+test = client.Test().load({"id": "test_id", "project_id": "project_id"})
 ```
 
 #### Example: List
@@ -714,6 +725,7 @@ tests = client.Test().list()
 
 ```python
 test = client.Test().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 

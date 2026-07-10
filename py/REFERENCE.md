@@ -131,8 +131,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Analytics().create({
-    "event_name": "example",  # str
-    "event_type": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -204,6 +203,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Asset().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -222,7 +222,7 @@ for asset in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Asset().load({"id": "asset_id"})
+result = client.Asset().load({"id": "asset_id", "project_id": "project_id"})
 ```
 
 #### `remove(reqmatch, ctrl=None) -> dict`
@@ -230,7 +230,7 @@ result = client.Asset().load({"id": "asset_id"})
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Asset().remove({"id": "asset_id"})
+result = client.Asset().remove({"id": "asset_id", "project_id": "project_id"})
 ```
 
 ### Common Methods
@@ -284,9 +284,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Build().create({
-    "configuration": "example",  # str
-    "platform": "example",  # str
-    "version": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -355,7 +353,7 @@ for collaboration in results:
 Remove the entity matching the given criteria. Raises on error.
 
 ```python
-result = client.Collaboration().remove()
+result = client.Collaboration().remove({"project_id": "project_id", "user_id": "user_id"})
 ```
 
 ### Common Methods
@@ -408,8 +406,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Collaborator().create({
-    "email": "example",  # str
-    "role": "example",  # str
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -494,6 +491,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Deployment().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -512,7 +510,7 @@ for deployment in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Deployment().load({"id": "deployment_id"})
+result = client.Deployment().load({"id": "deployment_id", "project_id": "project_id"})
 ```
 
 ### Common Methods
@@ -697,6 +695,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 
 ```python
 result = client.Test().create({
+    "project_id": "example_project_id",  # str
 })
 ```
 
@@ -715,7 +714,7 @@ for test in results:
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Test().load({"id": "test_id"})
+result = client.Test().load({"id": "test_id", "project_id": "project_id"})
 ```
 
 ### Common Methods

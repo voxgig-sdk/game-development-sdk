@@ -47,11 +47,25 @@ try {
 }
 ```
 
+### 3. Load an asset
+
+Asset is nested under project, so provide the `project_id`.
+
+```php
+try {
+    // load() returns the bare Asset record (throws on error).
+    $asset = $client->Asset()->load(["project_id" => "example_project_id", "id" => "example_id"]);
+    print_r($asset);
+} catch (\Throwable $err) {
+    echo "Error: " . $err->getMessage();
+}
+```
+
 ### 4. Create, update, and remove
 
 ```php
 // create() returns the bare created Analytics record.
-$created = $client->Analytics()->create(["project_id" => "example"]);
+$created = $client->Analytics()->create(["project_id" => "example_project_id"]);
 
 ```
 
@@ -436,8 +450,7 @@ $analyticss = $client->Analytics()->list();
 
 ```php
 $analytics = $client->Analytics()->create([
-    "event_name" => null, // string
-    "event_type" => null, // string
+    "project_id" => null, // string
 ]);
 ```
 
@@ -474,7 +487,7 @@ Create an instance: `$asset = $client->Asset();`
 
 ```php
 // load() returns the bare Asset record (throws on error).
-$asset = $client->Asset()->load(["id" => "asset_id"]);
+$asset = $client->Asset()->load(["id" => "asset_id", "project_id" => "project_id"]);
 ```
 
 #### Example: List
@@ -488,6 +501,7 @@ $assets = $client->Asset()->list();
 
 ```php
 $asset = $client->Asset()->create([
+    "project_id" => null, // string
 ]);
 ```
 
@@ -514,9 +528,7 @@ Create an instance: `$build = $client->Build();`
 
 ```php
 $build = $client->Build()->create([
-    "configuration" => null, // string
-    "platform" => null, // string
-    "version" => null, // string
+    "project_id" => null, // string
 ]);
 ```
 
@@ -574,8 +586,7 @@ Create an instance: `$collaborator = $client->Collaborator();`
 
 ```php
 $collaborator = $client->Collaborator()->create([
-    "email" => null, // string
-    "role" => null, // string
+    "project_id" => null, // string
 ]);
 ```
 
@@ -615,7 +626,7 @@ Create an instance: `$deployment = $client->Deployment();`
 
 ```php
 // load() returns the bare Deployment record (throws on error).
-$deployment = $client->Deployment()->load(["id" => "deployment_id"]);
+$deployment = $client->Deployment()->load(["id" => "deployment_id", "project_id" => "project_id"]);
 ```
 
 #### Example: List
@@ -629,6 +640,7 @@ $deployments = $client->Deployment()->list();
 
 ```php
 $deployment = $client->Deployment()->create([
+    "project_id" => null, // string
 ]);
 ```
 
@@ -713,7 +725,7 @@ Create an instance: `$test = $client->Test();`
 
 ```php
 // load() returns the bare Test record (throws on error).
-$test = $client->Test()->load(["id" => "test_id"]);
+$test = $client->Test()->load(["id" => "test_id", "project_id" => "project_id"]);
 ```
 
 #### Example: List
@@ -727,6 +739,7 @@ $tests = $client->Test()->list();
 
 ```php
 $test = $client->Test()->create([
+    "project_id" => null, // string
 ]);
 ```
 

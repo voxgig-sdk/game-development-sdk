@@ -47,6 +47,23 @@ for (const analytics of analyticss) {
 }
 ```
 
+### 3. Load an asset
+
+Asset is nested under project, so provide the `project_id`.
+`load()` returns the entity directly and throws on failure:
+
+```ts
+try {
+  const asset = await client.Asset().load({
+    project_id: 'example_project_id',
+    id: 'example_id',
+  })
+  console.log(asset)
+} catch (err) {
+  console.error('load failed:', err)
+}
+```
+
 ### 4. Create, update, and remove
 
 ```ts
@@ -479,8 +496,7 @@ const analyticss = await client.Analytics().list()
 
 ```ts
 const analytics = await client.Analytics().create({
-  event_name: /* string */,
-  event_type: /* string */,
+  project_id: 'example_project_id',
 })
 ```
 
@@ -516,7 +532,7 @@ Create an instance: `const asset = client.Asset()`
 #### Example: Load
 
 ```ts
-const asset = await client.Asset().load({ id: 'asset_id' })
+const asset = await client.Asset().load({ id: 'asset_id', project_id: 'project_id' })
 ```
 
 #### Example: List
@@ -529,6 +545,7 @@ const assets = await client.Asset().list()
 
 ```ts
 const asset = await client.Asset().create({
+  project_id: 'example_project_id',
 })
 ```
 
@@ -555,9 +572,7 @@ Create an instance: `const build = client.Build()`
 
 ```ts
 const build = await client.Build().create({
-  configuration: /* string */,
-  platform: /* string */,
-  version: /* string */,
+  project_id: 'example_project_id',
 })
 ```
 
@@ -614,8 +629,7 @@ Create an instance: `const collaborator = client.Collaborator()`
 
 ```ts
 const collaborator = await client.Collaborator().create({
-  email: /* string */,
-  role: /* string */,
+  project_id: 'example_project_id',
 })
 ```
 
@@ -654,7 +668,7 @@ Create an instance: `const deployment = client.Deployment()`
 #### Example: Load
 
 ```ts
-const deployment = await client.Deployment().load({ id: 'deployment_id' })
+const deployment = await client.Deployment().load({ id: 'deployment_id', project_id: 'project_id' })
 ```
 
 #### Example: List
@@ -667,6 +681,7 @@ const deployments = await client.Deployment().list()
 
 ```ts
 const deployment = await client.Deployment().create({
+  project_id: 'example_project_id',
 })
 ```
 
@@ -748,7 +763,7 @@ Create an instance: `const test = client.Test()`
 #### Example: Load
 
 ```ts
-const test = await client.Test().load({ id: 'test_id' })
+const test = await client.Test().load({ id: 'test_id', project_id: 'project_id' })
 ```
 
 #### Example: List
@@ -761,6 +776,7 @@ const tests = await client.Test().list()
 
 ```ts
 const test = await client.Test().create({
+  project_id: 'example_project_id',
 })
 ```
 

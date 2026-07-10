@@ -137,8 +137,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Analytics.create({
-  "event_name" => "example", # String
-  "event_type" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -209,6 +208,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Asset.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -225,7 +225,7 @@ results = client.Asset.list
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Asset.load({ "id" => "asset_id" })
+result = client.Asset.load({ "id" => "asset_id", "project_id" => "project_id" })
 ```
 
 #### `remove(reqmatch, ctrl = nil) -> result`
@@ -233,7 +233,7 @@ result = client.Asset.load({ "id" => "asset_id" })
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Asset.remove({ "id" => "asset_id" })
+result = client.Asset.remove({ "id" => "asset_id", "project_id" => "project_id" })
 ```
 
 ### Common Methods
@@ -288,9 +288,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Build.create({
-  "configuration" => "example", # String
-  "platform" => "example", # String
-  "version" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -358,7 +356,7 @@ results = client.Collaboration.list
 Remove the entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Collaboration.remove()
+result = client.Collaboration.remove({ "project_id" => "project_id", "user_id" => "user_id" })
 ```
 
 ### Common Methods
@@ -412,8 +410,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Collaborator.create({
-  "email" => "example", # String
-  "role" => "example", # String
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -499,6 +496,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Deployment.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -515,7 +513,7 @@ results = client.Deployment.list
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Deployment.load({ "id" => "deployment_id" })
+result = client.Deployment.load({ "id" => "deployment_id", "project_id" => "project_id" })
 ```
 
 ### Common Methods
@@ -700,6 +698,7 @@ Create a new entity with the given data. Raises on error.
 
 ```ruby
 result = client.Test.create({
+  "project_id" => "example_project_id", # String
 })
 ```
 
@@ -716,7 +715,7 @@ results = client.Test.list
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Test.load({ "id" => "test_id" })
+result = client.Test.load({ "id" => "test_id", "project_id" => "project_id" })
 ```
 
 ### Common Methods

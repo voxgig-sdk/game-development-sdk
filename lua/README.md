@@ -49,11 +49,21 @@ for _, item in ipairs(analyticss) do
 end
 ```
 
+### 3. Load an asset
+
+Asset is nested under project, so provide the `project_id`.
+
+```lua
+local asset, err = client:Asset():load({ project_id = "example_project_id", id = "example_id" })
+if err then error(err) end
+print(asset)
+```
+
 ### 4. Create, update, and remove
 
 ```lua
 -- Create
-local created, err = client:Analytics():create({ project_id = "example" })
+local created, err = client:Analytics():create({ project_id = "example_project_id" })
 if err then error(err) end
 
 ```
@@ -422,8 +432,7 @@ local analyticss, err = client:Analytics():list()
 
 ```lua
 local analytics, err = client:Analytics():create({
-  event_name = nil, -- string
-  event_type = nil, -- string
+  project_id = "example_project_id", -- string
 })
 ```
 
@@ -459,7 +468,7 @@ Create an instance: `local asset = client:Asset(nil)`
 #### Example: Load
 
 ```lua
-local asset, err = client:Asset():load({ id = "asset_id" })
+local asset, err = client:Asset():load({ id = "asset_id", project_id = "project_id" })
 ```
 
 #### Example: List
@@ -472,6 +481,7 @@ local assets, err = client:Asset():list()
 
 ```lua
 local asset, err = client:Asset():create({
+  project_id = "example_project_id", -- string
 })
 ```
 
@@ -498,9 +508,7 @@ Create an instance: `local build = client:Build(nil)`
 
 ```lua
 local build, err = client:Build():create({
-  configuration = nil, -- string
-  platform = nil, -- string
-  version = nil, -- string
+  project_id = "example_project_id", -- string
 })
 ```
 
@@ -557,8 +565,7 @@ Create an instance: `local collaborator = client:Collaborator(nil)`
 
 ```lua
 local collaborator, err = client:Collaborator():create({
-  email = nil, -- string
-  role = nil, -- string
+  project_id = "example_project_id", -- string
 })
 ```
 
@@ -597,7 +604,7 @@ Create an instance: `local deployment = client:Deployment(nil)`
 #### Example: Load
 
 ```lua
-local deployment, err = client:Deployment():load({ id = "deployment_id" })
+local deployment, err = client:Deployment():load({ id = "deployment_id", project_id = "project_id" })
 ```
 
 #### Example: List
@@ -610,6 +617,7 @@ local deployments, err = client:Deployment():list()
 
 ```lua
 local deployment, err = client:Deployment():create({
+  project_id = "example_project_id", -- string
 })
 ```
 
@@ -691,7 +699,7 @@ Create an instance: `local test = client:Test(nil)`
 #### Example: Load
 
 ```lua
-local test, err = client:Test():load({ id = "test_id" })
+local test, err = client:Test():load({ id = "test_id", project_id = "project_id" })
 ```
 
 #### Example: List
@@ -704,6 +712,7 @@ local tests, err = client:Test():list()
 
 ```lua
 local test, err = client:Test():create({
+  project_id = "example_project_id", -- string
 })
 ```
 
