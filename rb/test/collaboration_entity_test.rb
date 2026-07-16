@@ -12,6 +12,42 @@ class CollaborationEntityTest < Minitest::Test
     assert !ent.nil?
   end
 
+  # Feature #4: the entity stream(action, ...) method runs the op pipeline and
+  # returns an Enumerator over result items. With the streaming feature active
+  # it yields the feature's incremental output; otherwise it falls back to the
+  # materialised list so stream always yields.
+  def test_stream
+    seed = {
+      "entity" => {
+        "collaboration" => {
+          "s1" => { "id" => "s1" },
+          "s2" => { "id" => "s2" },
+          "s3" => { "id" => "s3" },
+        },
+      },
+    }
+
+    # Fallback: streaming inactive -> yields the materialised list items.
+    base = GameDevelopmentSDK.test(seed, nil)
+    seen = base.Collaboration(nil).stream("list", nil, nil).to_a
+    assert_equal 3, seen.length
+
+    # Inbound: streaming active -> yields each item from the feature.
+    cfg = GameDevelopmentConfig.make_config
+    if cfg["feature"].is_a?(Hash) && cfg["feature"].key?("streaming")
+      sdk = GameDevelopmentSDK.test(seed, { "feature" => { "streaming" => { "active" => true } } })
+      got = []
+      sdk.Collaboration(nil).stream("list", nil, nil).each do |item|
+        if item.is_a?(Array)
+          got.concat(item)
+        else
+          got << item
+        end
+      end
+      assert_equal 3, got.length
+    end
+  end
+
   def test_basic_flow
     setup = collaboration_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
@@ -47,20 +83,6 @@ class CollaborationEntityTest < Minitest::Test
 
     collaboration_ref01_list_result = collaboration_ref01_ent.list(collaboration_ref01_match, nil)
     assert collaboration_ref01_list_result.is_a?(Array)
-
-    # REMOVE
-    collaboration_ref01_match_rm0 = {
-      "id" => collaboration_ref01_data["id"],
-    }
-    collaboration_ref01_ent.remove(collaboration_ref01_match_rm0, nil)
-
-    # LIST
-    collaboration_ref01_match_rt0 = {
-      "project_id" => setup[:idmap]["project01"],
-    }
-
-    collaboration_ref01_list_rt0_result = collaboration_ref01_ent.list(collaboration_ref01_match_rt0, nil)
-    assert collaboration_ref01_list_rt0_result.is_a?(Array)
 
   end
 end

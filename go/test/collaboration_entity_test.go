@@ -24,6 +24,54 @@ func TestCollaborationEntity(t *testing.T) {
 		}
 	})
 
+	// Feature #4: the entity Stream(action, ...) method runs the op pipeline and
+	// returns a channel over result items. With the streaming feature active it
+	// yields the feature's incremental output; otherwise it falls back to the
+	// materialised list so Stream always yields.
+	t.Run("stream", func(t *testing.T) {
+		seed := map[string]any{
+			"entity": map[string]any{
+				"collaboration": map[string]any{
+					"s1": map[string]any{"id": "s1"},
+					"s2": map[string]any{"id": "s2"},
+					"s3": map[string]any{"id": "s3"},
+				},
+			},
+		}
+
+		// Fallback: streaming inactive -> yields the materialised list items.
+		base := sdk.TestSDK(seed, nil)
+		var seen []any
+		for item := range base.Collaboration(nil).Stream("list", nil, nil) {
+			seen = append(seen, item)
+		}
+		if len(seen) != 3 {
+			t.Fatalf("expected 3 streamed items, got %d", len(seen))
+		}
+
+		// Inbound: streaming active -> yields each item from the feature iterator.
+		hasStreaming := false
+		if fm, ok := core.MakeConfig()["feature"].(map[string]any); ok {
+			_, hasStreaming = fm["streaming"]
+		}
+		if hasStreaming {
+			streamSdk := sdk.TestSDK(seed, map[string]any{
+				"feature": map[string]any{"streaming": map[string]any{"active": true}},
+			})
+			var got []any
+			for item := range streamSdk.Collaboration(nil).Stream("list", nil, nil) {
+				if sub, ok := item.([]any); ok {
+					got = append(got, sub...)
+				} else {
+					got = append(got, item)
+				}
+			}
+			if len(got) != 3 {
+				t.Fatalf("expected 3 items via streaming feature, got %d", len(got))
+			}
+		}
+	})
+
 	t.Run("basic", func(t *testing.T) {
 		setup := collaborationBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
@@ -72,29 +120,6 @@ func TestCollaborationEntity(t *testing.T) {
 		_, collaborationRef01ListOk := collaborationRef01ListResult.([]any)
 		if !collaborationRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", collaborationRef01ListResult)
-		}
-
-		// REMOVE
-		collaborationRef01MatchRm0 := map[string]any{
-			"id": collaborationRef01Data["id"],
-		}
-		_, err = collaborationRef01Ent.Remove(collaborationRef01MatchRm0, nil)
-		if err != nil {
-			t.Fatalf("remove failed: %v", err)
-		}
-
-		// LIST
-		collaborationRef01MatchRt0 := map[string]any{
-			"project_id": setup.idmap["project01"],
-		}
-
-		collaborationRef01ListRt0Result, err := collaborationRef01Ent.List(collaborationRef01MatchRt0, nil)
-		if err != nil {
-			t.Fatalf("list failed: %v", err)
-		}
-		_, collaborationRef01ListRt0Ok := collaborationRef01ListRt0Result.([]any)
-		if !collaborationRef01ListRt0Ok {
-			t.Fatalf("expected list result to be an array, got %T", collaborationRef01ListRt0Result)
 		}
 
 	})

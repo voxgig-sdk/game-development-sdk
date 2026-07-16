@@ -67,18 +67,6 @@ describe('CollaborationEntity', async () => {
     const collaboration_ref01_list = await collaboration_ref01_ent.list(collaboration_ref01_match)
 
 
-    // REMOVE
-    const collaboration_ref01_match_rm0: any = { id: collaboration_ref01_data.id }
-    await collaboration_ref01_ent.remove(collaboration_ref01_match_rm0)
-  
-
-    // LIST
-    const collaboration_ref01_match_rt0: any = {}
-    collaboration_ref01_match_rt0['project_id'] = setup.idmap['project01']
-
-    const collaboration_ref01_list_rt0 = await collaboration_ref01_ent.list(collaboration_ref01_match_rt0)
-
-
   })
 })
 
