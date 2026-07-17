@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- GameDevelopment SDK exists test
 
 local sdk = require("game-development_sdk")
 

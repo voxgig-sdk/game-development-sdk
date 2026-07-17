@@ -1,4 +1,4 @@
--- ProjectName SDK configuration
+-- GameDevelopment SDK configuration
 
 local function make_config()
   return {
