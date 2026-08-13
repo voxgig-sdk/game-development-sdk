@@ -16,10 +16,10 @@ declare(strict_types=1);
 class Analytics
 {
     public ?int $count = null;
-    public string $event_name;
-    public string $event_type;
+    public string $eventName;
+    public string $eventType;
     public ?string $name = null;
-    public ?array $property = null;
+    public ?array $properties = null;
     public ?string $timestamp = null;
 }
 
@@ -33,20 +33,26 @@ class AnalyticsListMatch
 class AnalyticsCreateData
 {
     public string $project_id;
+    public ?int $count = null;
+    public string $eventName;
+    public string $eventType;
+    public ?string $name = null;
+    public ?array $properties = null;
+    public ?string $timestamp = null;
 }
 
 /** Asset entity data model. */
 class Asset
 {
-    public ?string $created_at = null;
+    public ?string $createdAt = null;
     public ?string $id = null;
-    public ?string $mime_type = null;
+    public ?string $mimeType = null;
     public ?string $name = null;
-    public ?string $project_id = null;
+    public ?string $projectId = null;
     public ?int $size = null;
-    public ?array $tag = null;
+    public ?array $tags = null;
     public ?string $type = null;
-    public ?string $updated_at = null;
+    public ?string $updatedAt = null;
     public ?string $url = null;
 }
 
@@ -67,6 +73,16 @@ class AssetListMatch
 class AssetCreateData
 {
     public string $project_id;
+    public ?string $createdAt = null;
+    public ?string $id = null;
+    public ?string $mimeType = null;
+    public ?string $name = null;
+    public ?string $projectId = null;
+    public ?int $size = null;
+    public ?array $tags = null;
+    public ?string $type = null;
+    public ?string $updatedAt = null;
+    public ?string $url = null;
 }
 
 /** Request payload for Asset#remove. */
@@ -88,19 +104,22 @@ class Build
 class BuildCreateData
 {
     public string $project_id;
+    public string $configuration;
+    public string $platform;
+    public string $version;
 }
 
 /** Collaboration entity data model. */
 class Collaboration
 {
-    public ?string $added_at = null;
+    public ?string $addedAt = null;
     public ?string $email = null;
     public ?string $id = null;
-    public ?string $last_active = null;
+    public ?string $lastActive = null;
     public ?string $name = null;
     public ?string $role = null;
     public ?string $status = null;
-    public ?string $user_id = null;
+    public ?string $userId = null;
 }
 
 /** Request payload for Collaboration#list. */
@@ -127,22 +146,24 @@ class Collaborator
 class CollaboratorCreateData
 {
     public string $project_id;
+    public string $email;
+    public string $role;
 }
 
 /** Deployment entity data model. */
 class Deployment
 {
-    public ?string $build_version = null;
-    public ?string $completed_at = null;
+    public ?string $buildVersion = null;
+    public ?string $completedAt = null;
     public ?string $configuration = null;
-    public ?string $created_at = null;
-    public ?string $deployment_url = null;
-    public ?string $download_url = null;
+    public ?string $createdAt = null;
+    public ?string $deploymentUrl = null;
+    public ?string $downloadUrl = null;
     public ?string $environment = null;
     public ?string $id = null;
     public ?string $platform = null;
-    public ?string $project_id = null;
-    public ?string $release_note = null;
+    public ?string $projectId = null;
+    public ?string $releaseNotes = null;
     public ?int $size = null;
     public ?string $status = null;
     public ?string $version = null;
@@ -165,19 +186,33 @@ class DeploymentListMatch
 class DeploymentCreateData
 {
     public string $project_id;
+    public ?string $buildVersion = null;
+    public ?string $completedAt = null;
+    public ?string $configuration = null;
+    public ?string $createdAt = null;
+    public ?string $deploymentUrl = null;
+    public ?string $downloadUrl = null;
+    public ?string $environment = null;
+    public ?string $id = null;
+    public ?string $platform = null;
+    public ?string $projectId = null;
+    public ?string $releaseNotes = null;
+    public ?int $size = null;
+    public ?string $status = null;
+    public ?string $version = null;
 }
 
 /** Project entity data model. */
 class Project
 {
-    public ?string $created_at = null;
+    public ?string $createdAt = null;
     public ?string $description = null;
     public ?string $id = null;
     public ?string $name = null;
     public ?array $owner = null;
-    public ?array $setting = null;
+    public ?array $settings = null;
     public ?string $status = null;
-    public ?string $updated_at = null;
+    public ?string $updatedAt = null;
 }
 
 /** Request payload for Project#load. */
@@ -189,33 +224,40 @@ class ProjectLoadMatch
 /** Request payload for Project#list. */
 class ProjectListMatch
 {
-    public ?string $created_at = null;
+    public ?string $createdAt = null;
     public ?string $description = null;
     public ?string $id = null;
     public ?string $name = null;
     public ?array $owner = null;
-    public ?array $setting = null;
+    public ?array $settings = null;
     public ?string $status = null;
-    public ?string $updated_at = null;
+    public ?string $updatedAt = null;
 }
 
 /** Request payload for Project#create. */
 class ProjectCreateData
 {
-    public ?string $created_at = null;
+    public ?string $createdAt = null;
     public ?string $description = null;
     public ?string $id = null;
     public ?string $name = null;
     public ?array $owner = null;
-    public ?array $setting = null;
+    public ?array $settings = null;
     public ?string $status = null;
-    public ?string $updated_at = null;
+    public ?string $updatedAt = null;
 }
 
 /** Request payload for Project#update. */
 class ProjectUpdateData
 {
     public string $id;
+    public ?string $createdAt = null;
+    public ?string $description = null;
+    public ?string $name = null;
+    public ?array $owner = null;
+    public ?array $settings = null;
+    public ?string $status = null;
+    public ?string $updatedAt = null;
 }
 
 /** Request payload for Project#remove. */
@@ -227,16 +269,21 @@ class ProjectRemoveMatch
 /** Test entity data model. */
 class Test
 {
-    public ?string $completed_at = null;
-    public ?string $environment = null;
+    public ?string $completedAt = null;
+    public ?float $duration = null;
+    public string $environment;
+    public ?int $failed = null;
     public ?string $id = null;
-    public ?string $name = null;
-    public ?string $platform = null;
-    public ?string $project_id = null;
-    public ?array $result = null;
-    public ?string $started_at = null;
+    public string $name;
+    public ?int $passed = null;
+    public string $platform;
+    public ?string $projectId = null;
+    public ?array $results = null;
+    public ?int $skipped = null;
+    public ?string $startedAt = null;
     public ?string $status = null;
-    public ?string $test_suite = null;
+    public string $testSuite;
+    public ?int $totalTests = null;
 }
 
 /** Request payload for Test#load. */
@@ -256,5 +303,20 @@ class TestListMatch
 class TestCreateData
 {
     public string $project_id;
+    public ?string $completedAt = null;
+    public ?float $duration = null;
+    public string $environment;
+    public ?int $failed = null;
+    public ?string $id = null;
+    public string $name;
+    public ?int $passed = null;
+    public string $platform;
+    public ?string $projectId = null;
+    public ?array $results = null;
+    public ?int $skipped = null;
+    public ?string $startedAt = null;
+    public ?string $status = null;
+    public string $testSuite;
+    public ?int $totalTests = null;
 }
 

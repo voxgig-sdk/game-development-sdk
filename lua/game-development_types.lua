@@ -8,10 +8,10 @@
 
 ---@class Analytics
 ---@field count? number
----@field event_name string
----@field event_type string
+---@field eventName string
+---@field eventType string
 ---@field name? string
----@field property? table
+---@field properties? table
 ---@field timestamp? string
 
 ---@class AnalyticsListMatch
@@ -19,17 +19,23 @@
 
 ---@class AnalyticsCreateData
 ---@field project_id string
+---@field count? number
+---@field eventName string
+---@field eventType string
+---@field name? string
+---@field properties? table
+---@field timestamp? string
 
 ---@class Asset
----@field created_at? string
+---@field createdAt? string
 ---@field id? string
----@field mime_type? string
+---@field mimeType? string
 ---@field name? string
----@field project_id? string
+---@field projectId? string
 ---@field size? number
----@field tag? table
+---@field tags? table
 ---@field type? string
----@field updated_at? string
+---@field updatedAt? string
 ---@field url? string
 
 ---@class AssetLoadMatch
@@ -41,6 +47,16 @@
 
 ---@class AssetCreateData
 ---@field project_id string
+---@field createdAt? string
+---@field id? string
+---@field mimeType? string
+---@field name? string
+---@field projectId? string
+---@field size? number
+---@field tags? table
+---@field type? string
+---@field updatedAt? string
+---@field url? string
 
 ---@class AssetRemoveMatch
 ---@field id string
@@ -53,16 +69,19 @@
 
 ---@class BuildCreateData
 ---@field project_id string
+---@field configuration string
+---@field platform string
+---@field version string
 
 ---@class Collaboration
----@field added_at? string
+---@field addedAt? string
 ---@field email? string
 ---@field id? string
----@field last_active? string
+---@field lastActive? string
 ---@field name? string
 ---@field role? string
 ---@field status? string
----@field user_id? string
+---@field userId? string
 
 ---@class CollaborationListMatch
 ---@field project_id string
@@ -77,19 +96,21 @@
 
 ---@class CollaboratorCreateData
 ---@field project_id string
+---@field email string
+---@field role string
 
 ---@class Deployment
----@field build_version? string
----@field completed_at? string
+---@field buildVersion? string
+---@field completedAt? string
 ---@field configuration? string
----@field created_at? string
----@field deployment_url? string
----@field download_url? string
+---@field createdAt? string
+---@field deploymentUrl? string
+---@field downloadUrl? string
 ---@field environment? string
 ---@field id? string
 ---@field platform? string
----@field project_id? string
----@field release_note? string
+---@field projectId? string
+---@field releaseNotes? string
 ---@field size? number
 ---@field status? string
 ---@field version? string
@@ -103,57 +124,83 @@
 
 ---@class DeploymentCreateData
 ---@field project_id string
+---@field buildVersion? string
+---@field completedAt? string
+---@field configuration? string
+---@field createdAt? string
+---@field deploymentUrl? string
+---@field downloadUrl? string
+---@field environment? string
+---@field id? string
+---@field platform? string
+---@field projectId? string
+---@field releaseNotes? string
+---@field size? number
+---@field status? string
+---@field version? string
 
 ---@class Project
----@field created_at? string
+---@field createdAt? string
 ---@field description? string
 ---@field id? string
 ---@field name? string
 ---@field owner? table
----@field setting? table
+---@field settings? table
 ---@field status? string
----@field updated_at? string
+---@field updatedAt? string
 
 ---@class ProjectLoadMatch
 ---@field id string
 
 ---@class ProjectListMatch
----@field created_at? string
+---@field createdAt? string
 ---@field description? string
 ---@field id? string
 ---@field name? string
 ---@field owner? table
----@field setting? table
+---@field settings? table
 ---@field status? string
----@field updated_at? string
+---@field updatedAt? string
 
 ---@class ProjectCreateData
----@field created_at? string
+---@field createdAt? string
 ---@field description? string
 ---@field id? string
 ---@field name? string
 ---@field owner? table
----@field setting? table
+---@field settings? table
 ---@field status? string
----@field updated_at? string
+---@field updatedAt? string
 
 ---@class ProjectUpdateData
 ---@field id string
+---@field createdAt? string
+---@field description? string
+---@field name? string
+---@field owner? table
+---@field settings? table
+---@field status? string
+---@field updatedAt? string
 
 ---@class ProjectRemoveMatch
 ---@field id string
 
 ---@class Test
----@field completed_at? string
----@field environment? string
+---@field completedAt? string
+---@field duration? number
+---@field environment string
+---@field failed? number
 ---@field id? string
----@field name? string
----@field platform? string
----@field project_id? string
----@field result? table
----@field started_at? string
+---@field name string
+---@field passed? number
+---@field platform string
+---@field projectId? string
+---@field results? table
+---@field skipped? number
+---@field startedAt? string
 ---@field status? string
----@field test_suite? string
+---@field testSuite string
+---@field totalTests? number
 
 ---@class TestLoadMatch
 ---@field id string
@@ -164,6 +211,21 @@
 
 ---@class TestCreateData
 ---@field project_id string
+---@field completedAt? string
+---@field duration? number
+---@field environment string
+---@field failed? number
+---@field id? string
+---@field name string
+---@field passed? number
+---@field platform string
+---@field projectId? string
+---@field results? table
+---@field skipped? number
+---@field startedAt? string
+---@field status? string
+---@field testSuite string
+---@field totalTests? number
 
 local M = {}
 

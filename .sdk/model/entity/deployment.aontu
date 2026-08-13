@@ -6,7 +6,7 @@ main: kit: entity: deployment: {
 
   fields: [
     {
-      name: "build_version"
+      name: "buildVersion"
       op: {
         create: {
           req: true
@@ -17,7 +17,7 @@ main: kit: entity: deployment: {
       type: "`$STRING`"
     }
     {
-      name: "completed_at"
+      name: "completedAt"
       req: false
       type: "`$STRING`"
     }
@@ -27,17 +27,17 @@ main: kit: entity: deployment: {
       type: "`$STRING`"
     }
     {
-      name: "created_at"
+      name: "createdAt"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "deployment_url"
+      name: "deploymentUrl"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "download_url"
+      name: "downloadUrl"
       req: false
       type: "`$STRING`"
     }
@@ -69,12 +69,12 @@ main: kit: entity: deployment: {
       type: "`$STRING`"
     }
     {
-      name: "project_id"
+      name: "projectId"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "release_note"
+      name: "releaseNotes"
       req: false
       type: "`$STRING`"
     }
@@ -185,7 +185,7 @@ main: kit: entity: deployment: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.deployments`"
           }
         }
         {
@@ -219,7 +219,7 @@ main: kit: entity: deployment: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.builds`"
           }
         }
       ]

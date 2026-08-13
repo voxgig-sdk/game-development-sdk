@@ -3,30 +3,30 @@
     "analytics": {
       "ANALYTICS00": {
         "count": "s3c",
-        "event_name": "s3d",
-        "event_type": "s3e",
+        "eventName": "s3d",
+        "eventType": "s3e",
         "name": "s3f",
-        "property": {},
+        "properties": {},
         "timestamp": "s41",
         "project_id": "PROJECT01",
         "id": "ANALYTICS00"
       },
       "ANALYTICS01": {
         "count": "s78",
-        "event_name": "s79",
-        "event_type": "s7a",
+        "eventName": "s79",
+        "eventType": "s7a",
         "name": "s7b",
-        "property": {},
+        "properties": {},
         "timestamp": "s7d",
         "project_id": "PROJECT01",
         "id": "ANALYTICS01"
       },
       "ANALYTICS02": {
         "count": "sb4",
-        "event_name": "sb5",
-        "event_type": "sb6",
+        "eventName": "sb5",
+        "eventType": "sb6",
         "name": "sb7",
-        "property": {},
+        "properties": {},
         "timestamp": "sb9",
         "project_id": "PROJECT01",
         "id": "ANALYTICS02"
@@ -37,10 +37,10 @@
     "analytics": {
       "analytics_ref01": {
         "count": "sf0",
-        "event_name": "sf1",
-        "event_type": "sf2",
+        "eventName": "sf1",
+        "eventType": "sf2",
         "name": "sf3",
-        "property": {},
+        "properties": {},
         "timestamp": "sf5"
       }
     }

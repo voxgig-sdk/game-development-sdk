@@ -26,8 +26,8 @@ import {
 describe('CollaborationEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when GAMEDEVELOPMENT_TEST_LIVE=TRUE.
-  afterEach(liveDelay('GAMEDEVELOPMENT_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when GAME_DEVELOPMENT_TEST_LIVE=TRUE.
+  afterEach(liveDelay('GAME_DEVELOPMENT_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = GameDevelopmentSDK.test()
@@ -39,7 +39,7 @@ describe('CollaborationEntity', async () => {
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.GAME_DEVELOPMENT_TEST_LIVE
-    for (const op of ['list', 'remove']) {
+    for (const op of ['list']) {
       if (maybeSkipControl(t, 'entityOp', 'collaboration.' + op, live)) return
     }
 
@@ -64,7 +64,7 @@ describe('CollaborationEntity', async () => {
     const collaboration_ref01_match: any = {}
     collaboration_ref01_match['project_id'] = setup.idmap['project01']
 
-    const collaboration_ref01_list = await collaboration_ref01_ent.list(collaboration_ref01_match)
+    const collaboration_ref01_list = (await collaboration_ref01_ent.list(collaboration_ref01_match)).map((e: any) => e.data())
 
 
   })

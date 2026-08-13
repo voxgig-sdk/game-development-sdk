@@ -117,10 +117,10 @@ analytics = client.Analytics()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `event_name` | `str` | Yes |  |
-| `event_type` | `str` | Yes |  |
+| `eventName` | `str` | Yes |  |
+| `eventType` | `str` | Yes |  |
 | `name` | `str` | No |  |
-| `property` | `dict` | No |  |
+| `properties` | `dict` | No |  |
 | `timestamp` | `str` | No |  |
 
 ### Operations
@@ -132,6 +132,8 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Analytics().create({
     "project_id": "example_project_id",  # str
+    "eventName": "example_eventName",  # str
+    "eventType": "example_eventType",  # str
 })
 ```
 
@@ -140,7 +142,7 @@ result = client.Analytics().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Analytics().list()
+results = client.Analytics().list({"project_id": "example"})
 for analytics in results:
     print(analytics)
 ```
@@ -184,15 +186,15 @@ asset = client.Asset()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `str` | No |  |
+| `createdAt` | `str` | No |  |
 | `id` | `str` | No |  |
-| `mime_type` | `str` | No |  |
+| `mimeType` | `str` | No |  |
 | `name` | `str` | No |  |
-| `project_id` | `str` | No |  |
+| `projectId` | `str` | No |  |
 | `size` | `int` | No |  |
-| `tag` | `list` | No |  |
+| `tags` | `list` | No |  |
 | `type` | `str` | No |  |
-| `updated_at` | `str` | No |  |
+| `updatedAt` | `str` | No |  |
 | `url` | `str` | No |  |
 
 ### Operations
@@ -212,7 +214,7 @@ result = client.Asset().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Asset().list()
+results = client.Asset().list({"project_id": "example"})
 for asset in results:
     print(asset)
 ```
@@ -285,6 +287,9 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Build().create({
     "project_id": "example_project_id",  # str
+    "configuration": "example_configuration",  # str
+    "platform": "example_platform",  # str
+    "version": "example_version",  # str
 })
 ```
 
@@ -327,14 +332,14 @@ collaboration = client.Collaboration()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | `str` | No |  |
+| `addedAt` | `str` | No |  |
 | `email` | `str` | No |  |
 | `id` | `str` | No |  |
-| `last_active` | `str` | No |  |
+| `lastActive` | `str` | No |  |
 | `name` | `str` | No |  |
 | `role` | `str` | No |  |
 | `status` | `str` | No |  |
-| `user_id` | `str` | No |  |
+| `userId` | `str` | No |  |
 
 ### Operations
 
@@ -343,7 +348,7 @@ collaboration = client.Collaboration()
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Collaboration().list()
+results = client.Collaboration().list({"project_id": "example"})
 for collaboration in results:
     print(collaboration)
 ```
@@ -407,6 +412,8 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Collaborator().create({
     "project_id": "example_project_id",  # str
+    "email": "example_email",  # str
+    "role": "example_role",  # str
 })
 ```
 
@@ -449,17 +456,17 @@ deployment = client.Deployment()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | `str` | No |  |
-| `completed_at` | `str` | No |  |
+| `buildVersion` | `str` | No |  |
+| `completedAt` | `str` | No |  |
 | `configuration` | `str` | No |  |
-| `created_at` | `str` | No |  |
-| `deployment_url` | `str` | No |  |
-| `download_url` | `str` | No |  |
+| `createdAt` | `str` | No |  |
+| `deploymentUrl` | `str` | No |  |
+| `downloadUrl` | `str` | No |  |
 | `environment` | `str` | No |  |
 | `id` | `str` | No |  |
 | `platform` | `str` | No |  |
-| `project_id` | `str` | No |  |
-| `release_note` | `str` | No |  |
+| `projectId` | `str` | No |  |
+| `releaseNotes` | `str` | No |  |
 | `size` | `int` | No |  |
 | `status` | `str` | No |  |
 | `version` | `str` | No |  |
@@ -468,17 +475,17 @@ deployment = client.Deployment()
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `build_version` | - | - | Yes |
-| `completed_at` | - | - | - |
+| `buildVersion` | - | - | Yes |
+| `completedAt` | - | - | - |
 | `configuration` | - | - | - |
-| `created_at` | - | - | - |
-| `deployment_url` | - | - | - |
-| `download_url` | - | - | - |
+| `createdAt` | - | - | - |
+| `deploymentUrl` | - | - | - |
+| `downloadUrl` | - | - | - |
 | `environment` | - | - | Yes |
 | `id` | - | - | - |
 | `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `release_note` | - | - | - |
+| `projectId` | - | - | - |
+| `releaseNotes` | - | - | - |
 | `size` | - | - | - |
 | `status` | - | - | - |
 | `version` | - | - | - |
@@ -500,7 +507,7 @@ result = client.Deployment().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Deployment().list()
+results = client.Deployment().list({"project_id": "example"})
 for deployment in results:
     print(deployment)
 ```
@@ -552,27 +559,27 @@ project = client.Project()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `str` | No |  |
+| `createdAt` | `str` | No |  |
 | `description` | `str` | No |  |
 | `id` | `str` | No |  |
 | `name` | `str` | No |  |
 | `owner` | `dict` | No |  |
-| `setting` | `dict` | No |  |
+| `settings` | `dict` | No |  |
 | `status` | `str` | No |  |
-| `updated_at` | `str` | No |  |
+| `updatedAt` | `str` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
+| `createdAt` | - | - | - | - | - |
 | `description` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `name` | - | - | Yes | - | - |
 | `owner` | - | - | - | - | - |
-| `setting` | - | - | - | - | - |
+| `settings` | - | - | - | - | - |
 | `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+| `updatedAt` | - | - | - | - | - |
 
 ### Operations
 
@@ -661,31 +668,41 @@ test = client.Test()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | `str` | No |  |
-| `environment` | `str` | No |  |
+| `completedAt` | `str` | No |  |
+| `duration` | `float` | No |  |
+| `environment` | `str` | Yes |  |
+| `failed` | `int` | No |  |
 | `id` | `str` | No |  |
-| `name` | `str` | No |  |
-| `platform` | `str` | No |  |
-| `project_id` | `str` | No |  |
-| `result` | `dict` | No |  |
-| `started_at` | `str` | No |  |
+| `name` | `str` | Yes |  |
+| `passed` | `int` | No |  |
+| `platform` | `str` | Yes |  |
+| `projectId` | `str` | No |  |
+| `results` | `dict` | No |  |
+| `skipped` | `int` | No |  |
+| `startedAt` | `str` | No |  |
 | `status` | `str` | No |  |
-| `test_suite` | `str` | No |  |
+| `testSuite` | `str` | Yes |  |
+| `totalTests` | `int` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `completed_at` | - | - | - |
-| `environment` | - | - | Yes |
+| `completedAt` | - | - | - |
+| `duration` | - | - | - |
+| `environment` | - | Yes | - |
+| `failed` | - | - | - |
 | `id` | - | - | - |
-| `name` | - | - | Yes |
-| `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `result` | - | - | - |
-| `started_at` | - | - | - |
+| `name` | - | Yes | - |
+| `passed` | - | - | - |
+| `platform` | - | Yes | - |
+| `projectId` | - | - | - |
+| `results` | - | - | - |
+| `skipped` | - | - | - |
+| `startedAt` | - | - | - |
 | `status` | - | - | - |
-| `test_suite` | - | - | Yes |
+| `testSuite` | - | Yes | - |
+| `totalTests` | - | - | - |
 
 ### Operations
 
@@ -696,6 +713,10 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Test().create({
     "project_id": "example_project_id",  # str
+    "environment": "example_environment",  # str
+    "name": "example_name",  # str
+    "platform": "example_platform",  # str
+    "testSuite": "example_testSuite",  # str
 })
 ```
 
@@ -704,7 +725,7 @@ result = client.Test().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Test().list()
+results = client.Test().list({"project_id": "example"})
 for test in results:
     print(test)
 ```

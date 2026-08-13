@@ -26,8 +26,8 @@ import {
 describe('AssetEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when GAMEDEVELOPMENT_TEST_LIVE=TRUE.
-  afterEach(liveDelay('GAMEDEVELOPMENT_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when GAME_DEVELOPMENT_TEST_LIVE=TRUE.
+  afterEach(liveDelay('GAME_DEVELOPMENT_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = GameDevelopmentSDK.test()
@@ -63,7 +63,7 @@ describe('AssetEntity', async () => {
     let asset_ref01_data = setup.data.new.asset['asset_ref01']
     asset_ref01_data['project_id'] = setup.idmap['project01']
 
-    asset_ref01_data = await asset_ref01_ent.create(asset_ref01_data)
+    asset_ref01_data = (await asset_ref01_ent.create(asset_ref01_data)).data()
     assert(null != asset_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('AssetEntity', async () => {
     const asset_ref01_match: any = {}
     asset_ref01_match['project_id'] = setup.idmap['project01']
 
-    const asset_ref01_list = await asset_ref01_ent.list(asset_ref01_match)
+    const asset_ref01_list = (await asset_ref01_ent.list(asset_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(asset_ref01_list, { id: asset_ref01_data.id })))
 
@@ -79,7 +79,7 @@ describe('AssetEntity', async () => {
     // LOAD
     const asset_ref01_match_dt0: any = {}
     asset_ref01_match_dt0.id = asset_ref01_data.id
-    const asset_ref01_data_dt0 = await asset_ref01_ent.load(asset_ref01_match_dt0)
+    const asset_ref01_data_dt0 = (await asset_ref01_ent.load(asset_ref01_match_dt0)).data()
     assert(asset_ref01_data_dt0.id === asset_ref01_data.id)
 
 
@@ -92,7 +92,7 @@ describe('AssetEntity', async () => {
     const asset_ref01_match_rt0: any = {}
     asset_ref01_match_rt0['project_id'] = setup.idmap['project01']
 
-    const asset_ref01_list_rt0 = await asset_ref01_ent.list(asset_ref01_match_rt0)
+    const asset_ref01_list_rt0 = (await asset_ref01_ent.list(asset_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(asset_ref01_list_rt0, { id: asset_ref01_data.id })))
 

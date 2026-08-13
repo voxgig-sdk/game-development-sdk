@@ -72,7 +72,7 @@ class ProjectEntityTest extends TestCase
         // The basic flow consumes synthetic IDs from the fixture. In live mode
         // without an *_ENTID env override, those IDs hit the live API and 4xx.
         if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set GAMEDEVELOPMENT_TEST_PROJECT_ENTID JSON to run live");
+            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set GAME_DEVELOPMENT_TEST_PROJECT_ENTID JSON to run live");
             return;
         }
         $client = $setup["client"];
@@ -83,7 +83,7 @@ class ProjectEntityTest extends TestCase
             Vs::getpath($setup["data"], "new.project"), "project_ref01"));
 
         $project_ref01_data_result = $project_ref01_ent->create($project_ref01_data, null);
-        $project_ref01_data = Helpers::to_map($project_ref01_data_result);
+        $project_ref01_data = Helpers::to_map(is_object($project_ref01_data_result) && method_exists($project_ref01_data_result, 'data_get') ? $project_ref01_data_result->data_get() : $project_ref01_data_result);
         $this->assertNotNull($project_ref01_data);
         $this->assertNotNull($project_ref01_data["id"]);
 
@@ -103,12 +103,12 @@ class ProjectEntityTest extends TestCase
             "id" => $project_ref01_data["id"],
         ];
 
-        $project_ref01_markdef_up0_name = "created_at";
+        $project_ref01_markdef_up0_name = "createdAt";
         $project_ref01_markdef_up0_value = "Mark01-project_ref01_" . $setup["now"];
         $project_ref01_data_up0_up[$project_ref01_markdef_up0_name] = $project_ref01_markdef_up0_value;
 
         $project_ref01_resdata_up0_result = $project_ref01_ent->update($project_ref01_data_up0_up, null);
-        $project_ref01_resdata_up0 = Helpers::to_map($project_ref01_resdata_up0_result);
+        $project_ref01_resdata_up0 = Helpers::to_map(is_object($project_ref01_resdata_up0_result) && method_exists($project_ref01_resdata_up0_result, 'data_get') ? $project_ref01_resdata_up0_result->data_get() : $project_ref01_resdata_up0_result);
         $this->assertNotNull($project_ref01_resdata_up0);
         $this->assertEquals($project_ref01_resdata_up0["id"], $project_ref01_data_up0_up["id"]);
         $this->assertEquals($project_ref01_resdata_up0[$project_ref01_markdef_up0_name], $project_ref01_markdef_up0_value);
@@ -118,7 +118,7 @@ class ProjectEntityTest extends TestCase
             "id" => $project_ref01_data["id"],
         ];
         $project_ref01_data_dt0_loaded = $project_ref01_ent->load($project_ref01_match_dt0, null);
-        $project_ref01_data_dt0_load_result = Helpers::to_map($project_ref01_data_dt0_loaded);
+        $project_ref01_data_dt0_load_result = Helpers::to_map(is_object($project_ref01_data_dt0_loaded) && method_exists($project_ref01_data_dt0_loaded, 'data_get') ? $project_ref01_data_dt0_loaded->data_get() : $project_ref01_data_dt0_loaded);
         $this->assertNotNull($project_ref01_data_dt0_load_result);
         $this->assertEquals($project_ref01_data_dt0_load_result["id"], $project_ref01_data["id"]);
 
@@ -164,39 +164,39 @@ function project_basic_setup($extra)
     // Detect ENTID env override before envOverride consumes it. When live
     // mode is on without a real override, the basic test runs against synthetic
     // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("GAMEDEVELOPMENT_TEST_PROJECT_ENTID");
+    $entid_env_raw = getenv("GAME_DEVELOPMENT_TEST_PROJECT_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "GAMEDEVELOPMENT_TEST_PROJECT_ENTID" => $idmap,
-        "GAMEDEVELOPMENT_TEST_LIVE" => "FALSE",
-        "GAMEDEVELOPMENT_TEST_EXPLAIN" => "FALSE",
-        "GAMEDEVELOPMENT_APIKEY" => "NONE",
+        "GAME_DEVELOPMENT_TEST_PROJECT_ENTID" => $idmap,
+        "GAME_DEVELOPMENT_TEST_LIVE" => "FALSE",
+        "GAME_DEVELOPMENT_TEST_EXPLAIN" => "FALSE",
+        "GAME_DEVELOPMENT_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["GAMEDEVELOPMENT_TEST_PROJECT_ENTID"]);
+        $env["GAME_DEVELOPMENT_TEST_PROJECT_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
 
-    if ($env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE") {
+    if ($env["GAME_DEVELOPMENT_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["GAMEDEVELOPMENT_APIKEY"],
+                "apikey" => $env["GAME_DEVELOPMENT_APIKEY"],
             ],
             $extra ?? [],
         ]);
         $client = new GameDevelopmentSDK(Helpers::to_map($merged_opts));
     }
 
-    $live = $env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE";
+    $live = $env["GAME_DEVELOPMENT_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["GAMEDEVELOPMENT_TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["GAME_DEVELOPMENT_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

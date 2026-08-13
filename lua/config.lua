@@ -43,14 +43,14 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "event_name",
+            ["name"] = "eventName",
             ["req"] = true,
             ["type"] = "`$STRING`",
             ["index$"] = 1,
           },
           {
             ["active"] = true,
-            ["name"] = "event_type",
+            ["name"] = "eventType",
             ["req"] = true,
             ["type"] = "`$STRING`",
             ["index$"] = 2,
@@ -64,7 +64,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "property",
+            ["name"] = "properties",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 4,
@@ -98,6 +98,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/analytics/events",
                 ["parts"] = {
@@ -171,6 +172,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/analytics",
                 ["parts"] = {
@@ -213,7 +215,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "created_at",
+            ["name"] = "createdAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 0,
@@ -227,7 +229,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "mime_type",
+            ["name"] = "mimeType",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 2,
@@ -241,7 +243,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "project_id",
+            ["name"] = "projectId",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 4,
@@ -255,7 +257,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "tag",
+            ["name"] = "tags",
             ["req"] = false,
             ["type"] = "`$ARRAY`",
             ["index$"] = 6,
@@ -269,7 +271,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "updated_at",
+            ["name"] = "updatedAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 8,
@@ -303,6 +305,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/assets",
                 ["parts"] = {
@@ -367,6 +370,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/assets",
                 ["parts"] = {
@@ -388,7 +392,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.assets`",
                 },
                 ["index$"] = 0,
               },
@@ -423,6 +427,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/assets/{assetId}",
                 ["parts"] = {
@@ -480,6 +485,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/projects/{projectId}/assets/{assetId}",
                 ["parts"] = {
@@ -563,6 +569,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/builds",
                 ["parts"] = {
@@ -602,7 +609,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "added_at",
+            ["name"] = "addedAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 0,
@@ -623,7 +630,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "last_active",
+            ["name"] = "lastActive",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 3,
@@ -651,7 +658,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "user_id",
+            ["name"] = "userId",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 7,
@@ -678,6 +685,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/collaborators",
                 ["parts"] = {
@@ -697,7 +705,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.collaborators`",
                 },
                 ["index$"] = 0,
               },
@@ -732,6 +740,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/projects/{projectId}/collaborators/{userId}",
                 ["parts"] = {
@@ -812,6 +821,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/collaborators",
                 ["parts"] = {
@@ -851,7 +861,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "build_version",
+            ["name"] = "buildVersion",
             ["op"] = {
               ["create"] = {
                 ["req"] = true,
@@ -864,7 +874,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "completed_at",
+            ["name"] = "completedAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 1,
@@ -878,21 +888,21 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "created_at",
+            ["name"] = "createdAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 3,
           },
           {
             ["active"] = true,
-            ["name"] = "deployment_url",
+            ["name"] = "deploymentUrl",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 4,
           },
           {
             ["active"] = true,
-            ["name"] = "download_url",
+            ["name"] = "downloadUrl",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 5,
@@ -932,14 +942,14 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "project_id",
+            ["name"] = "projectId",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 9,
           },
           {
             ["active"] = true,
-            ["name"] = "release_note",
+            ["name"] = "releaseNotes",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 10,
@@ -987,6 +997,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/deployments",
                 ["parts"] = {
@@ -1042,6 +1053,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/deployments",
                 ["parts"] = {
@@ -1062,7 +1074,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.deployments`",
                 },
                 ["index$"] = 0,
               },
@@ -1081,6 +1093,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/builds",
                 ["parts"] = {
@@ -1100,7 +1113,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.builds`",
                 },
                 ["index$"] = 1,
               },
@@ -1135,6 +1148,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/deployments/{deploymentId}",
                 ["parts"] = {
@@ -1177,7 +1191,7 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "created_at",
+            ["name"] = "createdAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 0,
@@ -1218,7 +1232,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "setting",
+            ["name"] = "settings",
             ["req"] = false,
             ["type"] = "`$OBJECT`",
             ["index$"] = 5,
@@ -1232,7 +1246,7 @@ local function make_config()
           },
           {
             ["active"] = true,
-            ["name"] = "updated_at",
+            ["name"] = "updatedAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 7,
@@ -1247,6 +1261,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects",
                 ["parts"] = {
@@ -1298,6 +1313,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects",
                 ["parts"] = {
@@ -1312,7 +1328,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.projects`",
                 },
                 ["index$"] = 0,
               },
@@ -1338,6 +1354,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}",
                 ["parts"] = {
@@ -1382,6 +1399,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "DELETE",
                 ["orig"] = "/projects/{projectId}",
                 ["parts"] = {
@@ -1426,6 +1444,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "PUT",
                 ["orig"] = "/projects/{projectId}",
                 ["parts"] = {
@@ -1460,97 +1479,132 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "completed_at",
+            ["name"] = "completedAt",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
+            ["name"] = "duration",
+            ["req"] = false,
+            ["type"] = "`$NUMBER`",
+            ["index$"] = 1,
+          },
+          {
+            ["active"] = true,
             ["name"] = "environment",
             ["op"] = {
-              ["create"] = {
-                ["req"] = true,
+              ["list"] = {
+                ["req"] = false,
                 ["type"] = "`$STRING`",
               },
             },
-            ["req"] = false,
+            ["req"] = true,
             ["type"] = "`$STRING`",
-            ["index$"] = 1,
+            ["index$"] = 2,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "failed",
+            ["req"] = false,
+            ["type"] = "`$INTEGER`",
+            ["index$"] = 3,
           },
           {
             ["active"] = true,
             ["name"] = "id",
             ["req"] = false,
             ["type"] = "`$STRING`",
-            ["index$"] = 2,
+            ["index$"] = 4,
           },
           {
             ["active"] = true,
             ["name"] = "name",
             ["op"] = {
-              ["create"] = {
-                ["req"] = true,
+              ["list"] = {
+                ["req"] = false,
                 ["type"] = "`$STRING`",
               },
             },
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 3,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "platform",
-            ["op"] = {
-              ["create"] = {
-                ["req"] = true,
-                ["type"] = "`$STRING`",
-              },
-            },
-            ["req"] = false,
-            ["type"] = "`$STRING`",
-            ["index$"] = 4,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "project_id",
-            ["req"] = false,
+            ["req"] = true,
             ["type"] = "`$STRING`",
             ["index$"] = 5,
           },
           {
             ["active"] = true,
-            ["name"] = "result",
+            ["name"] = "passed",
             ["req"] = false,
-            ["type"] = "`$OBJECT`",
+            ["type"] = "`$INTEGER`",
             ["index$"] = 6,
           },
           {
             ["active"] = true,
-            ["name"] = "started_at",
-            ["req"] = false,
+            ["name"] = "platform",
+            ["op"] = {
+              ["list"] = {
+                ["req"] = false,
+                ["type"] = "`$STRING`",
+              },
+            },
+            ["req"] = true,
             ["type"] = "`$STRING`",
             ["index$"] = 7,
           },
           {
             ["active"] = true,
-            ["name"] = "status",
+            ["name"] = "projectId",
             ["req"] = false,
             ["type"] = "`$STRING`",
             ["index$"] = 8,
           },
           {
             ["active"] = true,
-            ["name"] = "test_suite",
+            ["name"] = "results",
+            ["req"] = false,
+            ["type"] = "`$OBJECT`",
+            ["index$"] = 9,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "skipped",
+            ["req"] = false,
+            ["type"] = "`$INTEGER`",
+            ["index$"] = 10,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "startedAt",
+            ["req"] = false,
+            ["type"] = "`$STRING`",
+            ["index$"] = 11,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "status",
+            ["req"] = false,
+            ["type"] = "`$STRING`",
+            ["index$"] = 12,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "testSuite",
             ["op"] = {
-              ["create"] = {
-                ["req"] = true,
+              ["list"] = {
+                ["req"] = false,
                 ["type"] = "`$STRING`",
               },
             },
-            ["req"] = false,
+            ["req"] = true,
             ["type"] = "`$STRING`",
-            ["index$"] = 9,
+            ["index$"] = 13,
+          },
+          {
+            ["active"] = true,
+            ["name"] = "totalTests",
+            ["req"] = false,
+            ["type"] = "`$INTEGER`",
+            ["index$"] = 14,
           },
         },
         ["name"] = "test",
@@ -1574,6 +1628,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/projects/{projectId}/tests",
                 ["parts"] = {
@@ -1593,7 +1648,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.results`",
                 },
                 ["index$"] = 0,
               },
@@ -1629,6 +1684,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/tests",
                 ["parts"] = {
@@ -1649,7 +1705,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.tests`",
                 },
                 ["index$"] = 0,
               },
@@ -1684,6 +1740,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/projects/{projectId}/tests/{testId}",
                 ["parts"] = {
@@ -1706,7 +1763,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.results`",
                 },
                 ["index$"] = 0,
               },

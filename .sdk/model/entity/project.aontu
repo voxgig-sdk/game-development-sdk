@@ -6,7 +6,7 @@ main: kit: entity: project: {
 
   fields: [
     {
-      name: "created_at"
+      name: "createdAt"
       req: false
       type: "`$STRING`"
     }
@@ -37,7 +37,7 @@ main: kit: entity: project: {
       type: "`$OBJECT`"
     }
     {
-      name: "setting"
+      name: "settings"
       req: false
       type: "`$OBJECT`"
     }
@@ -47,7 +47,7 @@ main: kit: entity: project: {
       type: "`$STRING`"
     }
     {
-      name: "updated_at"
+      name: "updatedAt"
       req: false
       type: "`$STRING`"
     }
@@ -121,7 +121,7 @@ main: kit: entity: project: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.projects`"
           }
         }
       ]

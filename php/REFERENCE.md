@@ -122,10 +122,10 @@ $analytics = $client->Analytics();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `event_name` | `string` | Yes |  |
-| `event_type` | `string` | Yes |  |
+| `eventName` | `string` | Yes |  |
+| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `property` | `array` | No |  |
+| `properties` | `array` | No |  |
 | `timestamp` | `string` | No |  |
 
 ### Operations
@@ -137,6 +137,8 @@ Create a new entity with the given data. Throws on error.
 ```php
 $result = $client->Analytics()->create([
   "project_id" => null, // string
+  "eventName" => null, // string
+  "eventType" => null, // string
 ]);
 ```
 
@@ -188,15 +190,15 @@ $asset = $client->Asset();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `id` | `string` | No |  |
-| `mime_type` | `string` | No |  |
+| `mimeType` | `string` | No |  |
 | `name` | `string` | No |  |
-| `project_id` | `string` | No |  |
+| `projectId` | `string` | No |  |
 | `size` | `int` | No |  |
-| `tag` | `array` | No |  |
+| `tags` | `array` | No |  |
 | `type` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 | `url` | `string` | No |  |
 
 ### Operations
@@ -288,6 +290,9 @@ Create a new entity with the given data. Throws on error.
 ```php
 $result = $client->Build()->create([
   "project_id" => null, // string
+  "configuration" => null, // string
+  "platform" => null, // string
+  "version" => null, // string
 ]);
 ```
 
@@ -331,14 +336,14 @@ $collaboration = $client->Collaboration();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | `string` | No |  |
+| `addedAt` | `string` | No |  |
 | `email` | `string` | No |  |
 | `id` | `string` | No |  |
-| `last_active` | `string` | No |  |
+| `lastActive` | `string` | No |  |
 | `name` | `string` | No |  |
 | `role` | `string` | No |  |
 | `status` | `string` | No |  |
-| `user_id` | `string` | No |  |
+| `userId` | `string` | No |  |
 
 ### Operations
 
@@ -410,6 +415,8 @@ Create a new entity with the given data. Throws on error.
 ```php
 $result = $client->Collaborator()->create([
   "project_id" => null, // string
+  "email" => null, // string
+  "role" => null, // string
 ]);
 ```
 
@@ -453,17 +460,17 @@ $deployment = $client->Deployment();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | `string` | No |  |
-| `completed_at` | `string` | No |  |
+| `buildVersion` | `string` | No |  |
+| `completedAt` | `string` | No |  |
 | `configuration` | `string` | No |  |
-| `created_at` | `string` | No |  |
-| `deployment_url` | `string` | No |  |
-| `download_url` | `string` | No |  |
+| `createdAt` | `string` | No |  |
+| `deploymentUrl` | `string` | No |  |
+| `downloadUrl` | `string` | No |  |
 | `environment` | `string` | No |  |
 | `id` | `string` | No |  |
 | `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `release_note` | `string` | No |  |
+| `projectId` | `string` | No |  |
+| `releaseNotes` | `string` | No |  |
 | `size` | `int` | No |  |
 | `status` | `string` | No |  |
 | `version` | `string` | No |  |
@@ -472,17 +479,17 @@ $deployment = $client->Deployment();
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `build_version` | - | - | Yes |
-| `completed_at` | - | - | - |
+| `buildVersion` | - | - | Yes |
+| `completedAt` | - | - | - |
 | `configuration` | - | - | - |
-| `created_at` | - | - | - |
-| `deployment_url` | - | - | - |
-| `download_url` | - | - | - |
+| `createdAt` | - | - | - |
+| `deploymentUrl` | - | - | - |
+| `downloadUrl` | - | - | - |
 | `environment` | - | - | Yes |
 | `id` | - | - | - |
 | `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `release_note` | - | - | - |
+| `projectId` | - | - | - |
+| `releaseNotes` | - | - | - |
 | `size` | - | - | - |
 | `status` | - | - | - |
 | `version` | - | - | - |
@@ -555,27 +562,27 @@ $project = $client->Project();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 | `owner` | `array` | No |  |
-| `setting` | `array` | No |  |
+| `settings` | `array` | No |  |
 | `status` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
+| `createdAt` | - | - | - | - | - |
 | `description` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `name` | - | - | Yes | - | - |
 | `owner` | - | - | - | - | - |
-| `setting` | - | - | - | - | - |
+| `settings` | - | - | - | - | - |
 | `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+| `updatedAt` | - | - | - | - | - |
 
 ### Operations
 
@@ -656,38 +663,48 @@ Return the entity name.
 ## TestEntity
 
 ```php
-$test = $client->Test();
+$test = $client->Test_();
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | `string` | No |  |
-| `environment` | `string` | No |  |
+| `completedAt` | `string` | No |  |
+| `duration` | `float` | No |  |
+| `environment` | `string` | Yes |  |
+| `failed` | `int` | No |  |
 | `id` | `string` | No |  |
-| `name` | `string` | No |  |
-| `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `result` | `array` | No |  |
-| `started_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `passed` | `int` | No |  |
+| `platform` | `string` | Yes |  |
+| `projectId` | `string` | No |  |
+| `results` | `array` | No |  |
+| `skipped` | `int` | No |  |
+| `startedAt` | `string` | No |  |
 | `status` | `string` | No |  |
-| `test_suite` | `string` | No |  |
+| `testSuite` | `string` | Yes |  |
+| `totalTests` | `int` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `completed_at` | - | - | - |
-| `environment` | - | - | Yes |
+| `completedAt` | - | - | - |
+| `duration` | - | - | - |
+| `environment` | - | Yes | - |
+| `failed` | - | - | - |
 | `id` | - | - | - |
-| `name` | - | - | Yes |
-| `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `result` | - | - | - |
-| `started_at` | - | - | - |
+| `name` | - | Yes | - |
+| `passed` | - | - | - |
+| `platform` | - | Yes | - |
+| `projectId` | - | - | - |
+| `results` | - | - | - |
+| `skipped` | - | - | - |
+| `startedAt` | - | - | - |
 | `status` | - | - | - |
-| `test_suite` | - | - | Yes |
+| `testSuite` | - | Yes | - |
+| `totalTests` | - | - | - |
 
 ### Operations
 
@@ -696,8 +713,12 @@ $test = $client->Test();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->Test()->create([
+$result = $client->Test_()->create([
   "project_id" => null, // string
+  "environment" => null, // string
+  "name" => null, // string
+  "platform" => null, // string
+  "testSuite" => null, // string
 ]);
 ```
 
@@ -706,7 +727,7 @@ $result = $client->Test()->create([
 List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Test()->list();
+$results = $client->Test_()->list();
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -714,7 +735,7 @@ $results = $client->Test()->list();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->Test()->load(["id" => "test_id", "project_id" => "project_id"]);
+$result = $client->Test_()->load(["id" => "test_id", "project_id" => "project_id"]);
 ```
 
 ### Common Methods

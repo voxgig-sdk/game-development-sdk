@@ -62,7 +62,7 @@ class CollaborationEntityTest extends TestCase
         $setup = collaboration_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["list", "remove"] as $_op) {
+        foreach (["list"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "collaboration." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -72,7 +72,7 @@ class CollaborationEntityTest extends TestCase
         // The basic flow consumes synthetic IDs from the fixture. In live mode
         // without an *_ENTID env override, those IDs hit the live API and 4xx.
         if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID JSON to run live");
+            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID JSON to run live");
             return;
         }
         $client = $setup["client"];
@@ -119,39 +119,39 @@ function collaboration_basic_setup($extra)
     // Detect ENTID env override before envOverride consumes it. When live
     // mode is on without a real override, the basic test runs against synthetic
     // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID");
+    $entid_env_raw = getenv("GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID" => $idmap,
-        "GAMEDEVELOPMENT_TEST_LIVE" => "FALSE",
-        "GAMEDEVELOPMENT_TEST_EXPLAIN" => "FALSE",
-        "GAMEDEVELOPMENT_APIKEY" => "NONE",
+        "GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID" => $idmap,
+        "GAME_DEVELOPMENT_TEST_LIVE" => "FALSE",
+        "GAME_DEVELOPMENT_TEST_EXPLAIN" => "FALSE",
+        "GAME_DEVELOPMENT_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID"]);
+        $env["GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
 
-    if ($env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE") {
+    if ($env["GAME_DEVELOPMENT_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["GAMEDEVELOPMENT_APIKEY"],
+                "apikey" => $env["GAME_DEVELOPMENT_APIKEY"],
             ],
             $extra ?? [],
         ]);
         $client = new GameDevelopmentSDK(Helpers::to_map($merged_opts));
     }
 
-    $live = $env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE";
+    $live = $env["GAME_DEVELOPMENT_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["GAMEDEVELOPMENT_TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["GAME_DEVELOPMENT_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

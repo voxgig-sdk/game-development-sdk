@@ -45,7 +45,7 @@ local analyticss, err = client:Analytics():list()
 if err then error(err) end
 
 for _, item in ipairs(analyticss) do
-  print(item["event_name"])
+  print(item["eventName"])
 end
 ```
 
@@ -63,7 +63,7 @@ print(asset)
 
 ```lua
 -- Create
-local created, err = client:Analytics():create({ project_id = "example_project_id" })
+local created, err = client:Analytics():create({ project_id = "example_project_id", eventName = "example_eventName", eventType = "example_eventType" })
 if err then error(err) end
 
 ```
@@ -75,7 +75,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local analyticss, err = client:Analytics():list()
+local projects, err = client:Project():list()
 if err then error(err) end
 ```
 
@@ -133,7 +133,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Analytics():list()
+local result, err = client:Project():list()
 -- result is the returned data; err is set on failure
 ```
 
@@ -253,9 +253,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local analytics, err = client:Analytics():load()
+    local asset, err = client:Asset():load({ id = "example_id" })
     if err then error(err) end
-    -- analytics is the loaded record
+    -- asset is the loaded record
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -267,10 +267,10 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `event_name` |  |
-| `event_type` |  |
+| `eventName` |  |
+| `eventType` |  |
 | `name` |  |
-| `property` |  |
+| `properties` |  |
 | `timestamp` |  |
 
 Operations: Create, List.
@@ -281,15 +281,15 @@ API path: `/projects/{projectId}/analytics/events`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `id` |  |
-| `mime_type` |  |
+| `mimeType` |  |
 | `name` |  |
-| `project_id` |  |
+| `projectId` |  |
 | `size` |  |
-| `tag` |  |
+| `tags` |  |
 | `type` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 | `url` |  |
 
 Operations: Create, List, Load, Remove.
@@ -312,14 +312,14 @@ API path: `/projects/{projectId}/builds`
 
 | Field | Description |
 | --- | --- |
-| `added_at` |  |
+| `addedAt` |  |
 | `email` |  |
 | `id` |  |
-| `last_active` |  |
+| `lastActive` |  |
 | `name` |  |
 | `role` |  |
 | `status` |  |
-| `user_id` |  |
+| `userId` |  |
 
 Operations: List, Remove.
 
@@ -340,17 +340,17 @@ API path: `/projects/{projectId}/collaborators`
 
 | Field | Description |
 | --- | --- |
-| `build_version` |  |
-| `completed_at` |  |
+| `buildVersion` |  |
+| `completedAt` |  |
 | `configuration` |  |
-| `created_at` |  |
-| `deployment_url` |  |
-| `download_url` |  |
+| `createdAt` |  |
+| `deploymentUrl` |  |
+| `downloadUrl` |  |
 | `environment` |  |
 | `id` |  |
 | `platform` |  |
-| `project_id` |  |
-| `release_note` |  |
+| `projectId` |  |
+| `releaseNotes` |  |
 | `size` |  |
 | `status` |  |
 | `version` |  |
@@ -363,14 +363,14 @@ API path: `/projects/{projectId}/deployments`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `description` |  |
 | `id` |  |
 | `name` |  |
 | `owner` |  |
-| `setting` |  |
+| `settings` |  |
 | `status` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -380,16 +380,21 @@ API path: `/projects`
 
 | Field | Description |
 | --- | --- |
-| `completed_at` |  |
+| `completedAt` |  |
+| `duration` |  |
 | `environment` |  |
+| `failed` |  |
 | `id` |  |
 | `name` |  |
+| `passed` |  |
 | `platform` |  |
-| `project_id` |  |
-| `result` |  |
-| `started_at` |  |
+| `projectId` |  |
+| `results` |  |
+| `skipped` |  |
+| `startedAt` |  |
 | `status` |  |
-| `test_suite` |  |
+| `testSuite` |  |
+| `totalTests` |  |
 
 Operations: Create, List, Load.
 
@@ -416,10 +421,10 @@ Create an instance: `local analytics = client:Analytics(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `number` |  |
-| `event_name` | `string` |  |
-| `event_type` | `string` |  |
+| `eventName` | `string` |  |
+| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `property` | `table` |  |
+| `properties` | `table` |  |
 | `timestamp` | `string` |  |
 
 #### Example: List
@@ -433,6 +438,8 @@ local analyticss, err = client:Analytics():list()
 ```lua
 local analytics, err = client:Analytics():create({
   project_id = "example_project_id", -- string
+  eventName = "example_eventName", -- string
+  eventType = "example_eventType", -- string
 })
 ```
 
@@ -454,15 +461,15 @@ Create an instance: `local asset = client:Asset(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `id` | `string` |  |
-| `mime_type` | `string` |  |
+| `mimeType` | `string` |  |
 | `name` | `string` |  |
-| `project_id` | `string` |  |
+| `projectId` | `string` |  |
 | `size` | `number` |  |
-| `tag` | `table` |  |
+| `tags` | `table` |  |
 | `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 | `url` | `string` |  |
 
 #### Example: Load
@@ -509,6 +516,9 @@ Create an instance: `local build = client:Build(nil)`
 ```lua
 local build, err = client:Build():create({
   project_id = "example_project_id", -- string
+  configuration = "example_configuration", -- string
+  platform = "example_platform", -- string
+  version = "example_version", -- string
 })
 ```
 
@@ -528,14 +538,14 @@ Create an instance: `local collaboration = client:Collaboration(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | `string` |  |
+| `addedAt` | `string` |  |
 | `email` | `string` |  |
 | `id` | `string` |  |
-| `last_active` | `string` |  |
+| `lastActive` | `string` |  |
 | `name` | `string` |  |
 | `role` | `string` |  |
 | `status` | `string` |  |
-| `user_id` | `string` |  |
+| `userId` | `string` |  |
 
 #### Example: List
 
@@ -566,6 +576,8 @@ Create an instance: `local collaborator = client:Collaborator(nil)`
 ```lua
 local collaborator, err = client:Collaborator():create({
   project_id = "example_project_id", -- string
+  email = "example_email", -- string
+  role = "example_role", -- string
 })
 ```
 
@@ -586,17 +598,17 @@ Create an instance: `local deployment = client:Deployment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | `string` |  |
-| `completed_at` | `string` |  |
+| `buildVersion` | `string` |  |
+| `completedAt` | `string` |  |
 | `configuration` | `string` |  |
-| `created_at` | `string` |  |
-| `deployment_url` | `string` |  |
-| `download_url` | `string` |  |
+| `createdAt` | `string` |  |
+| `deploymentUrl` | `string` |  |
+| `downloadUrl` | `string` |  |
 | `environment` | `string` |  |
 | `id` | `string` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `release_note` | `string` |  |
+| `projectId` | `string` |  |
+| `releaseNotes` | `string` |  |
 | `size` | `number` |  |
 | `status` | `string` |  |
 | `version` | `string` |  |
@@ -640,14 +652,14 @@ Create an instance: `local project = client:Project(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 | `owner` | `table` |  |
-| `setting` | `table` |  |
+| `settings` | `table` |  |
 | `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 
 #### Example: Load
 
@@ -685,16 +697,21 @@ Create an instance: `local test = client:Test(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | `string` |  |
+| `completedAt` | `string` |  |
+| `duration` | `number` |  |
 | `environment` | `string` |  |
+| `failed` | `number` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `passed` | `number` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `result` | `table` |  |
-| `started_at` | `string` |  |
+| `projectId` | `string` |  |
+| `results` | `table` |  |
+| `skipped` | `number` |  |
+| `startedAt` | `string` |  |
 | `status` | `string` |  |
-| `test_suite` | `string` |  |
+| `testSuite` | `string` |  |
+| `totalTests` | `number` |  |
 
 #### Example: Load
 
@@ -713,6 +730,10 @@ local tests, err = client:Test():list()
 ```lua
 local test, err = client:Test():create({
   project_id = "example_project_id", -- string
+  environment = "example_environment", -- string
+  name = "example_name", -- string
+  platform = "example_platform", -- string
+  testSuite = "example_testSuite", -- string
 })
 ```
 
@@ -793,11 +814,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local analytics = client:Analytics()
-analytics:list()
+local project = client:Project()
+project:list()
 
--- analytics:data_get() now returns the analytics data from the last list
--- analytics:match_get() returns the last match criteria
+-- project:data_get() now returns the project data from the last list
+-- project:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

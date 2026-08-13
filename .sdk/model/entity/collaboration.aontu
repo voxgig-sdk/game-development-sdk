@@ -6,7 +6,7 @@ main: kit: entity: collaboration: {
 
   fields: [
     {
-      name: "added_at"
+      name: "addedAt"
       req: false
       type: "`$STRING`"
     }
@@ -21,7 +21,7 @@ main: kit: entity: collaboration: {
       type: "`$STRING`"
     }
     {
-      name: "last_active"
+      name: "lastActive"
       req: false
       type: "`$STRING`"
     }
@@ -41,7 +41,7 @@ main: kit: entity: collaboration: {
       type: "`$STRING`"
     }
     {
-      name: "user_id"
+      name: "userId"
       req: false
       type: "`$STRING`"
     }
@@ -88,7 +88,7 @@ main: kit: entity: collaboration: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.collaborators`"
           }
         }
       ]

@@ -7,10 +7,10 @@
 
 export interface Analytics {
   count?: number
-  event_name: string
-  event_type: string
+  eventName: string
+  eventType: string
   name?: string
-  property?: Record<string, any>
+  properties?: Record<string, any>
   timestamp?: string
 }
 
@@ -20,18 +20,30 @@ export interface AnalyticsListMatch {
 
 export interface AnalyticsCreateData {
   project_id: string
+  count?: number
+  eventName: string
+  eventType: string
+  name?: string
+  properties?: Record<string, any>
+  timestamp?: string
+
+  // Selects a custom action instead of the plain create:
+  //   'event'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
 }
 
 export interface Asset {
-  created_at?: string
+  createdAt?: string
   id?: string
-  mime_type?: string
+  mimeType?: string
   name?: string
-  project_id?: string
+  projectId?: string
   size?: number
-  tag?: any[]
+  tags?: any[]
   type?: string
-  updated_at?: string
+  updatedAt?: string
   url?: string
 }
 
@@ -46,6 +58,16 @@ export interface AssetListMatch {
 
 export interface AssetCreateData {
   project_id: string
+  createdAt?: string
+  id?: string
+  mimeType?: string
+  name?: string
+  projectId?: string
+  size?: number
+  tags?: any[]
+  type?: string
+  updatedAt?: string
+  url?: string
 }
 
 export interface AssetRemoveMatch {
@@ -61,17 +83,20 @@ export interface Build {
 
 export interface BuildCreateData {
   project_id: string
+  configuration: string
+  platform: string
+  version: string
 }
 
 export interface Collaboration {
-  added_at?: string
+  addedAt?: string
   email?: string
   id?: string
-  last_active?: string
+  lastActive?: string
   name?: string
   role?: string
   status?: string
-  user_id?: string
+  userId?: string
 }
 
 export interface CollaborationListMatch {
@@ -90,20 +115,22 @@ export interface Collaborator {
 
 export interface CollaboratorCreateData {
   project_id: string
+  email: string
+  role: string
 }
 
 export interface Deployment {
-  build_version?: string
-  completed_at?: string
+  buildVersion?: string
+  completedAt?: string
   configuration?: string
-  created_at?: string
-  deployment_url?: string
-  download_url?: string
+  createdAt?: string
+  deploymentUrl?: string
+  downloadUrl?: string
   environment?: string
   id?: string
   platform?: string
-  project_id?: string
-  release_note?: string
+  projectId?: string
+  releaseNotes?: string
   size?: number
   status?: string
   version?: string
@@ -120,17 +147,31 @@ export interface DeploymentListMatch {
 
 export interface DeploymentCreateData {
   project_id: string
+  buildVersion?: string
+  completedAt?: string
+  configuration?: string
+  createdAt?: string
+  deploymentUrl?: string
+  downloadUrl?: string
+  environment?: string
+  id?: string
+  platform?: string
+  projectId?: string
+  releaseNotes?: string
+  size?: number
+  status?: string
+  version?: string
 }
 
 export interface Project {
-  created_at?: string
+  createdAt?: string
   description?: string
   id?: string
   name?: string
   owner?: Record<string, any>
-  setting?: Record<string, any>
+  settings?: Record<string, any>
   status?: string
-  updated_at?: string
+  updatedAt?: string
 }
 
 export interface ProjectLoadMatch {
@@ -138,29 +179,36 @@ export interface ProjectLoadMatch {
 }
 
 export interface ProjectListMatch {
-  created_at?: string
+  createdAt?: string
   description?: string
   id?: string
   name?: string
   owner?: Record<string, any>
-  setting?: Record<string, any>
+  settings?: Record<string, any>
   status?: string
-  updated_at?: string
+  updatedAt?: string
 }
 
 export interface ProjectCreateData {
-  created_at?: string
+  createdAt?: string
   description?: string
   id?: string
   name?: string
   owner?: Record<string, any>
-  setting?: Record<string, any>
+  settings?: Record<string, any>
   status?: string
-  updated_at?: string
+  updatedAt?: string
 }
 
 export interface ProjectUpdateData {
   id: string
+  createdAt?: string
+  description?: string
+  name?: string
+  owner?: Record<string, any>
+  settings?: Record<string, any>
+  status?: string
+  updatedAt?: string
 }
 
 export interface ProjectRemoveMatch {
@@ -168,16 +216,21 @@ export interface ProjectRemoveMatch {
 }
 
 export interface Test {
-  completed_at?: string
-  environment?: string
+  completedAt?: string
+  duration?: number
+  environment: string
+  failed?: number
   id?: string
-  name?: string
-  platform?: string
-  project_id?: string
-  result?: Record<string, any>
-  started_at?: string
+  name: string
+  passed?: number
+  platform: string
+  projectId?: string
+  results?: Record<string, any>
+  skipped?: number
+  startedAt?: string
   status?: string
-  test_suite?: string
+  testSuite: string
+  totalTests?: number
 }
 
 export interface TestLoadMatch {
@@ -191,5 +244,20 @@ export interface TestListMatch {
 
 export interface TestCreateData {
   project_id: string
+  completedAt?: string
+  duration?: number
+  environment: string
+  failed?: number
+  id?: string
+  name: string
+  passed?: number
+  platform: string
+  projectId?: string
+  results?: Record<string, any>
+  skipped?: number
+  startedAt?: string
+  status?: string
+  testSuite: string
+  totalTests?: number
 }
 

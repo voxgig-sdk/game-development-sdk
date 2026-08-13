@@ -128,10 +128,10 @@ fmt.Println(analytics.GetName()) // "analytics"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `event_name` | `string` | Yes |  |
-| `event_type` | `string` | Yes |  |
+| `eventName` | `string` | Yes |  |
+| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `property` | `map[string]any` | No |  |
+| `properties` | `map[string]any` | No |  |
 | `timestamp` | `string` | No |  |
 
 ### Operations
@@ -155,6 +155,8 @@ Create a new entity with the given data.
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "eventName": "example_eventName",
+    "eventType": "example_eventType",
 }, nil)
 if err != nil {
     panic(err)
@@ -197,15 +199,15 @@ fmt.Println(asset.GetName()) // "asset"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `id` | `string` | No |  |
-| `mime_type` | `string` | No |  |
+| `mimeType` | `string` | No |  |
 | `name` | `string` | No |  |
-| `project_id` | `string` | No |  |
+| `projectId` | `string` | No |  |
 | `size` | `int` | No |  |
-| `tag` | `[]any` | No |  |
+| `tags` | `[]any` | No |  |
 | `type` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 | `url` | `string` | No |  |
 
 ### Operations
@@ -308,6 +310,9 @@ Create a new entity with the given data.
 ```go
 result, err := client.Build(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "configuration": "example_configuration",
+    "platform": "example_platform",
+    "version": "example_version",
 }, nil)
 if err != nil {
     panic(err)
@@ -350,14 +355,14 @@ fmt.Println(collaboration.GetName()) // "collaboration"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | `string` | No |  |
+| `addedAt` | `string` | No |  |
 | `email` | `string` | No |  |
 | `id` | `string` | No |  |
-| `last_active` | `string` | No |  |
+| `lastActive` | `string` | No |  |
 | `name` | `string` | No |  |
 | `role` | `string` | No |  |
 | `status` | `string` | No |  |
-| `user_id` | `string` | No |  |
+| `userId` | `string` | No |  |
 
 ### Operations
 
@@ -432,6 +437,8 @@ Create a new entity with the given data.
 ```go
 result, err := client.Collaborator(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "email": "example_email",
+    "role": "example_role",
 }, nil)
 if err != nil {
     panic(err)
@@ -474,17 +481,17 @@ fmt.Println(deployment.GetName()) // "deployment"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | `string` | No |  |
-| `completed_at` | `string` | No |  |
+| `buildVersion` | `string` | No |  |
+| `completedAt` | `string` | No |  |
 | `configuration` | `string` | No |  |
-| `created_at` | `string` | No |  |
-| `deployment_url` | `string` | No |  |
-| `download_url` | `string` | No |  |
+| `createdAt` | `string` | No |  |
+| `deploymentUrl` | `string` | No |  |
+| `downloadUrl` | `string` | No |  |
 | `environment` | `string` | No |  |
 | `id` | `string` | No |  |
 | `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `release_note` | `string` | No |  |
+| `projectId` | `string` | No |  |
+| `releaseNotes` | `string` | No |  |
 | `size` | `int` | No |  |
 | `status` | `string` | No |  |
 | `version` | `string` | No |  |
@@ -493,17 +500,17 @@ fmt.Println(deployment.GetName()) // "deployment"
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `build_version` | - | - | Yes |
-| `completed_at` | - | - | - |
+| `buildVersion` | - | - | Yes |
+| `completedAt` | - | - | - |
 | `configuration` | - | - | - |
-| `created_at` | - | - | - |
-| `deployment_url` | - | - | - |
-| `download_url` | - | - | - |
+| `createdAt` | - | - | - |
+| `deploymentUrl` | - | - | - |
+| `downloadUrl` | - | - | - |
 | `environment` | - | - | Yes |
 | `id` | - | - | - |
 | `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `release_note` | - | - | - |
+| `projectId` | - | - | - |
+| `releaseNotes` | - | - | - |
 | `size` | - | - | - |
 | `status` | - | - | - |
 | `version` | - | - | - |
@@ -583,27 +590,27 @@ fmt.Println(project.GetName()) // "project"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 | `owner` | `map[string]any` | No |  |
-| `setting` | `map[string]any` | No |  |
+| `settings` | `map[string]any` | No |  |
 | `status` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
+| `createdAt` | - | - | - | - | - |
 | `description` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `name` | - | - | Yes | - | - |
 | `owner` | - | - | - | - | - |
-| `setting` | - | - | - | - | - |
+| `settings` | - | - | - | - | - |
 | `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+| `updatedAt` | - | - | - | - | - |
 
 ### Operations
 
@@ -706,31 +713,41 @@ fmt.Println(test.GetName()) // "test"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | `string` | No |  |
-| `environment` | `string` | No |  |
+| `completedAt` | `string` | No |  |
+| `duration` | `float64` | No |  |
+| `environment` | `string` | Yes |  |
+| `failed` | `int` | No |  |
 | `id` | `string` | No |  |
-| `name` | `string` | No |  |
-| `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `result` | `map[string]any` | No |  |
-| `started_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `passed` | `int` | No |  |
+| `platform` | `string` | Yes |  |
+| `projectId` | `string` | No |  |
+| `results` | `map[string]any` | No |  |
+| `skipped` | `int` | No |  |
+| `startedAt` | `string` | No |  |
 | `status` | `string` | No |  |
-| `test_suite` | `string` | No |  |
+| `testSuite` | `string` | Yes |  |
+| `totalTests` | `int` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `completed_at` | - | - | - |
-| `environment` | - | - | Yes |
+| `completedAt` | - | - | - |
+| `duration` | - | - | - |
+| `environment` | - | Yes | - |
+| `failed` | - | - | - |
 | `id` | - | - | - |
-| `name` | - | - | Yes |
-| `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `result` | - | - | - |
-| `started_at` | - | - | - |
+| `name` | - | Yes | - |
+| `passed` | - | - | - |
+| `platform` | - | Yes | - |
+| `projectId` | - | - | - |
+| `results` | - | - | - |
+| `skipped` | - | - | - |
+| `startedAt` | - | - | - |
 | `status` | - | - | - |
-| `test_suite` | - | - | Yes |
+| `testSuite` | - | Yes | - |
+| `totalTests` | - | - | - |
 
 ### Operations
 
@@ -765,6 +782,10 @@ Create a new entity with the given data.
 ```go
 result, err := client.Test(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "environment": "example_environment",
+    "name": "example_name",
+    "platform": "example_platform",
+    "testSuite": "example_testSuite",
 }, nil)
 if err != nil {
     panic(err)

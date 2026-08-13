@@ -5,6 +5,10 @@
       "desc": ""
     },
     "kit": {
+      "author": {
+        "name": "",
+        "url": ""
+      },
       "config": {
         "docs_order": [
           "ts",
@@ -18,6 +22,7 @@
           "content-type": "application/json"
         }
       },
+      "contributor": {},
       "entity": {
         "analytics": {
           "active": true,
@@ -33,13 +38,13 @@
             },
             {
               "active": true,
-              "name": "event_name",
+              "name": "eventName",
               "req": true,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "event_type",
+              "name": "eventType",
               "req": true,
               "type": "`$STRING`"
             },
@@ -51,7 +56,7 @@
             },
             {
               "active": true,
-              "name": "property",
+              "name": "properties",
               "req": false,
               "type": "`$OBJECT`"
             },
@@ -82,6 +87,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/analytics/events",
                   "parts": [
@@ -152,6 +158,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/analytics",
                   "parts": [
@@ -196,7 +203,7 @@
           "fields": [
             {
               "active": true,
-              "name": "created_at",
+              "name": "createdAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -208,7 +215,7 @@
             },
             {
               "active": true,
-              "name": "mime_type",
+              "name": "mimeType",
               "req": false,
               "type": "`$STRING`"
             },
@@ -220,7 +227,7 @@
             },
             {
               "active": true,
-              "name": "project_id",
+              "name": "projectId",
               "req": false,
               "type": "`$STRING`"
             },
@@ -232,7 +239,7 @@
             },
             {
               "active": true,
-              "name": "tag",
+              "name": "tags",
               "req": false,
               "type": "`$ARRAY`"
             },
@@ -244,7 +251,7 @@
             },
             {
               "active": true,
-              "name": "updated_at",
+              "name": "updatedAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -279,6 +286,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/assets",
                   "parts": [
@@ -340,6 +348,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/assets",
                   "parts": [
@@ -361,7 +370,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.assets`"
                   }
                 }
               ]
@@ -392,6 +401,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/assets/{assetId}",
                   "parts": [
@@ -445,6 +455,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/projects/{projectId}/assets/{assetId}",
                   "parts": [
@@ -526,6 +537,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/builds",
                   "parts": [
@@ -567,7 +579,7 @@
           "fields": [
             {
               "active": true,
-              "name": "added_at",
+              "name": "addedAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -585,7 +597,7 @@
             },
             {
               "active": true,
-              "name": "last_active",
+              "name": "lastActive",
               "req": false,
               "type": "`$STRING`"
             },
@@ -609,7 +621,7 @@
             },
             {
               "active": true,
-              "name": "user_id",
+              "name": "userId",
               "req": false,
               "type": "`$STRING`"
             }
@@ -638,6 +650,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/collaborators",
                   "parts": [
@@ -657,7 +670,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.collaborators`"
                   }
                 }
               ]
@@ -688,6 +701,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/projects/{projectId}/collaborators/{userId}",
                   "parts": [
@@ -767,6 +781,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/collaborators",
                   "parts": [
@@ -808,7 +823,7 @@
           "fields": [
             {
               "active": true,
-              "name": "build_version",
+              "name": "buildVersion",
               "op": {
                 "create": {
                   "req": true,
@@ -820,7 +835,7 @@
             },
             {
               "active": true,
-              "name": "completed_at",
+              "name": "completedAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -832,19 +847,19 @@
             },
             {
               "active": true,
-              "name": "created_at",
+              "name": "createdAt",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "deployment_url",
+              "name": "deploymentUrl",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "download_url",
+              "name": "downloadUrl",
               "req": false,
               "type": "`$STRING`"
             },
@@ -880,13 +895,13 @@
             },
             {
               "active": true,
-              "name": "project_id",
+              "name": "projectId",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "release_note",
+              "name": "releaseNotes",
               "req": false,
               "type": "`$STRING`"
             },
@@ -933,6 +948,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/deployments",
                   "parts": [
@@ -985,6 +1001,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/deployments",
                   "parts": [
@@ -1005,7 +1022,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.deployments`"
                   }
                 },
                 {
@@ -1022,6 +1039,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/builds",
                   "parts": [
@@ -1041,7 +1059,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.builds`"
                   }
                 }
               ]
@@ -1072,6 +1090,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/deployments/{deploymentId}",
                   "parts": [
@@ -1116,7 +1135,7 @@
           "fields": [
             {
               "active": true,
-              "name": "created_at",
+              "name": "createdAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -1152,7 +1171,7 @@
             },
             {
               "active": true,
-              "name": "setting",
+              "name": "settings",
               "req": false,
               "type": "`$OBJECT`"
             },
@@ -1164,7 +1183,7 @@
             },
             {
               "active": true,
-              "name": "updated_at",
+              "name": "updatedAt",
               "req": false,
               "type": "`$STRING`"
             }
@@ -1182,6 +1201,7 @@
                 {
                   "active": true,
                   "args": {},
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects",
                   "parts": [
@@ -1231,6 +1251,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects",
                   "parts": [
@@ -1245,7 +1266,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.projects`"
                   }
                 }
               ]
@@ -1268,6 +1289,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}",
                   "parts": [
@@ -1309,6 +1331,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "DELETE",
                   "orig": "/projects/{projectId}",
                   "parts": [
@@ -1350,6 +1373,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "PUT",
                   "orig": "/projects/{projectId}",
                   "parts": [
@@ -1386,21 +1410,33 @@
           "fields": [
             {
               "active": true,
-              "name": "completed_at",
+              "name": "completedAt",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
+              "name": "duration",
+              "req": false,
+              "type": "`$NUMBER`"
+            },
+            {
+              "active": true,
               "name": "environment",
               "op": {
-                "create": {
-                  "req": true,
+                "list": {
+                  "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
+              "req": true,
               "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "failed",
+              "req": false,
+              "type": "`$INTEGER`"
             },
             {
               "active": true,
@@ -1412,41 +1448,53 @@
               "active": true,
               "name": "name",
               "op": {
-                "create": {
-                  "req": true,
+                "list": {
+                  "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
+              "req": true,
               "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "passed",
+              "req": false,
+              "type": "`$INTEGER`"
             },
             {
               "active": true,
               "name": "platform",
               "op": {
-                "create": {
-                  "req": true,
+                "list": {
+                  "req": false,
                   "type": "`$STRING`"
                 }
               },
+              "req": true,
+              "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "projectId",
               "req": false,
               "type": "`$STRING`"
             },
             {
               "active": true,
-              "name": "project_id",
-              "req": false,
-              "type": "`$STRING`"
-            },
-            {
-              "active": true,
-              "name": "result",
+              "name": "results",
               "req": false,
               "type": "`$OBJECT`"
             },
             {
               "active": true,
-              "name": "started_at",
+              "name": "skipped",
+              "req": false,
+              "type": "`$INTEGER`"
+            },
+            {
+              "active": true,
+              "name": "startedAt",
               "req": false,
               "type": "`$STRING`"
             },
@@ -1458,15 +1506,21 @@
             },
             {
               "active": true,
-              "name": "test_suite",
+              "name": "testSuite",
               "op": {
-                "create": {
-                  "req": true,
+                "list": {
+                  "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
+              "req": true,
               "type": "`$STRING`"
+            },
+            {
+              "active": true,
+              "name": "totalTests",
+              "req": false,
+              "type": "`$INTEGER`"
             }
           ],
           "id": {
@@ -1493,6 +1547,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "POST",
                   "orig": "/projects/{projectId}/tests",
                   "parts": [
@@ -1512,7 +1567,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.results`"
                   }
                 }
               ]
@@ -1545,6 +1600,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/tests",
                   "parts": [
@@ -1565,7 +1621,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.tests`"
                   }
                 }
               ]
@@ -1596,6 +1652,7 @@
                       }
                     ]
                   },
+                  "kind": "http",
                   "method": "GET",
                   "orig": "/projects/{projectId}/tests/{testId}",
                   "parts": [
@@ -1618,7 +1675,7 @@
                   },
                   "transform": {
                     "req": "`reqdata`",
-                    "res": "`body`"
+                    "res": "`body.results`"
                   }
                 }
               ]
@@ -1915,41 +1972,6 @@
                   }
                 }
               ]
-            },
-            {
-              "active": true,
-              "data": {},
-              "input": {
-                "ref": "collaboration_ref01",
-                "suffix": "_rm0"
-              },
-              "match": {
-                "id": "collaboration01",
-                "project_id": "project01"
-              },
-              "op": "remove",
-              "spec": [],
-              "valid": []
-            },
-            {
-              "active": true,
-              "data": {},
-              "input": {
-                "suffix": "_rt0"
-              },
-              "match": {
-                "project_id": "project01"
-              },
-              "op": "list",
-              "spec": [],
-              "valid": [
-                {
-                  "apply": "ItemNotExists",
-                  "def": {
-                    "ref": "collaboration_ref01"
-                  }
-                }
-              ]
             }
           ]
         },
@@ -2082,7 +2104,7 @@
                 "ref": "project_ref01",
                 "srcdatavar": "project_ref01_data",
                 "suffix": "_up0",
-                "textfield": "created_at"
+                "textfield": "createdAt"
               },
               "match": {},
               "op": "update",
@@ -2243,18 +2265,41 @@
         "website": "https://jenil-ai.vercel.app"
       },
       "option": {},
+      "repo": {
+        "host": "github.com",
+        "path": ""
+      },
       "target": {
         "go": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [
+              "test/feature_test.go"
+            ],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "go",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2276,22 +2321,40 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Golang"
         },
         "go-cli": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "go-cli",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "phase": {
             "agentguide": {
               "active": false
@@ -2330,21 +2393,39 @@
                 "recipe": "github"
               },
               "via": "root"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "Go CLI"
         },
         "go-mcp": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "go",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "go-mcp",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "phase": {
             "agentguide": {
               "active": false
@@ -2383,12 +2464,17 @@
                 "recipe": "github"
               },
               "via": "root"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "Go MCP server"
         },
         "lua": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "--"
           },
@@ -2400,10 +2486,23 @@
             }
           },
           "ext": "lua",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "lua",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2425,22 +2524,40 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Lua"
         },
         "php": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "//"
           },
           "deps": {},
           "ext": "php",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "php",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2462,13 +2579,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "PHP"
         },
         "py": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "#"
           },
@@ -2480,10 +2602,23 @@
             }
           },
           "ext": "py",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "py",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2505,13 +2640,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Python"
         },
         "rb": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "comment": {
             "line": "#"
           },
@@ -2528,10 +2668,23 @@
             }
           },
           "ext": "rb",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "rb",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2553,13 +2706,18 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "srcfeature": false,
           "title": "Ruby"
         },
         "ts": {
           "active": true,
+          "author": {
+            "name": "",
+            "url": ""
+          },
           "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "comment": {
             "line": "//"
@@ -2582,10 +2740,23 @@
             }
           },
           "ext": "ts",
+          "feature": {
+            "fullset": [],
+            "trim": true
+          },
           "module": {
-            "name": "game-development"
+            "goversion": "",
+            "name": "game-development",
+            "package": "",
+            "path": ""
           },
           "name": "ts",
+          "output": {
+            "adopt": false,
+            "path": "",
+            "repo": "",
+            "sdkrel": ""
+          },
           "publish": {
             "registry": {
               "active": false,
@@ -2607,9 +2778,17 @@
                 "recipe": "github"
               },
               "via": "port"
-            }
+            },
+            "version": "0.0.1"
           },
           "title": "TypeScript"
+        }
+      },
+      "test": {
+        "live": {
+          "app": false,
+          "base": "",
+          "strict": false
         }
       }
     }

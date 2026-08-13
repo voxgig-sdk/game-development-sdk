@@ -53,7 +53,7 @@ Asset is nested under project, so provide the `project_id`.
 
 ```php
 try {
-    // load() returns the bare Asset record (throws on error).
+    // load() returns the ENTITY — call data_get() for the Asset record (throws on error).
     $asset = $client->Asset()->load(["project_id" => "example_project_id", "id" => "example_id"]);
     print_r($asset);
 } catch (\Throwable $err) {
@@ -64,8 +64,8 @@ try {
 ### 4. Create, update, and remove
 
 ```php
-// create() returns the bare created Analytics record.
-$created = $client->Analytics()->create(["project_id" => "example_project_id"]);
+// create() returns the ENTITY — call data_get() for the created Analytics record.
+$created = $client->Analytics()->create(["project_id" => "example_project_id", "eventName" => "example_eventName", "eventType" => "example_eventType"]);
 
 ```
 
@@ -77,7 +77,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $analyticss = $client->Analytics()->list();
+    $projects = $client->Project()->list();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -144,14 +144,18 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = GameDevelopmentSDK::test();
+$client = GameDevelopmentSDK::test([
+    "entity" => ["project" => ["test01" => ["id" => "test01"]]],
+]);
 
-// Entity ops return the bare mock record (throws on error).
-$analytics = $client->Analytics()->list();
-print_r($analytics);
+// Entity ops return the ENTITY (throws on error);
+// call data_get() for the mock record.
+$project = $client->Project()->list();
+print_r($project);
 ```
 
 ### Use a custom fetch function
@@ -261,7 +265,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (an `array` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
 ops, a `list` for `list`) and throw on error. Wrap calls in
 `try`/`catch` to handle failures.
 
@@ -284,10 +288,10 @@ On error, `ok` is `false` and `$err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `event_name` |  |
-| `event_type` |  |
+| `eventName` |  |
+| `eventType` |  |
 | `name` |  |
-| `property` |  |
+| `properties` |  |
 | `timestamp` |  |
 
 Operations: Create, List.
@@ -298,15 +302,15 @@ API path: `/projects/{projectId}/analytics/events`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `id` |  |
-| `mime_type` |  |
+| `mimeType` |  |
 | `name` |  |
-| `project_id` |  |
+| `projectId` |  |
 | `size` |  |
-| `tag` |  |
+| `tags` |  |
 | `type` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 | `url` |  |
 
 Operations: Create, List, Load, Remove.
@@ -329,14 +333,14 @@ API path: `/projects/{projectId}/builds`
 
 | Field | Description |
 | --- | --- |
-| `added_at` |  |
+| `addedAt` |  |
 | `email` |  |
 | `id` |  |
-| `last_active` |  |
+| `lastActive` |  |
 | `name` |  |
 | `role` |  |
 | `status` |  |
-| `user_id` |  |
+| `userId` |  |
 
 Operations: List, Remove.
 
@@ -357,17 +361,17 @@ API path: `/projects/{projectId}/collaborators`
 
 | Field | Description |
 | --- | --- |
-| `build_version` |  |
-| `completed_at` |  |
+| `buildVersion` |  |
+| `completedAt` |  |
 | `configuration` |  |
-| `created_at` |  |
-| `deployment_url` |  |
-| `download_url` |  |
+| `createdAt` |  |
+| `deploymentUrl` |  |
+| `downloadUrl` |  |
 | `environment` |  |
 | `id` |  |
 | `platform` |  |
-| `project_id` |  |
-| `release_note` |  |
+| `projectId` |  |
+| `releaseNotes` |  |
 | `size` |  |
 | `status` |  |
 | `version` |  |
@@ -380,14 +384,14 @@ API path: `/projects/{projectId}/deployments`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `description` |  |
 | `id` |  |
 | `name` |  |
 | `owner` |  |
-| `setting` |  |
+| `settings` |  |
 | `status` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -397,16 +401,21 @@ API path: `/projects`
 
 | Field | Description |
 | --- | --- |
-| `completed_at` |  |
+| `completedAt` |  |
+| `duration` |  |
 | `environment` |  |
+| `failed` |  |
 | `id` |  |
 | `name` |  |
+| `passed` |  |
 | `platform` |  |
-| `project_id` |  |
-| `result` |  |
-| `started_at` |  |
+| `projectId` |  |
+| `results` |  |
+| `skipped` |  |
+| `startedAt` |  |
 | `status` |  |
-| `test_suite` |  |
+| `testSuite` |  |
+| `totalTests` |  |
 
 Operations: Create, List, Load.
 
@@ -433,10 +442,10 @@ Create an instance: `$analytics = $client->Analytics();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `event_name` | `string` |  |
-| `event_type` | `string` |  |
+| `eventName` | `string` |  |
+| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `property` | `array` |  |
+| `properties` | `array` |  |
 | `timestamp` | `string` |  |
 
 #### Example: List
@@ -451,6 +460,8 @@ $analyticss = $client->Analytics()->list();
 ```php
 $analytics = $client->Analytics()->create([
     "project_id" => null, // string
+    "eventName" => null, // string
+    "eventType" => null, // string
 ]);
 ```
 
@@ -472,21 +483,21 @@ Create an instance: `$asset = $client->Asset();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `id` | `string` |  |
-| `mime_type` | `string` |  |
+| `mimeType` | `string` |  |
 | `name` | `string` |  |
-| `project_id` | `string` |  |
+| `projectId` | `string` |  |
 | `size` | `int` |  |
-| `tag` | `array` |  |
+| `tags` | `array` |  |
 | `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 | `url` | `string` |  |
 
 #### Example: Load
 
 ```php
-// load() returns the bare Asset record (throws on error).
+// load() returns the ENTITY — call data_get() for the Asset record (throws on error).
 $asset = $client->Asset()->load(["id" => "asset_id", "project_id" => "project_id"]);
 ```
 
@@ -529,6 +540,9 @@ Create an instance: `$build = $client->Build();`
 ```php
 $build = $client->Build()->create([
     "project_id" => null, // string
+    "configuration" => null, // string
+    "platform" => null, // string
+    "version" => null, // string
 ]);
 ```
 
@@ -548,14 +562,14 @@ Create an instance: `$collaboration = $client->Collaboration();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | `string` |  |
+| `addedAt` | `string` |  |
 | `email` | `string` |  |
 | `id` | `string` |  |
-| `last_active` | `string` |  |
+| `lastActive` | `string` |  |
 | `name` | `string` |  |
 | `role` | `string` |  |
 | `status` | `string` |  |
-| `user_id` | `string` |  |
+| `userId` | `string` |  |
 
 #### Example: List
 
@@ -587,6 +601,8 @@ Create an instance: `$collaborator = $client->Collaborator();`
 ```php
 $collaborator = $client->Collaborator()->create([
     "project_id" => null, // string
+    "email" => null, // string
+    "role" => null, // string
 ]);
 ```
 
@@ -607,17 +623,17 @@ Create an instance: `$deployment = $client->Deployment();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | `string` |  |
-| `completed_at` | `string` |  |
+| `buildVersion` | `string` |  |
+| `completedAt` | `string` |  |
 | `configuration` | `string` |  |
-| `created_at` | `string` |  |
-| `deployment_url` | `string` |  |
-| `download_url` | `string` |  |
+| `createdAt` | `string` |  |
+| `deploymentUrl` | `string` |  |
+| `downloadUrl` | `string` |  |
 | `environment` | `string` |  |
 | `id` | `string` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `release_note` | `string` |  |
+| `projectId` | `string` |  |
+| `releaseNotes` | `string` |  |
 | `size` | `int` |  |
 | `status` | `string` |  |
 | `version` | `string` |  |
@@ -625,7 +641,7 @@ Create an instance: `$deployment = $client->Deployment();`
 #### Example: Load
 
 ```php
-// load() returns the bare Deployment record (throws on error).
+// load() returns the ENTITY — call data_get() for the Deployment record (throws on error).
 $deployment = $client->Deployment()->load(["id" => "deployment_id", "project_id" => "project_id"]);
 ```
 
@@ -663,19 +679,19 @@ Create an instance: `$project = $client->Project();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 | `owner` | `array` |  |
-| `setting` | `array` |  |
+| `settings` | `array` |  |
 | `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 
 #### Example: Load
 
 ```php
-// load() returns the bare Project record (throws on error).
+// load() returns the ENTITY — call data_get() for the Project record (throws on error).
 $project = $client->Project()->load(["id" => "project_id"]);
 ```
 
@@ -696,7 +712,7 @@ $project = $client->Project()->create([
 
 ### Test
 
-Create an instance: `$test = $client->Test();`
+Create an instance: `$test = $client->Test_();`
 
 #### Operations
 
@@ -710,36 +726,45 @@ Create an instance: `$test = $client->Test();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | `string` |  |
+| `completedAt` | `string` |  |
+| `duration` | `float` |  |
 | `environment` | `string` |  |
+| `failed` | `int` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `passed` | `int` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `result` | `array` |  |
-| `started_at` | `string` |  |
+| `projectId` | `string` |  |
+| `results` | `array` |  |
+| `skipped` | `int` |  |
+| `startedAt` | `string` |  |
 | `status` | `string` |  |
-| `test_suite` | `string` |  |
+| `testSuite` | `string` |  |
+| `totalTests` | `int` |  |
 
 #### Example: Load
 
 ```php
-// load() returns the bare Test record (throws on error).
-$test = $client->Test()->load(["id" => "test_id", "project_id" => "project_id"]);
+// load() returns the ENTITY — call data_get() for the Test record (throws on error).
+$test = $client->Test_()->load(["id" => "test_id", "project_id" => "project_id"]);
 ```
 
 #### Example: List
 
 ```php
 // list() returns an array of Test records (throws on error).
-$tests = $client->Test()->list();
+$tests = $client->Test_()->list();
 ```
 
 #### Example: Create
 
 ```php
-$test = $client->Test()->create([
+$test = $client->Test_()->create([
     "project_id" => null, // string
+    "environment" => null, // string
+    "name" => null, // string
+    "platform" => null, // string
+    "testSuite" => null, // string
 ]);
 ```
 
@@ -820,11 +845,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$analytics = $client->Analytics();
-$analytics->list();
+$project = $client->Project();
+$project->list();
 
-// $analytics->data_get() now returns the analytics data from the last list
-// $analytics->match_get() returns the last match criteria
+// $project->data_get() now returns the project data from the last list
+// $project->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

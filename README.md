@@ -23,7 +23,7 @@ support (`list`, `load`, `create`, `update`, `remove`):
 
 ```ts
 const client = new GameDevelopmentSDK()
-const items = await client.Analytics().list()
+const items = await client.Analytics().list({ project_id: "example" })
 ```
 
 Thinking in entities keeps the mental model small — for people and AI agents alike —
@@ -38,18 +38,27 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = GameDevelopmentSDK.test()
-const analyticss = await client.Analytics().list()
-// analyticss is an array of bare Analytics records populated with mock data
-console.log(analyticss)
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = GameDevelopmentSDK.test({
+  entity: {
+    project: {
+      test01: { id: 'test01' },
+    },
+  },
+})
+const projects = await client.Project().list()
+// projects is an array of Project entities, populated with mock data
+// — call projects[0].data() for the record itself
+console.log(projects)
 ```
 
 ### Python
 
 ```python
 client = GameDevelopmentSDK.test()
-analyticss = client.Analytics().list()
-print(analyticss)
+projects = client.Project().list()
+print(projects)
 ```
 
 ### PHP
@@ -57,16 +66,16 @@ print(analyticss)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = GameDevelopmentSDK::test([
-    "entity" => ["analytics" => ["test01" => []]],
+    "entity" => ["project" => ["test01" => ["id" => "test01"]]],
 ]);
-$analyticss = $client->Analytics()->list();
+$projects = $client->Project()->list();
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Analytics(nil).List(
+result, err := client.Project(nil).List(
     nil, nil,
 )
 ```
@@ -76,16 +85,16 @@ result, err := client.Analytics(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = GameDevelopmentSDK.test({
-  "entity" => { "analytics" => { "test01" => {} } },
+  "entity" => { "project" => { "test01" => { "id" => "test01" } } },
 })
-analyticss = client.Analytics.list()
+projects = client.Project.list()
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Analytics():list()
+local results, err = client:Project():list()
 ```
 
 ## Packages
@@ -112,8 +121,8 @@ const client = new GameDevelopmentSDK({
   apikey: process.env.GAME_DEVELOPMENT_APIKEY,
 })
 
-// List all analyticss (returns Analytics[])
-const analyticss = await client.Analytics().list()
+// List all analyticss (returns AnalyticsEntity[] — .data() for the record)
+const analyticss = await client.Analytics().list({ project_id: "example" })
 for (const analytics of analyticss) {
   console.log(analytics)
 }
@@ -164,7 +173,7 @@ The API exposes 8 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Analytics** | The Analytics entity (create, list). | `/projects/{projectId}/analytics/events` |
+| **Analytics** | The Analytics entity (create, list). | `/projects/{projectId}/analytics` |
 | **Asset** | The Asset entity (create, list, load, remove). | `/projects/{projectId}/assets` |
 | **Build** | The Build entity (create). | `/projects/{projectId}/builds` |
 | **Collaboration** | The Collaboration entity (list, remove). | `/projects/{projectId}/collaborators` |
@@ -189,7 +198,7 @@ client = GameDevelopmentSDK({
 })
 
 # List all analyticss (returns a list, raises on error)
-analyticss = client.Analytics().list()
+analyticss = client.Analytics().list({"project_id": "example"})
 for analytics in analyticss:
     print(analytics)
 ```
@@ -379,6 +388,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://jenil-ai.vercel.app](https://jenil-ai.vercel.app)
 

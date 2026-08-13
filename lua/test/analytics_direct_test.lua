@@ -75,16 +75,16 @@ function analytics_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["GAMEDEVELOPMENT_TEST_ANALYTICS_ENTID"] = {},
-    ["GAMEDEVELOPMENT_TEST_LIVE"] = "FALSE",
-    ["GAMEDEVELOPMENT_APIKEY"] = "NONE",
+    ["GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID"] = {},
+    ["GAME_DEVELOPMENT_TEST_LIVE"] = "FALSE",
+    ["GAME_DEVELOPMENT_APIKEY"] = "NONE",
   })
 
-  local live = env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE"
+  local live = env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {
-      apikey = env["GAMEDEVELOPMENT_APIKEY"],
+      apikey = env["GAME_DEVELOPMENT_APIKEY"],
     }
     local client = sdk.new(merged_opts)
     return {

@@ -80,16 +80,16 @@ function collaboration_direct_setup($mockres)
     $calls = new \ArrayObject();
 
     $env = Runner::env_override([
-        "GAMEDEVELOPMENT_TEST_COLLABORATION_ENTID" => [],
-        "GAMEDEVELOPMENT_TEST_LIVE" => "FALSE",
-        "GAMEDEVELOPMENT_APIKEY" => "NONE",
+        "GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID" => [],
+        "GAME_DEVELOPMENT_TEST_LIVE" => "FALSE",
+        "GAME_DEVELOPMENT_APIKEY" => "NONE",
     ]);
 
-    $live = $env["GAMEDEVELOPMENT_TEST_LIVE"] === "TRUE";
+    $live = $env["GAME_DEVELOPMENT_TEST_LIVE"] === "TRUE";
 
     if ($live) {
         $merged_opts = [
-            "apikey" => $env["GAMEDEVELOPMENT_APIKEY"],
+            "apikey" => $env["GAME_DEVELOPMENT_APIKEY"],
         ];
         $client = new GameDevelopmentSDK($merged_opts);
         return [

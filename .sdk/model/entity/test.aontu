@@ -6,20 +6,30 @@ main: kit: entity: test: {
 
   fields: [
     {
-      name: "completed_at"
+      name: "completedAt"
       req: false
       type: "`$STRING`"
     }
     {
+      name: "duration"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
       name: "environment"
       op: {
-        create: {
-          req: true
+        list: {
+          req: false
           type: "`$STRING`"
         }
       }
-      req: false
+      req: true
       type: "`$STRING`"
+    }
+    {
+      name: "failed"
+      req: false
+      type: "`$INTEGER`"
     }
     {
       name: "id"
@@ -29,37 +39,47 @@ main: kit: entity: test: {
     {
       name: "name"
       op: {
-        create: {
-          req: true
+        list: {
+          req: false
           type: "`$STRING`"
         }
       }
-      req: false
+      req: true
       type: "`$STRING`"
+    }
+    {
+      name: "passed"
+      req: false
+      type: "`$INTEGER`"
     }
     {
       name: "platform"
       op: {
-        create: {
-          req: true
+        list: {
+          req: false
           type: "`$STRING`"
         }
       }
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "projectId"
       req: false
       type: "`$STRING`"
     }
     {
-      name: "project_id"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "result"
+      name: "results"
       req: false
       type: "`$OBJECT`"
     }
     {
-      name: "started_at"
+      name: "skipped"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "startedAt"
       req: false
       type: "`$STRING`"
     }
@@ -69,15 +89,20 @@ main: kit: entity: test: {
       type: "`$STRING`"
     }
     {
-      name: "test_suite"
+      name: "testSuite"
       op: {
-        create: {
-          req: true
+        list: {
+          req: false
           type: "`$STRING`"
         }
       }
-      req: false
+      req: true
       type: "`$STRING`"
+    }
+    {
+      name: "totalTests"
+      req: false
+      type: "`$INTEGER`"
     }
   ]
 
@@ -122,7 +147,7 @@ main: kit: entity: test: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.results`"
           }
         }
       ]
@@ -171,7 +196,7 @@ main: kit: entity: test: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.tests`"
           }
         }
       ]
@@ -220,7 +245,7 @@ main: kit: entity: test: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.results`"
           }
         }
       ]

@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -59,6 +60,8 @@ GameDevelopmentUtility::setRegistrar(function (GameDevelopmentUtility $u): void 
     $u->prepare_params = [GameDevelopmentPrepareParams::class, 'call'];
     $u->prepare_path = [GameDevelopmentPreparePath::class, 'call'];
     $u->prepare_query = [GameDevelopmentPrepareQuery::class, 'call'];
+    $u->graphql_body = [GameDevelopmentGraphql::class, 'body'];
+    $u->graphql_errors = [GameDevelopmentGraphql::class, 'errors'];
     $u->result_basic = [GameDevelopmentResultBasic::class, 'call'];
     $u->result_body = [GameDevelopmentResultBody::class, 'call'];
     $u->result_headers = [GameDevelopmentResultHeaders::class, 'call'];

@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import GameDevelopmentSDK
-from core.error import GameDevelopmentError
-from core.result import GameDevelopmentResult
-from core.response import GameDevelopmentResponse
-from core.spec import GameDevelopmentSpec
-from feature.base_feature import GameDevelopmentBaseFeature
+from projectname_sdk.core.error import GameDevelopmentError
+from projectname_sdk.core.result import GameDevelopmentResult
+from projectname_sdk.core.response import GameDevelopmentResponse
+from projectname_sdk.core.spec import GameDevelopmentSpec
+from projectname_sdk.feature.base_feature import GameDevelopmentBaseFeature
 
 
 def _client():

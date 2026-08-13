@@ -153,8 +153,29 @@ class GameDevelopmentSDK {
   }
 
 
+  // Raw endpoint access is operator-controllable, like every entity op.
+  // Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+  // either one reaches the same endpoint.
   async direct(fetchargs?: any) {
+    if (!this._options.allow.op.includes('direct')) {
+      return {
+        ok: false,
+        err: new Error('GameDevelopmentSDK: direct: operation not allowed by' +
+          ' SDK option allow.op value: "' + this._options.allow.op + '"'),
+      }
+    }
+
+    return this._rawRequest(fetchargs)
+  }
+
+
+  // Ungated request path shared by direct() and graphql(), each of which
+  // checks its own allow.op token first. Private, rather than a flag on
+  // fetchargs: a caller-supplied marker would let anyone opt straight back
+  // out of the gate by passing it.
+  async _rawRequest(fetchargs?: any) {
     const utility = this._utility
+
     const fetcher = utility.fetcher
     const makeContext = utility.makeContext
 
@@ -215,59 +236,129 @@ class GameDevelopmentSDK {
 
 
 
+  // Raw GraphQL access: the pressure valve that makes the generated
+  // surface's deliberate omissions (per-call selection sets, typed filter
+  // builders, batching, subscriptions) livable — the whole schema stays
+  // reachable.
+  //
+  // Thin wrapper over the same prepare/fetch path `direct` uses, with the
+  // one thing raw `direct` cannot do for GraphQL: a GraphQL failure rides
+  // HTTP 200 as a top-level `errors` array, so status alone would report a
+  // failed query as ok.
+  //
+  // NOTE: like `direct`, this bypasses the feature pipeline — no retry,
+  // ratelimit or paging features apply.
+  async graphql(query: string, variables?: any, ctrl?: any) {
+    const options = this._options
+
+    if (!options.allow.op.includes('graphql')) {
+      return {
+        ok: false,
+        err: new Error('GameDevelopmentSDK: graphql: operation not allowed by' +
+          ' SDK option allow.op value: "' + options.allow.op + '"'),
+      }
+    }
+
+    const res: any = await this._rawRequest({
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: { query, variables: variables || {} },
+      ctrl,
+    })
+
+    if (res instanceof Error) {
+      return res
+    }
+
+    // Errors are read BEFORE any status check: a GraphQL parse or validation
+    // failure comes back as HTTP 400 carrying the standard { errors: [...] }
+    // body, and the raw path represents a non-2xx as { ok: false } with no
+    // err — so returning early on status would discard the server's own
+    // diagnostics, which are the only useful part of that response.
+    const errors = null == res.data ? undefined : res.data.errors
+
+    if (null != errors && Array.isArray(errors) && 0 < errors.length) {
+      const first = errors[0] || {}
+      const err: any = new Error('GameDevelopmentSDK: graphql: ' +
+        (first.message || 'graphql error'))
+      err.graphql = errors
+      return { ok: false, status: res.status, headers: res.headers, err, data: res.data }
+    }
+
+    return res
+  }
+
+
+
   // Entity access: `client.Analytics().list()` / `client.Analytics().load({ id })`.
-  Analytics(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Analytics(entopts?: Record<string, any>) {
     const self = this
-    return new AnalyticsEntity(self,data)
+    return new AnalyticsEntity(self, entopts)
   }
 
 
   // Entity access: `client.Asset().list()` / `client.Asset().load({ id })`.
-  Asset(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Asset(entopts?: Record<string, any>) {
     const self = this
-    return new AssetEntity(self,data)
+    return new AssetEntity(self, entopts)
   }
 
 
   // Entity access: `client.Build().list()` / `client.Build().load({ id })`.
-  Build(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Build(entopts?: Record<string, any>) {
     const self = this
-    return new BuildEntity(self,data)
+    return new BuildEntity(self, entopts)
   }
 
 
   // Entity access: `client.Collaboration().list()` / `client.Collaboration().load({ id })`.
-  Collaboration(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Collaboration(entopts?: Record<string, any>) {
     const self = this
-    return new CollaborationEntity(self,data)
+    return new CollaborationEntity(self, entopts)
   }
 
 
   // Entity access: `client.Collaborator().list()` / `client.Collaborator().load({ id })`.
-  Collaborator(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Collaborator(entopts?: Record<string, any>) {
     const self = this
-    return new CollaboratorEntity(self,data)
+    return new CollaboratorEntity(self, entopts)
   }
 
 
   // Entity access: `client.Deployment().list()` / `client.Deployment().load({ id })`.
-  Deployment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Deployment(entopts?: Record<string, any>) {
     const self = this
-    return new DeploymentEntity(self,data)
+    return new DeploymentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Project().list()` / `client.Project().load({ id })`.
-  Project(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Project(entopts?: Record<string, any>) {
     const self = this
-    return new ProjectEntity(self,data)
+    return new ProjectEntity(self, entopts)
   }
 
 
   // Entity access: `client.Test().list()` / `client.Test().load({ id })`.
-  Test(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Test(entopts?: Record<string, any>) {
     const self = this
-    return new TestEntity(self,data)
+    return new TestEntity(self, entopts)
   }
 
 

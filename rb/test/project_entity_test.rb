@@ -62,7 +62,7 @@ class ProjectEntityTest < Minitest::Test
     # The basic flow consumes synthetic IDs from the fixture. In live mode
     # without an *_ENTID env override, those IDs hit the live API and 4xx.
     if setup[:synthetic_only]
-      skip "live entity test uses synthetic IDs from fixture — set GAMEDEVELOPMENT_TEST_PROJECT_ENTID JSON to run live"
+      skip "live entity test uses synthetic IDs from fixture — set GAME_DEVELOPMENT_TEST_PROJECT_ENTID JSON to run live"
       return
     end
     client = setup[:client]
@@ -73,7 +73,7 @@ class ProjectEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.project"), "project_ref01"))
 
     project_ref01_data_result = project_ref01_ent.create(project_ref01_data, nil)
-    project_ref01_data = Helpers.to_map(project_ref01_data_result)
+    project_ref01_data = Helpers.to_map(project_ref01_data_result.respond_to?(:data_get) ? project_ref01_data_result.data_get : project_ref01_data_result)
     assert !project_ref01_data.nil?
     assert !project_ref01_data["id"].nil?
 
@@ -93,12 +93,12 @@ class ProjectEntityTest < Minitest::Test
       "id" => project_ref01_data["id"],
     }
 
-    project_ref01_markdef_up0_name = "created_at"
+    project_ref01_markdef_up0_name = "createdAt"
     project_ref01_markdef_up0_value = "Mark01-project_ref01_#{setup[:now]}"
     project_ref01_data_up0_up[project_ref01_markdef_up0_name] = project_ref01_markdef_up0_value
 
     project_ref01_resdata_up0_result = project_ref01_ent.update(project_ref01_data_up0_up, nil)
-    project_ref01_resdata_up0 = Helpers.to_map(project_ref01_resdata_up0_result)
+    project_ref01_resdata_up0 = Helpers.to_map(project_ref01_resdata_up0_result.respond_to?(:data_get) ? project_ref01_resdata_up0_result.data_get : project_ref01_resdata_up0_result)
     assert !project_ref01_resdata_up0.nil?
     assert_equal project_ref01_resdata_up0["id"], project_ref01_data_up0_up["id"]
     assert_equal project_ref01_resdata_up0[project_ref01_markdef_up0_name], project_ref01_markdef_up0_value
@@ -108,7 +108,7 @@ class ProjectEntityTest < Minitest::Test
       "id" => project_ref01_data["id"],
     }
     project_ref01_data_dt0_loaded = project_ref01_ent.load(project_ref01_match_dt0, nil)
-    project_ref01_data_dt0_load_result = Helpers.to_map(project_ref01_data_dt0_loaded)
+    project_ref01_data_dt0_load_result = Helpers.to_map(project_ref01_data_dt0_loaded.respond_to?(:data_get) ? project_ref01_data_dt0_loaded.data_get : project_ref01_data_dt0_loaded)
     assert !project_ref01_data_dt0_load_result.nil?
     assert_equal project_ref01_data_dt0_load_result["id"], project_ref01_data["id"]
 
@@ -158,39 +158,39 @@ def project_basic_setup(extra)
   # Detect ENTID env override before envOverride consumes it. When live
   # mode is on without a real override, the basic test runs against synthetic
   # IDs from the fixture and 4xx's. Surface this so the test can skip.
-  entid_env_raw = ENV["GAMEDEVELOPMENT_TEST_PROJECT_ENTID"]
+  entid_env_raw = ENV["GAME_DEVELOPMENT_TEST_PROJECT_ENTID"]
   idmap_overridden = !entid_env_raw.nil? && entid_env_raw.strip.start_with?("{")
 
   env = Runner.env_override({
-    "GAMEDEVELOPMENT_TEST_PROJECT_ENTID" => idmap,
-    "GAMEDEVELOPMENT_TEST_LIVE" => "FALSE",
-    "GAMEDEVELOPMENT_TEST_EXPLAIN" => "FALSE",
-    "GAMEDEVELOPMENT_APIKEY" => "NONE",
+    "GAME_DEVELOPMENT_TEST_PROJECT_ENTID" => idmap,
+    "GAME_DEVELOPMENT_TEST_LIVE" => "FALSE",
+    "GAME_DEVELOPMENT_TEST_EXPLAIN" => "FALSE",
+    "GAME_DEVELOPMENT_APIKEY" => "NONE",
   })
 
   idmap_resolved = Helpers.to_map(
-    env["GAMEDEVELOPMENT_TEST_PROJECT_ENTID"])
+    env["GAME_DEVELOPMENT_TEST_PROJECT_ENTID"])
   if idmap_resolved.nil?
     idmap_resolved = Helpers.to_map(idmap)
   end
 
-  if env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE"
+  if env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
       {
-        "apikey" => env["GAMEDEVELOPMENT_APIKEY"],
+        "apikey" => env["GAME_DEVELOPMENT_APIKEY"],
       },
       extra || {},
     ])
     client = GameDevelopmentSDK.new(Helpers.to_map(merged_opts))
   end
 
-  live = env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE"
+  live = env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
   {
     client: client,
     data: entity_data,
     idmap: idmap_resolved,
     env: env,
-    explain: env["GAMEDEVELOPMENT_TEST_EXPLAIN"] == "TRUE",
+    explain: env["GAME_DEVELOPMENT_TEST_EXPLAIN"] == "TRUE",
     live: live,
     synthetic_only: live && !idmap_overridden,
     now: (Time.now.to_f * 1000).to_i,

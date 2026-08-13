@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# GameDevelopment SDK exists test
 
 import pytest
 from gamedevelopment_sdk import GameDevelopmentSDK

@@ -11,12 +11,12 @@ main: kit: entity: analytics: {
       type: "`$INTEGER`"
     }
     {
-      name: "event_name"
+      name: "eventName"
       req: true
       type: "`$STRING`"
     }
     {
-      name: "event_type"
+      name: "eventType"
       req: true
       type: "`$STRING`"
     }
@@ -26,7 +26,7 @@ main: kit: entity: analytics: {
       type: "`$STRING`"
     }
     {
-      name: "property"
+      name: "properties"
       req: false
       type: "`$OBJECT`"
     }

@@ -202,11 +202,31 @@ const analytics = client.Analytics()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | No |  |
-| `event_name` | `string` | Yes |  |
-| `event_type` | `string` | Yes |  |
+| `eventName` | `string` | Yes |  |
+| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `property` | `Record<string, any>` | No |  |
+| `properties` | `Record<string, any>` | No |  |
 | `timestamp` | `string` | No |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `event` | `/projects/{projectId}/analytics/events` | `client.Analytics().create({ $action: 'event', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Analytics record — check the API definition for its shape.
+
+```ts
+const result = await client.Analytics().create({
+  $action: 'event',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -217,6 +237,8 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Analytics().create({
   project_id: 'example_project_id',
+  eventName: 'example_eventName',
+  eventType: 'example_eventType',
 })
 ```
 
@@ -225,7 +247,7 @@ const result = await client.Analytics().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Analytics().list()
+const results = await client.Analytics().list({ project_id: "example" })
 ```
 
 ### Common Methods
@@ -266,15 +288,15 @@ const asset = client.Asset()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `id` | `string` | No |  |
-| `mime_type` | `string` | No |  |
+| `mimeType` | `string` | No |  |
 | `name` | `string` | No |  |
-| `project_id` | `string` | No |  |
+| `projectId` | `string` | No |  |
 | `size` | `number` | No |  |
-| `tag` | `any[]` | No |  |
+| `tags` | `any[]` | No |  |
 | `type` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 | `url` | `string` | No |  |
 
 ### Operations
@@ -294,7 +316,7 @@ const result = await client.Asset().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Asset().list()
+const results = await client.Asset().list({ project_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -364,6 +386,9 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Build().create({
   project_id: 'example_project_id',
+  configuration: 'example_configuration',
+  platform: 'example_platform',
+  version: 'example_version',
 })
 ```
 
@@ -405,14 +430,14 @@ const collaboration = client.Collaboration()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | `string` | No |  |
+| `addedAt` | `string` | No |  |
 | `email` | `string` | No |  |
 | `id` | `string` | No |  |
-| `last_active` | `string` | No |  |
+| `lastActive` | `string` | No |  |
 | `name` | `string` | No |  |
 | `role` | `string` | No |  |
 | `status` | `string` | No |  |
-| `user_id` | `string` | No |  |
+| `userId` | `string` | No |  |
 
 ### Operations
 
@@ -421,7 +446,7 @@ const collaboration = client.Collaboration()
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Collaboration().list()
+const results = await client.Collaboration().list({ project_id: "example" })
 ```
 
 #### `remove(match: object, ctrl?: object)`
@@ -482,6 +507,8 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Collaborator().create({
   project_id: 'example_project_id',
+  email: 'example_email',
+  role: 'example_role',
 })
 ```
 
@@ -523,17 +550,17 @@ const deployment = client.Deployment()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | `string` | No |  |
-| `completed_at` | `string` | No |  |
+| `buildVersion` | `string` | No |  |
+| `completedAt` | `string` | No |  |
 | `configuration` | `string` | No |  |
-| `created_at` | `string` | No |  |
-| `deployment_url` | `string` | No |  |
-| `download_url` | `string` | No |  |
+| `createdAt` | `string` | No |  |
+| `deploymentUrl` | `string` | No |  |
+| `downloadUrl` | `string` | No |  |
 | `environment` | `string` | No |  |
 | `id` | `string` | No |  |
 | `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `release_note` | `string` | No |  |
+| `projectId` | `string` | No |  |
+| `releaseNotes` | `string` | No |  |
 | `size` | `number` | No |  |
 | `status` | `string` | No |  |
 | `version` | `string` | No |  |
@@ -542,17 +569,17 @@ const deployment = client.Deployment()
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `build_version` | - | - | Yes |
-| `completed_at` | - | - | - |
+| `buildVersion` | - | - | Yes |
+| `completedAt` | - | - | - |
 | `configuration` | - | - | - |
-| `created_at` | - | - | - |
-| `deployment_url` | - | - | - |
-| `download_url` | - | - | - |
+| `createdAt` | - | - | - |
+| `deploymentUrl` | - | - | - |
+| `downloadUrl` | - | - | - |
 | `environment` | - | - | Yes |
 | `id` | - | - | - |
 | `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `release_note` | - | - | - |
+| `projectId` | - | - | - |
+| `releaseNotes` | - | - | - |
 | `size` | - | - | - |
 | `status` | - | - | - |
 | `version` | - | - | - |
@@ -574,7 +601,7 @@ const result = await client.Deployment().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Deployment().list()
+const results = await client.Deployment().list({ project_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -623,27 +650,27 @@ const project = client.Project()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `string` | No |  |
+| `createdAt` | `string` | No |  |
 | `description` | `string` | No |  |
 | `id` | `string` | No |  |
 | `name` | `string` | No |  |
 | `owner` | `Record<string, any>` | No |  |
-| `setting` | `Record<string, any>` | No |  |
+| `settings` | `Record<string, any>` | No |  |
 | `status` | `string` | No |  |
-| `updated_at` | `string` | No |  |
+| `updatedAt` | `string` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
+| `createdAt` | - | - | - | - | - |
 | `description` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `name` | - | - | Yes | - | - |
 | `owner` | - | - | - | - | - |
-| `setting` | - | - | - | - | - |
+| `settings` | - | - | - | - | - |
 | `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+| `updatedAt` | - | - | - | - | - |
 
 ### Operations
 
@@ -729,31 +756,41 @@ const test = client.Test()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | `string` | No |  |
-| `environment` | `string` | No |  |
+| `completedAt` | `string` | No |  |
+| `duration` | `number` | No |  |
+| `environment` | `string` | Yes |  |
+| `failed` | `number` | No |  |
 | `id` | `string` | No |  |
-| `name` | `string` | No |  |
-| `platform` | `string` | No |  |
-| `project_id` | `string` | No |  |
-| `result` | `Record<string, any>` | No |  |
-| `started_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `passed` | `number` | No |  |
+| `platform` | `string` | Yes |  |
+| `projectId` | `string` | No |  |
+| `results` | `Record<string, any>` | No |  |
+| `skipped` | `number` | No |  |
+| `startedAt` | `string` | No |  |
 | `status` | `string` | No |  |
-| `test_suite` | `string` | No |  |
+| `testSuite` | `string` | Yes |  |
+| `totalTests` | `number` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `completed_at` | - | - | - |
-| `environment` | - | - | Yes |
+| `completedAt` | - | - | - |
+| `duration` | - | - | - |
+| `environment` | - | Yes | - |
+| `failed` | - | - | - |
 | `id` | - | - | - |
-| `name` | - | - | Yes |
-| `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `result` | - | - | - |
-| `started_at` | - | - | - |
+| `name` | - | Yes | - |
+| `passed` | - | - | - |
+| `platform` | - | Yes | - |
+| `projectId` | - | - | - |
+| `results` | - | - | - |
+| `skipped` | - | - | - |
+| `startedAt` | - | - | - |
 | `status` | - | - | - |
-| `test_suite` | - | - | Yes |
+| `testSuite` | - | Yes | - |
+| `totalTests` | - | - | - |
 
 ### Operations
 
@@ -764,6 +801,10 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Test().create({
   project_id: 'example_project_id',
+  environment: 'example_environment',
+  name: 'example_name',
+  platform: 'example_platform',
+  testSuite: 'example_testSuite',
 })
 ```
 
@@ -772,7 +813,7 @@ const result = await client.Test().create({
 List entities matching the given criteria. Returns an array.
 
 ```ts
-const results = await client.Test().list()
+const results = await client.Test().list({ project_id: "example" })
 ```
 
 #### `load(match: object, ctrl?: object)`

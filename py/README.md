@@ -46,7 +46,7 @@ error — iterate it directly.
 
 ```python
 try:
-    analyticss = client.Analytics().list()
+    analyticss = client.Analytics().list({"project_id": "example"})
     for analytics in analyticss:
         print(analytics)
 except Exception as err:
@@ -56,7 +56,7 @@ except Exception as err:
 ### 3. Load an asset
 
 Asset is nested under project, so provide the `project_id`.
-`load()` returns the bare record (a `dict`) and raises on error.
+`load()` returns the ENTITY — call data_get() for the record — and raises on error.
 
 ```python
 try:
@@ -69,8 +69,8 @@ except Exception as err:
 ### 4. Create, update, and remove
 
 ```python
-# Create — returns the bare created record (a dict)
-created = client.Analytics().create({"project_id": "example_project_id"})
+# Create — returns the ENTITY (call data_get() for the record)
+created = client.Analytics().create({"project_id": "example_project_id", "eventName": "example_eventName", "eventType": "example_eventType"})
 
 ```
 
@@ -81,8 +81,8 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    analyticss = client.Analytics().list()
-    print(analyticss)
+    projects = client.Project().list()
+    print(projects)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -148,9 +148,10 @@ Create a mock client for unit testing — no server required:
 ```python
 client = GameDevelopmentSDK.test()
 
-# Entity ops return the bare record and raise on error.
-analytics = client.Analytics().list()
-# analytics contains the mock response record
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
+project = client.Project().list()
+# project contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -257,7 +258,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -280,10 +281,10 @@ On error, `ok` is `False` and `err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `event_name` |  |
-| `event_type` |  |
+| `eventName` |  |
+| `eventType` |  |
 | `name` |  |
-| `property` |  |
+| `properties` |  |
 | `timestamp` |  |
 
 Operations: Create, List.
@@ -294,15 +295,15 @@ API path: `/projects/{projectId}/analytics/events`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `id` |  |
-| `mime_type` |  |
+| `mimeType` |  |
 | `name` |  |
-| `project_id` |  |
+| `projectId` |  |
 | `size` |  |
-| `tag` |  |
+| `tags` |  |
 | `type` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 | `url` |  |
 
 Operations: Create, List, Load, Remove.
@@ -325,14 +326,14 @@ API path: `/projects/{projectId}/builds`
 
 | Field | Description |
 | --- | --- |
-| `added_at` |  |
+| `addedAt` |  |
 | `email` |  |
 | `id` |  |
-| `last_active` |  |
+| `lastActive` |  |
 | `name` |  |
 | `role` |  |
 | `status` |  |
-| `user_id` |  |
+| `userId` |  |
 
 Operations: List, Remove.
 
@@ -353,17 +354,17 @@ API path: `/projects/{projectId}/collaborators`
 
 | Field | Description |
 | --- | --- |
-| `build_version` |  |
-| `completed_at` |  |
+| `buildVersion` |  |
+| `completedAt` |  |
 | `configuration` |  |
-| `created_at` |  |
-| `deployment_url` |  |
-| `download_url` |  |
+| `createdAt` |  |
+| `deploymentUrl` |  |
+| `downloadUrl` |  |
 | `environment` |  |
 | `id` |  |
 | `platform` |  |
-| `project_id` |  |
-| `release_note` |  |
+| `projectId` |  |
+| `releaseNotes` |  |
 | `size` |  |
 | `status` |  |
 | `version` |  |
@@ -376,14 +377,14 @@ API path: `/projects/{projectId}/deployments`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `description` |  |
 | `id` |  |
 | `name` |  |
 | `owner` |  |
-| `setting` |  |
+| `settings` |  |
 | `status` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -393,16 +394,21 @@ API path: `/projects`
 
 | Field | Description |
 | --- | --- |
-| `completed_at` |  |
+| `completedAt` |  |
+| `duration` |  |
 | `environment` |  |
+| `failed` |  |
 | `id` |  |
 | `name` |  |
+| `passed` |  |
 | `platform` |  |
-| `project_id` |  |
-| `result` |  |
-| `started_at` |  |
+| `projectId` |  |
+| `results` |  |
+| `skipped` |  |
+| `startedAt` |  |
 | `status` |  |
-| `test_suite` |  |
+| `testSuite` |  |
+| `totalTests` |  |
 
 Operations: Create, List, Load.
 
@@ -429,16 +435,16 @@ Create an instance: `analytics = client.Analytics()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `event_name` | `str` |  |
-| `event_type` | `str` |  |
+| `eventName` | `str` |  |
+| `eventType` | `str` |  |
 | `name` | `str` |  |
-| `property` | `dict` |  |
+| `properties` | `dict` |  |
 | `timestamp` | `str` |  |
 
 #### Example: List
 
 ```python
-analyticss = client.Analytics().list()
+analyticss = client.Analytics().list({"project_id": "example"})
 ```
 
 #### Example: Create
@@ -446,6 +452,8 @@ analyticss = client.Analytics().list()
 ```python
 analytics = client.Analytics().create({
     "project_id": "example_project_id",  # str
+    "eventName": "example_eventName",  # str
+    "eventType": "example_eventType",  # str
 })
 ```
 
@@ -467,15 +475,15 @@ Create an instance: `asset = client.Asset()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `str` |  |
+| `createdAt` | `str` |  |
 | `id` | `str` |  |
-| `mime_type` | `str` |  |
+| `mimeType` | `str` |  |
 | `name` | `str` |  |
-| `project_id` | `str` |  |
+| `projectId` | `str` |  |
 | `size` | `int` |  |
-| `tag` | `list` |  |
+| `tags` | `list` |  |
 | `type` | `str` |  |
-| `updated_at` | `str` |  |
+| `updatedAt` | `str` |  |
 | `url` | `str` |  |
 
 #### Example: Load
@@ -487,7 +495,7 @@ asset = client.Asset().load({"id": "asset_id", "project_id": "project_id"})
 #### Example: List
 
 ```python
-assets = client.Asset().list()
+assets = client.Asset().list({"project_id": "example"})
 ```
 
 #### Example: Create
@@ -522,6 +530,9 @@ Create an instance: `build = client.Build()`
 ```python
 build = client.Build().create({
     "project_id": "example_project_id",  # str
+    "configuration": "example_configuration",  # str
+    "platform": "example_platform",  # str
+    "version": "example_version",  # str
 })
 ```
 
@@ -541,19 +552,19 @@ Create an instance: `collaboration = client.Collaboration()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | `str` |  |
+| `addedAt` | `str` |  |
 | `email` | `str` |  |
 | `id` | `str` |  |
-| `last_active` | `str` |  |
+| `lastActive` | `str` |  |
 | `name` | `str` |  |
 | `role` | `str` |  |
 | `status` | `str` |  |
-| `user_id` | `str` |  |
+| `userId` | `str` |  |
 
 #### Example: List
 
 ```python
-collaborations = client.Collaboration().list()
+collaborations = client.Collaboration().list({"project_id": "example"})
 ```
 
 
@@ -579,6 +590,8 @@ Create an instance: `collaborator = client.Collaborator()`
 ```python
 collaborator = client.Collaborator().create({
     "project_id": "example_project_id",  # str
+    "email": "example_email",  # str
+    "role": "example_role",  # str
 })
 ```
 
@@ -599,17 +612,17 @@ Create an instance: `deployment = client.Deployment()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | `str` |  |
-| `completed_at` | `str` |  |
+| `buildVersion` | `str` |  |
+| `completedAt` | `str` |  |
 | `configuration` | `str` |  |
-| `created_at` | `str` |  |
-| `deployment_url` | `str` |  |
-| `download_url` | `str` |  |
+| `createdAt` | `str` |  |
+| `deploymentUrl` | `str` |  |
+| `downloadUrl` | `str` |  |
 | `environment` | `str` |  |
 | `id` | `str` |  |
 | `platform` | `str` |  |
-| `project_id` | `str` |  |
-| `release_note` | `str` |  |
+| `projectId` | `str` |  |
+| `releaseNotes` | `str` |  |
 | `size` | `int` |  |
 | `status` | `str` |  |
 | `version` | `str` |  |
@@ -623,7 +636,7 @@ deployment = client.Deployment().load({"id": "deployment_id", "project_id": "pro
 #### Example: List
 
 ```python
-deployments = client.Deployment().list()
+deployments = client.Deployment().list({"project_id": "example"})
 ```
 
 #### Example: Create
@@ -653,14 +666,14 @@ Create an instance: `project = client.Project()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `str` |  |
+| `createdAt` | `str` |  |
 | `description` | `str` |  |
 | `id` | `str` |  |
 | `name` | `str` |  |
 | `owner` | `dict` |  |
-| `setting` | `dict` |  |
+| `settings` | `dict` |  |
 | `status` | `str` |  |
-| `updated_at` | `str` |  |
+| `updatedAt` | `str` |  |
 
 #### Example: Load
 
@@ -698,16 +711,21 @@ Create an instance: `test = client.Test()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | `str` |  |
+| `completedAt` | `str` |  |
+| `duration` | `float` |  |
 | `environment` | `str` |  |
+| `failed` | `int` |  |
 | `id` | `str` |  |
 | `name` | `str` |  |
+| `passed` | `int` |  |
 | `platform` | `str` |  |
-| `project_id` | `str` |  |
-| `result` | `dict` |  |
-| `started_at` | `str` |  |
+| `projectId` | `str` |  |
+| `results` | `dict` |  |
+| `skipped` | `int` |  |
+| `startedAt` | `str` |  |
 | `status` | `str` |  |
-| `test_suite` | `str` |  |
+| `testSuite` | `str` |  |
+| `totalTests` | `int` |  |
 
 #### Example: Load
 
@@ -718,7 +736,7 @@ test = client.Test().load({"id": "test_id", "project_id": "project_id"})
 #### Example: List
 
 ```python
-tests = client.Test().list()
+tests = client.Test().list({"project_id": "example"})
 ```
 
 #### Example: Create
@@ -726,6 +744,10 @@ tests = client.Test().list()
 ```python
 test = client.Test().create({
     "project_id": "example_project_id",  # str
+    "environment": "example_environment",  # str
+    "name": "example_name",  # str
+    "platform": "example_platform",  # str
+    "testSuite": "example_testSuite",  # str
 })
 ```
 
@@ -805,11 +827,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-analytics = client.Analytics()
-analytics.list()
+project = client.Project()
+project.list()
 
-# analytics.data_get() now returns the analytics data from the last list
-# analytics.match_get() returns the last match criteria
+# project.data_get() now returns the project data from the last list
+# project.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

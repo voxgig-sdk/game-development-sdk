@@ -13,26 +13,26 @@
 # @!attribute [rw] count
 #   @return [Integer, nil]
 #
-# @!attribute [rw] event_name
+# @!attribute [rw] eventName
 #   @return [String]
 #
-# @!attribute [rw] event_type
+# @!attribute [rw] eventType
 #   @return [String]
 #
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] property
+# @!attribute [rw] properties
 #   @return [Hash, nil]
 #
 # @!attribute [rw] timestamp
 #   @return [String, nil]
 Analytics = Struct.new(
   :count,
-  :event_name,
-  :event_type,
+  :eventName,
+  :eventType,
   :name,
-  :property,
+  :properties,
   :timestamp,
   keyword_init: true
 )
@@ -50,52 +50,76 @@ AnalyticsListMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] count
+#   @return [Integer, nil]
+#
+# @!attribute [rw] eventName
+#   @return [String]
+#
+# @!attribute [rw] eventType
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] properties
+#   @return [Hash, nil]
+#
+# @!attribute [rw] timestamp
+#   @return [String, nil]
 AnalyticsCreateData = Struct.new(
   :project_id,
+  :count,
+  :eventName,
+  :eventType,
+  :name,
+  :properties,
+  :timestamp,
   keyword_init: true
 )
 
 # Asset entity data model.
 #
-# @!attribute [rw] created_at
+# @!attribute [rw] createdAt
 #   @return [String, nil]
 #
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] mime_type
+# @!attribute [rw] mimeType
 #   @return [String, nil]
 #
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] project_id
+# @!attribute [rw] projectId
 #   @return [String, nil]
 #
 # @!attribute [rw] size
 #   @return [Integer, nil]
 #
-# @!attribute [rw] tag
+# @!attribute [rw] tags
 #   @return [Array, nil]
 #
 # @!attribute [rw] type
 #   @return [String, nil]
 #
-# @!attribute [rw] updated_at
+# @!attribute [rw] updatedAt
 #   @return [String, nil]
 #
 # @!attribute [rw] url
 #   @return [String, nil]
 Asset = Struct.new(
-  :created_at,
+  :createdAt,
   :id,
-  :mime_type,
+  :mimeType,
   :name,
-  :project_id,
+  :projectId,
   :size,
-  :tag,
+  :tags,
   :type,
-  :updated_at,
+  :updatedAt,
   :url,
   keyword_init: true
 )
@@ -126,8 +150,48 @@ AssetListMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] createdAt
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] mimeType
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] projectId
+#   @return [String, nil]
+#
+# @!attribute [rw] size
+#   @return [Integer, nil]
+#
+# @!attribute [rw] tags
+#   @return [Array, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] updatedAt
+#   @return [String, nil]
+#
+# @!attribute [rw] url
+#   @return [String, nil]
 AssetCreateData = Struct.new(
   :project_id,
+  :createdAt,
+  :id,
+  :mimeType,
+  :name,
+  :projectId,
+  :size,
+  :tags,
+  :type,
+  :updatedAt,
+  :url,
   keyword_init: true
 )
 
@@ -165,14 +229,26 @@ Build = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] configuration
+#   @return [String]
+#
+# @!attribute [rw] platform
+#   @return [String]
+#
+# @!attribute [rw] version
+#   @return [String]
 BuildCreateData = Struct.new(
   :project_id,
+  :configuration,
+  :platform,
+  :version,
   keyword_init: true
 )
 
 # Collaboration entity data model.
 #
-# @!attribute [rw] added_at
+# @!attribute [rw] addedAt
 #   @return [String, nil]
 #
 # @!attribute [rw] email
@@ -181,7 +257,7 @@ BuildCreateData = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] last_active
+# @!attribute [rw] lastActive
 #   @return [String, nil]
 #
 # @!attribute [rw] name
@@ -193,17 +269,17 @@ BuildCreateData = Struct.new(
 # @!attribute [rw] status
 #   @return [String, nil]
 #
-# @!attribute [rw] user_id
+# @!attribute [rw] userId
 #   @return [String, nil]
 Collaboration = Struct.new(
-  :added_at,
+  :addedAt,
   :email,
   :id,
-  :last_active,
+  :lastActive,
   :name,
   :role,
   :status,
-  :user_id,
+  :userId,
   keyword_init: true
 )
 
@@ -246,29 +322,37 @@ Collaborator = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] email
+#   @return [String]
+#
+# @!attribute [rw] role
+#   @return [String]
 CollaboratorCreateData = Struct.new(
   :project_id,
+  :email,
+  :role,
   keyword_init: true
 )
 
 # Deployment entity data model.
 #
-# @!attribute [rw] build_version
+# @!attribute [rw] buildVersion
 #   @return [String, nil]
 #
-# @!attribute [rw] completed_at
+# @!attribute [rw] completedAt
 #   @return [String, nil]
 #
 # @!attribute [rw] configuration
 #   @return [String, nil]
 #
-# @!attribute [rw] created_at
+# @!attribute [rw] createdAt
 #   @return [String, nil]
 #
-# @!attribute [rw] deployment_url
+# @!attribute [rw] deploymentUrl
 #   @return [String, nil]
 #
-# @!attribute [rw] download_url
+# @!attribute [rw] downloadUrl
 #   @return [String, nil]
 #
 # @!attribute [rw] environment
@@ -280,10 +364,10 @@ CollaboratorCreateData = Struct.new(
 # @!attribute [rw] platform
 #   @return [String, nil]
 #
-# @!attribute [rw] project_id
+# @!attribute [rw] projectId
 #   @return [String, nil]
 #
-# @!attribute [rw] release_note
+# @!attribute [rw] releaseNotes
 #   @return [String, nil]
 #
 # @!attribute [rw] size
@@ -295,17 +379,17 @@ CollaboratorCreateData = Struct.new(
 # @!attribute [rw] version
 #   @return [String, nil]
 Deployment = Struct.new(
-  :build_version,
-  :completed_at,
+  :buildVersion,
+  :completedAt,
   :configuration,
-  :created_at,
-  :deployment_url,
-  :download_url,
+  :createdAt,
+  :deploymentUrl,
+  :downloadUrl,
   :environment,
   :id,
   :platform,
-  :project_id,
-  :release_note,
+  :projectId,
+  :releaseNotes,
   :size,
   :status,
   :version,
@@ -338,14 +422,70 @@ DeploymentListMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] buildVersion
+#   @return [String, nil]
+#
+# @!attribute [rw] completedAt
+#   @return [String, nil]
+#
+# @!attribute [rw] configuration
+#   @return [String, nil]
+#
+# @!attribute [rw] createdAt
+#   @return [String, nil]
+#
+# @!attribute [rw] deploymentUrl
+#   @return [String, nil]
+#
+# @!attribute [rw] downloadUrl
+#   @return [String, nil]
+#
+# @!attribute [rw] environment
+#   @return [String, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] platform
+#   @return [String, nil]
+#
+# @!attribute [rw] projectId
+#   @return [String, nil]
+#
+# @!attribute [rw] releaseNotes
+#   @return [String, nil]
+#
+# @!attribute [rw] size
+#   @return [Integer, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] version
+#   @return [String, nil]
 DeploymentCreateData = Struct.new(
   :project_id,
+  :buildVersion,
+  :completedAt,
+  :configuration,
+  :createdAt,
+  :deploymentUrl,
+  :downloadUrl,
+  :environment,
+  :id,
+  :platform,
+  :projectId,
+  :releaseNotes,
+  :size,
+  :status,
+  :version,
   keyword_init: true
 )
 
 # Project entity data model.
 #
-# @!attribute [rw] created_at
+# @!attribute [rw] createdAt
 #   @return [String, nil]
 #
 # @!attribute [rw] description
@@ -360,23 +500,23 @@ DeploymentCreateData = Struct.new(
 # @!attribute [rw] owner
 #   @return [Hash, nil]
 #
-# @!attribute [rw] setting
+# @!attribute [rw] settings
 #   @return [Hash, nil]
 #
 # @!attribute [rw] status
 #   @return [String, nil]
 #
-# @!attribute [rw] updated_at
+# @!attribute [rw] updatedAt
 #   @return [String, nil]
 Project = Struct.new(
-  :created_at,
+  :createdAt,
   :description,
   :id,
   :name,
   :owner,
-  :setting,
+  :settings,
   :status,
-  :updated_at,
+  :updatedAt,
   keyword_init: true
 )
 
@@ -391,7 +531,7 @@ ProjectLoadMatch = Struct.new(
 
 # Request payload for Project#list.
 #
-# @!attribute [rw] created_at
+# @!attribute [rw] createdAt
 #   @return [String, nil]
 #
 # @!attribute [rw] description
@@ -406,29 +546,29 @@ ProjectLoadMatch = Struct.new(
 # @!attribute [rw] owner
 #   @return [Hash, nil]
 #
-# @!attribute [rw] setting
+# @!attribute [rw] settings
 #   @return [Hash, nil]
 #
 # @!attribute [rw] status
 #   @return [String, nil]
 #
-# @!attribute [rw] updated_at
+# @!attribute [rw] updatedAt
 #   @return [String, nil]
 ProjectListMatch = Struct.new(
-  :created_at,
+  :createdAt,
   :description,
   :id,
   :name,
   :owner,
-  :setting,
+  :settings,
   :status,
-  :updated_at,
+  :updatedAt,
   keyword_init: true
 )
 
 # Request payload for Project#create.
 #
-# @!attribute [rw] created_at
+# @!attribute [rw] createdAt
 #   @return [String, nil]
 #
 # @!attribute [rw] description
@@ -443,23 +583,23 @@ ProjectListMatch = Struct.new(
 # @!attribute [rw] owner
 #   @return [Hash, nil]
 #
-# @!attribute [rw] setting
+# @!attribute [rw] settings
 #   @return [Hash, nil]
 #
 # @!attribute [rw] status
 #   @return [String, nil]
 #
-# @!attribute [rw] updated_at
+# @!attribute [rw] updatedAt
 #   @return [String, nil]
 ProjectCreateData = Struct.new(
-  :created_at,
+  :createdAt,
   :description,
   :id,
   :name,
   :owner,
-  :setting,
+  :settings,
   :status,
-  :updated_at,
+  :updatedAt,
   keyword_init: true
 )
 
@@ -467,8 +607,36 @@ ProjectCreateData = Struct.new(
 #
 # @!attribute [rw] id
 #   @return [String]
+#
+# @!attribute [rw] createdAt
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] owner
+#   @return [Hash, nil]
+#
+# @!attribute [rw] settings
+#   @return [Hash, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] updatedAt
+#   @return [String, nil]
 ProjectUpdateData = Struct.new(
   :id,
+  :createdAt,
+  :description,
+  :name,
+  :owner,
+  :settings,
+  :status,
+  :updatedAt,
   keyword_init: true
 )
 
@@ -483,46 +651,66 @@ ProjectRemoveMatch = Struct.new(
 
 # Test entity data model.
 #
-# @!attribute [rw] completed_at
+# @!attribute [rw] completedAt
 #   @return [String, nil]
 #
+# @!attribute [rw] duration
+#   @return [Float, nil]
+#
 # @!attribute [rw] environment
-#   @return [String, nil]
+#   @return [String]
+#
+# @!attribute [rw] failed
+#   @return [Integer, nil]
 #
 # @!attribute [rw] id
 #   @return [String, nil]
 #
 # @!attribute [rw] name
-#   @return [String, nil]
+#   @return [String]
+#
+# @!attribute [rw] passed
+#   @return [Integer, nil]
 #
 # @!attribute [rw] platform
+#   @return [String]
+#
+# @!attribute [rw] projectId
 #   @return [String, nil]
 #
-# @!attribute [rw] project_id
-#   @return [String, nil]
-#
-# @!attribute [rw] result
+# @!attribute [rw] results
 #   @return [Hash, nil]
 #
-# @!attribute [rw] started_at
+# @!attribute [rw] skipped
+#   @return [Integer, nil]
+#
+# @!attribute [rw] startedAt
 #   @return [String, nil]
 #
 # @!attribute [rw] status
 #   @return [String, nil]
 #
-# @!attribute [rw] test_suite
-#   @return [String, nil]
+# @!attribute [rw] testSuite
+#   @return [String]
+#
+# @!attribute [rw] totalTests
+#   @return [Integer, nil]
 Test = Struct.new(
-  :completed_at,
+  :completedAt,
+  :duration,
   :environment,
+  :failed,
   :id,
   :name,
+  :passed,
   :platform,
-  :project_id,
-  :result,
-  :started_at,
+  :projectId,
+  :results,
+  :skipped,
+  :startedAt,
   :status,
-  :test_suite,
+  :testSuite,
+  :totalTests,
   keyword_init: true
 )
 
@@ -552,8 +740,68 @@ TestListMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] completedAt
+#   @return [String, nil]
+#
+# @!attribute [rw] duration
+#   @return [Float, nil]
+#
+# @!attribute [rw] environment
+#   @return [String]
+#
+# @!attribute [rw] failed
+#   @return [Integer, nil]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String]
+#
+# @!attribute [rw] passed
+#   @return [Integer, nil]
+#
+# @!attribute [rw] platform
+#   @return [String]
+#
+# @!attribute [rw] projectId
+#   @return [String, nil]
+#
+# @!attribute [rw] results
+#   @return [Hash, nil]
+#
+# @!attribute [rw] skipped
+#   @return [Integer, nil]
+#
+# @!attribute [rw] startedAt
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
+#
+# @!attribute [rw] testSuite
+#   @return [String]
+#
+# @!attribute [rw] totalTests
+#   @return [Integer, nil]
 TestCreateData = Struct.new(
   :project_id,
+  :completedAt,
+  :duration,
+  :environment,
+  :failed,
+  :id,
+  :name,
+  :passed,
+  :platform,
+  :projectId,
+  :results,
+  :skipped,
+  :startedAt,
+  :status,
+  :testSuite,
+  :totalTests,
   keyword_init: true
 )
 

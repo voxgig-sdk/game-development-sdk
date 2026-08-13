@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ GameDevelopmentUtility.registrar = ->(u) {
   u.prepare_params = GameDevelopmentUtilities::PrepareParams
   u.prepare_path = GameDevelopmentUtilities::PreparePath
   u.prepare_query = GameDevelopmentUtilities::PrepareQuery
+  u.graphql_body = GameDevelopmentUtilities::GraphqlBody
+  u.graphql_errors = GameDevelopmentUtilities::GraphqlErrors
   u.result_basic = GameDevelopmentUtilities::ResultBasic
   u.result_body = GameDevelopmentUtilities::ResultBody
   u.result_headers = GameDevelopmentUtilities::ResultHeaders

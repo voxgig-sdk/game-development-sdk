@@ -26,8 +26,8 @@ import {
 describe('BuildEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when GAMEDEVELOPMENT_TEST_LIVE=TRUE.
-  afterEach(liveDelay('GAMEDEVELOPMENT_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when GAME_DEVELOPMENT_TEST_LIVE=TRUE.
+  afterEach(liveDelay('GAME_DEVELOPMENT_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = GameDevelopmentSDK.test()
@@ -63,7 +63,7 @@ describe('BuildEntity', async () => {
     let build_ref01_data = setup.data.new.build['build_ref01']
     build_ref01_data['project_id'] = setup.idmap['project01']
 
-    build_ref01_data = await build_ref01_ent.create(build_ref01_data)
+    build_ref01_data = (await build_ref01_ent.create(build_ref01_data)).data()
     assert(null != build_ref01_data)
 
 

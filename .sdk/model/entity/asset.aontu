@@ -6,7 +6,7 @@ main: kit: entity: asset: {
 
   fields: [
     {
-      name: "created_at"
+      name: "createdAt"
       req: false
       type: "`$STRING`"
     }
@@ -16,7 +16,7 @@ main: kit: entity: asset: {
       type: "`$STRING`"
     }
     {
-      name: "mime_type"
+      name: "mimeType"
       req: false
       type: "`$STRING`"
     }
@@ -26,7 +26,7 @@ main: kit: entity: asset: {
       type: "`$STRING`"
     }
     {
-      name: "project_id"
+      name: "projectId"
       req: false
       type: "`$STRING`"
     }
@@ -36,7 +36,7 @@ main: kit: entity: asset: {
       type: "`$INTEGER`"
     }
     {
-      name: "tag"
+      name: "tags"
       req: false
       type: "`$ARRAY`"
     }
@@ -46,7 +46,7 @@ main: kit: entity: asset: {
       type: "`$STRING`"
     }
     {
-      name: "updated_at"
+      name: "updatedAt"
       req: false
       type: "`$STRING`"
     }
@@ -156,7 +156,7 @@ main: kit: entity: asset: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.assets`"
           }
         }
       ]

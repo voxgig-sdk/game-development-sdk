@@ -37,10 +37,12 @@ const client = new GameDevelopmentSDK({
 
 ### 2. List analytics records
 
-`list()` resolves to an array of Analytics objects — iterate it directly:
+`list()` resolves to an array of Analytics ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.Analytics().list({ project_id: "example" })
 
 for (const analytics of analyticss) {
   console.log(analytics)
@@ -67,9 +69,11 @@ try {
 ### 4. Create, update, and remove
 
 ```ts
-// Create — returns the created Analytics
+// Create — returns the created Analytics ENTITY (.data() for the record)
 const created = await client.Analytics().create({
   project_id: 'example_project_id',
+  eventName: 'example_eventName',
+  eventType: 'example_eventType',
 })
 
 ```
@@ -81,8 +85,8 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const analyticss = await client.Analytics().list()
-  console.log(analyticss)
+  const projects = await client.Project().list()
+  console.log(projects)
 } catch (err) {
   console.error('list failed:', err)
 }
@@ -148,9 +152,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = GameDevelopmentSDK.test()
 
-const analytics = await client.Analytics().list()
-// analytics is a bare entity populated with mock response data
-console.log(analytics)
+const project = await client.Project().list()
+// project is the entity, populated with mock response data
+// — call project.data() for the record itself
+console.log(project)
 ```
 
 You can also use the instance method:
@@ -165,14 +170,14 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Analytics()
+const entity = client.Project()
 
 // First call runs the operation and stores its result
 await entity.list()
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data)
+console.log(data.id)
 ```
 
 ### Add custom middleware
@@ -331,10 +336,10 @@ The `prepare()` method returns:
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `event_name` |  |
-| `event_type` |  |
+| `eventName` |  |
+| `eventType` |  |
 | `name` |  |
-| `property` |  |
+| `properties` |  |
 | `timestamp` |  |
 
 Operations: create, list.
@@ -345,15 +350,15 @@ API path: `/projects/{projectId}/analytics/events`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `id` |  |
-| `mime_type` |  |
+| `mimeType` |  |
 | `name` |  |
-| `project_id` |  |
+| `projectId` |  |
 | `size` |  |
-| `tag` |  |
+| `tags` |  |
 | `type` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 | `url` |  |
 
 Operations: create, list, load, remove.
@@ -376,14 +381,14 @@ API path: `/projects/{projectId}/builds`
 
 | Field | Description |
 | --- | --- |
-| `added_at` |  |
+| `addedAt` |  |
 | `email` |  |
 | `id` |  |
-| `last_active` |  |
+| `lastActive` |  |
 | `name` |  |
 | `role` |  |
 | `status` |  |
-| `user_id` |  |
+| `userId` |  |
 
 Operations: list, remove.
 
@@ -404,17 +409,17 @@ API path: `/projects/{projectId}/collaborators`
 
 | Field | Description |
 | --- | --- |
-| `build_version` |  |
-| `completed_at` |  |
+| `buildVersion` |  |
+| `completedAt` |  |
 | `configuration` |  |
-| `created_at` |  |
-| `deployment_url` |  |
-| `download_url` |  |
+| `createdAt` |  |
+| `deploymentUrl` |  |
+| `downloadUrl` |  |
 | `environment` |  |
 | `id` |  |
 | `platform` |  |
-| `project_id` |  |
-| `release_note` |  |
+| `projectId` |  |
+| `releaseNotes` |  |
 | `size` |  |
 | `status` |  |
 | `version` |  |
@@ -427,14 +432,14 @@ API path: `/projects/{projectId}/deployments`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
+| `createdAt` |  |
 | `description` |  |
 | `id` |  |
 | `name` |  |
 | `owner` |  |
-| `setting` |  |
+| `settings` |  |
 | `status` |  |
-| `updated_at` |  |
+| `updatedAt` |  |
 
 Operations: create, list, load, remove, update.
 
@@ -444,16 +449,21 @@ API path: `/projects`
 
 | Field | Description |
 | --- | --- |
-| `completed_at` |  |
+| `completedAt` |  |
+| `duration` |  |
 | `environment` |  |
+| `failed` |  |
 | `id` |  |
 | `name` |  |
+| `passed` |  |
 | `platform` |  |
-| `project_id` |  |
-| `result` |  |
-| `started_at` |  |
+| `projectId` |  |
+| `results` |  |
+| `skipped` |  |
+| `startedAt` |  |
 | `status` |  |
-| `test_suite` |  |
+| `testSuite` |  |
+| `totalTests` |  |
 
 Operations: create, list, load.
 
@@ -480,16 +490,16 @@ Create an instance: `const analytics = client.Analytics()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `number` |  |
-| `event_name` | `string` |  |
-| `event_type` | `string` |  |
+| `eventName` | `string` |  |
+| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `property` | `Record<string, any>` |  |
+| `properties` | `Record<string, any>` |  |
 | `timestamp` | `string` |  |
 
 #### Example: List
 
 ```ts
-const analyticss = await client.Analytics().list()
+const analyticss = await client.Analytics().list({ project_id: "example" })
 ```
 
 #### Example: Create
@@ -497,6 +507,8 @@ const analyticss = await client.Analytics().list()
 ```ts
 const analytics = await client.Analytics().create({
   project_id: 'example_project_id',
+  eventName: 'example_eventName',
+  eventType: 'example_eventType',
 })
 ```
 
@@ -518,15 +530,15 @@ Create an instance: `const asset = client.Asset()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `id` | `string` |  |
-| `mime_type` | `string` |  |
+| `mimeType` | `string` |  |
 | `name` | `string` |  |
-| `project_id` | `string` |  |
+| `projectId` | `string` |  |
 | `size` | `number` |  |
-| `tag` | `any[]` |  |
+| `tags` | `any[]` |  |
 | `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 | `url` | `string` |  |
 
 #### Example: Load
@@ -538,7 +550,7 @@ const asset = await client.Asset().load({ id: 'asset_id', project_id: 'project_i
 #### Example: List
 
 ```ts
-const assets = await client.Asset().list()
+const assets = await client.Asset().list({ project_id: "example" })
 ```
 
 #### Example: Create
@@ -573,6 +585,9 @@ Create an instance: `const build = client.Build()`
 ```ts
 const build = await client.Build().create({
   project_id: 'example_project_id',
+  configuration: 'example_configuration',
+  platform: 'example_platform',
+  version: 'example_version',
 })
 ```
 
@@ -592,19 +607,19 @@ Create an instance: `const collaboration = client.Collaboration()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | `string` |  |
+| `addedAt` | `string` |  |
 | `email` | `string` |  |
 | `id` | `string` |  |
-| `last_active` | `string` |  |
+| `lastActive` | `string` |  |
 | `name` | `string` |  |
 | `role` | `string` |  |
 | `status` | `string` |  |
-| `user_id` | `string` |  |
+| `userId` | `string` |  |
 
 #### Example: List
 
 ```ts
-const collaborations = await client.Collaboration().list()
+const collaborations = await client.Collaboration().list({ project_id: "example" })
 ```
 
 
@@ -630,6 +645,8 @@ Create an instance: `const collaborator = client.Collaborator()`
 ```ts
 const collaborator = await client.Collaborator().create({
   project_id: 'example_project_id',
+  email: 'example_email',
+  role: 'example_role',
 })
 ```
 
@@ -650,17 +667,17 @@ Create an instance: `const deployment = client.Deployment()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | `string` |  |
-| `completed_at` | `string` |  |
+| `buildVersion` | `string` |  |
+| `completedAt` | `string` |  |
 | `configuration` | `string` |  |
-| `created_at` | `string` |  |
-| `deployment_url` | `string` |  |
-| `download_url` | `string` |  |
+| `createdAt` | `string` |  |
+| `deploymentUrl` | `string` |  |
+| `downloadUrl` | `string` |  |
 | `environment` | `string` |  |
 | `id` | `string` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `release_note` | `string` |  |
+| `projectId` | `string` |  |
+| `releaseNotes` | `string` |  |
 | `size` | `number` |  |
 | `status` | `string` |  |
 | `version` | `string` |  |
@@ -674,7 +691,7 @@ const deployment = await client.Deployment().load({ id: 'deployment_id', project
 #### Example: List
 
 ```ts
-const deployments = await client.Deployment().list()
+const deployments = await client.Deployment().list({ project_id: "example" })
 ```
 
 #### Example: Create
@@ -704,14 +721,14 @@ Create an instance: `const project = client.Project()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 | `owner` | `Record<string, any>` |  |
-| `setting` | `Record<string, any>` |  |
+| `settings` | `Record<string, any>` |  |
 | `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 
 #### Example: Load
 
@@ -749,16 +766,21 @@ Create an instance: `const test = client.Test()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | `string` |  |
+| `completedAt` | `string` |  |
+| `duration` | `number` |  |
 | `environment` | `string` |  |
+| `failed` | `number` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `passed` | `number` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `result` | `Record<string, any>` |  |
-| `started_at` | `string` |  |
+| `projectId` | `string` |  |
+| `results` | `Record<string, any>` |  |
+| `skipped` | `number` |  |
+| `startedAt` | `string` |  |
 | `status` | `string` |  |
-| `test_suite` | `string` |  |
+| `testSuite` | `string` |  |
+| `totalTests` | `number` |  |
 
 #### Example: Load
 
@@ -769,7 +791,7 @@ const test = await client.Test().load({ id: 'test_id', project_id: 'project_id' 
 #### Example: List
 
 ```ts
-const tests = await client.Test().list()
+const tests = await client.Test().list({ project_id: "example" })
 ```
 
 #### Example: Create
@@ -777,6 +799,10 @@ const tests = await client.Test().list()
 ```ts
 const test = await client.Test().create({
   project_id: 'example_project_id',
+  environment: 'example_environment',
+  name: 'example_name',
+  platform: 'example_platform',
+  testSuite: 'example_testSuite',
 })
 ```
 
@@ -850,11 +876,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const analytics = client.Analytics()
-await analytics.list()
+const project = client.Project()
+await project.list()
 
-// analytics.data() now returns the analytics data from the last `list`
-// analytics.match() returns the last match criteria
+// project.data() now returns the project data from the last `list`
+// project.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

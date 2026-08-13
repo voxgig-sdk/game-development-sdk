@@ -123,10 +123,10 @@ analytics = client.Analytics
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `Integer` | No |  |
-| `event_name` | `String` | Yes |  |
-| `event_type` | `String` | Yes |  |
+| `eventName` | `String` | Yes |  |
+| `eventType` | `String` | Yes |  |
 | `name` | `String` | No |  |
-| `property` | `Hash` | No |  |
+| `properties` | `Hash` | No |  |
 | `timestamp` | `String` | No |  |
 
 ### Operations
@@ -138,6 +138,8 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Analytics.create({
   "project_id" => "example_project_id", # String
+  "eventName" => "example_eventName", # String
+  "eventType" => "example_eventType", # String
 })
 ```
 
@@ -189,15 +191,15 @@ asset = client.Asset
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `String` | No |  |
+| `createdAt` | `String` | No |  |
 | `id` | `String` | No |  |
-| `mime_type` | `String` | No |  |
+| `mimeType` | `String` | No |  |
 | `name` | `String` | No |  |
-| `project_id` | `String` | No |  |
+| `projectId` | `String` | No |  |
 | `size` | `Integer` | No |  |
-| `tag` | `Array` | No |  |
+| `tags` | `Array` | No |  |
 | `type` | `String` | No |  |
-| `updated_at` | `String` | No |  |
+| `updatedAt` | `String` | No |  |
 | `url` | `String` | No |  |
 
 ### Operations
@@ -289,6 +291,9 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Build.create({
   "project_id" => "example_project_id", # String
+  "configuration" => "example_configuration", # String
+  "platform" => "example_platform", # String
+  "version" => "example_version", # String
 })
 ```
 
@@ -332,14 +337,14 @@ collaboration = client.Collaboration
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `added_at` | `String` | No |  |
+| `addedAt` | `String` | No |  |
 | `email` | `String` | No |  |
 | `id` | `String` | No |  |
-| `last_active` | `String` | No |  |
+| `lastActive` | `String` | No |  |
 | `name` | `String` | No |  |
 | `role` | `String` | No |  |
 | `status` | `String` | No |  |
-| `user_id` | `String` | No |  |
+| `userId` | `String` | No |  |
 
 ### Operations
 
@@ -411,6 +416,8 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Collaborator.create({
   "project_id" => "example_project_id", # String
+  "email" => "example_email", # String
+  "role" => "example_role", # String
 })
 ```
 
@@ -454,17 +461,17 @@ deployment = client.Deployment
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `build_version` | `String` | No |  |
-| `completed_at` | `String` | No |  |
+| `buildVersion` | `String` | No |  |
+| `completedAt` | `String` | No |  |
 | `configuration` | `String` | No |  |
-| `created_at` | `String` | No |  |
-| `deployment_url` | `String` | No |  |
-| `download_url` | `String` | No |  |
+| `createdAt` | `String` | No |  |
+| `deploymentUrl` | `String` | No |  |
+| `downloadUrl` | `String` | No |  |
 | `environment` | `String` | No |  |
 | `id` | `String` | No |  |
 | `platform` | `String` | No |  |
-| `project_id` | `String` | No |  |
-| `release_note` | `String` | No |  |
+| `projectId` | `String` | No |  |
+| `releaseNotes` | `String` | No |  |
 | `size` | `Integer` | No |  |
 | `status` | `String` | No |  |
 | `version` | `String` | No |  |
@@ -473,17 +480,17 @@ deployment = client.Deployment
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `build_version` | - | - | Yes |
-| `completed_at` | - | - | - |
+| `buildVersion` | - | - | Yes |
+| `completedAt` | - | - | - |
 | `configuration` | - | - | - |
-| `created_at` | - | - | - |
-| `deployment_url` | - | - | - |
-| `download_url` | - | - | - |
+| `createdAt` | - | - | - |
+| `deploymentUrl` | - | - | - |
+| `downloadUrl` | - | - | - |
 | `environment` | - | - | Yes |
 | `id` | - | - | - |
 | `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `release_note` | - | - | - |
+| `projectId` | - | - | - |
+| `releaseNotes` | - | - | - |
 | `size` | - | - | - |
 | `status` | - | - | - |
 | `version` | - | - | - |
@@ -556,27 +563,27 @@ project = client.Project
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `created_at` | `String` | No |  |
+| `createdAt` | `String` | No |  |
 | `description` | `String` | No |  |
 | `id` | `String` | No |  |
 | `name` | `String` | No |  |
 | `owner` | `Hash` | No |  |
-| `setting` | `Hash` | No |  |
+| `settings` | `Hash` | No |  |
 | `status` | `String` | No |  |
-| `updated_at` | `String` | No |  |
+| `updatedAt` | `String` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create | update | remove |
 | --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
+| `createdAt` | - | - | - | - | - |
 | `description` | - | - | - | - | - |
 | `id` | - | - | - | - | - |
 | `name` | - | - | Yes | - | - |
 | `owner` | - | - | - | - | - |
-| `setting` | - | - | - | - | - |
+| `settings` | - | - | - | - | - |
 | `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+| `updatedAt` | - | - | - | - | - |
 
 ### Operations
 
@@ -664,31 +671,41 @@ test = client.Test
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `completed_at` | `String` | No |  |
-| `environment` | `String` | No |  |
+| `completedAt` | `String` | No |  |
+| `duration` | `Float` | No |  |
+| `environment` | `String` | Yes |  |
+| `failed` | `Integer` | No |  |
 | `id` | `String` | No |  |
-| `name` | `String` | No |  |
-| `platform` | `String` | No |  |
-| `project_id` | `String` | No |  |
-| `result` | `Hash` | No |  |
-| `started_at` | `String` | No |  |
+| `name` | `String` | Yes |  |
+| `passed` | `Integer` | No |  |
+| `platform` | `String` | Yes |  |
+| `projectId` | `String` | No |  |
+| `results` | `Hash` | No |  |
+| `skipped` | `Integer` | No |  |
+| `startedAt` | `String` | No |  |
 | `status` | `String` | No |  |
-| `test_suite` | `String` | No |  |
+| `testSuite` | `String` | Yes |  |
+| `totalTests` | `Integer` | No |  |
 
 ### Field Usage by Operation
 
 | Field | load | list | create |
 | --- | --- | --- | --- |
-| `completed_at` | - | - | - |
-| `environment` | - | - | Yes |
+| `completedAt` | - | - | - |
+| `duration` | - | - | - |
+| `environment` | - | Yes | - |
+| `failed` | - | - | - |
 | `id` | - | - | - |
-| `name` | - | - | Yes |
-| `platform` | - | - | Yes |
-| `project_id` | - | - | - |
-| `result` | - | - | - |
-| `started_at` | - | - | - |
+| `name` | - | Yes | - |
+| `passed` | - | - | - |
+| `platform` | - | Yes | - |
+| `projectId` | - | - | - |
+| `results` | - | - | - |
+| `skipped` | - | - | - |
+| `startedAt` | - | - | - |
 | `status` | - | - | - |
-| `test_suite` | - | - | Yes |
+| `testSuite` | - | Yes | - |
+| `totalTests` | - | - | - |
 
 ### Operations
 
@@ -699,6 +716,10 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Test.create({
   "project_id" => "example_project_id", # String
+  "environment" => "example_environment", # String
+  "name" => "example_name", # String
+  "platform" => "example_platform", # String
+  "testSuite" => "example_testSuite", # String
 })
 ```
 

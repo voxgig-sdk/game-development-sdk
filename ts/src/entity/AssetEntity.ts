@@ -39,7 +39,7 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
 
 
 
-  async load(this: any, reqmatch?: AssetLoadMatch, ctrl?: Control): Promise<Asset> {
+  async load(this: any, reqmatch?: AssetLoadMatch, ctrl?: Control): Promise<AssetEntity> {
 
     const utility = this._utility
 
@@ -130,7 +130,15 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -152,7 +160,7 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
 
 
 
-  async list(this: any, reqmatch?: AssetListMatch, ctrl?: Control): Promise<Asset[]> {
+  async list(this: any, reqmatch?: AssetListMatch, ctrl?: Control): Promise<AssetEntity[]> {
 
     const utility = this._utility
 
@@ -261,7 +269,7 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
 
 
 
-  async create(this: any, reqdata?: AssetCreateData, ctrl?: Control): Promise<Asset> {
+  async create(this: any, reqdata?: AssetCreateData, ctrl?: Control): Promise<AssetEntity> {
 
     const utility = this._utility
     const {
@@ -347,7 +355,15 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -370,7 +386,17 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
 
 
 
-  async remove(this: any, reqmatch?: AssetRemoveMatch, ctrl?: Control): Promise<Asset> {
+  // Resolves to THIS entity, marked as deleted — like every other operation,
+  // which resolve to the entity too (see AGENTS.md). The instance keeps the
+  // data it held, so a caller can still read what was removed; `deleted()`
+  // reports that it is no longer a live record.
+  //
+  // A DELETE that answers 204 No Content therefore still resolves to
+  // something useful, where returning the raw body resolved to `undefined`
+  // against a signature that promised a record.
+  async remove(
+    this: any, reqmatch?: AssetRemoveMatch, ctrl?: Control,
+  ): Promise<AssetEntity> {
 
     const utility = this._utility
 
@@ -462,7 +488,21 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      if (ctx.result && ctx.result.ok) {
+        // A removed entity keeps its data but is no longer a live record.
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err: any) {
 
@@ -476,7 +516,7 @@ class AssetEntity extends GameDevelopmentEntityBase<Asset> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Asset> return stays clean under strict null checks.
+        // Promise<AssetEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }

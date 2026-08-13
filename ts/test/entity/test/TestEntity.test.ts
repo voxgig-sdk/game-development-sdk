@@ -26,8 +26,8 @@ import {
 describe('TestEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when GAMEDEVELOPMENT_TEST_LIVE=TRUE.
-  afterEach(liveDelay('GAMEDEVELOPMENT_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when GAME_DEVELOPMENT_TEST_LIVE=TRUE.
+  afterEach(liveDelay('GAME_DEVELOPMENT_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = GameDevelopmentSDK.test()
@@ -63,7 +63,7 @@ describe('TestEntity', async () => {
     let test_ref01_data = setup.data.new.test['test_ref01']
     test_ref01_data['project_id'] = setup.idmap['project01']
 
-    test_ref01_data = await test_ref01_ent.create(test_ref01_data)
+    test_ref01_data = (await test_ref01_ent.create(test_ref01_data)).data()
     assert(null != test_ref01_data.id)
 
 
@@ -71,7 +71,7 @@ describe('TestEntity', async () => {
     const test_ref01_match: any = {}
     test_ref01_match['project_id'] = setup.idmap['project01']
 
-    const test_ref01_list = await test_ref01_ent.list(test_ref01_match)
+    const test_ref01_list = (await test_ref01_ent.list(test_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(test_ref01_list, { id: test_ref01_data.id })))
 
@@ -79,7 +79,7 @@ describe('TestEntity', async () => {
     // LOAD
     const test_ref01_match_dt0: any = {}
     test_ref01_match_dt0.id = test_ref01_data.id
-    const test_ref01_data_dt0 = await test_ref01_ent.load(test_ref01_match_dt0)
+    const test_ref01_data_dt0 = (await test_ref01_ent.load(test_ref01_match_dt0)).data()
     assert(test_ref01_data_dt0.id === test_ref01_data.id)
 
 

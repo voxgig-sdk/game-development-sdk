@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from gamedevelopment_sdk.utility.voxgig_struct import voxgig_struct as vs
 from gamedevelopment_sdk import GameDevelopmentSDK
-from core import helpers
+from gamedevelopment_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -42,7 +42,7 @@ class TestTestEntity:
         assert len(seen) == 3
 
         # Inbound: streaming active -> yields each item from the feature.
-        from config import make_config
+        from gamedevelopment_sdk.config import make_config
         cfg = make_config()
         if isinstance(cfg.get("feature"), dict) and "streaming" in cfg["feature"]:
             sdk = GameDevelopmentSDK.test(
@@ -70,7 +70,7 @@ class TestTestEntity:
         # without an *_ENTID env override, those IDs hit the live API and 4xx.
         if setup.get("synthetic_only"):
             pytest.skip("live entity test uses synthetic IDs from fixture — "
-                        "set GAMEDEVELOPMENT_TEST_TEST_ENTID JSON to run live")
+                        "set GAME_DEVELOPMENT_TEST_TEST_ENTID JSON to run live")
         client = setup["client"]
 
         # CREATE
@@ -79,7 +79,7 @@ class TestTestEntity:
             vs.getpath(setup["data"], "new.test"), "test_ref01"))
         test_ref01_data["project_id"] = setup["idmap"]["project01"]
 
-        test_ref01_data = helpers.to_map(test_ref01_ent.create(test_ref01_data, None))
+        test_ref01_data = helpers.to_map(runner.entity_data(test_ref01_ent.create(test_ref01_data, None)))
         assert test_ref01_data is not None
         assert test_ref01_data["id"] is not None
 
@@ -101,7 +101,7 @@ class TestTestEntity:
             "id": test_ref01_data["id"],
         }
         test_ref01_data_dt0_loaded = test_ref01_ent.load(test_ref01_match_dt0, None)
-        test_ref01_data_dt0_load_result = helpers.to_map(test_ref01_data_dt0_loaded)
+        test_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(test_ref01_data_dt0_loaded))
         assert test_ref01_data_dt0_load_result is not None
         assert test_ref01_data_dt0_load_result["id"] == test_ref01_data["id"]
 
@@ -136,37 +136,37 @@ def _test_basic_setup(extra):
     # mode is on without a real override, the basic test runs against synthetic
     # IDs from the fixture and 4xx's. We surface this so the test can skip.
     _entid_env_raw = os.environ.get(
-        "GAMEDEVELOPMENT_TEST_TEST_ENTID")
+        "GAME_DEVELOPMENT_TEST_TEST_ENTID")
     _idmap_overridden = _entid_env_raw is not None and _entid_env_raw.strip().startswith("{")
 
     env = runner.env_override({
-        "GAMEDEVELOPMENT_TEST_TEST_ENTID": idmap,
-        "GAMEDEVELOPMENT_TEST_LIVE": "FALSE",
-        "GAMEDEVELOPMENT_TEST_EXPLAIN": "FALSE",
-        "GAMEDEVELOPMENT_APIKEY": "NONE",
+        "GAME_DEVELOPMENT_TEST_TEST_ENTID": idmap,
+        "GAME_DEVELOPMENT_TEST_LIVE": "FALSE",
+        "GAME_DEVELOPMENT_TEST_EXPLAIN": "FALSE",
+        "GAME_DEVELOPMENT_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
-        env.get("GAMEDEVELOPMENT_TEST_TEST_ENTID"))
+        env.get("GAME_DEVELOPMENT_TEST_TEST_ENTID"))
     if idmap_resolved is None:
         idmap_resolved = helpers.to_map(idmap)
 
-    if env.get("GAMEDEVELOPMENT_TEST_LIVE") == "TRUE":
+    if env.get("GAME_DEVELOPMENT_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("GAMEDEVELOPMENT_APIKEY"),
+                "apikey": env.get("GAME_DEVELOPMENT_APIKEY"),
             },
             extra or {},
         ])
         client = GameDevelopmentSDK(helpers.to_map(merged_opts))
 
-    _live = env.get("GAMEDEVELOPMENT_TEST_LIVE") == "TRUE"
+    _live = env.get("GAME_DEVELOPMENT_TEST_LIVE") == "TRUE"
     return {
         "client": client,
         "data": entity_data,
         "idmap": idmap_resolved,
         "env": env,
-        "explain": env.get("GAMEDEVELOPMENT_TEST_EXPLAIN") == "TRUE",
+        "explain": env.get("GAME_DEVELOPMENT_TEST_EXPLAIN") == "TRUE",
         "live": _live,
         "synthetic_only": _live and not _idmap_overridden,
         "now": int(time.time() * 1000),

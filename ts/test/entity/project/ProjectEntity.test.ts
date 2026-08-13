@@ -26,8 +26,8 @@ import {
 describe('ProjectEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when GAMEDEVELOPMENT_TEST_LIVE=TRUE.
-  afterEach(liveDelay('GAMEDEVELOPMENT_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when GAME_DEVELOPMENT_TEST_LIVE=TRUE.
+  afterEach(liveDelay('GAME_DEVELOPMENT_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = GameDevelopmentSDK.test()
@@ -62,14 +62,14 @@ describe('ProjectEntity', async () => {
     const project_ref01_ent = client.Project()
     let project_ref01_data = setup.data.new.project['project_ref01']
 
-    project_ref01_data = await project_ref01_ent.create(project_ref01_data)
+    project_ref01_data = (await project_ref01_ent.create(project_ref01_data)).data()
     assert(null != project_ref01_data.id)
 
 
     // LIST
     const project_ref01_match: any = {}
 
-    const project_ref01_list = await project_ref01_ent.list(project_ref01_match)
+    const project_ref01_list = (await project_ref01_ent.list(project_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(project_ref01_list, { id: project_ref01_data.id })))
 
@@ -78,10 +78,10 @@ describe('ProjectEntity', async () => {
     const project_ref01_data_up0: any = {}
     project_ref01_data_up0.id = project_ref01_data.id
 
-    const project_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-project_ref01_' + setup.now }
+    const project_ref01_markdef_up0 = { name: 'createdAt', value: 'Mark01-project_ref01_' + setup.now }
     ;(project_ref01_data_up0 as any)[project_ref01_markdef_up0.name] = project_ref01_markdef_up0.value
 
-    const project_ref01_resdata_up0 = await project_ref01_ent.update(project_ref01_data_up0)
+    const project_ref01_resdata_up0 = (await project_ref01_ent.update(project_ref01_data_up0)).data()
     assert(project_ref01_resdata_up0.id === project_ref01_data_up0.id)
 
     assert((project_ref01_resdata_up0 as any)[project_ref01_markdef_up0.name] === project_ref01_markdef_up0.value)
@@ -90,7 +90,7 @@ describe('ProjectEntity', async () => {
     // LOAD
     const project_ref01_match_dt0: any = {}
     project_ref01_match_dt0.id = project_ref01_data.id
-    const project_ref01_data_dt0 = await project_ref01_ent.load(project_ref01_match_dt0)
+    const project_ref01_data_dt0 = (await project_ref01_ent.load(project_ref01_match_dt0)).data()
     assert(project_ref01_data_dt0.id === project_ref01_data.id)
 
 
@@ -102,7 +102,7 @@ describe('ProjectEntity', async () => {
     // LIST
     const project_ref01_match_rt0: any = {}
 
-    const project_ref01_list_rt0 = await project_ref01_ent.list(project_ref01_match_rt0)
+    const project_ref01_list_rt0 = (await project_ref01_ent.list(project_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(project_ref01_list_rt0, { id: project_ref01_data.id })))
 

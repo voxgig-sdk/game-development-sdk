@@ -22,6 +22,7 @@ guide: {
       rename: param: "projectId": *"project_id"
       op: create: method: *POST
       op: list: method: *GET
+      op: list: transform: res: *("`body.assets`")|top
     }
     path: "/projects/{projectId}/assets/{assetId}": {
       rename: param: "assetId": *"id"
@@ -42,6 +43,7 @@ guide: {
     path: "/projects/{projectId}/collaborators": {
       rename: param: "projectId": *"project_id"
       op: list: method: *GET
+      op: list: transform: res: *("`body.collaborators`")|top
     }
     path: "/projects/{projectId}/collaborators/{userId}": {
       rename: param: "projectId": *"project_id"
@@ -61,11 +63,13 @@ guide: {
     path: "/projects/{projectId}/builds": {
       rename: param: "projectId": *"project_id"
       op: list: method: *GET
+      op: list: transform: res: *("`body.builds`")|top
     }
     path: "/projects/{projectId}/deployments": {
       rename: param: "projectId": *"project_id"
       op: create: method: *POST
       op: list: method: *GET
+      op: list: transform: res: *("`body.deployments`")|top
     }
     path: "/projects/{projectId}/deployments/{deploymentId}": {
       rename: param: "deploymentId": *"id"
@@ -78,6 +82,7 @@ guide: {
     path: "/projects": {
       op: create: method: *POST
       op: list: method: *GET
+      op: list: transform: res: *("`body.projects`")|top
     }
     path: "/projects/{projectId}": {
       rename: param: "projectId": *"id"
@@ -91,12 +96,15 @@ guide: {
     path: "/projects/{projectId}/tests": {
       rename: param: "projectId": *"project_id"
       op: create: method: *POST
+      op: create: transform: res: *("`body.results`")|top
       op: list: method: *GET
+      op: list: transform: res: *("`body.tests`")|top
     }
     path: "/projects/{projectId}/tests/{testId}": {
       rename: param: "projectId": *"project_id"
       rename: param: "testId": *"id"
       op: load: method: *GET
+      op: load: transform: res: *("`body.results`")|top
     }
   }
 

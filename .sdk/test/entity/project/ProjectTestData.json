@@ -2,47 +2,47 @@
   "existing": {
     "project": {
       "PROJECT00": {
-        "created_at": "s50",
+        "createdAt": "s50",
         "description": "s51",
         "id": "PROJECT00",
         "name": "s53",
         "owner": {},
-        "setting": {},
+        "settings": {},
         "status": "s56",
-        "updated_at": "s57"
+        "updatedAt": "s57"
       },
       "PROJECT01": {
-        "created_at": "sa0",
+        "createdAt": "sa0",
         "description": "sa1",
         "id": "PROJECT01",
         "name": "sa3",
         "owner": {},
-        "setting": {},
+        "settings": {},
         "status": "sa6",
-        "updated_at": "sa7"
+        "updatedAt": "sa7"
       },
       "PROJECT02": {
-        "created_at": "sf0",
+        "createdAt": "sf0",
         "description": "sf1",
         "id": "PROJECT02",
         "name": "sf3",
         "owner": {},
-        "setting": {},
+        "settings": {},
         "status": "sf6",
-        "updated_at": "sf7"
+        "updatedAt": "sf7"
       }
     }
   },
   "new": {
     "project": {
       "project_ref01": {
-        "created_at": "s140",
+        "createdAt": "s140",
         "description": "s141",
         "name": "s143",
         "owner": {},
-        "setting": {},
+        "settings": {},
         "status": "s146",
-        "updated_at": "s147"
+        "updatedAt": "s147"
       }
     }
   }

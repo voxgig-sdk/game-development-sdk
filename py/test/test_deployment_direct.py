@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from gamedevelopment_sdk.utility.voxgig_struct import voxgig_struct as vs
 from gamedevelopment_sdk import GameDevelopmentSDK
-from core import helpers
+from gamedevelopment_sdk.core import helpers
 from test import runner
 
 
@@ -118,16 +118,16 @@ def _deployment_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "GAMEDEVELOPMENT_TEST_DEPLOYMENT_ENTID": {},
-        "GAMEDEVELOPMENT_TEST_LIVE": "FALSE",
-        "GAMEDEVELOPMENT_APIKEY": "NONE",
+        "GAME_DEVELOPMENT_TEST_DEPLOYMENT_ENTID": {},
+        "GAME_DEVELOPMENT_TEST_LIVE": "FALSE",
+        "GAME_DEVELOPMENT_APIKEY": "NONE",
     })
 
-    live = env.get("GAMEDEVELOPMENT_TEST_LIVE") == "TRUE"
+    live = env.get("GAME_DEVELOPMENT_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
-            "apikey": env.get("GAMEDEVELOPMENT_APIKEY"),
+            "apikey": env.get("GAME_DEVELOPMENT_APIKEY"),
         }
         client = GameDevelopmentSDK(merged_opts)
         return {

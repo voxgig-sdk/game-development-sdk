@@ -93,7 +93,7 @@ func TestProjectEntity(t *testing.T) {
 		// The basic flow consumes synthetic IDs from the fixture. In live mode
 		// without an *_ENTID env override, those IDs hit the live API and 4xx.
 		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set GAMEDEVELOPMENT_TEST_PROJECT_ENTID JSON to run live")
+			t.Skip("live entity test uses synthetic IDs from fixture — set GAME_DEVELOPMENT_TEST_PROJECT_ENTID JSON to run live")
 			return
 		}
 		client := setup.client
@@ -107,7 +107,7 @@ func TestProjectEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		projectRef01Data = core.ToMapAny(projectRef01DataResult)
+		projectRef01Data = core.ToMapAny(entityData(projectRef01DataResult))
 		if projectRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -137,7 +137,7 @@ func TestProjectEntity(t *testing.T) {
 			"id": projectRef01Data["id"],
 		}
 
-		projectRef01MarkdefUp0Name := "created_at"
+		projectRef01MarkdefUp0Name := "createdAt"
 		projectRef01MarkdefUp0Value := fmt.Sprintf("Mark01-project_ref01_%d", setup.now)
 		projectRef01DataUp0Up[projectRef01MarkdefUp0Name] = projectRef01MarkdefUp0Value
 
@@ -145,7 +145,7 @@ func TestProjectEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("update failed: %v", err)
 		}
-		projectRef01ResdataUp0 := core.ToMapAny(projectRef01ResdataUp0Result)
+		projectRef01ResdataUp0 := core.ToMapAny(entityData(projectRef01ResdataUp0Result))
 		if projectRef01ResdataUp0 == nil {
 			t.Fatal("expected update result to be a map")
 		}
@@ -164,7 +164,7 @@ func TestProjectEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		projectRef01DataDt0LoadResult := core.ToMapAny(projectRef01DataDt0Loaded)
+		projectRef01DataDt0LoadResult := core.ToMapAny(entityData(projectRef01DataDt0Loaded))
 		if projectRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}
@@ -238,38 +238,38 @@ func projectBasicSetup(extra map[string]any) *entityTestSetup {
 	// Detect ENTID env override before envOverride consumes it. When live
 	// mode is on without a real override, the basic test runs against synthetic
 	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("GAMEDEVELOPMENT_TEST_PROJECT_ENTID")
+	entidEnvRaw := os.Getenv("GAME_DEVELOPMENT_TEST_PROJECT_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"GAMEDEVELOPMENT_TEST_PROJECT_ENTID": idmap,
-		"GAMEDEVELOPMENT_TEST_LIVE":      "FALSE",
-		"GAMEDEVELOPMENT_TEST_EXPLAIN":   "FALSE",
-		"GAMEDEVELOPMENT_APIKEY":         "NONE",
+		"GAME_DEVELOPMENT_TEST_PROJECT_ENTID": idmap,
+		"GAME_DEVELOPMENT_TEST_LIVE":      "FALSE",
+		"GAME_DEVELOPMENT_TEST_EXPLAIN":   "FALSE",
+		"GAME_DEVELOPMENT_APIKEY":         "NONE",
 	})
 
-	idmapResolved := core.ToMapAny(env["GAMEDEVELOPMENT_TEST_PROJECT_ENTID"])
+	idmapResolved := core.ToMapAny(env["GAME_DEVELOPMENT_TEST_PROJECT_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE" {
+	if env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
-				"apikey": env["GAMEDEVELOPMENT_APIKEY"],
+				"apikey": env["GAME_DEVELOPMENT_APIKEY"],
 			},
 			extra,
 		})
 		client = sdk.NewGameDevelopmentSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["GAMEDEVELOPMENT_TEST_LIVE"] == "TRUE"
+	live := env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["GAMEDEVELOPMENT_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["GAME_DEVELOPMENT_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

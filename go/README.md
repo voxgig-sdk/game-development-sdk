@@ -63,7 +63,7 @@ func main() {
     }
 
     // Create a analytics.
-    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example_project_id"}, nil)
+    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example_project_id", "eventName": "example_eventName", "eventType": "example_eventType"}, nil)
     if err != nil {
         panic(err)
     }
@@ -78,12 +78,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-analyticss, err := client.Analytics(nil).List(nil, nil)
+projects, err := client.Project(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = analyticss
+_ = projects
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -147,13 +147,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-analytics, err := client.Analytics(nil).List(
+project, err := client.Project(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(analytics) // the returned mock data
+fmt.Println(project) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -285,10 +285,10 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | Field | Description |
 | --- | --- |
 | `"count"` |  |
-| `"event_name"` |  |
-| `"event_type"` |  |
+| `"eventName"` |  |
+| `"eventType"` |  |
 | `"name"` |  |
-| `"property"` |  |
+| `"properties"` |  |
 | `"timestamp"` |  |
 
 Operations: Create, List.
@@ -299,15 +299,15 @@ API path: `/projects/{projectId}/analytics/events`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
+| `"createdAt"` |  |
 | `"id"` |  |
-| `"mime_type"` |  |
+| `"mimeType"` |  |
 | `"name"` |  |
-| `"project_id"` |  |
+| `"projectId"` |  |
 | `"size"` |  |
-| `"tag"` |  |
+| `"tags"` |  |
 | `"type"` |  |
-| `"updated_at"` |  |
+| `"updatedAt"` |  |
 | `"url"` |  |
 
 Operations: Create, List, Load, Remove.
@@ -330,14 +330,14 @@ API path: `/projects/{projectId}/builds`
 
 | Field | Description |
 | --- | --- |
-| `"added_at"` |  |
+| `"addedAt"` |  |
 | `"email"` |  |
 | `"id"` |  |
-| `"last_active"` |  |
+| `"lastActive"` |  |
 | `"name"` |  |
 | `"role"` |  |
 | `"status"` |  |
-| `"user_id"` |  |
+| `"userId"` |  |
 
 Operations: List, Remove.
 
@@ -358,17 +358,17 @@ API path: `/projects/{projectId}/collaborators`
 
 | Field | Description |
 | --- | --- |
-| `"build_version"` |  |
-| `"completed_at"` |  |
+| `"buildVersion"` |  |
+| `"completedAt"` |  |
 | `"configuration"` |  |
-| `"created_at"` |  |
-| `"deployment_url"` |  |
-| `"download_url"` |  |
+| `"createdAt"` |  |
+| `"deploymentUrl"` |  |
+| `"downloadUrl"` |  |
 | `"environment"` |  |
 | `"id"` |  |
 | `"platform"` |  |
-| `"project_id"` |  |
-| `"release_note"` |  |
+| `"projectId"` |  |
+| `"releaseNotes"` |  |
 | `"size"` |  |
 | `"status"` |  |
 | `"version"` |  |
@@ -381,14 +381,14 @@ API path: `/projects/{projectId}/deployments`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
+| `"createdAt"` |  |
 | `"description"` |  |
 | `"id"` |  |
 | `"name"` |  |
 | `"owner"` |  |
-| `"setting"` |  |
+| `"settings"` |  |
 | `"status"` |  |
-| `"updated_at"` |  |
+| `"updatedAt"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -398,16 +398,21 @@ API path: `/projects`
 
 | Field | Description |
 | --- | --- |
-| `"completed_at"` |  |
+| `"completedAt"` |  |
+| `"duration"` |  |
 | `"environment"` |  |
+| `"failed"` |  |
 | `"id"` |  |
 | `"name"` |  |
+| `"passed"` |  |
 | `"platform"` |  |
-| `"project_id"` |  |
-| `"result"` |  |
-| `"started_at"` |  |
+| `"projectId"` |  |
+| `"results"` |  |
+| `"skipped"` |  |
+| `"startedAt"` |  |
 | `"status"` |  |
-| `"test_suite"` |  |
+| `"testSuite"` |  |
+| `"totalTests"` |  |
 
 Operations: Create, List, Load.
 
@@ -434,10 +439,10 @@ Create an instance: `analytics := client.Analytics(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `event_name` | `string` |  |
-| `event_type` | `string` |  |
+| `eventName` | `string` |  |
+| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `property` | `map[string]any` |  |
+| `properties` | `map[string]any` |  |
 | `timestamp` | `string` |  |
 
 #### Example: List
@@ -455,6 +460,8 @@ fmt.Println(analyticss) // the array of records
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "eventName": "example_eventName",
+    "eventType": "example_eventType",
 }, nil)
 if err != nil {
     panic(err)
@@ -480,15 +487,15 @@ Create an instance: `asset := client.Asset(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `id` | `string` |  |
-| `mime_type` | `string` |  |
+| `mimeType` | `string` |  |
 | `name` | `string` |  |
-| `project_id` | `string` |  |
+| `projectId` | `string` |  |
 | `size` | `int` |  |
-| `tag` | `[]any` |  |
+| `tags` | `[]any` |  |
 | `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 | `url` | `string` |  |
 
 #### Example: Load
@@ -547,6 +554,9 @@ Create an instance: `build := client.Build(nil)`
 ```go
 result, err := client.Build(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "configuration": "example_configuration",
+    "platform": "example_platform",
+    "version": "example_version",
 }, nil)
 if err != nil {
     panic(err)
@@ -570,14 +580,14 @@ Create an instance: `collaboration := client.Collaboration(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `added_at` | `string` |  |
+| `addedAt` | `string` |  |
 | `email` | `string` |  |
 | `id` | `string` |  |
-| `last_active` | `string` |  |
+| `lastActive` | `string` |  |
 | `name` | `string` |  |
 | `role` | `string` |  |
 | `status` | `string` |  |
-| `user_id` | `string` |  |
+| `userId` | `string` |  |
 
 #### Example: List
 
@@ -612,6 +622,8 @@ Create an instance: `collaborator := client.Collaborator(nil)`
 ```go
 result, err := client.Collaborator(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "email": "example_email",
+    "role": "example_role",
 }, nil)
 if err != nil {
     panic(err)
@@ -636,17 +648,17 @@ Create an instance: `deployment := client.Deployment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `build_version` | `string` |  |
-| `completed_at` | `string` |  |
+| `buildVersion` | `string` |  |
+| `completedAt` | `string` |  |
 | `configuration` | `string` |  |
-| `created_at` | `string` |  |
-| `deployment_url` | `string` |  |
-| `download_url` | `string` |  |
+| `createdAt` | `string` |  |
+| `deploymentUrl` | `string` |  |
+| `downloadUrl` | `string` |  |
 | `environment` | `string` |  |
 | `id` | `string` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `release_note` | `string` |  |
+| `projectId` | `string` |  |
+| `releaseNotes` | `string` |  |
 | `size` | `int` |  |
 | `status` | `string` |  |
 | `version` | `string` |  |
@@ -702,14 +714,14 @@ Create an instance: `project := client.Project(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
+| `createdAt` | `string` |  |
 | `description` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
 | `owner` | `map[string]any` |  |
-| `setting` | `map[string]any` |  |
+| `settings` | `map[string]any` |  |
 | `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `updatedAt` | `string` |  |
 
 #### Example: Load
 
@@ -759,16 +771,21 @@ Create an instance: `test := client.Test(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `completed_at` | `string` |  |
+| `completedAt` | `string` |  |
+| `duration` | `float64` |  |
 | `environment` | `string` |  |
+| `failed` | `int` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `passed` | `int` |  |
 | `platform` | `string` |  |
-| `project_id` | `string` |  |
-| `result` | `map[string]any` |  |
-| `started_at` | `string` |  |
+| `projectId` | `string` |  |
+| `results` | `map[string]any` |  |
+| `skipped` | `int` |  |
+| `startedAt` | `string` |  |
 | `status` | `string` |  |
-| `test_suite` | `string` |  |
+| `testSuite` | `string` |  |
+| `totalTests` | `int` |  |
 
 #### Example: Load
 
@@ -795,6 +812,10 @@ fmt.Println(tests) // the array of records
 ```go
 result, err := client.Test(nil).Create(map[string]any{
     "project_id": "example_project_id",
+    "environment": "example_environment",
+    "name": "example_name",
+    "platform": "example_platform",
+    "testSuite": "example_testSuite",
 }, nil)
 if err != nil {
     panic(err)
@@ -876,11 +897,11 @@ Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-analytics := client.Analytics(nil)
-analytics.List(nil, nil)
+project := client.Project(nil)
+project.List(nil, nil)
 
-// analytics.Data() now returns the analytics data from the last list
-// analytics.Match() returns the last match criteria
+// project.Data() now returns the project data from the last list
+// project.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

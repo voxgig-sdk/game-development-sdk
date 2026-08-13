@@ -49,14 +49,14 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'event_name',
+              'name' => 'eventName',
               'req' => true,
               'type' => '`$STRING`',
               'index$' => 1,
             ],
             [
               'active' => true,
-              'name' => 'event_type',
+              'name' => 'eventType',
               'req' => true,
               'type' => '`$STRING`',
               'index$' => 2,
@@ -70,7 +70,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'property',
+              'name' => 'properties',
               'req' => false,
               'type' => '`$OBJECT`',
               'index$' => 4,
@@ -104,6 +104,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/analytics/events',
                   'parts' => [
@@ -177,6 +178,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/analytics',
                   'parts' => [
@@ -219,7 +221,7 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'created_at',
+              'name' => 'createdAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 0,
@@ -233,7 +235,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'mime_type',
+              'name' => 'mimeType',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 2,
@@ -247,7 +249,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'project_id',
+              'name' => 'projectId',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 4,
@@ -261,7 +263,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'tag',
+              'name' => 'tags',
               'req' => false,
               'type' => '`$ARRAY`',
               'index$' => 6,
@@ -275,7 +277,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'updated_at',
+              'name' => 'updatedAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 8,
@@ -309,6 +311,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/assets',
                   'parts' => [
@@ -373,6 +376,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/assets',
                   'parts' => [
@@ -394,7 +398,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.assets`',
                   ],
                   'index$' => 0,
                 ],
@@ -429,6 +433,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/assets/{assetId}',
                   'parts' => [
@@ -486,6 +491,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}/assets/{assetId}',
                   'parts' => [
@@ -569,6 +575,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/builds',
                   'parts' => [
@@ -608,7 +615,7 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'added_at',
+              'name' => 'addedAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 0,
@@ -629,7 +636,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'last_active',
+              'name' => 'lastActive',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 3,
@@ -657,7 +664,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'user_id',
+              'name' => 'userId',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 7,
@@ -684,6 +691,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/collaborators',
                   'parts' => [
@@ -703,7 +711,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.collaborators`',
                   ],
                   'index$' => 0,
                 ],
@@ -738,6 +746,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}/collaborators/{userId}',
                   'parts' => [
@@ -818,6 +827,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/collaborators',
                   'parts' => [
@@ -857,7 +867,7 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'build_version',
+              'name' => 'buildVersion',
               'op' => [
                 'create' => [
                   'req' => true,
@@ -870,7 +880,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'completed_at',
+              'name' => 'completedAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 1,
@@ -884,21 +894,21 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'created_at',
+              'name' => 'createdAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 3,
             ],
             [
               'active' => true,
-              'name' => 'deployment_url',
+              'name' => 'deploymentUrl',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 4,
             ],
             [
               'active' => true,
-              'name' => 'download_url',
+              'name' => 'downloadUrl',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 5,
@@ -938,14 +948,14 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'project_id',
+              'name' => 'projectId',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 9,
             ],
             [
               'active' => true,
-              'name' => 'release_note',
+              'name' => 'releaseNotes',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 10,
@@ -993,6 +1003,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/deployments',
                   'parts' => [
@@ -1048,6 +1059,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/deployments',
                   'parts' => [
@@ -1068,7 +1080,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.deployments`',
                   ],
                   'index$' => 0,
                 ],
@@ -1087,6 +1099,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/builds',
                   'parts' => [
@@ -1106,7 +1119,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.builds`',
                   ],
                   'index$' => 1,
                 ],
@@ -1141,6 +1154,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/deployments/{deploymentId}',
                   'parts' => [
@@ -1183,7 +1197,7 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'created_at',
+              'name' => 'createdAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 0,
@@ -1224,7 +1238,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'setting',
+              'name' => 'settings',
               'req' => false,
               'type' => '`$OBJECT`',
               'index$' => 5,
@@ -1238,7 +1252,7 @@ class GameDevelopmentConfig
             ],
             [
               'active' => true,
-              'name' => 'updated_at',
+              'name' => 'updatedAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 7,
@@ -1253,6 +1267,7 @@ class GameDevelopmentConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects',
                   'parts' => [
@@ -1304,6 +1319,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects',
                   'parts' => [
@@ -1318,7 +1334,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.projects`',
                   ],
                   'index$' => 0,
                 ],
@@ -1344,6 +1360,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}',
                   'parts' => [
@@ -1388,6 +1405,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}',
                   'parts' => [
@@ -1432,6 +1450,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'PUT',
                   'orig' => '/projects/{projectId}',
                   'parts' => [
@@ -1466,97 +1485,132 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'completed_at',
+              'name' => 'completedAt',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 0,
             ],
             [
               'active' => true,
+              'name' => 'duration',
+              'req' => false,
+              'type' => '`$NUMBER`',
+              'index$' => 1,
+            ],
+            [
+              'active' => true,
               'name' => 'environment',
               'op' => [
-                'create' => [
-                  'req' => true,
+                'list' => [
+                  'req' => false,
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => false,
+              'req' => true,
               'type' => '`$STRING`',
-              'index$' => 1,
+              'index$' => 2,
+            ],
+            [
+              'active' => true,
+              'name' => 'failed',
+              'req' => false,
+              'type' => '`$INTEGER`',
+              'index$' => 3,
             ],
             [
               'active' => true,
               'name' => 'id',
               'req' => false,
               'type' => '`$STRING`',
-              'index$' => 2,
+              'index$' => 4,
             ],
             [
               'active' => true,
               'name' => 'name',
               'op' => [
-                'create' => [
-                  'req' => true,
+                'list' => [
+                  'req' => false,
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => false,
-              'type' => '`$STRING`',
-              'index$' => 3,
-            ],
-            [
-              'active' => true,
-              'name' => 'platform',
-              'op' => [
-                'create' => [
-                  'req' => true,
-                  'type' => '`$STRING`',
-                ],
-              ],
-              'req' => false,
-              'type' => '`$STRING`',
-              'index$' => 4,
-            ],
-            [
-              'active' => true,
-              'name' => 'project_id',
-              'req' => false,
+              'req' => true,
               'type' => '`$STRING`',
               'index$' => 5,
             ],
             [
               'active' => true,
-              'name' => 'result',
+              'name' => 'passed',
               'req' => false,
-              'type' => '`$OBJECT`',
+              'type' => '`$INTEGER`',
               'index$' => 6,
             ],
             [
               'active' => true,
-              'name' => 'started_at',
-              'req' => false,
+              'name' => 'platform',
+              'op' => [
+                'list' => [
+                  'req' => false,
+                  'type' => '`$STRING`',
+                ],
+              ],
+              'req' => true,
               'type' => '`$STRING`',
               'index$' => 7,
             ],
             [
               'active' => true,
-              'name' => 'status',
+              'name' => 'projectId',
               'req' => false,
               'type' => '`$STRING`',
               'index$' => 8,
             ],
             [
               'active' => true,
-              'name' => 'test_suite',
+              'name' => 'results',
+              'req' => false,
+              'type' => '`$OBJECT`',
+              'index$' => 9,
+            ],
+            [
+              'active' => true,
+              'name' => 'skipped',
+              'req' => false,
+              'type' => '`$INTEGER`',
+              'index$' => 10,
+            ],
+            [
+              'active' => true,
+              'name' => 'startedAt',
+              'req' => false,
+              'type' => '`$STRING`',
+              'index$' => 11,
+            ],
+            [
+              'active' => true,
+              'name' => 'status',
+              'req' => false,
+              'type' => '`$STRING`',
+              'index$' => 12,
+            ],
+            [
+              'active' => true,
+              'name' => 'testSuite',
               'op' => [
-                'create' => [
-                  'req' => true,
+                'list' => [
+                  'req' => false,
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => false,
+              'req' => true,
               'type' => '`$STRING`',
-              'index$' => 9,
+              'index$' => 13,
+            ],
+            [
+              'active' => true,
+              'name' => 'totalTests',
+              'req' => false,
+              'type' => '`$INTEGER`',
+              'index$' => 14,
             ],
           ],
           'name' => 'test',
@@ -1580,6 +1634,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/tests',
                   'parts' => [
@@ -1599,7 +1654,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.results`',
                   ],
                   'index$' => 0,
                 ],
@@ -1635,6 +1690,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/tests',
                   'parts' => [
@@ -1655,7 +1711,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.tests`',
                   ],
                   'index$' => 0,
                 ],
@@ -1690,6 +1746,7 @@ class GameDevelopmentConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/tests/{testId}',
                   'parts' => [
@@ -1712,7 +1769,7 @@ class GameDevelopmentConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.results`',
                   ],
                   'index$' => 0,
                 ],
