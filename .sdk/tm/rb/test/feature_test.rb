@@ -15,7 +15,7 @@ require_relative "../GameDevelopment_sdk"
 module GameDevelopmentFeatureHarness
   # True when this SDK was generated with the named feature.
   def self.has_feature?(name)
-    f = GameDevelopmentConfig.make_config["feature"]
+    f = GameDevelopmentConfig.shared_config["feature"]
     f.is_a?(Hash) && !f[name].nil?
   end
 

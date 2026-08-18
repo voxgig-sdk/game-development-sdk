@@ -40,7 +40,7 @@ class GameDevelopmentSDK
         $utility = new GameDevelopmentUtility();
         $this->_utility = $utility;
 
-        $config = GameDevelopmentConfig::make_config();
+        $config = GameDevelopmentConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

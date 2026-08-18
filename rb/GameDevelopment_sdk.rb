@@ -28,7 +28,7 @@ class GameDevelopmentSDK
     utility = GameDevelopmentUtility.new
     @_utility = utility
 
-    config = GameDevelopmentConfig.make_config
+    config = GameDevelopmentConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

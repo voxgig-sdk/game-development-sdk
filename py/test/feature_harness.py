@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from gamedevelopment_sdk.config import make_config
+from gamedevelopment_sdk.config import shared_config
 from gamedevelopment_sdk.features import _make_feature
 from gamedevelopment_sdk.core.control import GameDevelopmentControl
 from gamedevelopment_sdk.core.error import GameDevelopmentError
@@ -24,7 +24,7 @@ from gamedevelopment_sdk.core.spec import GameDevelopmentSpec
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 
