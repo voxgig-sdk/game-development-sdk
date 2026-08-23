@@ -9,7 +9,7 @@ The API is exposed as capitalised, semantic **Entities** — e.g.
 instead of raw URL paths and query parameters. This keeps the surface
 predictable and low-friction for both humans and AI agents.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go`, `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb` — see
 > the [top-level README](../README.md).
 
 
@@ -355,7 +355,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `mimeType` |  |
 | `name` |  |
 | `projectId` |  |
-| `size` |  |
+| `size` | File size in bytes |
 | `tags` |  |
 | `type` |  |
 | `updatedAt` |  |
@@ -420,7 +420,7 @@ API path: `/projects/{projectId}/collaborators`
 | `platform` |  |
 | `projectId` |  |
 | `releaseNotes` |  |
-| `size` |  |
+| `size` | Build size in bytes |
 | `status` |  |
 | `version` |  |
 
@@ -433,12 +433,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `createdAt` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
+| `description` | Detailed description of the project |
+| `id` | Unique identifier for the project |
+| `name` | Name of the game project |
 | `owner` |  |
 | `settings` |  |
-| `status` |  |
+| `status` | Current status of the project |
 | `updatedAt` |  |
 
 Operations: create, list, load, remove, update.
@@ -450,7 +450,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `completedAt` |  |
-| `duration` |  |
+| `duration` | Test duration in seconds |
 | `environment` |  |
 | `failed` |  |
 | `id` |  |
@@ -535,7 +535,7 @@ Create an instance: `const asset = client.Asset()`
 | `mimeType` | `string` |  |
 | `name` | `string` |  |
 | `projectId` | `string` |  |
-| `size` | `number` |  |
+| `size` | `number` | File size in bytes |
 | `tags` | `any[]` |  |
 | `type` | `string` |  |
 | `updatedAt` | `string` |  |
@@ -678,7 +678,7 @@ Create an instance: `const deployment = client.Deployment()`
 | `platform` | `string` |  |
 | `projectId` | `string` |  |
 | `releaseNotes` | `string` |  |
-| `size` | `number` |  |
+| `size` | `number` | Build size in bytes |
 | `status` | `string` |  |
 | `version` | `string` |  |
 
@@ -722,12 +722,12 @@ Create an instance: `const project = client.Project()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `description` | `string` | Detailed description of the project |
+| `id` | `string` | Unique identifier for the project |
+| `name` | `string` | Name of the game project |
 | `owner` | `Record<string, any>` |  |
 | `settings` | `Record<string, any>` |  |
-| `status` | `string` |  |
+| `status` | `string` | Current status of the project |
 | `updatedAt` | `string` |  |
 
 #### Example: Load
@@ -767,7 +767,7 @@ Create an instance: `const test = client.Test()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `string` |  |
-| `duration` | `number` |  |
+| `duration` | `number` | Test duration in seconds |
 | `environment` | `string` |  |
 | `failed` | `number` |  |
 | `id` | `string` |  |

@@ -307,7 +307,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `mimeType` |  |
 | `name` |  |
 | `projectId` |  |
-| `size` |  |
+| `size` | File size in bytes |
 | `tags` |  |
 | `type` |  |
 | `updatedAt` |  |
@@ -372,7 +372,7 @@ API path: `/projects/{projectId}/collaborators`
 | `platform` |  |
 | `projectId` |  |
 | `releaseNotes` |  |
-| `size` |  |
+| `size` | Build size in bytes |
 | `status` |  |
 | `version` |  |
 
@@ -385,12 +385,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `createdAt` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
+| `description` | Detailed description of the project |
+| `id` | Unique identifier for the project |
+| `name` | Name of the game project |
 | `owner` |  |
 | `settings` |  |
-| `status` |  |
+| `status` | Current status of the project |
 | `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -402,7 +402,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `completedAt` |  |
-| `duration` |  |
+| `duration` | Test duration in seconds |
 | `environment` |  |
 | `failed` |  |
 | `id` |  |
@@ -488,7 +488,7 @@ Create an instance: `$asset = $client->Asset();`
 | `mimeType` | `string` |  |
 | `name` | `string` |  |
 | `projectId` | `string` |  |
-| `size` | `int` |  |
+| `size` | `int` | File size in bytes |
 | `tags` | `array` |  |
 | `type` | `string` |  |
 | `updatedAt` | `string` |  |
@@ -634,7 +634,7 @@ Create an instance: `$deployment = $client->Deployment();`
 | `platform` | `string` |  |
 | `projectId` | `string` |  |
 | `releaseNotes` | `string` |  |
-| `size` | `int` |  |
+| `size` | `int` | Build size in bytes |
 | `status` | `string` |  |
 | `version` | `string` |  |
 
@@ -680,12 +680,12 @@ Create an instance: `$project = $client->Project();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `description` | `string` | Detailed description of the project |
+| `id` | `string` | Unique identifier for the project |
+| `name` | `string` | Name of the game project |
 | `owner` | `array` |  |
 | `settings` | `array` |  |
-| `status` | `string` |  |
+| `status` | `string` | Current status of the project |
 | `updatedAt` | `string` |  |
 
 #### Example: Load
@@ -727,7 +727,7 @@ Create an instance: `$test = $client->Test_();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `string` |  |
-| `duration` | `float` |  |
+| `duration` | `float` | Test duration in seconds |
 | `environment` | `string` |  |
 | `failed` | `int` |  |
 | `id` | `string` |  |

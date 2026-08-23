@@ -191,7 +191,7 @@ asset = client.Asset()
 | `mimeType` | `str` | No |  |
 | `name` | `str` | No |  |
 | `projectId` | `str` | No |  |
-| `size` | `int` | No |  |
+| `size` | `int` | No | File size in bytes |
 | `tags` | `list` | No |  |
 | `type` | `str` | No |  |
 | `updatedAt` | `str` | No |  |
@@ -467,7 +467,7 @@ deployment = client.Deployment()
 | `platform` | `str` | No |  |
 | `projectId` | `str` | No |  |
 | `releaseNotes` | `str` | No |  |
-| `size` | `int` | No |  |
+| `size` | `int` | No | Build size in bytes |
 | `status` | `str` | No |  |
 | `version` | `str` | No |  |
 
@@ -560,12 +560,12 @@ project = client.Project()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `createdAt` | `str` | No |  |
-| `description` | `str` | No |  |
-| `id` | `str` | No |  |
-| `name` | `str` | No |  |
+| `description` | `str` | No | Detailed description of the project |
+| `id` | `str` | No | Unique identifier for the project |
+| `name` | `str` | No | Name of the game project |
 | `owner` | `dict` | No |  |
 | `settings` | `dict` | No |  |
-| `status` | `str` | No |  |
+| `status` | `str` | No | Current status of the project |
 | `updatedAt` | `str` | No |  |
 
 ### Field Usage by Operation
@@ -669,7 +669,7 @@ test = client.Test()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `completedAt` | `str` | No |  |
-| `duration` | `float` | No |  |
+| `duration` | `float` | No | Test duration in seconds |
 | `environment` | `str` | Yes |  |
 | `failed` | `int` | No |  |
 | `id` | `str` | No |  |

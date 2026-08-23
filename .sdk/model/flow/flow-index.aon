@@ -1,0 +1,10 @@
+# Flows
+
+@"BasicAnalyticsFlow.aon"
+@"BasicAssetFlow.aon"
+@"BasicBuildFlow.aon"
+@"BasicCollaborationFlow.aon"
+@"BasicCollaboratorFlow.aon"
+@"BasicDeploymentFlow.aon"
+@"BasicProjectFlow.aon"
+@"BasicTestFlow.aon"

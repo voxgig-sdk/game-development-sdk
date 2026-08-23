@@ -196,7 +196,7 @@ asset = client.Asset
 | `mimeType` | `String` | No |  |
 | `name` | `String` | No |  |
 | `projectId` | `String` | No |  |
-| `size` | `Integer` | No |  |
+| `size` | `Integer` | No | File size in bytes |
 | `tags` | `Array` | No |  |
 | `type` | `String` | No |  |
 | `updatedAt` | `String` | No |  |
@@ -472,7 +472,7 @@ deployment = client.Deployment
 | `platform` | `String` | No |  |
 | `projectId` | `String` | No |  |
 | `releaseNotes` | `String` | No |  |
-| `size` | `Integer` | No |  |
+| `size` | `Integer` | No | Build size in bytes |
 | `status` | `String` | No |  |
 | `version` | `String` | No |  |
 
@@ -564,12 +564,12 @@ project = client.Project
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `createdAt` | `String` | No |  |
-| `description` | `String` | No |  |
-| `id` | `String` | No |  |
-| `name` | `String` | No |  |
+| `description` | `String` | No | Detailed description of the project |
+| `id` | `String` | No | Unique identifier for the project |
+| `name` | `String` | No | Name of the game project |
 | `owner` | `Hash` | No |  |
 | `settings` | `Hash` | No |  |
-| `status` | `String` | No |  |
+| `status` | `String` | No | Current status of the project |
 | `updatedAt` | `String` | No |  |
 
 ### Field Usage by Operation
@@ -672,7 +672,7 @@ test = client.Test
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `completedAt` | `String` | No |  |
-| `duration` | `Float` | No |  |
+| `duration` | `Float` | No | Test duration in seconds |
 | `environment` | `String` | Yes |  |
 | `failed` | `Integer` | No |  |
 | `id` | `String` | No |  |

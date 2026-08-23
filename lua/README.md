@@ -286,7 +286,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `mimeType` |  |
 | `name` |  |
 | `projectId` |  |
-| `size` |  |
+| `size` | File size in bytes |
 | `tags` |  |
 | `type` |  |
 | `updatedAt` |  |
@@ -351,7 +351,7 @@ API path: `/projects/{projectId}/collaborators`
 | `platform` |  |
 | `projectId` |  |
 | `releaseNotes` |  |
-| `size` |  |
+| `size` | Build size in bytes |
 | `status` |  |
 | `version` |  |
 
@@ -364,12 +364,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `createdAt` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
+| `description` | Detailed description of the project |
+| `id` | Unique identifier for the project |
+| `name` | Name of the game project |
 | `owner` |  |
 | `settings` |  |
-| `status` |  |
+| `status` | Current status of the project |
 | `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -381,7 +381,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `completedAt` |  |
-| `duration` |  |
+| `duration` | Test duration in seconds |
 | `environment` |  |
 | `failed` |  |
 | `id` |  |
@@ -466,7 +466,7 @@ Create an instance: `local asset = client:Asset(nil)`
 | `mimeType` | `string` |  |
 | `name` | `string` |  |
 | `projectId` | `string` |  |
-| `size` | `number` |  |
+| `size` | `number` | File size in bytes |
 | `tags` | `table` |  |
 | `type` | `string` |  |
 | `updatedAt` | `string` |  |
@@ -609,7 +609,7 @@ Create an instance: `local deployment = client:Deployment(nil)`
 | `platform` | `string` |  |
 | `projectId` | `string` |  |
 | `releaseNotes` | `string` |  |
-| `size` | `number` |  |
+| `size` | `number` | Build size in bytes |
 | `status` | `string` |  |
 | `version` | `string` |  |
 
@@ -653,12 +653,12 @@ Create an instance: `local project = client:Project(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `description` | `string` | Detailed description of the project |
+| `id` | `string` | Unique identifier for the project |
+| `name` | `string` | Name of the game project |
 | `owner` | `table` |  |
 | `settings` | `table` |  |
-| `status` | `string` |  |
+| `status` | `string` | Current status of the project |
 | `updatedAt` | `string` |  |
 
 #### Example: Load
@@ -698,7 +698,7 @@ Create an instance: `local test = client:Test(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `string` |  |
-| `duration` | `number` |  |
+| `duration` | `number` | Test duration in seconds |
 | `environment` | `string` |  |
 | `failed` | `number` |  |
 | `id` | `string` |  |

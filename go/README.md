@@ -6,7 +6,7 @@ The Golang SDK for the GameDevelopment API — an entity-oriented client using s
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Analytics(nil)` — each with the same small set of operations (`List`, `Load`, `Create`, `Update`, `Remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -304,7 +304,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `"mimeType"` |  |
 | `"name"` |  |
 | `"projectId"` |  |
-| `"size"` |  |
+| `"size"` | File size in bytes |
 | `"tags"` |  |
 | `"type"` |  |
 | `"updatedAt"` |  |
@@ -369,7 +369,7 @@ API path: `/projects/{projectId}/collaborators`
 | `"platform"` |  |
 | `"projectId"` |  |
 | `"releaseNotes"` |  |
-| `"size"` |  |
+| `"size"` | Build size in bytes |
 | `"status"` |  |
 | `"version"` |  |
 
@@ -382,12 +382,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `"createdAt"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"name"` |  |
+| `"description"` | Detailed description of the project |
+| `"id"` | Unique identifier for the project |
+| `"name"` | Name of the game project |
 | `"owner"` |  |
 | `"settings"` |  |
-| `"status"` |  |
+| `"status"` | Current status of the project |
 | `"updatedAt"` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -399,7 +399,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `"completedAt"` |  |
-| `"duration"` |  |
+| `"duration"` | Test duration in seconds |
 | `"environment"` |  |
 | `"failed"` |  |
 | `"id"` |  |
@@ -492,7 +492,7 @@ Create an instance: `asset := client.Asset(nil)`
 | `mimeType` | `string` |  |
 | `name` | `string` |  |
 | `projectId` | `string` |  |
-| `size` | `int` |  |
+| `size` | `int` | File size in bytes |
 | `tags` | `[]any` |  |
 | `type` | `string` |  |
 | `updatedAt` | `string` |  |
@@ -659,7 +659,7 @@ Create an instance: `deployment := client.Deployment(nil)`
 | `platform` | `string` |  |
 | `projectId` | `string` |  |
 | `releaseNotes` | `string` |  |
-| `size` | `int` |  |
+| `size` | `int` | Build size in bytes |
 | `status` | `string` |  |
 | `version` | `string` |  |
 
@@ -715,12 +715,12 @@ Create an instance: `project := client.Project(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
+| `description` | `string` | Detailed description of the project |
+| `id` | `string` | Unique identifier for the project |
+| `name` | `string` | Name of the game project |
 | `owner` | `map[string]any` |  |
 | `settings` | `map[string]any` |  |
-| `status` | `string` |  |
+| `status` | `string` | Current status of the project |
 | `updatedAt` | `string` |  |
 
 #### Example: Load
@@ -772,7 +772,7 @@ Create an instance: `test := client.Test(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `string` |  |
-| `duration` | `float64` |  |
+| `duration` | `float64` | Test duration in seconds |
 | `environment` | `string` |  |
 | `failed` | `int` |  |
 | `id` | `string` |  |

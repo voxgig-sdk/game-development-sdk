@@ -297,7 +297,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `mimeType` |  |
 | `name` |  |
 | `projectId` |  |
-| `size` |  |
+| `size` | File size in bytes |
 | `tags` |  |
 | `type` |  |
 | `updatedAt` |  |
@@ -362,7 +362,7 @@ API path: `/projects/{projectId}/collaborators`
 | `platform` |  |
 | `projectId` |  |
 | `releaseNotes` |  |
-| `size` |  |
+| `size` | Build size in bytes |
 | `status` |  |
 | `version` |  |
 
@@ -375,12 +375,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `createdAt` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
+| `description` | Detailed description of the project |
+| `id` | Unique identifier for the project |
+| `name` | Name of the game project |
 | `owner` |  |
 | `settings` |  |
-| `status` |  |
+| `status` | Current status of the project |
 | `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -392,7 +392,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `completedAt` |  |
-| `duration` |  |
+| `duration` | Test duration in seconds |
 | `environment` |  |
 | `failed` |  |
 | `id` |  |
@@ -478,7 +478,7 @@ Create an instance: `asset = client.Asset`
 | `mimeType` | `String` |  |
 | `name` | `String` |  |
 | `projectId` | `String` |  |
-| `size` | `Integer` |  |
+| `size` | `Integer` | File size in bytes |
 | `tags` | `Array` |  |
 | `type` | `String` |  |
 | `updatedAt` | `String` |  |
@@ -624,7 +624,7 @@ Create an instance: `deployment = client.Deployment`
 | `platform` | `String` |  |
 | `projectId` | `String` |  |
 | `releaseNotes` | `String` |  |
-| `size` | `Integer` |  |
+| `size` | `Integer` | Build size in bytes |
 | `status` | `String` |  |
 | `version` | `String` |  |
 
@@ -670,12 +670,12 @@ Create an instance: `project = client.Project`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `String` |  |
-| `description` | `String` |  |
-| `id` | `String` |  |
-| `name` | `String` |  |
+| `description` | `String` | Detailed description of the project |
+| `id` | `String` | Unique identifier for the project |
+| `name` | `String` | Name of the game project |
 | `owner` | `Hash` |  |
 | `settings` | `Hash` |  |
-| `status` | `String` |  |
+| `status` | `String` | Current status of the project |
 | `updatedAt` | `String` |  |
 
 #### Example: Load
@@ -717,7 +717,7 @@ Create an instance: `test = client.Test`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `String` |  |
-| `duration` | `Float` |  |
+| `duration` | `Float` | Test duration in seconds |
 | `environment` | `String` |  |
 | `failed` | `Integer` |  |
 | `id` | `String` |  |

@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'GameDevelopment',
+        slug: "game-development",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -248,6 +259,7 @@ class Config {
         },
         {
           "name": "size",
+          "short": "File size in bytes",
           "type": "`$INTEGER`"
         },
         {
@@ -822,6 +834,7 @@ class Config {
         },
         {
           "name": "size",
+          "short": "Build size in bytes",
           "type": "`$INTEGER`"
         },
         {
@@ -1029,10 +1042,12 @@ class Config {
         },
         {
           "name": "description",
+          "short": "Detailed description of the project",
           "type": "`$STRING`"
         },
         {
           "name": "id",
+          "short": "Unique identifier for the project",
           "type": "`$STRING`"
         },
         {
@@ -1043,6 +1058,7 @@ class Config {
               "type": "`$STRING`"
             }
           },
+          "short": "Name of the game project",
           "type": "`$STRING`"
         },
         {
@@ -1055,6 +1071,7 @@ class Config {
         },
         {
           "name": "status",
+          "short": "Current status of the project",
           "type": "`$STRING`"
         },
         {
@@ -1266,6 +1283,7 @@ class Config {
         },
         {
           "name": "duration",
+          "short": "Test duration in seconds",
           "type": "`$NUMBER`"
         },
         {

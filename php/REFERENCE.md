@@ -195,7 +195,7 @@ $asset = $client->Asset();
 | `mimeType` | `string` | No |  |
 | `name` | `string` | No |  |
 | `projectId` | `string` | No |  |
-| `size` | `int` | No |  |
+| `size` | `int` | No | File size in bytes |
 | `tags` | `array` | No |  |
 | `type` | `string` | No |  |
 | `updatedAt` | `string` | No |  |
@@ -471,7 +471,7 @@ $deployment = $client->Deployment();
 | `platform` | `string` | No |  |
 | `projectId` | `string` | No |  |
 | `releaseNotes` | `string` | No |  |
-| `size` | `int` | No |  |
+| `size` | `int` | No | Build size in bytes |
 | `status` | `string` | No |  |
 | `version` | `string` | No |  |
 
@@ -563,12 +563,12 @@ $project = $client->Project();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `createdAt` | `string` | No |  |
-| `description` | `string` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
+| `description` | `string` | No | Detailed description of the project |
+| `id` | `string` | No | Unique identifier for the project |
+| `name` | `string` | No | Name of the game project |
 | `owner` | `array` | No |  |
 | `settings` | `array` | No |  |
-| `status` | `string` | No |  |
+| `status` | `string` | No | Current status of the project |
 | `updatedAt` | `string` | No |  |
 
 ### Field Usage by Operation
@@ -671,7 +671,7 @@ $test = $client->Test_();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `completedAt` | `string` | No |  |
-| `duration` | `float` | No |  |
+| `duration` | `float` | No | Test duration in seconds |
 | `environment` | `string` | Yes |  |
 | `failed` | `int` | No |  |
 | `id` | `string` | No |  |

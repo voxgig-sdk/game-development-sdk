@@ -300,7 +300,7 @@ API path: `/projects/{projectId}/analytics/events`
 | `mimeType` |  |
 | `name` |  |
 | `projectId` |  |
-| `size` |  |
+| `size` | File size in bytes |
 | `tags` |  |
 | `type` |  |
 | `updatedAt` |  |
@@ -365,7 +365,7 @@ API path: `/projects/{projectId}/collaborators`
 | `platform` |  |
 | `projectId` |  |
 | `releaseNotes` |  |
-| `size` |  |
+| `size` | Build size in bytes |
 | `status` |  |
 | `version` |  |
 
@@ -378,12 +378,12 @@ API path: `/projects/{projectId}/deployments`
 | Field | Description |
 | --- | --- |
 | `createdAt` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
+| `description` | Detailed description of the project |
+| `id` | Unique identifier for the project |
+| `name` | Name of the game project |
 | `owner` |  |
 | `settings` |  |
-| `status` |  |
+| `status` | Current status of the project |
 | `updatedAt` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -395,7 +395,7 @@ API path: `/projects`
 | Field | Description |
 | --- | --- |
 | `completedAt` |  |
-| `duration` |  |
+| `duration` | Test duration in seconds |
 | `environment` |  |
 | `failed` |  |
 | `id` |  |
@@ -480,7 +480,7 @@ Create an instance: `asset = client.Asset()`
 | `mimeType` | `str` |  |
 | `name` | `str` |  |
 | `projectId` | `str` |  |
-| `size` | `int` |  |
+| `size` | `int` | File size in bytes |
 | `tags` | `list` |  |
 | `type` | `str` |  |
 | `updatedAt` | `str` |  |
@@ -623,7 +623,7 @@ Create an instance: `deployment = client.Deployment()`
 | `platform` | `str` |  |
 | `projectId` | `str` |  |
 | `releaseNotes` | `str` |  |
-| `size` | `int` |  |
+| `size` | `int` | Build size in bytes |
 | `status` | `str` |  |
 | `version` | `str` |  |
 
@@ -667,12 +667,12 @@ Create an instance: `project = client.Project()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `createdAt` | `str` |  |
-| `description` | `str` |  |
-| `id` | `str` |  |
-| `name` | `str` |  |
+| `description` | `str` | Detailed description of the project |
+| `id` | `str` | Unique identifier for the project |
+| `name` | `str` | Name of the game project |
 | `owner` | `dict` |  |
 | `settings` | `dict` |  |
-| `status` | `str` |  |
+| `status` | `str` | Current status of the project |
 | `updatedAt` | `str` |  |
 
 #### Example: Load
@@ -712,7 +712,7 @@ Create an instance: `test = client.Test()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `completedAt` | `str` |  |
-| `duration` | `float` |  |
+| `duration` | `float` | Test duration in seconds |
 | `environment` | `str` |  |
 | `failed` | `int` |  |
 | `id` | `str` |  |

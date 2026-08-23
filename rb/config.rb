@@ -19,6 +19,9 @@ module GameDevelopmentConfig
     {
       "main" => {
         "name" => "GameDevelopment",
+        "slug" => "game-development",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -218,6 +221,7 @@ module GameDevelopmentConfig
             },
             {
               "name" => "size",
+              "short" => "File size in bytes",
               "type" => "`$INTEGER`",
             },
             {
@@ -792,6 +796,7 @@ module GameDevelopmentConfig
             },
             {
               "name" => "size",
+              "short" => "Build size in bytes",
               "type" => "`$INTEGER`",
             },
             {
@@ -999,10 +1004,12 @@ module GameDevelopmentConfig
             },
             {
               "name" => "description",
+              "short" => "Detailed description of the project",
               "type" => "`$STRING`",
             },
             {
               "name" => "id",
+              "short" => "Unique identifier for the project",
               "type" => "`$STRING`",
             },
             {
@@ -1013,6 +1020,7 @@ module GameDevelopmentConfig
                   "type" => "`$STRING`",
                 },
               },
+              "short" => "Name of the game project",
               "type" => "`$STRING`",
             },
             {
@@ -1025,6 +1033,7 @@ module GameDevelopmentConfig
             },
             {
               "name" => "status",
+              "short" => "Current status of the project",
               "type" => "`$STRING`",
             },
             {
@@ -1236,6 +1245,7 @@ module GameDevelopmentConfig
             },
             {
               "name" => "duration",
+              "short" => "Test duration in seconds",
               "type" => "`$NUMBER`",
             },
             {

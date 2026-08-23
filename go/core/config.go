@@ -11,6 +11,9 @@ func MakeConfig() map[string]any {
 	return map[string]any{
 		"main": map[string]any{
 			"name": "GameDevelopment",
+			"slug": "game-development",
+			"version": "0.0.1",
+			"target": "go",
 		},
 		"feature": map[string]any{
 			"test": map[string]any{
@@ -210,6 +213,7 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "size",
+						"short": "File size in bytes",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
@@ -784,6 +788,7 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "size",
+						"short": "Build size in bytes",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
@@ -991,10 +996,12 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "description",
+						"short": "Detailed description of the project",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "id",
+						"short": "Unique identifier for the project",
 						"type": "`$STRING`",
 					},
 					map[string]any{
@@ -1005,6 +1012,7 @@ func MakeConfig() map[string]any {
 								"type": "`$STRING`",
 							},
 						},
+						"short": "Name of the game project",
 						"type": "`$STRING`",
 					},
 					map[string]any{
@@ -1017,6 +1025,7 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "status",
+						"short": "Current status of the project",
 						"type": "`$STRING`",
 					},
 					map[string]any{
@@ -1228,6 +1237,7 @@ func MakeConfig() map[string]any {
 					},
 					map[string]any{
 						"name": "duration",
+						"short": "Test duration in seconds",
 						"type": "`$NUMBER`",
 					},
 					map[string]any{

@@ -33,6 +33,9 @@ class GameDevelopmentConfig
         return [
             "main" => [
                 "name" => "GameDevelopment",
+                "slug" => "game-development",
+                "version" => "0.0.1",
+                "target" => "php",
             ],
             "feature" => [
                 "test" => [
@@ -232,6 +235,7 @@ class GameDevelopmentConfig
             ],
             [
               'name' => 'size',
+              'short' => 'File size in bytes',
               'type' => '`$INTEGER`',
             ],
             [
@@ -806,6 +810,7 @@ class GameDevelopmentConfig
             ],
             [
               'name' => 'size',
+              'short' => 'Build size in bytes',
               'type' => '`$INTEGER`',
             ],
             [
@@ -1013,10 +1018,12 @@ class GameDevelopmentConfig
             ],
             [
               'name' => 'description',
+              'short' => 'Detailed description of the project',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'id',
+              'short' => 'Unique identifier for the project',
               'type' => '`$STRING`',
             ],
             [
@@ -1027,6 +1034,7 @@ class GameDevelopmentConfig
                   'type' => '`$STRING`',
                 ],
               ],
+              'short' => 'Name of the game project',
               'type' => '`$STRING`',
             ],
             [
@@ -1039,6 +1047,7 @@ class GameDevelopmentConfig
             ],
             [
               'name' => 'status',
+              'short' => 'Current status of the project',
               'type' => '`$STRING`',
             ],
             [
@@ -1250,6 +1259,7 @@ class GameDevelopmentConfig
             ],
             [
               'name' => 'duration',
+              'short' => 'Test duration in seconds',
               'type' => '`$NUMBER`',
             ],
             [

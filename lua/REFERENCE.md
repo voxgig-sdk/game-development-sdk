@@ -193,7 +193,7 @@ local asset = client:Asset(nil)
 | `mimeType` | `string` | No |  |
 | `name` | `string` | No |  |
 | `projectId` | `string` | No |  |
-| `size` | `number` | No |  |
+| `size` | `number` | No | File size in bytes |
 | `tags` | `table` | No |  |
 | `type` | `string` | No |  |
 | `updatedAt` | `string` | No |  |
@@ -469,7 +469,7 @@ local deployment = client:Deployment(nil)
 | `platform` | `string` | No |  |
 | `projectId` | `string` | No |  |
 | `releaseNotes` | `string` | No |  |
-| `size` | `number` | No |  |
+| `size` | `number` | No | Build size in bytes |
 | `status` | `string` | No |  |
 | `version` | `string` | No |  |
 
@@ -561,12 +561,12 @@ local project = client:Project(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `createdAt` | `string` | No |  |
-| `description` | `string` | No |  |
-| `id` | `string` | No |  |
-| `name` | `string` | No |  |
+| `description` | `string` | No | Detailed description of the project |
+| `id` | `string` | No | Unique identifier for the project |
+| `name` | `string` | No | Name of the game project |
 | `owner` | `table` | No |  |
 | `settings` | `table` | No |  |
-| `status` | `string` | No |  |
+| `status` | `string` | No | Current status of the project |
 | `updatedAt` | `string` | No |  |
 
 ### Field Usage by Operation
@@ -669,7 +669,7 @@ local test = client:Test(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `completedAt` | `string` | No |  |
-| `duration` | `number` | No |  |
+| `duration` | `number` | No | Test duration in seconds |
 | `environment` | `string` | Yes |  |
 | `failed` | `number` | No |  |
 | `id` | `string` | No |  |

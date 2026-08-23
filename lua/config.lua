@@ -7,6 +7,9 @@ local function make_config()
   return {
     main = {
       name = "GameDevelopment",
+      slug = "game-development",
+      version = "0.0.1",
+      target = "lua",
     },
     feature = {
       ["test"] = {
@@ -206,6 +209,7 @@ local function make_config()
           },
           {
             ["name"] = "size",
+            ["short"] = "File size in bytes",
             ["type"] = "`$INTEGER`",
           },
           {
@@ -780,6 +784,7 @@ local function make_config()
           },
           {
             ["name"] = "size",
+            ["short"] = "Build size in bytes",
             ["type"] = "`$INTEGER`",
           },
           {
@@ -987,10 +992,12 @@ local function make_config()
           },
           {
             ["name"] = "description",
+            ["short"] = "Detailed description of the project",
             ["type"] = "`$STRING`",
           },
           {
             ["name"] = "id",
+            ["short"] = "Unique identifier for the project",
             ["type"] = "`$STRING`",
           },
           {
@@ -1001,6 +1008,7 @@ local function make_config()
                 ["type"] = "`$STRING`",
               },
             },
+            ["short"] = "Name of the game project",
             ["type"] = "`$STRING`",
           },
           {
@@ -1013,6 +1021,7 @@ local function make_config()
           },
           {
             ["name"] = "status",
+            ["short"] = "Current status of the project",
             ["type"] = "`$STRING`",
           },
           {
@@ -1224,6 +1233,7 @@ local function make_config()
           },
           {
             ["name"] = "duration",
+            ["short"] = "Test duration in seconds",
             ["type"] = "`$NUMBER`",
           },
           {

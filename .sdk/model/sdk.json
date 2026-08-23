@@ -237,6 +237,7 @@
               "active": true,
               "name": "size",
               "req": false,
+              "short": "File size in bytes",
               "type": "`$INTEGER`"
             },
             {
@@ -911,6 +912,7 @@
               "active": true,
               "name": "size",
               "req": false,
+              "short": "Build size in bytes",
               "type": "`$INTEGER`"
             },
             {
@@ -1145,12 +1147,14 @@
               "active": true,
               "name": "description",
               "req": false,
+              "short": "Detailed description of the project",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "id",
               "req": false,
+              "short": "Unique identifier for the project",
               "type": "`$STRING`"
             },
             {
@@ -1163,6 +1167,7 @@
                 }
               },
               "req": false,
+              "short": "Name of the game project",
               "type": "`$STRING`"
             },
             {
@@ -1181,6 +1186,7 @@
               "active": true,
               "name": "status",
               "req": false,
+              "short": "Current status of the project",
               "type": "`$STRING`"
             },
             {
@@ -1420,6 +1426,7 @@
               "active": true,
               "name": "duration",
               "req": false,
+              "short": "Test duration in seconds",
               "type": "`$NUMBER`"
             },
             {
