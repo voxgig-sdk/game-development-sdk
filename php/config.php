@@ -42,6 +42,7 @@ class GameDevelopmentConfig
           'options' => [
             'active' => false,
           ],
+          'transport' => 'base',
         ],
             ],
             "options" => [
