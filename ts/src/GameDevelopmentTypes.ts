@@ -16,6 +16,9 @@ export interface Analytics {
 
 export interface AnalyticsListMatch {
   project_id: string
+  end_date?: string
+  metric?: string
+  start_date?: string
 }
 
 export interface AnalyticsCreateData {
@@ -54,6 +57,8 @@ export interface AssetLoadMatch {
 
 export interface AssetListMatch {
   project_id: string
+  limit?: number
+  type?: string
 }
 
 export interface AssetCreateData {
@@ -143,6 +148,7 @@ export interface DeploymentLoadMatch {
 
 export interface DeploymentListMatch {
   project_id: string
+  status?: string
 }
 
 export interface DeploymentCreateData {
@@ -179,14 +185,9 @@ export interface ProjectLoadMatch {
 }
 
 export interface ProjectListMatch {
-  createdAt?: string
-  description?: string
-  id?: string
-  name?: string
-  owner?: Record<string, any>
-  settings?: Record<string, any>
+  limit?: number
+  offset?: number
   status?: string
-  updatedAt?: string
 }
 
 export interface ProjectCreateData {
@@ -240,6 +241,7 @@ export interface TestLoadMatch {
 
 export interface TestListMatch {
   project_id: string
+  status?: string
 }
 
 export interface TestCreateData {

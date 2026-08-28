@@ -16,6 +16,9 @@
 
 ---@class AnalyticsListMatch
 ---@field project_id string
+---@field end_date? string
+---@field metric? string
+---@field start_date? string
 
 ---@class AnalyticsCreateData
 ---@field project_id string
@@ -44,6 +47,8 @@
 
 ---@class AssetListMatch
 ---@field project_id string
+---@field limit? number
+---@field type? string
 
 ---@class AssetCreateData
 ---@field project_id string
@@ -121,6 +126,7 @@
 
 ---@class DeploymentListMatch
 ---@field project_id string
+---@field status? string
 
 ---@class DeploymentCreateData
 ---@field project_id string
@@ -153,14 +159,9 @@
 ---@field id string
 
 ---@class ProjectListMatch
----@field createdAt? string
----@field description? string
----@field id? string
----@field name? string
----@field owner? table
----@field settings? table
+---@field limit? number
+---@field offset? number
 ---@field status? string
----@field updatedAt? string
 
 ---@class ProjectCreateData
 ---@field createdAt? string
@@ -208,6 +209,7 @@
 
 ---@class TestListMatch
 ---@field project_id string
+---@field status? string
 
 ---@class TestCreateData
 ---@field project_id string

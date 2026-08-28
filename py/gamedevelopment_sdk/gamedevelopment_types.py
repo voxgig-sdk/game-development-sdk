@@ -28,8 +28,14 @@ class Analytics(AnalyticsRequired, total=False):
     timestamp: str
 
 
-class AnalyticsListMatch(TypedDict):
+class AnalyticsListMatchRequired(TypedDict):
     project_id: str
+
+
+class AnalyticsListMatch(AnalyticsListMatchRequired, total=False):
+    end_date: str
+    metric: str
+    start_date: str
 
 
 class AnalyticsCreateDataRequired(TypedDict):
@@ -63,8 +69,13 @@ class AssetLoadMatch(TypedDict):
     project_id: str
 
 
-class AssetListMatch(TypedDict):
+class AssetListMatchRequired(TypedDict):
     project_id: str
+
+
+class AssetListMatch(AssetListMatchRequired, total=False):
+    limit: int
+    type: str
 
 
 class AssetCreateDataRequired(TypedDict):
@@ -155,8 +166,12 @@ class DeploymentLoadMatch(TypedDict):
     project_id: str
 
 
-class DeploymentListMatch(TypedDict):
+class DeploymentListMatchRequired(TypedDict):
     project_id: str
+
+
+class DeploymentListMatch(DeploymentListMatchRequired, total=False):
+    status: str
 
 
 class DeploymentCreateDataRequired(TypedDict):
@@ -196,14 +211,9 @@ class ProjectLoadMatch(TypedDict):
 
 
 class ProjectListMatch(TypedDict, total=False):
-    createdAt: str
-    description: str
-    id: str
-    name: str
-    owner: dict
-    settings: dict
+    limit: int
+    offset: int
     status: str
-    updatedAt: str
 
 
 class ProjectCreateData(TypedDict, total=False):
@@ -261,8 +271,12 @@ class TestLoadMatch(TypedDict):
     project_id: str
 
 
-class TestListMatch(TypedDict):
+class TestListMatchRequired(TypedDict):
     project_id: str
+
+
+class TestListMatch(TestListMatchRequired, total=False):
+    status: str
 
 
 class TestCreateDataRequired(TypedDict):

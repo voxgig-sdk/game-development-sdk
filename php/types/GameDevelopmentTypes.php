@@ -27,6 +27,9 @@ class Analytics
 class AnalyticsListMatch
 {
     public string $project_id;
+    public ?string $end_date = null;
+    public ?string $metric = null;
+    public ?string $start_date = null;
 }
 
 /** Request payload for Analytics#create. */
@@ -67,6 +70,8 @@ class AssetLoadMatch
 class AssetListMatch
 {
     public string $project_id;
+    public ?int $limit = null;
+    public ?string $type = null;
 }
 
 /** Request payload for Asset#create. */
@@ -180,6 +185,7 @@ class DeploymentLoadMatch
 class DeploymentListMatch
 {
     public string $project_id;
+    public ?string $status = null;
 }
 
 /** Request payload for Deployment#create. */
@@ -224,14 +230,9 @@ class ProjectLoadMatch
 /** Request payload for Project#list. */
 class ProjectListMatch
 {
-    public ?string $createdAt = null;
-    public ?string $description = null;
-    public ?string $id = null;
-    public ?string $name = null;
-    public ?array $owner = null;
-    public ?array $settings = null;
+    public ?int $limit = null;
+    public ?int $offset = null;
     public ?string $status = null;
-    public ?string $updatedAt = null;
 }
 
 /** Request payload for Project#create. */
@@ -297,6 +298,7 @@ class TestLoadMatch
 class TestListMatch
 {
     public string $project_id;
+    public ?string $status = null;
 }
 
 /** Request payload for Test#create. */

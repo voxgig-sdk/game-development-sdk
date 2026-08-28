@@ -41,8 +41,20 @@ Analytics = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] end_date
+#   @return [String, nil]
+#
+# @!attribute [rw] metric
+#   @return [String, nil]
+#
+# @!attribute [rw] start_date
+#   @return [String, nil]
 AnalyticsListMatch = Struct.new(
   :project_id,
+  :end_date,
+  :metric,
+  :start_date,
   keyword_init: true
 )
 
@@ -141,8 +153,16 @@ AssetLoadMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] limit
+#   @return [Integer, nil]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
 AssetListMatch = Struct.new(
   :project_id,
+  :limit,
+  :type,
   keyword_init: true
 )
 
@@ -413,8 +433,12 @@ DeploymentLoadMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
 DeploymentListMatch = Struct.new(
   :project_id,
+  :status,
   keyword_init: true
 )
 
@@ -531,38 +555,18 @@ ProjectLoadMatch = Struct.new(
 
 # Request payload for Project#list.
 #
-# @!attribute [rw] createdAt
-#   @return [String, nil]
+# @!attribute [rw] limit
+#   @return [Integer, nil]
 #
-# @!attribute [rw] description
-#   @return [String, nil]
-#
-# @!attribute [rw] id
-#   @return [String, nil]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] owner
-#   @return [Hash, nil]
-#
-# @!attribute [rw] settings
-#   @return [Hash, nil]
+# @!attribute [rw] offset
+#   @return [Integer, nil]
 #
 # @!attribute [rw] status
 #   @return [String, nil]
-#
-# @!attribute [rw] updatedAt
-#   @return [String, nil]
 ProjectListMatch = Struct.new(
-  :createdAt,
-  :description,
-  :id,
-  :name,
-  :owner,
-  :settings,
+  :limit,
+  :offset,
   :status,
-  :updatedAt,
   keyword_init: true
 )
 
@@ -731,8 +735,12 @@ TestLoadMatch = Struct.new(
 #
 # @!attribute [rw] project_id
 #   @return [String]
+#
+# @!attribute [rw] status
+#   @return [String, nil]
 TestListMatch = Struct.new(
   :project_id,
+  :status,
   keyword_init: true
 )
 

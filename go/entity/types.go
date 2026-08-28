@@ -25,6 +25,9 @@ type Analytics struct {
 // AnalyticsListMatch is the typed request payload for Analytics.ListTyped.
 type AnalyticsListMatch struct {
 	ProjectId string `json:"project_id"`
+	EndDate *string `json:"end_date,omitempty"`
+	Metric *string `json:"metric,omitempty"`
+	StartDate *string `json:"start_date,omitempty"`
 }
 
 // AnalyticsCreateData is the typed request payload for Analytics.CreateTyped.
@@ -61,6 +64,8 @@ type AssetLoadMatch struct {
 // AssetListMatch is the typed request payload for Asset.ListTyped.
 type AssetListMatch struct {
 	ProjectId string `json:"project_id"`
+	Limit *int `json:"limit,omitempty"`
+	Type *string `json:"type,omitempty"`
 }
 
 // AssetCreateData is the typed request payload for Asset.CreateTyped.
@@ -162,6 +167,7 @@ type DeploymentLoadMatch struct {
 // DeploymentListMatch is the typed request payload for Deployment.ListTyped.
 type DeploymentListMatch struct {
 	ProjectId string `json:"project_id"`
+	Status *string `json:"status,omitempty"`
 }
 
 // DeploymentCreateData is the typed request payload for Deployment.CreateTyped.
@@ -202,14 +208,9 @@ type ProjectLoadMatch struct {
 
 // ProjectListMatch is the typed request payload for Project.ListTyped.
 type ProjectListMatch struct {
-	CreatedAt *string `json:"createdAt,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Owner *map[string]any `json:"owner,omitempty"`
-	Settings *map[string]any `json:"settings,omitempty"`
+	Limit *int `json:"limit,omitempty"`
+	Offset *int `json:"offset,omitempty"`
 	Status *string `json:"status,omitempty"`
-	UpdatedAt *string `json:"updatedAt,omitempty"`
 }
 
 // ProjectCreateData is the typed request payload for Project.CreateTyped.
@@ -269,6 +270,7 @@ type TestLoadMatch struct {
 // TestListMatch is the typed request payload for Test.ListTyped.
 type TestListMatch struct {
 	ProjectId string `json:"project_id"`
+	Status *string `json:"status,omitempty"`
 }
 
 // TestCreateData is the typed request payload for Test.CreateTyped.
