@@ -100,7 +100,7 @@ func TestTestEntity(t *testing.T) {
 		// CREATE
 		testRef01Ent := client.Test(nil)
 		testRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "test"}, setup.data), "test_ref01"))
+			vs.GetPath(setup.data, []any{"new", "test"}), "test_ref01"))
 		testRef01Data["project_id"] = setup.idmap["project01"]
 
 		testRef01DataResult, err := testRef01Ent.Create(testRef01Data, nil)
@@ -177,7 +177,7 @@ func testBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"test01", "test02", "test03", "project01", "project02", "project03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -197,7 +197,7 @@ func testBasicSetup(extra map[string]any) *entityTestSetup {
 		"GAME_DEVELOPMENT_TEST_TEST_ENTID": idmap,
 		"GAME_DEVELOPMENT_TEST_LIVE":      "FALSE",
 		"GAME_DEVELOPMENT_TEST_EXPLAIN":   "FALSE",
-		"GAME_DEVELOPMENT_APIKEY":         "NONE",
+		"GAME_DEVELOPMENT_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["GAME_DEVELOPMENT_TEST_TEST_ENTID"])
@@ -206,11 +206,23 @@ func testBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["GAME_DEVELOPMENT_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewGameDevelopmentSDK(core.ToMapAny(mergedOpts))
 	}

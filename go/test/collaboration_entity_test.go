@@ -98,7 +98,7 @@ func TestCollaborationEntity(t *testing.T) {
 		client := setup.client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
-		collaborationRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.collaboration", setup.data)))
+		collaborationRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.collaboration")))
 		var collaborationRef01Data map[string]any
 		if len(collaborationRef01DataRaw) > 0 {
 			collaborationRef01Data = core.ToMapAny(collaborationRef01DataRaw[0][1])
@@ -149,7 +149,7 @@ func collaborationBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"collaboration01", "collaboration02", "collaboration03", "project01", "project02", "project03", "collaborator01", "collaborator02", "collaborator03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -169,7 +169,7 @@ func collaborationBasicSetup(extra map[string]any) *entityTestSetup {
 		"GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID": idmap,
 		"GAME_DEVELOPMENT_TEST_LIVE":      "FALSE",
 		"GAME_DEVELOPMENT_TEST_EXPLAIN":   "FALSE",
-		"GAME_DEVELOPMENT_APIKEY":         "NONE",
+		"GAME_DEVELOPMENT_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID"])
@@ -178,11 +178,23 @@ func collaborationBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["GAME_DEVELOPMENT_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewGameDevelopmentSDK(core.ToMapAny(mergedOpts))
 	}

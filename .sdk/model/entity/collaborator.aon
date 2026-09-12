@@ -6,6 +6,7 @@ main: kit: entity: collaborator: {
 
   fields: [
     {
+      format: "email"
       name: "email"
       req: true
       type: "`$STRING`"
@@ -36,16 +37,22 @@ main: kit: entity: collaborator: {
           }
           method: "POST"
           orig: "/projects/{projectId}/collaborators"
-          parts: [
-            "projects"
-            "{project_id}"
-            "collaborators"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "collaborators"
+            }
+          ]
           select: {
             exist: [
               "project_id"

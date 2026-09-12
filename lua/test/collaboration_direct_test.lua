@@ -77,7 +77,7 @@ function collaboration_direct_setup(mockres)
   local env = runner.env_override({
     ["GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID"] = {},
     ["GAME_DEVELOPMENT_TEST_LIVE"] = "FALSE",
-    ["GAME_DEVELOPMENT_APIKEY"] = "NONE",
+    ["GAME_DEVELOPMENT_APIKEY"] = "",
   })
 
   local live = env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
@@ -86,6 +86,13 @@ function collaboration_direct_setup(mockres)
     local merged_opts = {
       apikey = env["GAME_DEVELOPMENT_APIKEY"],
     }
+    -- sdk-test-control.json's test.client.options goes UNDER the generated
+    -- fields: it adds to the live client, it does not redirect it.
+    for _k, _v in pairs(runner.live_client_options()) do
+      if merged_opts[_k] == nil then
+        merged_opts[_k] = _v
+      end
+    end
     local client = sdk.new(merged_opts)
     return {
       client = client,

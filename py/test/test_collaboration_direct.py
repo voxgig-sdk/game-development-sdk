@@ -72,15 +72,18 @@ def _collaboration_direct_setup(mockres):
     env = runner.env_override({
         "GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID": {},
         "GAME_DEVELOPMENT_TEST_LIVE": "FALSE",
-        "GAME_DEVELOPMENT_APIKEY": "NONE",
+        "GAME_DEVELOPMENT_APIKEY": "",
     })
 
     live = env.get("GAME_DEVELOPMENT_TEST_LIVE") == "TRUE"
 
     if live:
-        merged_opts = {
+        # sdk-test-control.json's test.client.options seeds the live
+        # client; the generated fields below overwrite anything they name.
+        merged_opts = dict(runner.live_client_options())
+        merged_opts.update({
             "apikey": env.get("GAME_DEVELOPMENT_APIKEY"),
-        }
+        })
         client = GameDevelopmentSDK(merged_opts)
         return {
             "client": client,

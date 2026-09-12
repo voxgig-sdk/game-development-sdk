@@ -165,7 +165,7 @@ def project_basic_setup(extra)
     "GAME_DEVELOPMENT_TEST_PROJECT_ENTID" => idmap,
     "GAME_DEVELOPMENT_TEST_LIVE" => "FALSE",
     "GAME_DEVELOPMENT_TEST_EXPLAIN" => "FALSE",
-    "GAME_DEVELOPMENT_APIKEY" => "NONE",
+    "GAME_DEVELOPMENT_APIKEY" => "",
   })
 
   idmap_resolved = Helpers.to_map(
@@ -176,6 +176,9 @@ def project_basic_setup(extra)
 
   if env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
     merged_opts = Vs.merge([
+      # FIRST, so the generated fields below win: sdk-test-control.json's
+      # test.client.options adds to the live client, it does not redirect it.
+      Runner.live_client_options,
       {
         "apikey" => env["GAME_DEVELOPMENT_APIKEY"],
       },

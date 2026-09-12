@@ -6,11 +6,13 @@ main: kit: entity: collaboration: {
 
   fields: [
     {
+      format: "date-time"
       name: "addedAt"
       req: false
       type: "`$STRING`"
     }
     {
+      format: "email"
       name: "email"
       req: false
       type: "`$STRING`"
@@ -21,6 +23,7 @@ main: kit: entity: collaboration: {
       type: "`$STRING`"
     }
     {
+      format: "date-time"
       name: "lastActive"
       req: false
       type: "`$STRING`"
@@ -71,16 +74,22 @@ main: kit: entity: collaboration: {
           }
           method: "GET"
           orig: "/projects/{projectId}/collaborators"
-          parts: [
-            "projects"
-            "{project_id}"
-            "collaborators"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "collaborators"
+            }
+          ]
           select: {
             exist: [
               "project_id"
@@ -117,18 +126,26 @@ main: kit: entity: collaboration: {
           }
           method: "DELETE"
           orig: "/projects/{projectId}/collaborators/{userId}"
-          parts: [
-            "projects"
-            "{project_id}"
-            "collaborators"
-            "{user_id}"
-          ]
           rename: {
             param: {
               projectId: "project_id"
               userId: "user_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "collaborators"
+            }
+            {
+              var: "user_id"
+            }
+          ]
           select: {
             exist: [
               "project_id"

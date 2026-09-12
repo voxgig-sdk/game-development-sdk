@@ -1,6 +1,14 @@
 # GameDevelopment SDK configuration
 
 
+# The sekreto plugin DEFINITIONS the model selected per feature, imported
+# above by name from the modules the catalogue's active `plugin.def`
+# entries declare. Handed to each feature (secrets builds its Sekreto
+# with them): a provider kind not listed here is unknown to that SDK.
+FEATURE_PLUGINS = {
+}
+
+
 _shared_config = None
 
 
@@ -85,6 +93,7 @@ def make_config():
             "type": "`$OBJECT`",
           },
           {
+            "format": "date-time",
             "name": "timestamp",
             "type": "`$STRING`",
           },
@@ -110,17 +119,25 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/analytics/events",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "analytics",
-                  "events",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "analytics",
+                  },
+                  {
+                    "lit": "events",
+                  },
+                ],
                 "select": {
                   "$action": "event",
                   "exist": [
@@ -131,6 +148,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "analytics",
+                  "events",
+                ],
               },
             ],
           },
@@ -173,16 +196,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/analytics",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "analytics",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "analytics",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "end_date",
@@ -195,6 +224,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "analytics",
+                ],
               },
             ],
           },
@@ -210,6 +244,7 @@ def make_config():
       "asset": {
         "fields": [
           {
+            "format": "date-time",
             "name": "createdAt",
             "type": "`$STRING`",
           },
@@ -243,14 +278,20 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "format": "date-time",
             "name": "updatedAt",
             "type": "`$STRING`",
           },
           {
+            "format": "uri",
             "name": "url",
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "asset",
         "op": {
           "create": {
@@ -272,16 +313,22 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/assets",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "assets",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "assets",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -291,6 +338,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "assets",
+                ],
               },
             ],
           },
@@ -328,16 +380,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/assets",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "assets",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "assets",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "limit",
@@ -349,6 +407,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.assets`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "assets",
+                ],
               },
             ],
           },
@@ -378,18 +441,26 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/assets/{assetId}",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "assets",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "assetId": "id",
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "assets",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -400,6 +471,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "assets",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -429,18 +506,26 @@ def make_config():
                 "kind": "http",
                 "method": "DELETE",
                 "orig": "/projects/{projectId}/assets/{assetId}",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "assets",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "assetId": "id",
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "assets",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -451,6 +536,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "assets",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -502,16 +593,22 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/builds",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "builds",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "builds",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -521,6 +618,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "builds",
+                ],
               },
             ],
           },
@@ -536,10 +638,12 @@ def make_config():
       "collaboration": {
         "fields": [
           {
+            "format": "date-time",
             "name": "addedAt",
             "type": "`$STRING`",
           },
           {
+            "format": "email",
             "name": "email",
             "type": "`$STRING`",
           },
@@ -548,6 +652,7 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "format": "date-time",
             "name": "lastActive",
             "type": "`$STRING`",
           },
@@ -568,6 +673,10 @@ def make_config():
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "collaboration",
         "op": {
           "list": {
@@ -589,16 +698,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/collaborators",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "collaborators",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "collaborators",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -608,6 +723,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.collaborators`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "collaborators",
+                ],
               },
             ],
           },
@@ -637,18 +757,26 @@ def make_config():
                 "kind": "http",
                 "method": "DELETE",
                 "orig": "/projects/{projectId}/collaborators/{userId}",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "collaborators",
-                  "{user_id}",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                     "userId": "user_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "collaborators",
+                  },
+                  {
+                    "var": "user_id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -659,6 +787,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "collaborators",
+                  "{user_id}",
+                ],
               },
             ],
           },
@@ -678,6 +812,7 @@ def make_config():
       "collaborator": {
         "fields": [
           {
+            "format": "email",
             "name": "email",
             "req": True,
             "type": "`$STRING`",
@@ -709,16 +844,22 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/collaborators",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "collaborators",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "collaborators",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -728,6 +869,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "collaborators",
+                ],
               },
             ],
           },
@@ -753,6 +899,7 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "format": "date-time",
             "name": "completedAt",
             "type": "`$STRING`",
           },
@@ -761,14 +908,17 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "format": "date-time",
             "name": "createdAt",
             "type": "`$STRING`",
           },
           {
+            "format": "uri",
             "name": "deploymentUrl",
             "type": "`$STRING`",
           },
           {
+            "format": "uri",
             "name": "downloadUrl",
             "type": "`$STRING`",
           },
@@ -818,6 +968,10 @@ def make_config():
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "deployment",
         "op": {
           "create": {
@@ -839,16 +993,22 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/deployments",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "deployments",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "deployments",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -858,6 +1018,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "deployments",
+                ],
               },
             ],
           },
@@ -888,16 +1053,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/deployments",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "deployments",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "deployments",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -908,6 +1079,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.deployments`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "deployments",
+                ],
               },
               {
                 "args": {
@@ -924,16 +1100,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/builds",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "builds",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "builds",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -943,6 +1125,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.builds`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "builds",
+                ],
               },
             ],
           },
@@ -972,18 +1159,26 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/deployments/{deploymentId}",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "deployments",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "deploymentId": "id",
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "deployments",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -994,6 +1189,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "deployments",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -1009,6 +1210,7 @@ def make_config():
       "project": {
         "fields": [
           {
+            "format": "date-time",
             "name": "createdAt",
             "type": "`$STRING`",
           },
@@ -1047,10 +1249,15 @@ def make_config():
             "type": "`$STRING`",
           },
           {
+            "format": "date-time",
             "name": "updatedAt",
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "project",
         "op": {
           "create": {
@@ -1062,14 +1269,19 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects",
-                "parts": [
-                  "projects",
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                ],
               },
             ],
           },
@@ -1105,8 +1317,10 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects",
-                "parts": [
-                  "projects",
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
                 ],
                 "select": {
                   "exist": [
@@ -1119,6 +1333,9 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.projects`",
                 },
+                "parts": [
+                  "projects",
+                ],
               },
             ],
           },
@@ -1141,15 +1358,19 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}",
-                "parts": [
-                  "projects",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -1159,6 +1380,10 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -1181,15 +1406,19 @@ def make_config():
                 "kind": "http",
                 "method": "DELETE",
                 "orig": "/projects/{projectId}",
-                "parts": [
-                  "projects",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -1199,6 +1428,10 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -1221,15 +1454,19 @@ def make_config():
                 "kind": "http",
                 "method": "PUT",
                 "orig": "/projects/{projectId}",
-                "parts": [
-                  "projects",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -1239,6 +1476,10 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "projects",
+                  "{id}",
+                ],
               },
             ],
           },
@@ -1250,6 +1491,7 @@ def make_config():
       "test": {
         "fields": [
           {
+            "format": "date-time",
             "name": "completedAt",
             "type": "`$STRING`",
           },
@@ -1313,6 +1555,7 @@ def make_config():
             "type": "`$INTEGER`",
           },
           {
+            "format": "date-time",
             "name": "startedAt",
             "type": "`$STRING`",
           },
@@ -1335,6 +1578,10 @@ def make_config():
             "type": "`$INTEGER`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "test",
         "op": {
           "create": {
@@ -1356,16 +1603,22 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/projects/{projectId}/tests",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "tests",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "tests",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -1375,6 +1628,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.results`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "tests",
+                ],
               },
             ],
           },
@@ -1405,16 +1663,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/tests",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "tests",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "tests",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "project_id",
@@ -1425,6 +1689,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.tests`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "tests",
+                ],
               },
             ],
           },
@@ -1454,18 +1723,26 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/projects/{projectId}/tests/{testId}",
-                "parts": [
-                  "projects",
-                  "{project_id}",
-                  "tests",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "projectId": "project_id",
                     "testId": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "projects",
+                  },
+                  {
+                    "var": "project_id",
+                  },
+                  {
+                    "lit": "tests",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -1476,6 +1753,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.results`",
                 },
+                "parts": [
+                  "projects",
+                  "{project_id}",
+                  "tests",
+                  "{id}",
+                ],
               },
             ],
           },

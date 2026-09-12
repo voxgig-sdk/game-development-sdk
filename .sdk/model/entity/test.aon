@@ -6,6 +6,7 @@ main: kit: entity: test: {
 
   fields: [
     {
+      format: "date-time"
       name: "completedAt"
       req: false
       type: "`$STRING`"
@@ -80,6 +81,7 @@ main: kit: entity: test: {
       type: "`$INTEGER`"
     }
     {
+      format: "date-time"
       name: "startedAt"
       req: false
       type: "`$STRING`"
@@ -131,16 +133,22 @@ main: kit: entity: test: {
           }
           method: "POST"
           orig: "/projects/{projectId}/tests"
-          parts: [
-            "projects"
-            "{project_id}"
-            "tests"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+          ]
           select: {
             exist: [
               "project_id"
@@ -179,16 +187,22 @@ main: kit: entity: test: {
           }
           method: "GET"
           orig: "/projects/{projectId}/tests"
-          parts: [
-            "projects"
-            "{project_id}"
-            "tests"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+          ]
           select: {
             exist: [
               "project_id"
@@ -226,18 +240,26 @@ main: kit: entity: test: {
           }
           method: "GET"
           orig: "/projects/{projectId}/tests/{testId}"
-          parts: [
-            "projects"
-            "{project_id}"
-            "tests"
-            "{id}"
-          ]
           rename: {
             param: {
               projectId: "project_id"
               testId: "id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

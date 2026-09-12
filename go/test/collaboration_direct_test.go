@@ -119,14 +119,22 @@ func collaborationDirectSetup(mockres any) *collaborationDirectSetupResult {
 	env := envOverride(map[string]any{
 		"GAME_DEVELOPMENT_TEST_COLLABORATION_ENTID": map[string]any{},
 		"GAME_DEVELOPMENT_TEST_LIVE":    "FALSE",
-		"GAME_DEVELOPMENT_APIKEY":       "NONE",
+		"GAME_DEVELOPMENT_APIKEY":       "",
 	})
 
 	live := env["GAME_DEVELOPMENT_TEST_LIVE"] == "TRUE"
 
 	if live {
-		mergedOpts := map[string]any{
+		// sdk-test-control.json's test.client.options seeds the live
+		// client; the generated fields below overwrite anything they name.
+		mergedOpts := map[string]any{}
+		for k, v := range liveClientOptions() {
+			mergedOpts[k] = v
+		}
+		for k, v := range map[string]any{
 			"apikey": env["GAME_DEVELOPMENT_APIKEY"],
+		} {
+			mergedOpts[k] = v
 		}
 		client := sdk.NewGameDevelopmentSDK(mergedOpts)
 

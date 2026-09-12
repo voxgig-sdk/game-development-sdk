@@ -41,16 +41,22 @@ main: kit: entity: build: {
           }
           method: "POST"
           orig: "/projects/{projectId}/builds"
-          parts: [
-            "projects"
-            "{project_id}"
-            "builds"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "builds"
+            }
+          ]
           select: {
             exist: [
               "project_id"

@@ -6,6 +6,7 @@ main: kit: entity: asset: {
 
   fields: [
     {
+      format: "date-time"
       name: "createdAt"
       req: false
       type: "`$STRING`"
@@ -47,11 +48,13 @@ main: kit: entity: asset: {
       type: "`$STRING`"
     }
     {
+      format: "date-time"
       name: "updatedAt"
       req: false
       type: "`$STRING`"
     }
     {
+      format: "uri"
       name: "url"
       req: false
       type: "`$STRING`"
@@ -82,16 +85,22 @@ main: kit: entity: asset: {
           }
           method: "POST"
           orig: "/projects/{projectId}/assets"
-          parts: [
-            "projects"
-            "{project_id}"
-            "assets"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "assets"
+            }
+          ]
           select: {
             exist: [
               "project_id"
@@ -138,16 +147,22 @@ main: kit: entity: asset: {
           }
           method: "GET"
           orig: "/projects/{projectId}/assets"
-          parts: [
-            "projects"
-            "{project_id}"
-            "assets"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "assets"
+            }
+          ]
           select: {
             exist: [
               "limit"
@@ -186,18 +201,26 @@ main: kit: entity: asset: {
           }
           method: "GET"
           orig: "/projects/{projectId}/assets/{assetId}"
-          parts: [
-            "projects"
-            "{project_id}"
-            "assets"
-            "{id}"
-          ]
           rename: {
             param: {
               assetId: "id"
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "assets"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"
@@ -235,18 +258,26 @@ main: kit: entity: asset: {
           }
           method: "DELETE"
           orig: "/projects/{projectId}/assets/{assetId}"
-          parts: [
-            "projects"
-            "{project_id}"
-            "assets"
-            "{id}"
-          ]
           rename: {
             param: {
               assetId: "id"
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "assets"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

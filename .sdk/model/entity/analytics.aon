@@ -31,6 +31,7 @@ main: kit: entity: analytics: {
       type: "`$OBJECT`"
     }
     {
+      format: "date-time"
       name: "timestamp"
       req: false
       type: "`$STRING`"
@@ -56,17 +57,25 @@ main: kit: entity: analytics: {
           }
           method: "POST"
           orig: "/projects/{projectId}/analytics/events"
-          parts: [
-            "projects"
-            "{project_id}"
-            "analytics"
-            "events"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "analytics"
+            }
+            {
+              lit: "events"
+            }
+          ]
           select: {
             "$action": "event"
             exist: [
@@ -120,16 +129,22 @@ main: kit: entity: analytics: {
           }
           method: "GET"
           orig: "/projects/{projectId}/analytics"
-          parts: [
-            "projects"
-            "{project_id}"
-            "analytics"
-          ]
           rename: {
             param: {
               projectId: "project_id"
             }
           }
+          segments: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "analytics"
+            }
+          ]
           select: {
             exist: [
               "end_date"
