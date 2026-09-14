@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
+import { GameDevelopmentSDK } from '@voxgig-sdk/game-development-sdk'
 
 const client = new GameDevelopmentSDK({
   apikey: process.env.GAME_DEVELOPMENT_APIKEY,
@@ -889,7 +889,7 @@ game-development/
 Import the SDK from the package root:
 
 ```ts
-import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
+import { GameDevelopmentSDK } from '@voxgig-sdk/game-development-sdk'
 ```
 
 ### Entity state

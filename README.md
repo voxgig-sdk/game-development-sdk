@@ -105,7 +105,7 @@ local results, err = client:Project():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
+| TypeScript | `@voxgig-sdk/game-development-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
 | Python | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
 | PHP | `voxgig-sdk/game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/game-development-sdk/go` | `go get github.com/voxgig-sdk/game-development-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:Project():list()
 ### TypeScript
 
 ```ts
-import { GameDevelopmentSDK } from '@voxgig-sdk/game-development'
+import { GameDevelopmentSDK } from '@voxgig-sdk/game-development-sdk'
 
 const client = new GameDevelopmentSDK({
   apikey: process.env.GAME_DEVELOPMENT_APIKEY,

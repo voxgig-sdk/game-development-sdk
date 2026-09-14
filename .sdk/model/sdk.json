@@ -2987,7 +2987,7 @@
             "registry": {
               "active": false,
               "name": "npm",
-              "package": "",
+              "package": "@voxgig-sdk/game-development-sdk",
               "state": "pending",
               "url": "https://registry.npmjs.org",
               "vault": {
