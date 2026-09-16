@@ -5,6 +5,8 @@ import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { GameDevelopmentSDK, BaseFeature, stdutil } from '../../..'
@@ -47,16 +49,13 @@ describe('AnalyticsEntity', async () => {
 
     const live = 'TRUE' === process.env.GAME_DEVELOPMENT_TEST_LIVE
     for (const op of ['create', 'list']) {
-      if (maybeSkipControl(t, 'entityOp', 'analytics.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'analytics.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"name":"count","req":false,"type":"`$INTEGER`","index$":0},{"active":true,"name":"eventName","req":true,"type":"`$STRING`","index$":1},{"active":true,"name":"eventType","req":true,"type":"`$STRING`","index$":2},{"active":true,"name":"name","req":false,"type":"`$STRING`","index$":3},{"active":true,"name":"properties","req":false,"type":"`$OBJECT`","index$":4},{"active":true,"format":"date-time","name":"timestamp","req":false,"type":"`$STRING`","index$":5}],"name":"analytics","op":{"create":{"input":"data","name":"create","points":[{"active":true,"args":{"params":[{"active":true,"kind":"param","name":"project_id","orig":"project_id","reqd":true,"type":"`$STRING`","index$":0}]},"contract":{"id":"POST /projects/{projectId}/analytics/events","json":"{\"operationId\":\"trackAnalyticsEvent\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventName\":{\"type\":\"string\"},\"eventType\":{\"enum\":[\"gameplay\",\"ui_interaction\",\"error\",\"performance\",\"custom\"],\"type\":\"string\"},\"properties\":{\"additionalProperties\":true,\"type\":\"object\"},\"timestamp\":{\"format\":\"date-time\",\"type\":\"string\"}},\"required\":[\"eventName\",\"eventType\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"202\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventId\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Event accepted for processing\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}","source":"openapi3","version":1},"kind":"http","method":"POST","orig":"/projects/{projectId}/analytics/events","rename":{"param":{"projectId":"project_id"}},"segments":[{"lit":"projects"},{"var":"project_id"},{"lit":"analytics"},{"lit":"events"}],"select":{"$action":"event","exist":["project_id"]},"transform":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"create"},"list":{"input":"data","name":"list","points":[{"active":true,"args":{"params":[{"active":true,"kind":"param","name":"project_id","orig":"project_id","reqd":true,"type":"`$STRING`","index$":0}],"query":[{"active":true,"kind":"query","name":"end_date","orig":"end_date","reqd":false,"type":"`$STRING`","index$":0},{"active":true,"kind":"query","name":"metric","orig":"metric","reqd":false,"type":"`$STRING`","index$":1},{"active":true,"kind":"query","name":"start_date","orig":"start_date","reqd":false,"type":"`$STRING`","index$":2}]},"contract":{"id":"GET /projects/{projectId}/analytics","json":"{\"operationId\":\"getProjectAnalytics\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Start date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"startDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"End date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"endDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"Comma-separated list of metrics to retrieve\",\"in\":\"query\",\"name\":\"metrics\",\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"events\":{\"items\":{\"properties\":{\"count\":{\"type\":\"integer\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"metrics\":{\"properties\":{\"averageSessionDuration\":{\"description\":\"Average session duration in seconds\",\"type\":\"number\"},\"crashRate\":{\"description\":\"Percentage of sessions with crashes\",\"type\":\"number\"},\"retentionRate\":{\"description\":\"Percentage of returning players\",\"type\":\"number\"},\"totalPlays\":{\"type\":\"integer\"},\"uniquePlayers\":{\"type\":\"integer\"}},\"type\":\"object\"},\"period\":{\"properties\":{\"endDate\":{\"format\":\"date\",\"type\":\"string\"},\"startDate\":{\"format\":\"date\",\"type\":\"string\"}},\"type\":\"object\"},\"projectId\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}","source":"openapi3","version":1},"kind":"http","method":"GET","orig":"/projects/{projectId}/analytics","rename":{"param":{"projectId":"project_id"}},"segments":[{"lit":"projects"},{"var":"project_id"},{"lit":"analytics"}],"select":{"exist":["end_date","metric","project_id","start_date"]},"transform":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[["project"]]},"key$":"analytics","name__orig":"analytics","Name":"Analytics","name_":"analytics","name-":"analytics","NAME":"ANALYTICS","index$":0}, {"active":true,"entity":"analytics","key$":"BasicAnalyticsFlow","kind":"basic","name":"BasicAnalyticsFlow","param":{},"step":[{"active":true,"data":{},"input":{"ref":"analytics_ref01"},"match":{"project_id":"project01"},"op":"create","spec":[],"valid":[],"index$":0},{"active":true,"data":{},"input":{},"match":{"project_id":"project01"},"op":"list","spec":[],"valid":[{"apply":"ItemExists","def":{"ref":"analytics_ref01"}}],"index$":1}]}, 'Analytics')
     }
     const client = setup.client
     const struct = setup.struct
@@ -117,13 +116,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID': idmap,
     'GAME_DEVELOPMENT_TEST_LIVE': 'FALSE',
@@ -135,7 +127,13 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.GAME_DEVELOPMENT_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['GAME_DEVELOPMENT_TEST_ANALYTICS_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new GameDevelopmentSDK(merge([
       // FIRST, so the generated fields below win: sdk-test-control.json's
       // test.client.options adds to the live client, it does not redirect it.
@@ -148,7 +146,8 @@ function basicSetup(extra?: any) {
       // argument at all - so a bare 'extra' silently discarded the apikey
       // and server values above and handed the SDK undefined. Harmless
       // while there was nothing in that object; not harmless now.
-      extra || {}
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -161,7 +160,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.GAME_DEVELOPMENT_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

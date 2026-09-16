@@ -2,7 +2,7 @@
   "existing": {
     "analytics": {
       "ANALYTICS00": {
-        "count": "s3c",
+        "count": 60,
         "eventName": "s3d",
         "eventType": "s3e",
         "name": "s3f",
@@ -12,7 +12,7 @@
         "id": "ANALYTICS00"
       },
       "ANALYTICS01": {
-        "count": "s78",
+        "count": 120,
         "eventName": "s79",
         "eventType": "s7a",
         "name": "s7b",
@@ -22,7 +22,7 @@
         "id": "ANALYTICS01"
       },
       "ANALYTICS02": {
-        "count": "sb4",
+        "count": 180,
         "eventName": "sb5",
         "eventType": "sb6",
         "name": "sb7",
@@ -36,12 +36,311 @@
   "new": {
     "analytics": {
       "analytics_ref01": {
-        "count": "sf0",
+        "count": 240,
         "eventName": "sf1",
         "eventType": "sf2",
         "name": "sf3",
         "properties": {},
         "timestamp": "sf5"
+      }
+    }
+  },
+  "requests": {
+    "POST /projects/{projectId}/analytics/events": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "trackAnalyticsEvent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "eventName": {
+                    "type": "string"
+                  },
+                  "eventType": {
+                    "enum": [
+                      "gameplay",
+                      "ui_interaction",
+                      "error",
+                      "performance",
+                      "custom"
+                    ],
+                    "type": "string"
+                  },
+                  "properties": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "timestamp": {
+                    "format": "date-time",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "eventName",
+                  "eventType"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "eventId": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Event accepted for processing"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The request was malformed or contains invalid parameters"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "GET /projects/{projectId}/analytics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getProjectAnalytics",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Start date for analytics period (ISO 8601 format)",
+            "in": "query",
+            "name": "startDate",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "End date for analytics period (ISO 8601 format)",
+            "in": "query",
+            "name": "endDate",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Comma-separated list of metrics to retrieve",
+            "in": "query",
+            "name": "metrics",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "events": {
+                      "items": {
+                        "properties": {
+                          "count": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "metrics": {
+                      "properties": {
+                        "averageSessionDuration": {
+                          "description": "Average session duration in seconds",
+                          "type": "number"
+                        },
+                        "crashRate": {
+                          "description": "Percentage of sessions with crashes",
+                          "type": "number"
+                        },
+                        "retentionRate": {
+                          "description": "Percentage of returning players",
+                          "type": "number"
+                        },
+                        "totalPlays": {
+                          "type": "integer"
+                        },
+                        "uniquePlayers": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "period": {
+                      "properties": {
+                        "endDate": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "format": "date",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "projectId": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
       }
     }
   }

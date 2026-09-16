@@ -4,7 +4,10 @@ declare(strict_types=1);
 // GameDevelopment SDK feature factory
 
 require_once __DIR__ . '/feature/BaseFeature.php';
+require_once __DIR__ . '/feature/RatelimitFeature.php';
+require_once __DIR__ . '/feature/RetryFeature.php';
 require_once __DIR__ . '/feature/TestFeature.php';
+require_once __DIR__ . '/feature/TimeoutFeature.php';
 
 
 class GameDevelopmentFeatures
@@ -14,8 +17,14 @@ class GameDevelopmentFeatures
         switch ($name) {
             case "base":
                 return new GameDevelopmentBaseFeature();
+            case "ratelimit":
+                return new GameDevelopmentRatelimitFeature();
+            case "retry":
+                return new GameDevelopmentRetryFeature();
             case "test":
                 return new GameDevelopmentTestFeature();
+            case "timeout":
+                return new GameDevelopmentTimeoutFeature();
             default:
                 return new GameDevelopmentBaseFeature();
         }
@@ -31,7 +40,10 @@ class GameDevelopmentFeatures
     {
         switch ($name) {
             case "base":
+            case "ratelimit":
+            case "retry":
             case "test":
+            case "timeout":
                 return true;
             default:
                 return false;

@@ -13,7 +13,7 @@
         "platform": "s94",
         "projectId": "s95",
         "releaseNotes": "s96",
-        "size": "s97",
+        "size": 151,
         "status": "s98",
         "version": "s99",
         "project_id": "PROJECT01"
@@ -30,7 +30,7 @@
         "platform": "s120",
         "projectId": "s121",
         "releaseNotes": "s122",
-        "size": "s123",
+        "size": 291,
         "status": "s124",
         "version": "s125",
         "project_id": "PROJECT01"
@@ -47,7 +47,7 @@
         "platform": "s1ac",
         "projectId": "s1ad",
         "releaseNotes": "s1ae",
-        "size": "s1af",
+        "size": 431,
         "status": "s1b0",
         "version": "s1b1",
         "project_id": "PROJECT01"
@@ -67,9 +67,661 @@
         "platform": "s238",
         "projectId": "s239",
         "releaseNotes": "s23a",
-        "size": "s23b",
+        "size": 571,
         "status": "s23c",
         "version": "s23d"
+      }
+    }
+  },
+  "requests": {
+    "POST /projects/{projectId}/deployments": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "createDeployment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "buildVersion": {
+                    "type": "string"
+                  },
+                  "environment": {
+                    "enum": [
+                      "development",
+                      "staging",
+                      "production"
+                    ],
+                    "type": "string"
+                  },
+                  "platform": {
+                    "enum": [
+                      "windows",
+                      "macos",
+                      "linux",
+                      "android",
+                      "ios",
+                      "web",
+                      "console"
+                    ],
+                    "type": "string"
+                  },
+                  "releaseNotes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "environment",
+                  "platform",
+                  "buildVersion"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "buildVersion": {
+                      "type": "string"
+                    },
+                    "completedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "deploymentUrl": {
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "environment": {
+                      "enum": [
+                        "development",
+                        "staging",
+                        "production"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "platform": {
+                      "enum": [
+                        "windows",
+                        "macos",
+                        "linux",
+                        "android",
+                        "ios",
+                        "web",
+                        "console"
+                      ],
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "type": "string"
+                    },
+                    "releaseNotes": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "pending",
+                        "building",
+                        "deploying",
+                        "success",
+                        "failed",
+                        "cancelled"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Deployment created successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The request was malformed or contains invalid parameters"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "GET /projects/{projectId}/deployments": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "listDeployments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "enum": [
+                "pending",
+                "building",
+                "deploying",
+                "success",
+                "failed",
+                "cancelled"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "deployments": {
+                      "items": {
+                        "properties": {
+                          "buildVersion": {
+                            "type": "string"
+                          },
+                          "completedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "deploymentUrl": {
+                            "format": "uri",
+                            "type": "string"
+                          },
+                          "environment": {
+                            "enum": [
+                              "development",
+                              "staging",
+                              "production"
+                            ],
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "platform": {
+                            "enum": [
+                              "windows",
+                              "macos",
+                              "linux",
+                              "android",
+                              "ios",
+                              "web",
+                              "console"
+                            ],
+                            "type": "string"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          },
+                          "releaseNotes": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "enum": [
+                              "pending",
+                              "building",
+                              "deploying",
+                              "success",
+                              "failed",
+                              "cancelled"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "GET /projects/{projectId}/builds": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "listBuilds",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "builds": {
+                      "items": {
+                        "properties": {
+                          "completedAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "configuration": {
+                            "enum": [
+                              "debug",
+                              "release"
+                            ],
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "downloadUrl": {
+                            "format": "uri",
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "platform": {
+                            "enum": [
+                              "windows",
+                              "macos",
+                              "linux",
+                              "android",
+                              "ios",
+                              "web",
+                              "console"
+                            ],
+                            "type": "string"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          },
+                          "size": {
+                            "description": "Build size in bytes",
+                            "type": "integer"
+                          },
+                          "status": {
+                            "enum": [
+                              "pending",
+                              "building",
+                              "success",
+                              "failed"
+                            ],
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "GET /projects/{projectId}/deployments/{deploymentId}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getDeployment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "deploymentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "buildVersion": {
+                      "type": "string"
+                    },
+                    "completedAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "deploymentUrl": {
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "environment": {
+                      "enum": [
+                        "development",
+                        "staging",
+                        "production"
+                      ],
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "platform": {
+                      "enum": [
+                        "windows",
+                        "macos",
+                        "linux",
+                        "android",
+                        "ios",
+                        "web",
+                        "console"
+                      ],
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "type": "string"
+                    },
+                    "releaseNotes": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "pending",
+                        "building",
+                        "deploying",
+                        "success",
+                        "failed",
+                        "cancelled"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Authentication information is missing or invalid"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The requested resource was not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "bearerAuth": {
+            "bearerFormat": "JWT",
+            "scheme": "bearer",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
       }
     }
   }

@@ -122,6 +122,12 @@ main: kit: entity: deployment: {
               }
             ]
           }
+          contract: {
+            id: "POST /projects/{projectId}/deployments"
+            json: "{\"operationId\":\"createDeployment\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"}},\"required\":[\"environment\",\"platform\",\"buildVersion\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Deployment created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "POST"
           orig: "/projects/{projectId}/deployments"
           rename: {
@@ -176,6 +182,12 @@ main: kit: entity: deployment: {
               }
             ]
           }
+          contract: {
+            id: "GET /projects/{projectId}/deployments"
+            json: "{\"operationId\":\"listDeployments\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"query\",\"name\":\"status\",\"schema\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"deployments\":{\"items\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/projects/{projectId}/deployments"
           rename: {
@@ -216,6 +228,12 @@ main: kit: entity: deployment: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "GET /projects/{projectId}/builds"
+            json: "{\"operationId\":\"listBuilds\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"builds\":{\"items\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"configuration\":{\"enum\":[\"debug\",\"release\"],\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"downloadUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"Build size in bytes\",\"type\":\"integer\"},\"status\":{\"enum\":[\"pending\",\"building\",\"success\",\"failed\"],\"type\":\"string\"},\"version\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "GET"
           orig: "/projects/{projectId}/builds"
@@ -268,6 +286,12 @@ main: kit: entity: deployment: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "GET /projects/{projectId}/deployments/{deploymentId}"
+            json: "{\"operationId\":\"getDeployment\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"deploymentId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "GET"
           orig: "/projects/{projectId}/deployments/{deploymentId}"

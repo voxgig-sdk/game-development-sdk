@@ -131,6 +131,12 @@ main: kit: entity: test: {
               }
             ]
           }
+          contract: {
+            id: "POST /projects/{projectId}/tests"
+            json: "{\"operationId\":\"createTestRun\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"required\":[\"name\",\"testSuite\",\"environment\",\"platform\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Test run created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "POST"
           orig: "/projects/{projectId}/tests"
           rename: {
@@ -185,6 +191,12 @@ main: kit: entity: test: {
               }
             ]
           }
+          contract: {
+            id: "GET /projects/{projectId}/tests"
+            json: "{\"operationId\":\"listTestRuns\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by test status\",\"in\":\"query\",\"name\":\"status\",\"schema\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"tests\":{\"items\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "GET"
           orig: "/projects/{projectId}/tests"
           rename: {
@@ -237,6 +249,12 @@ main: kit: entity: test: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "GET /projects/{projectId}/tests/{testId}"
+            json: "{\"operationId\":\"getTestRun\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"testId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "GET"
           orig: "/projects/{projectId}/tests/{testId}"

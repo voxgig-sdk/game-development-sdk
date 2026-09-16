@@ -55,6 +55,12 @@ main: kit: entity: analytics: {
               }
             ]
           }
+          contract: {
+            id: "POST /projects/{projectId}/analytics/events"
+            json: "{\"operationId\":\"trackAnalyticsEvent\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventName\":{\"type\":\"string\"},\"eventType\":{\"enum\":[\"gameplay\",\"ui_interaction\",\"error\",\"performance\",\"custom\"],\"type\":\"string\"},\"properties\":{\"additionalProperties\":true,\"type\":\"object\"},\"timestamp\":{\"format\":\"date-time\",\"type\":\"string\"}},\"required\":[\"eventName\",\"eventType\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"202\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventId\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Event accepted for processing\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
           method: "POST"
           orig: "/projects/{projectId}/analytics/events"
           rename: {
@@ -126,6 +132,12 @@ main: kit: entity: analytics: {
                 type: "`$STRING`"
               }
             ]
+          }
+          contract: {
+            id: "GET /projects/{projectId}/analytics"
+            json: "{\"operationId\":\"getProjectAnalytics\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Start date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"startDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"End date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"endDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"Comma-separated list of metrics to retrieve\",\"in\":\"query\",\"name\":\"metrics\",\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"events\":{\"items\":{\"properties\":{\"count\":{\"type\":\"integer\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"metrics\":{\"properties\":{\"averageSessionDuration\":{\"description\":\"Average session duration in seconds\",\"type\":\"number\"},\"crashRate\":{\"description\":\"Percentage of sessions with crashes\",\"type\":\"number\"},\"retentionRate\":{\"description\":\"Percentage of returning players\",\"type\":\"number\"},\"totalPlays\":{\"type\":\"integer\"},\"uniquePlayers\":{\"type\":\"integer\"}},\"type\":\"object\"},\"period\":{\"properties\":{\"endDate\":{\"format\":\"date\",\"type\":\"string\"},\"startDate\":{\"format\":\"date\",\"type\":\"string\"}},\"type\":\"object\"},\"projectId\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
           }
           method: "GET"
           orig: "/projects/{projectId}/analytics"
