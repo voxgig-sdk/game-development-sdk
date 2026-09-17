@@ -70,7 +70,7 @@ except Exception as err:
 
 ```python
 # Create — returns the ENTITY (call data_get() for the record)
-created = client.Analytics().create({"project_id": "example_project_id", "eventName": "example_eventName", "eventType": "example_eventType"})
+created = client.Analytics().create({"project_id": "example_project_id"})
 
 ```
 
@@ -281,11 +281,7 @@ On error, `ok` is `False` and `err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `eventName` |  |
-| `eventType` |  |
 | `name` |  |
-| `properties` |  |
-| `timestamp` |  |
 
 Operations: Create, List.
 
@@ -435,11 +431,7 @@ Create an instance: `analytics = client.Analytics()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `eventName` | `str` |  |
-| `eventType` | `str` |  |
 | `name` | `str` |  |
-| `properties` | `dict` |  |
-| `timestamp` | `str` |  |
 
 #### Example: List
 
@@ -452,8 +444,6 @@ analyticss = client.Analytics().list({"project_id": "example"})
 ```python
 analytics = client.Analytics().create({
     "project_id": "example_project_id",  # str
-    "eventName": "example_eventName",  # str
-    "eventType": "example_eventType",  # str
 })
 ```
 
@@ -894,6 +884,7 @@ Use `helpers.to_map()` to safely validate that a value is a dict.
 py/
 ├── gamedevelopment_sdk.py         -- Main SDK module
 ├── config.py                    -- Configuration
+├── schema.py                    -- Generated option + entity specs
 ├── features.py                  -- Feature factory
 ├── core/                        -- Core types and context
 ├── entity/                      -- Entity implementations

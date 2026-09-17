@@ -128,11 +128,7 @@ fmt.Println(analytics.GetName()) // "analytics"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `eventName` | `string` | Yes |  |
-| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `properties` | `map[string]any` | No |  |
-| `timestamp` | `string` | No |  |
 
 ### Operations
 
@@ -155,8 +151,6 @@ Create a new entity with the given data.
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
     "project_id": "example_project_id",
-    "eventName": "example_eventName",
-    "eventType": "example_eventType",
 }, nil)
 if err != nil {
     panic(err)

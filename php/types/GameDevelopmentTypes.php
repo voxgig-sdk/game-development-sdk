@@ -16,11 +16,7 @@ declare(strict_types=1);
 class Analytics
 {
     public ?int $count = null;
-    public string $eventName;
-    public string $eventType;
     public ?string $name = null;
-    public ?array $properties = null;
-    public ?string $timestamp = null;
 }
 
 /** Request payload for Analytics#list. */
@@ -37,11 +33,7 @@ class AnalyticsCreateData
 {
     public string $project_id;
     public ?int $count = null;
-    public string $eventName;
-    public string $eventType;
     public ?string $name = null;
-    public ?array $properties = null;
-    public ?string $timestamp = null;
 }
 
 /** Asset entity data model. */

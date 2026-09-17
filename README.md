@@ -105,12 +105,12 @@ local results, err = client:Project():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/game-development-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
-| Python | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
-| PHP | `voxgig-sdk/game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
+| TypeScript | `@voxgig-sdk/game-development-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/tags) |
+| Python | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/tags) |
+| PHP | `voxgig-sdk/game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/game-development-sdk/go` | `go get github.com/voxgig-sdk/game-development-sdk/go@latest` |
-| Ruby | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
-| Lua | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/releases) |
+| Ruby | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/tags) |
+| Lua | `voxgig-sdk-game-development` | publish pending — [install from git tag](https://github.com/voxgig-sdk/game-development-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/game-development-sdk/go-cli` | `go install github.com/voxgig-sdk/game-development-sdk/go-cli/cmd/game-development@latest` |
 | Go MCP server | `github.com/voxgig-sdk/game-development-sdk/go-mcp` | `go get github.com/voxgig-sdk/game-development-sdk/go-mcp@latest` |
 

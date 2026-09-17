@@ -84,22 +84,10 @@ declare class Config {
     };
     entity: {
         analytics: {
-            fields: ({
+            fields: {
                 name: string;
                 type: string;
-                req?: undefined;
-                format?: undefined;
-            } | {
-                name: string;
-                req: boolean;
-                type: string;
-                format?: undefined;
-            } | {
-                format: string;
-                name: string;
-                type: string;
-                req?: undefined;
-            })[];
+            }[];
             name: string;
             op: {
                 create: {

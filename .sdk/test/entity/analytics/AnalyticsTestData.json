@@ -2,32 +2,20 @@
   "existing": {
     "analytics": {
       "ANALYTICS00": {
-        "count": 60,
-        "eventName": "s3d",
-        "eventType": "s3e",
-        "name": "s3f",
-        "properties": {},
-        "timestamp": "s41",
+        "count": 20,
+        "name": "s15",
         "project_id": "PROJECT01",
         "id": "ANALYTICS00"
       },
       "ANALYTICS01": {
-        "count": 120,
-        "eventName": "s79",
-        "eventType": "s7a",
-        "name": "s7b",
-        "properties": {},
-        "timestamp": "s7d",
+        "count": 40,
+        "name": "s29",
         "project_id": "PROJECT01",
         "id": "ANALYTICS01"
       },
       "ANALYTICS02": {
-        "count": 180,
-        "eventName": "sb5",
-        "eventType": "sb6",
-        "name": "sb7",
-        "properties": {},
-        "timestamp": "sb9",
+        "count": 60,
+        "name": "s3d",
         "project_id": "PROJECT01",
         "id": "ANALYTICS02"
       }
@@ -36,12 +24,8 @@
   "new": {
     "analytics": {
       "analytics_ref01": {
-        "count": 240,
-        "eventName": "sf1",
-        "eventType": "sf2",
-        "name": "sf3",
-        "properties": {},
-        "timestamp": "sf5"
+        "count": 80,
+        "name": "s51"
       }
     }
   },

@@ -104,26 +104,7 @@ func MakeConfig() map[string]any {
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
-						"name": "eventName",
-						"req": true,
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "eventType",
-						"req": true,
-						"type": "`$STRING`",
-					},
-					map[string]any{
 						"name": "name",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "properties",
-						"type": "`$OBJECT`",
-					},
-					map[string]any{
-						"format": "date-time",
-						"name": "timestamp",
 						"type": "`$STRING`",
 					},
 				},

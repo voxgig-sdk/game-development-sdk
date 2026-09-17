@@ -123,11 +123,7 @@ analytics = client.Analytics
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `Integer` | No |  |
-| `eventName` | `String` | Yes |  |
-| `eventType` | `String` | Yes |  |
 | `name` | `String` | No |  |
-| `properties` | `Hash` | No |  |
-| `timestamp` | `String` | No |  |
 
 ### Operations
 
@@ -138,8 +134,6 @@ Create a new entity with the given data. Raises on error.
 ```ruby
 result = client.Analytics.create({
   "project_id" => "example_project_id", # String
-  "eventName" => "example_eventName", # String
-  "eventType" => "example_eventType", # String
 })
 ```
 

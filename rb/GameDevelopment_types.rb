@@ -13,27 +13,11 @@
 # @!attribute [rw] count
 #   @return [Integer, nil]
 #
-# @!attribute [rw] eventName
-#   @return [String]
-#
-# @!attribute [rw] eventType
-#   @return [String]
-#
 # @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] properties
-#   @return [Hash, nil]
-#
-# @!attribute [rw] timestamp
 #   @return [String, nil]
 Analytics = Struct.new(
   :count,
-  :eventName,
-  :eventType,
   :name,
-  :properties,
-  :timestamp,
   keyword_init: true
 )
 
@@ -66,28 +50,12 @@ AnalyticsListMatch = Struct.new(
 # @!attribute [rw] count
 #   @return [Integer, nil]
 #
-# @!attribute [rw] eventName
-#   @return [String]
-#
-# @!attribute [rw] eventType
-#   @return [String]
-#
 # @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] properties
-#   @return [Hash, nil]
-#
-# @!attribute [rw] timestamp
 #   @return [String, nil]
 AnalyticsCreateData = Struct.new(
   :project_id,
   :count,
-  :eventName,
-  :eventType,
   :name,
-  :properties,
-  :timestamp,
   keyword_init: true
 )
 

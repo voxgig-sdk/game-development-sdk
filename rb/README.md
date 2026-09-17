@@ -64,7 +64,7 @@ end
 
 ```ruby
 # create returns the ENTITY — call data_get for the created Analytics record.
-created = client.Analytics.create({ "project_id" => "example_project_id", "eventName" => "example_eventName", "eventType" => "example_eventType" })
+created = client.Analytics.create({ "project_id" => "example_project_id" })
 
 ```
 
@@ -278,11 +278,7 @@ returns a result `Hash` with these keys:
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `eventName` |  |
-| `eventType` |  |
 | `name` |  |
-| `properties` |  |
-| `timestamp` |  |
 
 Operations: Create, List.
 
@@ -432,11 +428,7 @@ Create an instance: `analytics = client.Analytics`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `Integer` |  |
-| `eventName` | `String` |  |
-| `eventType` | `String` |  |
 | `name` | `String` |  |
-| `properties` | `Hash` |  |
-| `timestamp` | `String` |  |
 
 #### Example: List
 
@@ -450,8 +442,6 @@ analyticss = client.Analytics.list
 ```ruby
 analytics = client.Analytics.create({
   "project_id" => "example_project_id", # String
-  "eventName" => "example_eventName", # String
-  "eventType" => "example_eventType", # String
 })
 ```
 
@@ -901,6 +891,7 @@ Use `Helpers.to_map()` to safely validate that a value is a hash.
 rb/
 ├── GameDevelopment_sdk.rb       -- Main SDK module
 ├── config.rb                  -- Configuration
+├── schema.rb                  -- Generated option + entity specs
 ├── features.rb                -- Feature factory
 ├── core/                      -- Core types and context
 ├── entity/                    -- Entity implementations

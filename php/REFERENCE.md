@@ -122,11 +122,7 @@ $analytics = $client->Analytics();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `eventName` | `string` | Yes |  |
-| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `properties` | `array` | No |  |
-| `timestamp` | `string` | No |  |
 
 ### Operations
 
@@ -137,8 +133,6 @@ Create a new entity with the given data. Throws on error.
 ```php
 $result = $client->Analytics()->create([
   "project_id" => null, // string
-  "eventName" => null, // string
-  "eventType" => null, // string
 ]);
 ```
 

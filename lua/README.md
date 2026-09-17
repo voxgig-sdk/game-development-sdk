@@ -45,7 +45,7 @@ local analyticss, err = client:Analytics():list()
 if err then error(err) end
 
 for _, item in ipairs(analyticss) do
-  print(item["eventName"])
+  print(item["name"])
 end
 ```
 
@@ -63,7 +63,7 @@ print(asset)
 
 ```lua
 -- Create
-local created, err = client:Analytics():create({ project_id = "example_project_id", eventName = "example_eventName", eventType = "example_eventType" })
+local created, err = client:Analytics():create({ project_id = "example_project_id" })
 if err then error(err) end
 
 ```
@@ -267,11 +267,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `eventName` |  |
-| `eventType` |  |
 | `name` |  |
-| `properties` |  |
-| `timestamp` |  |
 
 Operations: Create, List.
 
@@ -421,11 +417,7 @@ Create an instance: `local analytics = client:Analytics(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `number` |  |
-| `eventName` | `string` |  |
-| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `properties` | `table` |  |
-| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -438,8 +430,6 @@ local analyticss, err = client:Analytics():list()
 ```lua
 local analytics, err = client:Analytics():create({
   project_id = "example_project_id", -- string
-  eventName = "example_eventName", -- string
-  eventType = "example_eventType", -- string
 })
 ```
 
@@ -880,6 +870,7 @@ Use `helpers.to_map()` to safely validate that a value is a table.
 lua/
 ├── game-development_sdk.lua    -- Main SDK module
 ├── config.lua               -- Configuration
+├── schema.lua               -- Generated option + entity specs
 ├── features.lua             -- Feature factory
 ├── core/                    -- Core types and context
 ├── entity/                  -- Entity implementations

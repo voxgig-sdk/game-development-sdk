@@ -100,26 +100,7 @@ local function make_config()
             ["type"] = "`$INTEGER`",
           },
           {
-            ["name"] = "eventName",
-            ["req"] = true,
-            ["type"] = "`$STRING`",
-          },
-          {
-            ["name"] = "eventType",
-            ["req"] = true,
-            ["type"] = "`$STRING`",
-          },
-          {
             ["name"] = "name",
-            ["type"] = "`$STRING`",
-          },
-          {
-            ["name"] = "properties",
-            ["type"] = "`$OBJECT`",
-          },
-          {
-            ["format"] = "date-time",
-            ["name"] = "timestamp",
             ["type"] = "`$STRING`",
           },
         },

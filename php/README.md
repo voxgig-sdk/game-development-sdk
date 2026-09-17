@@ -66,7 +66,7 @@ try {
 
 ```php
 // create() returns the ENTITY — call data_get() for the created Analytics record.
-$created = $client->Analytics()->create(["project_id" => "example_project_id", "eventName" => "example_eventName", "eventType" => "example_eventType"]);
+$created = $client->Analytics()->create(["project_id" => "example_project_id"]);
 
 ```
 
@@ -289,11 +289,7 @@ On error, `ok` is `false` and `$err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `eventName` |  |
-| `eventType` |  |
 | `name` |  |
-| `properties` |  |
-| `timestamp` |  |
 
 Operations: Create, List.
 
@@ -443,11 +439,7 @@ Create an instance: `$analytics = $client->Analytics();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `eventName` | `string` |  |
-| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `properties` | `array` |  |
-| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -461,8 +453,6 @@ $analyticss = $client->Analytics()->list();
 ```php
 $analytics = $client->Analytics()->create([
     "project_id" => null, // string
-    "eventName" => null, // string
-    "eventType" => null, // string
 ]);
 ```
 
@@ -912,6 +902,7 @@ Use `Helpers::to_map()` to safely validate that a value is an array.
 php/
 ├── gamedevelopment_sdk.php          -- Main SDK class
 ├── config.php                     -- Configuration
+├── schema.php                     -- Generated option + entity specs
 ├── features.php                   -- Feature factory
 ├── core/                          -- Core types and context
 ├── entity/                        -- Entity implementations

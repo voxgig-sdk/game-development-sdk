@@ -117,11 +117,7 @@ analytics = client.Analytics()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `int` | No |  |
-| `eventName` | `str` | Yes |  |
-| `eventType` | `str` | Yes |  |
 | `name` | `str` | No |  |
-| `properties` | `dict` | No |  |
-| `timestamp` | `str` | No |  |
 
 ### Operations
 
@@ -132,8 +128,6 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.Analytics().create({
     "project_id": "example_project_id",  # str
-    "eventName": "example_eventName",  # str
-    "eventType": "example_eventType",  # str
 })
 ```
 

@@ -1,10 +1,6 @@
 export interface Analytics {
     count?: number;
-    eventName: string;
-    eventType: string;
     name?: string;
-    properties?: Record<string, any>;
-    timestamp?: string;
 }
 export interface AnalyticsListMatch {
     project_id: string;
@@ -15,11 +11,7 @@ export interface AnalyticsListMatch {
 export interface AnalyticsCreateData {
     project_id: string;
     count?: number;
-    eventName: string;
-    eventType: string;
     name?: string;
-    properties?: Record<string, any>;
-    timestamp?: string;
     $action?: string;
     [action: string]: any;
 }

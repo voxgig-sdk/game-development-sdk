@@ -16,16 +16,9 @@ from __future__ import annotations
 from typing import TypedDict, Any
 
 
-class AnalyticsRequired(TypedDict):
-    eventName: str
-    eventType: str
-
-
-class Analytics(AnalyticsRequired, total=False):
+class Analytics(TypedDict, total=False):
     count: int
     name: str
-    properties: dict
-    timestamp: str
 
 
 class AnalyticsListMatchRequired(TypedDict):
@@ -40,15 +33,11 @@ class AnalyticsListMatch(AnalyticsListMatchRequired, total=False):
 
 class AnalyticsCreateDataRequired(TypedDict):
     project_id: str
-    eventName: str
-    eventType: str
 
 
 class AnalyticsCreateData(AnalyticsCreateDataRequired, total=False):
     count: int
     name: str
-    properties: dict
-    timestamp: str
 
 
 class Asset(TypedDict, total=False):

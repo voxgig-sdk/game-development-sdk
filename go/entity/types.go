@@ -15,11 +15,7 @@ import (
 // Analytics is the typed data model for the analytics entity.
 type Analytics struct {
 	Count *int `json:"count,omitempty"`
-	EventName string `json:"eventName"`
-	EventType string `json:"eventType"`
 	Name *string `json:"name,omitempty"`
-	Properties *map[string]any `json:"properties,omitempty"`
-	Timestamp *string `json:"timestamp,omitempty"`
 }
 
 // AnalyticsListMatch is the typed request payload for Analytics.ListTyped.
@@ -34,11 +30,7 @@ type AnalyticsListMatch struct {
 type AnalyticsCreateData struct {
 	ProjectId string `json:"project_id"`
 	Count *int `json:"count,omitempty"`
-	EventName string `json:"eventName"`
-	EventType string `json:"eventType"`
 	Name *string `json:"name,omitempty"`
-	Properties *map[string]any `json:"properties,omitempty"`
-	Timestamp *string `json:"timestamp,omitempty"`
 }
 
 // Asset is the typed data model for the asset entity.

@@ -129,26 +129,7 @@ def make_config():
             "type": "`$INTEGER`",
           },
           {
-            "name": "eventName",
-            "req": True,
-            "type": "`$STRING`",
-          },
-          {
-            "name": "eventType",
-            "req": True,
-            "type": "`$STRING`",
-          },
-          {
             "name": "name",
-            "type": "`$STRING`",
-          },
-          {
-            "name": "properties",
-            "type": "`$OBJECT`",
-          },
-          {
-            "format": "date-time",
-            "name": "timestamp",
             "type": "`$STRING`",
           },
         ],

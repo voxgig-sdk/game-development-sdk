@@ -11,28 +11,7 @@ main: kit: entity: analytics: {
       type: "`$INTEGER`"
     }
     {
-      name: "eventName"
-      req: true
-      type: "`$STRING`"
-    }
-    {
-      name: "eventType"
-      req: true
-      type: "`$STRING`"
-    }
-    {
       name: "name"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "properties"
-      req: false
-      type: "`$OBJECT`"
-    }
-    {
-      format: "date-time"
-      name: "timestamp"
       req: false
       type: "`$STRING`"
     }

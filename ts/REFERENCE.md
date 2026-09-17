@@ -202,11 +202,7 @@ const analytics = client.Analytics()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | No |  |
-| `eventName` | `string` | Yes |  |
-| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `properties` | `Record<string, any>` | No |  |
-| `timestamp` | `string` | No |  |
 
 ### Actions
 
@@ -237,8 +233,6 @@ Create a new entity with the given data.
 ```ts
 const result = await client.Analytics().create({
   project_id: 'example_project_id',
-  eventName: 'example_eventName',
-  eventType: 'example_eventType',
 })
 ```
 

@@ -120,11 +120,7 @@ local analytics = client:Analytics(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | No |  |
-| `eventName` | `string` | Yes |  |
-| `eventType` | `string` | Yes |  |
 | `name` | `string` | No |  |
-| `properties` | `table` | No |  |
-| `timestamp` | `string` | No |  |
 
 ### Operations
 
@@ -135,8 +131,6 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:Analytics():create({
   project_id = --[[ string ]],
-  eventName = --[[ string ]],
-  eventType = --[[ string ]],
 })
 ```
 

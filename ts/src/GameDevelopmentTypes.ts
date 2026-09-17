@@ -7,11 +7,7 @@
 
 export interface Analytics {
   count?: number
-  eventName: string
-  eventType: string
   name?: string
-  properties?: Record<string, any>
-  timestamp?: string
 }
 
 export interface AnalyticsListMatch {
@@ -24,11 +20,7 @@ export interface AnalyticsListMatch {
 export interface AnalyticsCreateData {
   project_id: string
   count?: number
-  eventName: string
-  eventType: string
   name?: string
-  properties?: Record<string, any>
-  timestamp?: string
 
   // Selects a custom action instead of the plain create:
   //   'event'

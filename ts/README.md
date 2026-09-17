@@ -72,8 +72,6 @@ try {
 // Create — returns the created Analytics ENTITY (.data() for the record)
 const created = await client.Analytics().create({
   project_id: 'example_project_id',
-  eventName: 'example_eventName',
-  eventType: 'example_eventType',
 })
 
 ```
@@ -341,11 +339,7 @@ The `prepare()` method returns:
 | Field | Description |
 | --- | --- |
 | `count` |  |
-| `eventName` |  |
-| `eventType` |  |
 | `name` |  |
-| `properties` |  |
-| `timestamp` |  |
 
 Operations: create, list.
 
@@ -495,11 +489,7 @@ Create an instance: `const analytics = client.Analytics()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `number` |  |
-| `eventName` | `string` |  |
-| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `properties` | `Record<string, any>` |  |
-| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -512,8 +502,6 @@ const analyticss = await client.Analytics().list({ project_id: "example" })
 ```ts
 const analytics = await client.Analytics().create({
   project_id: 'example_project_id',
-  eventName: 'example_eventName',
-  eventType: 'example_eventType',
 })
 ```
 

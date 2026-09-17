@@ -63,7 +63,7 @@ func main() {
     }
 
     // Create a analytics.
-    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example_project_id", "eventName": "example_eventName", "eventType": "example_eventType"}, nil)
+    created, err := client.Analytics(nil).Create(map[string]any{"project_id": "example_project_id"}, nil)
     if err != nil {
         panic(err)
     }
@@ -285,11 +285,7 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | Field | Description |
 | --- | --- |
 | `"count"` |  |
-| `"eventName"` |  |
-| `"eventType"` |  |
 | `"name"` |  |
-| `"properties"` |  |
-| `"timestamp"` |  |
 
 Operations: Create, List.
 
@@ -439,11 +435,7 @@ Create an instance: `analytics := client.Analytics(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `count` | `int` |  |
-| `eventName` | `string` |  |
-| `eventType` | `string` |  |
 | `name` | `string` |  |
-| `properties` | `map[string]any` |  |
-| `timestamp` | `string` |  |
 
 #### Example: List
 
@@ -460,8 +452,6 @@ fmt.Println(analyticss) // the array of records
 ```go
 result, err := client.Analytics(nil).Create(map[string]any{
     "project_id": "example_project_id",
-    "eventName": "example_eventName",
-    "eventType": "example_eventType",
 }, nil)
 if err != nil {
     panic(err)

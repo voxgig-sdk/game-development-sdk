@@ -8,11 +8,7 @@
 
 ---@class Analytics
 ---@field count? number
----@field eventName string
----@field eventType string
 ---@field name? string
----@field properties? table
----@field timestamp? string
 
 ---@class AnalyticsListMatch
 ---@field project_id string
@@ -23,11 +19,7 @@
 ---@class AnalyticsCreateData
 ---@field project_id string
 ---@field count? number
----@field eventName string
----@field eventType string
 ---@field name? string
----@field properties? table
----@field timestamp? string
 
 ---@class Asset
 ---@field createdAt? string
