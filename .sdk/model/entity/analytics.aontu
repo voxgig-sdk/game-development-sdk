@@ -1,0 +1,161 @@
+# Entity: analytics
+
+main: kit: entity: analytics: {
+
+  alias: field: {}
+
+  fields: {
+    count: {
+      h: "Count"
+      n: "count"
+      r: false
+      t: "`$INTEGER`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  name: "analytics"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /projects/{projectId}/analytics/events"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/projects/{projectId}/analytics/events"
+          q: {
+            "$action": "event"
+            exist: [
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "analytics"
+            }
+            {
+              lit: "events"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/analytics"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "end_date"
+                or: "end_date"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "metric"
+                or: "metric"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "start_date"
+                or: "start_date"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/analytics"
+          q: {
+            exist: [
+              "end_date"
+              "metric"
+              "project_id"
+              "start_date"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "analytics"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.project")]
+  ]
+
+}

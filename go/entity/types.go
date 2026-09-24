@@ -1,7 +1,7 @@
 // Typed models for the GameDevelopment SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -14,8 +14,6 @@ import (
 
 // Analytics is the typed data model for the analytics entity.
 type Analytics struct {
-	Count *int `json:"count,omitempty"`
-	Name *string `json:"name,omitempty"`
 }
 
 // AnalyticsListMatch is the typed request payload for Analytics.ListTyped.
@@ -35,16 +33,6 @@ type AnalyticsCreateData struct {
 
 // Asset is the typed data model for the asset entity.
 type Asset struct {
-	CreatedAt *string `json:"createdAt,omitempty"`
-	Id *string `json:"id,omitempty"`
-	MimeType *string `json:"mimeType,omitempty"`
-	Name *string `json:"name,omitempty"`
-	ProjectId *string `json:"projectId,omitempty"`
-	Size *int `json:"size,omitempty"`
-	Tags *[]any `json:"tags,omitempty"`
-	Type *string `json:"type,omitempty"`
-	UpdatedAt *string `json:"updatedAt,omitempty"`
-	Url *string `json:"url,omitempty"`
 }
 
 // AssetLoadMatch is the typed request payload for Asset.LoadTyped.
@@ -83,9 +71,6 @@ type AssetRemoveMatch struct {
 
 // Build is the typed data model for the build entity.
 type Build struct {
-	Configuration string `json:"configuration"`
-	Platform string `json:"platform"`
-	Version string `json:"version"`
 }
 
 // BuildCreateData is the typed request payload for Build.CreateTyped.
@@ -98,14 +83,6 @@ type BuildCreateData struct {
 
 // Collaboration is the typed data model for the collaboration entity.
 type Collaboration struct {
-	AddedAt *string `json:"addedAt,omitempty"`
-	Email *string `json:"email,omitempty"`
-	Id *string `json:"id,omitempty"`
-	LastActive *string `json:"lastActive,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Role *string `json:"role,omitempty"`
-	Status *string `json:"status,omitempty"`
-	UserId *string `json:"userId,omitempty"`
 }
 
 // CollaborationListMatch is the typed request payload for Collaboration.ListTyped.
@@ -121,8 +98,6 @@ type CollaborationRemoveMatch struct {
 
 // Collaborator is the typed data model for the collaborator entity.
 type Collaborator struct {
-	Email string `json:"email"`
-	Role string `json:"role"`
 }
 
 // CollaboratorCreateData is the typed request payload for Collaborator.CreateTyped.
@@ -134,20 +109,6 @@ type CollaboratorCreateData struct {
 
 // Deployment is the typed data model for the deployment entity.
 type Deployment struct {
-	BuildVersion *string `json:"buildVersion,omitempty"`
-	CompletedAt *string `json:"completedAt,omitempty"`
-	Configuration *string `json:"configuration,omitempty"`
-	CreatedAt *string `json:"createdAt,omitempty"`
-	DeploymentUrl *string `json:"deploymentUrl,omitempty"`
-	DownloadUrl *string `json:"downloadUrl,omitempty"`
-	Environment *string `json:"environment,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Platform *string `json:"platform,omitempty"`
-	ProjectId *string `json:"projectId,omitempty"`
-	ReleaseNotes *string `json:"releaseNotes,omitempty"`
-	Size *int `json:"size,omitempty"`
-	Status *string `json:"status,omitempty"`
-	Version *string `json:"version,omitempty"`
 }
 
 // DeploymentLoadMatch is the typed request payload for Deployment.LoadTyped.
@@ -183,14 +144,6 @@ type DeploymentCreateData struct {
 
 // Project is the typed data model for the project entity.
 type Project struct {
-	CreatedAt *string `json:"createdAt,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
-	Owner *map[string]any `json:"owner,omitempty"`
-	Settings *map[string]any `json:"settings,omitempty"`
-	Status *string `json:"status,omitempty"`
-	UpdatedAt *string `json:"updatedAt,omitempty"`
 }
 
 // ProjectLoadMatch is the typed request payload for Project.LoadTyped.
@@ -236,21 +189,6 @@ type ProjectRemoveMatch struct {
 
 // Test is the typed data model for the test entity.
 type Test struct {
-	CompletedAt *string `json:"completedAt,omitempty"`
-	Duration *float64 `json:"duration,omitempty"`
-	Environment string `json:"environment"`
-	Failed *int `json:"failed,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Name string `json:"name"`
-	Passed *int `json:"passed,omitempty"`
-	Platform string `json:"platform"`
-	ProjectId *string `json:"projectId,omitempty"`
-	Results *map[string]any `json:"results,omitempty"`
-	Skipped *int `json:"skipped,omitempty"`
-	StartedAt *string `json:"startedAt,omitempty"`
-	Status *string `json:"status,omitempty"`
-	TestSuite string `json:"testSuite"`
-	TotalTests *int `json:"totalTests,omitempty"`
 }
 
 // TestLoadMatch is the typed request payload for Test.LoadTyped.

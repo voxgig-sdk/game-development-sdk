@@ -1,0 +1,22 @@
+# BasicCollaboratorFlow
+
+main: kit: flow: BasicCollaboratorFlow:
+{
+  entity: "collaborator",
+  kind: "basic",
+  name: "BasicCollaboratorFlow",
+  step: [
+    {
+      i: {
+        ref: "collaborator_ref01"
+      }
+
+      m: {
+        project_id: "project01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicCollaboratorFlow"
+}

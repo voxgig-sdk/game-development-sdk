@@ -1,0 +1,26 @@
+# BasicCollaborationFlow
+
+main: kit: flow: BasicCollaborationFlow:
+{
+  entity: "collaboration",
+  kind: "basic",
+  name: "BasicCollaborationFlow",
+  step: [
+    {
+      m: {
+        project_id: "project01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "collaboration_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCollaborationFlow"
+}

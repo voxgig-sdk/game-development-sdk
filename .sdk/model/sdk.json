@@ -24,26 +24,94 @@
         "repr": "auto"
       },
       "contributor": {},
+      "doc": {
+        "active": true,
+        "assets": {
+          "path": ".sdk/doc/assets"
+        },
+        "brand": {
+          "label": "",
+          "notice": "",
+          "shortNotice": "",
+          "url": ""
+        },
+        "ci": {
+          "active": true,
+          "branch": "main"
+        },
+        "content": {
+          "path": ".sdk/doc/content"
+        },
+        "edition": {
+          "summary": {
+            "active": true,
+            "base": "node_modules/@voxgig/docgen/project/.sdk",
+            "brand": {},
+            "filter": {
+              "entities": [],
+              "features": [],
+              "targets": []
+            },
+            "kind": "summary",
+            "name": "summary",
+            "origname": "",
+            "output": {
+              "path": "SUMMARY.md"
+            },
+            "package": "@voxgig/docgen",
+            "published": false,
+            "site": {
+              "active": true
+            },
+            "style": {},
+            "title": ""
+          }
+        },
+        "qa": {
+          "vocabulary": []
+        },
+        "style": {
+          "color": {
+            "accent": "#00c6d8",
+            "background": "#f5f5f9",
+            "darkBackground": "#0f1117",
+            "darkText": "#e6edf3",
+            "primary": "#e70042",
+            "text": "#0a0a0a"
+          },
+          "font": "Nunito, system-ui, sans-serif",
+          "fontFile": "",
+          "headingFont": "Nunito, system-ui, sans-serif",
+          "headingFontFile": "",
+          "logo": "",
+          "mode": "light",
+          "mono": "ui-monospace, monospace",
+          "monoFile": ""
+        },
+        "target": {}
+      },
       "entity": {
         "analytics": {
           "active": true,
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "count",
-              "req": false,
-              "type": "`$INTEGER`"
+          "fields": {
+            "count": {
+              "a": true,
+              "h": "Count",
+              "n": "count",
+              "r": false,
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "type": "`$STRING`"
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "name": "analytics",
           "op": {
             "create": {
@@ -51,34 +119,39 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/analytics/events",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/analytics/events",
-                    "json": "{\"operationId\":\"trackAnalyticsEvent\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventName\":{\"type\":\"string\"},\"eventType\":{\"enum\":[\"gameplay\",\"ui_interaction\",\"error\",\"performance\",\"custom\"],\"type\":\"string\"},\"properties\":{\"additionalProperties\":true,\"type\":\"object\"},\"timestamp\":{\"format\":\"date-time\",\"type\":\"string\"}},\"required\":[\"eventName\",\"eventType\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"202\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"eventId\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Event accepted for processing\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/analytics/events",
+                  "q": {
+                    "$action": "event",
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/analytics/events",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -92,13 +165,7 @@
                       "lit": "events"
                     }
                   ],
-                  "select": {
-                    "$action": "event",
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -110,60 +177,67 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/analytics",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ],
                     "query": [
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "end_date",
-                        "orig": "end_date",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "end_date",
+                        "or": "end_date",
+                        "r": false,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "metric",
-                        "orig": "metric",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "metric",
+                        "or": "metric",
+                        "r": false,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "start_date",
-                        "orig": "start_date",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "start_date",
+                        "or": "start_date",
+                        "r": false,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/analytics",
-                    "json": "{\"operationId\":\"getProjectAnalytics\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Start date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"startDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"End date for analytics period (ISO 8601 format)\",\"in\":\"query\",\"name\":\"endDate\",\"schema\":{\"format\":\"date\",\"type\":\"string\"}},{\"description\":\"Comma-separated list of metrics to retrieve\",\"in\":\"query\",\"name\":\"metrics\",\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"events\":{\"items\":{\"properties\":{\"count\":{\"type\":\"integer\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"metrics\":{\"properties\":{\"averageSessionDuration\":{\"description\":\"Average session duration in seconds\",\"type\":\"number\"},\"crashRate\":{\"description\":\"Percentage of sessions with crashes\",\"type\":\"number\"},\"retentionRate\":{\"description\":\"Percentage of returning players\",\"type\":\"number\"},\"totalPlays\":{\"type\":\"integer\"},\"uniquePlayers\":{\"type\":\"integer\"}},\"type\":\"object\"},\"period\":{\"properties\":{\"endDate\":{\"format\":\"date\",\"type\":\"string\"},\"startDate\":{\"format\":\"date\",\"type\":\"string\"}},\"type\":\"object\"},\"projectId\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/analytics",
+                  "q": {
+                    "exist": [
+                      "end_date",
+                      "metric",
+                      "project_id",
+                      "start_date"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/analytics",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -174,15 +248,7 @@
                       "lit": "analytics"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "end_date",
-                      "metric",
-                      "project_id",
-                      "start_date"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -193,7 +259,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -203,72 +269,82 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "createdAt",
-              "req": false,
-              "type": "`$STRING`"
+          "fields": {
+            "createdAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Created At",
+              "n": "createdAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "mimeType",
-              "req": false,
-              "type": "`$STRING`"
+            "mimeType": {
+              "a": true,
+              "h": "Mime Type",
+              "n": "mimeType",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "type": "`$STRING`"
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "projectId",
-              "req": false,
-              "type": "`$STRING`"
+            "projectId": {
+              "a": true,
+              "h": "Project Id",
+              "n": "projectId",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "size",
-              "req": false,
-              "short": "File size in bytes",
-              "type": "`$INTEGER`"
+            "size": {
+              "a": true,
+              "h": "Size",
+              "n": "size",
+              "r": false,
+              "sh": "File size in bytes",
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "tags",
-              "req": false,
-              "type": "`$ARRAY`"
+            "tags": {
+              "a": true,
+              "h": "Tags",
+              "n": "tags",
+              "r": false,
+              "t": "`$ARRAY`"
             },
-            {
-              "active": true,
-              "name": "type",
-              "req": false,
-              "type": "`$STRING`"
+            "type": {
+              "a": true,
+              "h": "Type",
+              "n": "type",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "updatedAt",
-              "req": false,
-              "type": "`$STRING`"
+            "updatedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Updated At",
+              "n": "updatedAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "uri",
-              "name": "url",
-              "req": false,
-              "type": "`$STRING`"
+            "url": {
+              "a": true,
+              "fo": "uri",
+              "h": "Url",
+              "n": "url",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -280,34 +356,38 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/assets",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/assets",
-                    "json": "{\"operationId\":\"uploadAsset\",\"parameters\":[{\"description\":\"Unique identifier of the project\",\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"multipart/form-data\":{\"schema\":{\"properties\":{\"file\":{\"description\":\"Asset file to upload\",\"format\":\"binary\",\"type\":\"string\"},\"name\":{\"description\":\"Display name for the asset\",\"type\":\"string\"},\"tags\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"type\":{\"enum\":[\"image\",\"audio\",\"video\",\"model\",\"texture\",\"script\",\"font\",\"config\"],\"type\":\"string\"}},\"required\":[\"file\",\"type\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"mimeType\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"File size in bytes\",\"type\":\"integer\"},\"tags\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"type\":{\"enum\":[\"image\",\"audio\",\"video\",\"model\",\"texture\",\"script\",\"font\",\"config\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"url\":{\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Asset uploaded successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/assets",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/assets",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -318,12 +398,7 @@
                       "lit": "assets"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -335,53 +410,59 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/assets",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ],
                     "query": [
                       {
-                        "active": true,
-                        "example": 50,
-                        "kind": "query",
-                        "name": "limit",
-                        "orig": "limit",
-                        "reqd": false,
-                        "type": "`$INTEGER`"
+                        "a": true,
+                        "ex": 50,
+                        "k": "query",
+                        "n": "limit",
+                        "or": "limit",
+                        "r": false,
+                        "t": "`$INTEGER`"
                       },
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "type",
-                        "orig": "type",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "type",
+                        "or": "type",
+                        "r": false,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/assets",
-                    "json": "{\"operationId\":\"listAssets\",\"parameters\":[{\"description\":\"Unique identifier of the project\",\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter assets by type\",\"in\":\"query\",\"name\":\"type\",\"schema\":{\"enum\":[\"image\",\"audio\",\"video\",\"model\",\"texture\",\"script\",\"font\",\"config\"],\"type\":\"string\"}},{\"in\":\"query\",\"name\":\"limit\",\"schema\":{\"default\":50,\"type\":\"integer\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"assets\":{\"items\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"mimeType\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"File size in bytes\",\"type\":\"integer\"},\"tags\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"type\":{\"enum\":[\"image\",\"audio\",\"video\",\"model\",\"texture\",\"script\",\"font\",\"config\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"url\":{\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"total\":{\"type\":\"integer\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/assets",
+                  "q": {
+                    "exist": [
+                      "limit",
+                      "project_id",
+                      "type"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/assets",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -392,14 +473,7 @@
                       "lit": "assets"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "limit",
-                      "project_id",
-                      "type"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.assets`"
                   }
@@ -411,43 +485,48 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/assets/{assetId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "asset_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "asset_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/assets/{assetId}",
-                    "json": "{\"operationId\":\"getAsset\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"assetId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"mimeType\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"File size in bytes\",\"type\":\"integer\"},\"tags\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"type\":{\"enum\":[\"image\",\"audio\",\"video\",\"model\",\"texture\",\"script\",\"font\",\"config\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"url\":{\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/assets/{assetId}",
+                  "q": {
+                    "exist": [
+                      "id",
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/assets/{assetId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "assetId": "id",
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -461,13 +540,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id",
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -479,43 +552,48 @@
               "name": "remove",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "DELETE /projects/{projectId}/assets/{assetId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "asset_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "asset_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "DELETE /projects/{projectId}/assets/{assetId}",
-                    "json": "{\"operationId\":\"deleteAsset\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"assetId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"204\":{\"description\":\"Asset deleted successfully\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "DELETE",
+                  "o": "/projects/{projectId}/assets/{assetId}",
+                  "q": {
+                    "exist": [
+                      "id",
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "DELETE",
-                  "orig": "/projects/{projectId}/assets/{assetId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "assetId": "id",
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -529,13 +607,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id",
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -546,7 +618,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -556,26 +628,29 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "configuration",
-              "req": true,
-              "type": "`$STRING`"
+          "fields": {
+            "configuration": {
+              "a": true,
+              "h": "Configuration",
+              "n": "configuration",
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "platform",
-              "req": true,
-              "type": "`$STRING`"
+            "platform": {
+              "a": true,
+              "h": "Platform",
+              "n": "platform",
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "version",
-              "req": true,
-              "type": "`$STRING`"
+            "version": {
+              "a": true,
+              "h": "Version",
+              "n": "version",
+              "r": true,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "name": "build",
           "op": {
             "create": {
@@ -583,34 +658,38 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/builds",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/builds",
-                    "json": "{\"operationId\":\"createBuild\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"configuration\":{\"enum\":[\"debug\",\"release\"],\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"version\":{\"type\":\"string\"}},\"required\":[\"version\",\"platform\",\"configuration\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"configuration\":{\"enum\":[\"debug\",\"release\"],\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"downloadUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"Build size in bytes\",\"type\":\"integer\"},\"status\":{\"enum\":[\"pending\",\"building\",\"success\",\"failed\"],\"type\":\"string\"},\"version\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Build created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/builds",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/builds",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -621,12 +700,7 @@
                       "lit": "builds"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -637,7 +711,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -647,59 +721,67 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "addedAt",
-              "req": false,
-              "type": "`$STRING`"
+          "fields": {
+            "addedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Added At",
+              "n": "addedAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "email",
-              "name": "email",
-              "req": false,
-              "type": "`$STRING`"
+            "email": {
+              "a": true,
+              "fo": "email",
+              "h": "Email",
+              "n": "email",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "lastActive",
-              "req": false,
-              "type": "`$STRING`"
+            "lastActive": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Last Active",
+              "n": "lastActive",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
-              "req": false,
-              "type": "`$STRING`"
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "role",
-              "req": false,
-              "type": "`$STRING`"
+            "role": {
+              "a": true,
+              "h": "Role",
+              "n": "role",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "status",
-              "req": false,
-              "type": "`$STRING`"
+            "status": {
+              "a": true,
+              "h": "Status",
+              "n": "status",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "userId",
-              "req": false,
-              "type": "`$STRING`"
+            "userId": {
+              "a": true,
+              "h": "User Id",
+              "n": "userId",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -711,34 +793,38 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/collaborators",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/collaborators",
-                    "json": "{\"operationId\":\"listCollaborators\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"collaborators\":{\"items\":{\"properties\":{\"addedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"lastActive\":{\"format\":\"date-time\",\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"role\":{\"enum\":[\"owner\",\"editor\",\"viewer\"],\"type\":\"string\"},\"status\":{\"enum\":[\"active\",\"pending\",\"inactive\"],\"type\":\"string\"},\"userId\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/collaborators",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/collaborators",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -749,12 +835,7 @@
                       "lit": "collaborators"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.collaborators`"
                   }
@@ -766,43 +847,48 @@
               "name": "remove",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "DELETE /projects/{projectId}/collaborators/{userId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "user_id",
-                        "orig": "user_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "user_id",
+                        "or": "user_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "DELETE /projects/{projectId}/collaborators/{userId}",
-                    "json": "{\"operationId\":\"removeCollaborator\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"userId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"204\":{\"description\":\"Collaborator removed successfully\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "DELETE",
+                  "o": "/projects/{projectId}/collaborators/{userId}",
+                  "q": {
+                    "exist": [
+                      "project_id",
+                      "user_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "DELETE",
-                  "orig": "/projects/{projectId}/collaborators/{userId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id",
                       "userId": "user_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -816,13 +902,7 @@
                       "var": "user_id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id",
-                      "user_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -833,11 +913,11 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ],
               [
-                "project",
-                "collaborator"
+                "$.main.kit.entity.project",
+                "$.main.kit.entity.collaborator"
               ]
             ]
           }
@@ -847,21 +927,23 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "format": "email",
-              "name": "email",
-              "req": true,
-              "type": "`$STRING`"
+          "fields": {
+            "email": {
+              "a": true,
+              "fo": "email",
+              "h": "Email",
+              "n": "email",
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "role",
-              "req": true,
-              "type": "`$STRING`"
+            "role": {
+              "a": true,
+              "h": "Role",
+              "n": "role",
+              "r": true,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "name": "collaborator",
           "op": {
             "create": {
@@ -869,34 +951,38 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/collaborators",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/collaborators",
-                    "json": "{\"operationId\":\"addCollaborator\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"email\":{\"format\":\"email\",\"type\":\"string\"},\"role\":{\"enum\":[\"owner\",\"editor\",\"viewer\"],\"type\":\"string\"}},\"required\":[\"email\",\"role\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"addedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"lastActive\":{\"format\":\"date-time\",\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"role\":{\"enum\":[\"owner\",\"editor\",\"viewer\"],\"type\":\"string\"},\"status\":{\"enum\":[\"active\",\"pending\",\"inactive\"],\"type\":\"string\"},\"userId\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Collaborator added successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/collaborators",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/collaborators",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -907,12 +993,7 @@
                       "lit": "collaborators"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -923,7 +1004,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -933,115 +1014,129 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "name": "buildVersion",
+          "fields": {
+            "buildVersion": {
+              "a": true,
+              "h": "Build Version",
+              "n": "buildVersion",
               "op": {
                 "create": {
                   "req": true,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
-              "type": "`$STRING`"
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "completedAt",
-              "req": false,
-              "type": "`$STRING`"
+            "completedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Completed At",
+              "n": "completedAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "configuration",
-              "req": false,
-              "type": "`$STRING`"
+            "configuration": {
+              "a": true,
+              "h": "Configuration",
+              "n": "configuration",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "createdAt",
-              "req": false,
-              "type": "`$STRING`"
+            "createdAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Created At",
+              "n": "createdAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "uri",
-              "name": "deploymentUrl",
-              "req": false,
-              "type": "`$STRING`"
+            "deploymentUrl": {
+              "a": true,
+              "fo": "uri",
+              "h": "Deployment Url",
+              "n": "deploymentUrl",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "uri",
-              "name": "downloadUrl",
-              "req": false,
-              "type": "`$STRING`"
+            "downloadUrl": {
+              "a": true,
+              "fo": "uri",
+              "h": "Download Url",
+              "n": "downloadUrl",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "environment",
+            "environment": {
+              "a": true,
+              "h": "Environment",
+              "n": "environment",
               "op": {
                 "create": {
                   "req": true,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
-              "type": "`$STRING`"
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "platform",
+            "platform": {
+              "a": true,
+              "h": "Platform",
+              "n": "platform",
               "op": {
                 "create": {
                   "req": true,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
-              "type": "`$STRING`"
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "projectId",
-              "req": false,
-              "type": "`$STRING`"
+            "projectId": {
+              "a": true,
+              "h": "Project Id",
+              "n": "projectId",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "releaseNotes",
-              "req": false,
-              "type": "`$STRING`"
+            "releaseNotes": {
+              "a": true,
+              "h": "Release Notes",
+              "n": "releaseNotes",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "size",
-              "req": false,
-              "short": "Build size in bytes",
-              "type": "`$INTEGER`"
+            "size": {
+              "a": true,
+              "h": "Size",
+              "n": "size",
+              "r": false,
+              "sh": "Build size in bytes",
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "status",
-              "req": false,
-              "type": "`$STRING`"
+            "status": {
+              "a": true,
+              "h": "Status",
+              "n": "status",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "version",
-              "req": false,
-              "type": "`$STRING`"
+            "version": {
+              "a": true,
+              "h": "Version",
+              "n": "version",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -1053,34 +1148,38 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/deployments",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/deployments",
-                    "json": "{\"operationId\":\"createDeployment\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"}},\"required\":[\"environment\",\"platform\",\"buildVersion\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Deployment created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/deployments",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/deployments",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1091,12 +1190,7 @@
                       "lit": "deployments"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1108,44 +1202,49 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/deployments",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ],
                     "query": [
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "status",
-                        "orig": "status",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "status",
+                        "or": "status",
+                        "r": false,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/deployments",
-                    "json": "{\"operationId\":\"listDeployments\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"query\",\"name\":\"status\",\"schema\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"deployments\":{\"items\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/deployments",
+                  "q": {
+                    "exist": [
+                      "project_id",
+                      "status"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/deployments",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1156,46 +1255,44 @@
                       "lit": "deployments"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id",
-                      "status"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.deployments`"
                   }
                 },
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/builds",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/builds",
-                    "json": "{\"operationId\":\"listBuilds\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"builds\":{\"items\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"configuration\":{\"enum\":[\"debug\",\"release\"],\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"downloadUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"size\":{\"description\":\"Build size in bytes\",\"type\":\"integer\"},\"status\":{\"enum\":[\"pending\",\"building\",\"success\",\"failed\"],\"type\":\"string\"},\"version\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/builds",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/builds",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1206,12 +1303,7 @@
                       "lit": "builds"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.builds`"
                   }
@@ -1223,43 +1315,48 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/deployments/{deploymentId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "deployment_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "deployment_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/deployments/{deploymentId}",
-                    "json": "{\"operationId\":\"getDeployment\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"deploymentId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"buildVersion\":{\"type\":\"string\"},\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"deploymentUrl\":{\"format\":\"uri\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\",\"console\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"releaseNotes\":{\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"building\",\"deploying\",\"success\",\"failed\",\"cancelled\"],\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/deployments/{deploymentId}",
+                  "q": {
+                    "exist": [
+                      "id",
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/deployments/{deploymentId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "deploymentId": "id",
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1273,13 +1370,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id",
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1290,7 +1381,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -1300,68 +1391,76 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "createdAt",
-              "req": false,
-              "type": "`$STRING`"
+          "fields": {
+            "createdAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Created At",
+              "n": "createdAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "description",
-              "req": false,
-              "short": "Detailed description of the project",
-              "type": "`$STRING`"
+            "description": {
+              "a": true,
+              "h": "Description",
+              "n": "description",
+              "r": false,
+              "sh": "Detailed description of the project",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "short": "Unique identifier for the project",
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "sh": "Unique identifier for the project",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
               "op": {
                 "create": {
                   "req": true,
                   "type": "`$STRING`"
                 }
               },
-              "req": false,
-              "short": "Name of the game project",
-              "type": "`$STRING`"
+              "r": false,
+              "sh": "Name of the game project",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "owner",
-              "req": false,
-              "type": "`$OBJECT`"
+            "owner": {
+              "a": true,
+              "h": "Owner",
+              "n": "owner",
+              "r": false,
+              "t": "`$OBJECT`"
             },
-            {
-              "active": true,
-              "name": "settings",
-              "req": false,
-              "type": "`$OBJECT`"
+            "settings": {
+              "a": true,
+              "h": "Settings",
+              "n": "settings",
+              "r": false,
+              "t": "`$OBJECT`"
             },
-            {
-              "active": true,
-              "name": "status",
-              "req": false,
-              "short": "Current status of the project",
-              "type": "`$STRING`"
+            "status": {
+              "a": true,
+              "h": "Status",
+              "n": "status",
+              "r": false,
+              "sh": "Current status of the project",
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "updatedAt",
-              "req": false,
-              "type": "`$STRING`"
+            "updatedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Updated At",
+              "n": "updatedAt",
+              "r": false,
+              "t": "`$STRING`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -1373,24 +1472,24 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {},
-                  "contract": {
+                  "a": true,
+                  "co": {
                     "id": "POST /projects",
-                    "json": "{\"operationId\":\"createProject\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"description\":{\"maxLength\":2000,\"type\":\"string\"},\"name\":{\"maxLength\":255,\"minLength\":1,\"type\":\"string\"},\"settings\":{\"properties\":{\"gameEngine\":{\"type\":\"string\"},\"targetPlatforms\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"}},\"required\":[\"name\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"description\":{\"description\":\"Detailed description of the project\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the project\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the game project\",\"type\":\"string\"},\"owner\":{\"properties\":{\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"settings\":{\"properties\":{\"gameEngine\":{\"type\":\"string\"},\"targetPlatforms\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"status\":{\"description\":\"Current status of the project\",\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Project created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
                     "source": "openapi3",
-                    "version": 1
+                    "version": 2
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects",
-                  "segments": [
+                  "g": {},
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects",
+                  "q": {},
+                  "r": {},
+                  "s": [
                     {
                       "lit": "projects"
                     }
                   ],
-                  "select": {},
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1402,59 +1501,59 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "query": [
                       {
-                        "active": true,
-                        "example": 20,
-                        "kind": "query",
-                        "name": "limit",
-                        "orig": "limit",
-                        "reqd": false,
-                        "type": "`$INTEGER`"
+                        "a": true,
+                        "ex": 20,
+                        "k": "query",
+                        "n": "limit",
+                        "or": "limit",
+                        "r": false,
+                        "t": "`$INTEGER`"
                       },
                       {
-                        "active": true,
-                        "example": 0,
-                        "kind": "query",
-                        "name": "offset",
-                        "orig": "offset",
-                        "reqd": false,
-                        "type": "`$INTEGER`"
+                        "a": true,
+                        "ex": 0,
+                        "k": "query",
+                        "n": "offset",
+                        "or": "offset",
+                        "r": false,
+                        "t": "`$INTEGER`"
                       },
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "status",
-                        "orig": "status",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "status",
+                        "or": "status",
+                        "r": false,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects",
-                    "json": "{\"operationId\":\"listProjects\",\"parameters\":[{\"description\":\"Maximum number of projects to return\",\"in\":\"query\",\"name\":\"limit\",\"schema\":{\"default\":20,\"maximum\":100,\"minimum\":1,\"type\":\"integer\"}},{\"description\":\"Number of projects to skip\",\"in\":\"query\",\"name\":\"offset\",\"schema\":{\"default\":0,\"minimum\":0,\"type\":\"integer\"}},{\"description\":\"Filter projects by status\",\"in\":\"query\",\"name\":\"status\",\"schema\":{\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"limit\":{\"type\":\"integer\"},\"offset\":{\"type\":\"integer\"},\"projects\":{\"items\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"description\":{\"description\":\"Detailed description of the project\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the project\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the game project\",\"type\":\"string\"},\"owner\":{\"properties\":{\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"settings\":{\"properties\":{\"gameEngine\":{\"type\":\"string\"},\"targetPlatforms\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"status\":{\"description\":\"Current status of the project\",\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"total\":{\"type\":\"integer\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
-                  },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects",
-                  "segments": [
-                    {
-                      "lit": "projects"
-                    }
-                  ],
-                  "select": {
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects",
+                  "q": {
                     "exist": [
                       "limit",
                       "offset",
                       "status"
                     ]
                   },
-                  "transform": {
+                  "r": {},
+                  "s": [
+                    {
+                      "lit": "projects"
+                    }
+                  ],
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.projects`"
                   }
@@ -1466,34 +1565,38 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}",
-                    "json": "{\"operationId\":\"getProject\",\"parameters\":[{\"description\":\"Unique identifier of the project\",\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"description\":{\"description\":\"Detailed description of the project\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the project\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the game project\",\"type\":\"string\"},\"owner\":{\"properties\":{\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"settings\":{\"properties\":{\"gameEngine\":{\"type\":\"string\"},\"targetPlatforms\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"status\":{\"description\":\"Current status of the project\",\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}",
+                  "q": {
+                    "exist": [
+                      "id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1501,12 +1604,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1518,34 +1616,38 @@
               "name": "remove",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "DELETE /projects/{projectId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "DELETE /projects/{projectId}",
-                    "json": "{\"operationId\":\"deleteProject\",\"parameters\":[{\"description\":\"Unique identifier of the project\",\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"204\":{\"description\":\"Project deleted successfully\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "DELETE",
+                  "o": "/projects/{projectId}",
+                  "q": {
+                    "exist": [
+                      "id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "DELETE",
-                  "orig": "/projects/{projectId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1553,12 +1655,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1570,34 +1667,38 @@
               "name": "update",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "PUT /projects/{projectId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "PUT /projects/{projectId}",
-                    "json": "{\"operationId\":\"updateProject\",\"parameters\":[{\"description\":\"Unique identifier of the project\",\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"description\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"settings\":{\"type\":\"object\"},\"status\":{\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"}},\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"createdAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"description\":{\"description\":\"Detailed description of the project\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier for the project\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the game project\",\"type\":\"string\"},\"owner\":{\"properties\":{\"email\":{\"format\":\"email\",\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"}},\"type\":\"object\"},\"settings\":{\"properties\":{\"gameEngine\":{\"type\":\"string\"},\"targetPlatforms\":{\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"status\":{\"description\":\"Current status of the project\",\"enum\":[\"active\",\"archived\",\"in_development\",\"deployed\"],\"type\":\"string\"},\"updatedAt\":{\"format\":\"date-time\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Project updated successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "PUT",
+                  "o": "/projects/{projectId}",
+                  "q": {
+                    "exist": [
+                      "id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "PUT",
-                  "orig": "/projects/{projectId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1605,12 +1706,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body`"
                   }
@@ -1627,125 +1723,140 @@
           "alias": {
             "field": {}
           },
-          "fields": [
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "completedAt",
-              "req": false,
-              "type": "`$STRING`"
+          "fields": {
+            "completedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Completed At",
+              "n": "completedAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "duration",
-              "req": false,
-              "short": "Test duration in seconds",
-              "type": "`$NUMBER`"
+            "duration": {
+              "a": true,
+              "h": "Duration",
+              "n": "duration",
+              "r": false,
+              "sh": "Test duration in seconds",
+              "t": "`$NUMBER`"
             },
-            {
-              "active": true,
-              "name": "environment",
+            "environment": {
+              "a": true,
+              "h": "Environment",
+              "n": "environment",
               "op": {
                 "list": {
                   "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": true,
-              "type": "`$STRING`"
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "failed",
-              "req": false,
-              "type": "`$INTEGER`"
+            "failed": {
+              "a": true,
+              "h": "Failed",
+              "n": "failed",
+              "r": false,
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "id",
-              "req": false,
-              "type": "`$STRING`"
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "name",
+            "name": {
+              "a": true,
+              "h": "Name",
+              "n": "name",
               "op": {
                 "list": {
                   "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": true,
-              "type": "`$STRING`"
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "passed",
-              "req": false,
-              "type": "`$INTEGER`"
+            "passed": {
+              "a": true,
+              "h": "Passed",
+              "n": "passed",
+              "r": false,
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "name": "platform",
+            "platform": {
+              "a": true,
+              "h": "Platform",
+              "n": "platform",
               "op": {
                 "list": {
                   "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": true,
-              "type": "`$STRING`"
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "projectId",
-              "req": false,
-              "type": "`$STRING`"
+            "projectId": {
+              "a": true,
+              "h": "Project Id",
+              "n": "projectId",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "results",
-              "req": false,
-              "type": "`$OBJECT`"
+            "results": {
+              "a": true,
+              "h": "Results",
+              "n": "results",
+              "r": false,
+              "t": "`$OBJECT`"
             },
-            {
-              "active": true,
-              "name": "skipped",
-              "req": false,
-              "type": "`$INTEGER`"
+            "skipped": {
+              "a": true,
+              "h": "Skipped",
+              "n": "skipped",
+              "r": false,
+              "t": "`$INTEGER`"
             },
-            {
-              "active": true,
-              "format": "date-time",
-              "name": "startedAt",
-              "req": false,
-              "type": "`$STRING`"
+            "startedAt": {
+              "a": true,
+              "fo": "date-time",
+              "h": "Started At",
+              "n": "startedAt",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "status",
-              "req": false,
-              "type": "`$STRING`"
+            "status": {
+              "a": true,
+              "h": "Status",
+              "n": "status",
+              "r": false,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "testSuite",
+            "testSuite": {
+              "a": true,
+              "h": "Test Suite",
+              "n": "testSuite",
               "op": {
                 "list": {
                   "req": false,
                   "type": "`$STRING`"
                 }
               },
-              "req": true,
-              "type": "`$STRING`"
+              "r": true,
+              "t": "`$STRING`"
             },
-            {
-              "active": true,
-              "name": "totalTests",
-              "req": false,
-              "type": "`$INTEGER`"
+            "totalTests": {
+              "a": true,
+              "h": "Total Tests",
+              "n": "totalTests",
+              "r": false,
+              "t": "`$INTEGER`"
             }
-          ],
+          },
           "id": {
             "field": "id",
             "name": "id"
@@ -1757,34 +1868,38 @@
               "name": "create",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "POST /projects/{projectId}/tests",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "POST /projects/{projectId}/tests",
-                    "json": "{\"operationId\":\"createTestRun\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"required\":[\"name\",\"testSuite\",\"environment\",\"platform\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Test run created successfully\"},\"400\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The request was malformed or contains invalid parameters\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "POST",
+                  "o": "/projects/{projectId}/tests",
+                  "q": {
+                    "exist": [
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "POST",
-                  "orig": "/projects/{projectId}/tests",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1795,12 +1910,7 @@
                       "lit": "tests"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.results`"
                   }
@@ -1812,44 +1922,49 @@
               "name": "list",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/tests",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ],
                     "query": [
                       {
-                        "active": true,
-                        "kind": "query",
-                        "name": "status",
-                        "orig": "status",
-                        "reqd": false,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "query",
+                        "n": "status",
+                        "or": "status",
+                        "r": false,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/tests",
-                    "json": "{\"operationId\":\"listTestRuns\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by test status\",\"in\":\"query\",\"name\":\"status\",\"schema\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"tests\":{\"items\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/tests",
+                  "q": {
+                    "exist": [
+                      "project_id",
+                      "status"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/tests",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1860,13 +1975,7 @@
                       "lit": "tests"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "project_id",
-                      "status"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.tests`"
                   }
@@ -1878,43 +1987,48 @@
               "name": "load",
               "points": [
                 {
-                  "active": true,
-                  "args": {
+                  "a": true,
+                  "co": {
+                    "id": "GET /projects/{projectId}/tests/{testId}",
+                    "source": "openapi3",
+                    "version": 2
+                  },
+                  "g": {
                     "params": [
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "id",
-                        "orig": "test_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "id",
+                        "or": "test_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       },
                       {
-                        "active": true,
-                        "kind": "param",
-                        "name": "project_id",
-                        "orig": "project_id",
-                        "reqd": true,
-                        "type": "`$STRING`"
+                        "a": true,
+                        "k": "param",
+                        "n": "project_id",
+                        "or": "project_id",
+                        "r": true,
+                        "t": "`$STRING`"
                       }
                     ]
                   },
-                  "contract": {
-                    "id": "GET /projects/{projectId}/tests/{testId}",
-                    "json": "{\"operationId\":\"getTestRun\",\"parameters\":[{\"in\":\"path\",\"name\":\"projectId\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"in\":\"path\",\"name\":\"testId\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"completedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"environment\":{\"enum\":[\"development\",\"staging\",\"production\"],\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"platform\":{\"enum\":[\"windows\",\"macos\",\"linux\",\"android\",\"ios\",\"web\"],\"type\":\"string\"},\"projectId\":{\"type\":\"string\"},\"results\":{\"properties\":{\"duration\":{\"description\":\"Test duration in seconds\",\"type\":\"number\"},\"failed\":{\"type\":\"integer\"},\"passed\":{\"type\":\"integer\"},\"skipped\":{\"type\":\"integer\"},\"totalTests\":{\"type\":\"integer\"}},\"type\":\"object\"},\"startedAt\":{\"format\":\"date-time\",\"type\":\"string\"},\"status\":{\"enum\":[\"pending\",\"running\",\"passed\",\"failed\",\"cancelled\"],\"type\":\"string\"},\"testSuite\":{\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response\"},\"401\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"Authentication information is missing or invalid\"},\"404\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"error\":{\"properties\":{\"code\":{\"type\":\"string\"},\"details\":{\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"message\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"The requested resource was not found\"}},\"security\":[{\"bearerAuth\":[]}],\"securitySchemes\":{\"bearerAuth\":{\"bearerFormat\":\"JWT\",\"scheme\":\"bearer\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
-                    "source": "openapi3",
-                    "version": 1
+                  "k": "http",
+                  "m": "GET",
+                  "o": "/projects/{projectId}/tests/{testId}",
+                  "q": {
+                    "exist": [
+                      "id",
+                      "project_id"
+                    ]
                   },
-                  "kind": "http",
-                  "method": "GET",
-                  "orig": "/projects/{projectId}/tests/{testId}",
-                  "rename": {
+                  "r": {
                     "param": {
                       "projectId": "project_id",
                       "testId": "id"
                     }
                   },
-                  "segments": [
+                  "s": [
                     {
                       "lit": "projects"
                     },
@@ -1928,13 +2042,7 @@
                       "var": "id"
                     }
                   ],
-                  "select": {
-                    "exist": [
-                      "id",
-                      "project_id"
-                    ]
-                  },
-                  "transform": {
+                  "t": {
                     "req": "`reqdata`",
                     "res": "`body.results`"
                   }
@@ -1945,7 +2053,7 @@
           "relations": {
             "ancestors": [
               [
-                "project"
+                "$.main.kit.entity.project"
               ]
             ]
           }
@@ -2367,28 +2475,28 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "analytics_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2408,28 +2516,28 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "asset_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2439,20 +2547,20 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "asset_ref01",
                 "srcdatavar": "asset_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "asset01",
                 "project_id": "project01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -2462,32 +2570,32 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "asset_ref01",
                 "suffix": "_rm0"
               },
-              "match": {
+              "m": {
                 "id": "asset01",
                 "project_id": "project01"
               },
-              "op": "remove",
-              "spec": [],
-              "valid": []
+              "o": "remove",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "suffix": "_rt0"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemNotExists",
                   "def": {
@@ -2507,17 +2615,17 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "build_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             }
           ]
         },
@@ -2530,15 +2638,15 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2558,17 +2666,17 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "collaborator_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             }
           ]
         },
@@ -2581,28 +2689,28 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "deployment_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2612,20 +2720,20 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "deployment_ref01",
                 "srcdatavar": "deployment_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "deployment01",
                 "project_id": "project01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -2645,24 +2753,24 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "project_ref01"
               },
-              "match": {},
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "m": {},
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {},
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {},
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2672,17 +2780,17 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "project_ref01",
                 "srcdatavar": "project_ref01_data",
                 "suffix": "_up0",
                 "textfield": "createdAt"
               },
-              "match": {},
-              "op": "update",
-              "spec": [
+              "m": {},
+              "o": "update",
+              "s": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -2690,22 +2798,22 @@
                   }
                 }
               ],
-              "valid": []
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "project_ref01",
                 "srcdatavar": "project_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "project01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {
@@ -2715,29 +2823,29 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "project_ref01",
                 "suffix": "_rm0"
               },
-              "match": {
+              "m": {
                 "id": "project01"
               },
-              "op": "remove",
-              "spec": [],
-              "valid": []
+              "o": "remove",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "suffix": "_rt0"
               },
-              "match": {},
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "m": {},
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemNotExists",
                   "def": {
@@ -2757,28 +2865,28 @@
           "param": {},
           "step": [
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "test_ref01"
               },
-              "match": {
+              "m": {
                 "project_id": "project01"
               },
-              "op": "create",
-              "spec": [],
-              "valid": []
+              "o": "create",
+              "s": [],
+              "v": []
             },
             {
-              "active": true,
-              "data": {},
-              "input": {},
-              "match": {
+              "a": true,
+              "d": {},
+              "i": {},
+              "m": {
                 "project_id": "project01"
               },
-              "op": "list",
-              "spec": [],
-              "valid": [
+              "o": "list",
+              "s": [],
+              "v": [
                 {
                   "apply": "ItemExists",
                   "def": {
@@ -2788,20 +2896,20 @@
               ]
             },
             {
-              "active": true,
-              "data": {},
-              "input": {
+              "a": true,
+              "d": {},
+              "i": {
                 "ref": "test_ref01",
                 "srcdatavar": "test_ref01_data",
                 "suffix": "_dt0"
               },
-              "match": {
+              "m": {
                 "id": "test01",
                 "project_id": "project01"
               },
-              "op": "load",
-              "spec": [],
-              "valid": [
+              "o": "load",
+              "s": [],
+              "v": [
                 {
                   "apply": "TextFieldMark",
                   "def": {

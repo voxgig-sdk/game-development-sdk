@@ -1,0 +1,348 @@
+# Entity: deployment
+
+main: kit: entity: deployment: {
+
+  alias: field: {}
+
+  fields: {
+    buildVersion: {
+      h: "Build Version"
+      n: "buildVersion"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      t: "`$STRING`"
+    }
+    completedAt: {
+      fo: "date-time"
+      h: "Completed At"
+      n: "completedAt"
+      r: false
+      t: "`$STRING`"
+    }
+    configuration: {
+      h: "Configuration"
+      n: "configuration"
+      r: false
+      t: "`$STRING`"
+    }
+    createdAt: {
+      fo: "date-time"
+      h: "Created At"
+      n: "createdAt"
+      r: false
+      t: "`$STRING`"
+    }
+    deploymentUrl: {
+      fo: "uri"
+      h: "Deployment Url"
+      n: "deploymentUrl"
+      r: false
+      t: "`$STRING`"
+    }
+    downloadUrl: {
+      fo: "uri"
+      h: "Download Url"
+      n: "downloadUrl"
+      r: false
+      t: "`$STRING`"
+    }
+    environment: {
+      h: "Environment"
+      n: "environment"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    platform: {
+      h: "Platform"
+      n: "platform"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      t: "`$STRING`"
+    }
+    projectId: {
+      h: "Project Id"
+      n: "projectId"
+      r: false
+      t: "`$STRING`"
+    }
+    releaseNotes: {
+      h: "Release Notes"
+      n: "releaseNotes"
+      r: false
+      t: "`$STRING`"
+    }
+    size: {
+      h: "Size"
+      n: "size"
+      r: false
+      sh: "Build size in bytes"
+      t: "`$INTEGER`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: false
+      t: "`$STRING`"
+    }
+    version: {
+      h: "Version"
+      n: "version"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "deployment"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /projects/{projectId}/deployments"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/projects/{projectId}/deployments"
+          q: {
+            exist: [
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "deployments"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/deployments"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/deployments"
+          q: {
+            exist: [
+              "project_id"
+              "status"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "deployments"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.deployments`"
+          }
+        }
+        {
+          co: {
+            id: "GET /projects/{projectId}/builds"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/builds"
+          q: {
+            exist: [
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "builds"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.builds`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/deployments/{deploymentId}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "deployment_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/deployments/{deploymentId}"
+          q: {
+            exist: [
+              "id"
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              deploymentId: "id"
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "deployments"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.project")]
+  ]
+
+}

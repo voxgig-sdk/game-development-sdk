@@ -123,10 +123,12 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'name' => 'count',
+              'title' => 'Count',
               'type' => '`$INTEGER`',
             ],
             [
               'name' => 'name',
+              'title' => 'Name',
               'type' => '`$STRING`',
             ],
           ],
@@ -137,25 +139,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/analytics/events',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -170,21 +156,37 @@ class GameDevelopmentConfig
                       'lit' => 'events',
                     ],
                   ],
-                  'select' => [
-                    '$action' => 'event',
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'analytics',
+                    'events',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'analytics',
-                    'events',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    '$action' => 'event',
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -194,45 +196,9 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                    'query' => [
-                      [
-                        'kind' => 'query',
-                        'name' => 'end_date',
-                        'orig' => 'end_date',
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'metric',
-                        'orig' => 'metric',
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'start_date',
-                        'orig' => 'start_date',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/analytics',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -244,6 +210,51 @@ class GameDevelopmentConfig
                       'lit' => 'analytics',
                     ],
                   ],
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'analytics',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
+                    ],
+                  ],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body`',
+                  ],
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                    'query' => [
+                      [
+                        'name' => 'end_date',
+                        'orig' => 'end_date',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'metric',
+                        'orig' => 'metric',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'start_date',
+                        'orig' => 'start_date',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                    ],
+                  ],
                   'select' => [
                     'exist' => [
                       'end_date',
@@ -252,15 +263,6 @@ class GameDevelopmentConfig
                       'start_date',
                     ],
                   ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body`',
-                  ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'analytics',
-                  ],
                 ],
               ],
             ],
@@ -268,7 +270,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],
@@ -276,48 +278,58 @@ class GameDevelopmentConfig
         'asset' => [
           'fields' => [
             [
-              'format' => 'date-time',
               'name' => 'createdAt',
+              'title' => 'Created At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'mimeType',
+              'title' => 'Mime Type',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'name',
+              'title' => 'Name',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'projectId',
+              'title' => 'Project Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'size',
-              'short' => 'File size in bytes',
+              'title' => 'Size',
               'type' => '`$INTEGER`',
+              'short' => 'File size in bytes',
             ],
             [
               'name' => 'tags',
+              'title' => 'Tags',
               'type' => '`$ARRAY`',
             ],
             [
               'name' => 'type',
+              'title' => 'Type',
               'type' => '`$STRING`',
             ],
             [
-              'format' => 'date-time',
               'name' => 'updatedAt',
+              'title' => 'Updated At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
-              'format' => 'uri',
               'name' => 'url',
+              'title' => 'Url',
               'type' => '`$STRING`',
+              'format' => 'uri',
             ],
           ],
           'id' => [
@@ -331,25 +343,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/assets',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -361,19 +357,35 @@ class GameDevelopmentConfig
                       'lit' => 'assets',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'assets',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'assets',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -383,40 +395,9 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                    'query' => [
-                      [
-                        'example' => 50,
-                        'kind' => 'query',
-                        'name' => 'limit',
-                        'orig' => 'limit',
-                        'type' => '`$INTEGER`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'type',
-                        'orig' => 'type',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/assets',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -426,6 +407,46 @@ class GameDevelopmentConfig
                     ],
                     [
                       'lit' => 'assets',
+                    ],
+                  ],
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'assets',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
+                    ],
+                  ],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body.assets`',
+                  ],
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                    'query' => [
+                      [
+                        'name' => 'limit',
+                        'orig' => 'limit',
+                        'type' => '`$INTEGER`',
+                        'kind' => 'query',
+                        'example' => 50,
+                      ],
+                      [
+                        'name' => 'type',
+                        'orig' => 'type',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
                     ],
                   ],
                   'select' => [
@@ -435,15 +456,6 @@ class GameDevelopmentConfig
                       'type',
                     ],
                   ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body.assets`',
-                  ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'assets',
-                  ],
                 ],
               ],
             ],
@@ -452,33 +464,9 @@ class GameDevelopmentConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'asset_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/assets/{assetId}',
-                  'rename' => [
-                    'param' => [
-                      'assetId' => 'id',
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -493,21 +481,45 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'assets',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'assetId' => 'id',
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'assets',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'asset_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -517,33 +529,9 @@ class GameDevelopmentConfig
               'name' => 'remove',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'asset_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}/assets/{assetId}',
-                  'rename' => [
-                    'param' => [
-                      'assetId' => 'id',
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -558,21 +546,45 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'assets',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'assetId' => 'id',
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'assets',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'asset_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -581,7 +593,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],
@@ -590,18 +602,21 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'name' => 'configuration',
-              'req' => true,
+              'title' => 'Configuration',
               'type' => '`$STRING`',
+              'req' => true,
             ],
             [
               'name' => 'platform',
-              'req' => true,
+              'title' => 'Platform',
               'type' => '`$STRING`',
+              'req' => true,
             ],
             [
               'name' => 'version',
-              'req' => true,
+              'title' => 'Version',
               'type' => '`$STRING`',
+              'req' => true,
             ],
           ],
           'name' => 'build',
@@ -611,25 +626,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/builds',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -641,19 +640,35 @@ class GameDevelopmentConfig
                       'lit' => 'builds',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'builds',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'builds',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -662,7 +677,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],
@@ -670,38 +685,46 @@ class GameDevelopmentConfig
         'collaboration' => [
           'fields' => [
             [
-              'format' => 'date-time',
               'name' => 'addedAt',
+              'title' => 'Added At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
-              'format' => 'email',
               'name' => 'email',
+              'title' => 'Email',
               'type' => '`$STRING`',
+              'format' => 'email',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
-              'format' => 'date-time',
               'name' => 'lastActive',
+              'title' => 'Last Active',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'name',
+              'title' => 'Name',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'role',
+              'title' => 'Role',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'status',
+              'title' => 'Status',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'userId',
+              'title' => 'User Id',
               'type' => '`$STRING`',
             ],
           ],
@@ -716,25 +739,9 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/collaborators',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -746,19 +753,35 @@ class GameDevelopmentConfig
                       'lit' => 'collaborators',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'collaborators',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.collaborators`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'collaborators',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -768,33 +791,9 @@ class GameDevelopmentConfig
               'name' => 'remove',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'param',
-                        'name' => 'user_id',
-                        'orig' => 'user_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}/collaborators/{userId}',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                      'userId' => 'user_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -809,21 +808,45 @@ class GameDevelopmentConfig
                       'var' => 'user_id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
-                      'user_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'collaborators',
+                    '{user_id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
+                      'userId' => 'user_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'collaborators',
-                    '{user_id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                      [
+                        'name' => 'user_id',
+                        'orig' => 'user_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                      'user_id',
+                    ],
                   ],
                 ],
               ],
@@ -832,11 +855,11 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
               [
-                'project',
-                'collaborator',
+                '$.main.kit.entity.project',
+                '$.main.kit.entity.collaborator',
               ],
             ],
           ],
@@ -844,15 +867,17 @@ class GameDevelopmentConfig
         'collaborator' => [
           'fields' => [
             [
-              'format' => 'email',
               'name' => 'email',
-              'req' => true,
+              'title' => 'Email',
               'type' => '`$STRING`',
+              'req' => true,
+              'format' => 'email',
             ],
             [
               'name' => 'role',
-              'req' => true,
+              'title' => 'Role',
               'type' => '`$STRING`',
+              'req' => true,
             ],
           ],
           'name' => 'collaborator',
@@ -862,25 +887,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/collaborators',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -892,19 +901,35 @@ class GameDevelopmentConfig
                       'lit' => 'collaborators',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'collaborators',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'collaborators',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -913,7 +938,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],
@@ -922,81 +947,95 @@ class GameDevelopmentConfig
           'fields' => [
             [
               'name' => 'buildVersion',
+              'title' => 'Build Version',
+              'type' => '`$STRING`',
               'op' => [
                 'create' => [
                   'req' => true,
                   'type' => '`$STRING`',
                 ],
               ],
-              'type' => '`$STRING`',
             ],
             [
-              'format' => 'date-time',
               'name' => 'completedAt',
+              'title' => 'Completed At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'configuration',
+              'title' => 'Configuration',
               'type' => '`$STRING`',
             ],
             [
-              'format' => 'date-time',
               'name' => 'createdAt',
+              'title' => 'Created At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
-              'format' => 'uri',
               'name' => 'deploymentUrl',
+              'title' => 'Deployment Url',
               'type' => '`$STRING`',
+              'format' => 'uri',
             ],
             [
-              'format' => 'uri',
               'name' => 'downloadUrl',
+              'title' => 'Download Url',
               'type' => '`$STRING`',
+              'format' => 'uri',
             ],
             [
               'name' => 'environment',
+              'title' => 'Environment',
+              'type' => '`$STRING`',
               'op' => [
                 'create' => [
                   'req' => true,
                   'type' => '`$STRING`',
                 ],
               ],
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'platform',
+              'title' => 'Platform',
+              'type' => '`$STRING`',
               'op' => [
                 'create' => [
                   'req' => true,
                   'type' => '`$STRING`',
                 ],
               ],
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'projectId',
+              'title' => 'Project Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'releaseNotes',
+              'title' => 'Release Notes',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'size',
-              'short' => 'Build size in bytes',
+              'title' => 'Size',
               'type' => '`$INTEGER`',
+              'short' => 'Build size in bytes',
             ],
             [
               'name' => 'status',
+              'title' => 'Status',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'version',
+              'title' => 'Version',
               'type' => '`$STRING`',
             ],
           ],
@@ -1011,25 +1050,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/deployments',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1041,19 +1064,35 @@ class GameDevelopmentConfig
                       'lit' => 'deployments',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'deployments',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'deployments',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -1063,33 +1102,9 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                    'query' => [
-                      [
-                        'kind' => 'query',
-                        'name' => 'status',
-                        'orig' => 'status',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/deployments',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1101,42 +1116,50 @@ class GameDevelopmentConfig
                       'lit' => 'deployments',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
-                      'status',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'deployments',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.deployments`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'deployments',
-                  ],
-                ],
-                [
                   'args' => [
                     'params' => [
                       [
-                        'kind' => 'param',
                         'name' => 'project_id',
                         'orig' => 'project_id',
-                        'reqd' => true,
                         'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                    'query' => [
+                      [
+                        'name' => 'status',
+                        'orig' => 'status',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
                       ],
                     ],
                   ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                      'status',
+                    ],
+                  ],
+                ],
+                [
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/builds',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1148,19 +1171,35 @@ class GameDevelopmentConfig
                       'lit' => 'builds',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'builds',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.builds`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'builds',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -1170,33 +1209,9 @@ class GameDevelopmentConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'deployment_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/deployments/{deploymentId}',
-                  'rename' => [
-                    'param' => [
-                      'deploymentId' => 'id',
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1211,21 +1226,45 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'deployments',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'deploymentId' => 'id',
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'deployments',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'deployment_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -1234,7 +1273,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],
@@ -1242,22 +1281,27 @@ class GameDevelopmentConfig
         'project' => [
           'fields' => [
             [
-              'format' => 'date-time',
               'name' => 'createdAt',
+              'title' => 'Created At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'description',
-              'short' => 'Detailed description of the project',
+              'title' => 'Description',
               'type' => '`$STRING`',
+              'short' => 'Detailed description of the project',
             ],
             [
               'name' => 'id',
-              'short' => 'Unique identifier for the project',
+              'title' => 'Id',
               'type' => '`$STRING`',
+              'short' => 'Unique identifier for the project',
             ],
             [
               'name' => 'name',
+              'title' => 'Name',
+              'type' => '`$STRING`',
               'op' => [
                 'create' => [
                   'req' => true,
@@ -1265,25 +1309,28 @@ class GameDevelopmentConfig
                 ],
               ],
               'short' => 'Name of the game project',
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'owner',
+              'title' => 'Owner',
               'type' => '`$OBJECT`',
             ],
             [
               'name' => 'settings',
+              'title' => 'Settings',
               'type' => '`$OBJECT`',
             ],
             [
               'name' => 'status',
-              'short' => 'Current status of the project',
+              'title' => 'Status',
               'type' => '`$STRING`',
+              'short' => 'Current status of the project',
             ],
             [
-              'format' => 'date-time',
               'name' => 'updatedAt',
+              'title' => 'Updated At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
           ],
           'id' => [
@@ -1297,7 +1344,6 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects',
@@ -1306,14 +1352,16 @@ class GameDevelopmentConfig
                       'lit' => 'projects',
                     ],
                   ],
-                  'select' => [],
+                  'parts' => [
+                    'projects',
+                  ],
+                  'rename' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                  ],
+                  'args' => [],
+                  'select' => [],
                 ],
               ],
             ],
@@ -1322,36 +1370,44 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'query' => [
-                      [
-                        'example' => 20,
-                        'kind' => 'query',
-                        'name' => 'limit',
-                        'orig' => 'limit',
-                        'type' => '`$INTEGER`',
-                      ],
-                      [
-                        'example' => 0,
-                        'kind' => 'query',
-                        'name' => 'offset',
-                        'orig' => 'offset',
-                        'type' => '`$INTEGER`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'status',
-                        'orig' => 'status',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects',
                   'segments' => [
                     [
                       'lit' => 'projects',
+                    ],
+                  ],
+                  'parts' => [
+                    'projects',
+                  ],
+                  'rename' => [],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body.projects`',
+                  ],
+                  'args' => [
+                    'query' => [
+                      [
+                        'name' => 'limit',
+                        'orig' => 'limit',
+                        'type' => '`$INTEGER`',
+                        'kind' => 'query',
+                        'example' => 20,
+                      ],
+                      [
+                        'name' => 'offset',
+                        'orig' => 'offset',
+                        'type' => '`$INTEGER`',
+                        'kind' => 'query',
+                        'example' => 0,
+                      ],
+                      [
+                        'name' => 'status',
+                        'orig' => 'status',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
                     ],
                   ],
                   'select' => [
@@ -1361,13 +1417,6 @@ class GameDevelopmentConfig
                       'status',
                     ],
                   ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body.projects`',
-                  ],
-                  'parts' => [
-                    'projects',
-                  ],
                 ],
               ],
             ],
@@ -1376,25 +1425,9 @@ class GameDevelopmentConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1403,18 +1436,34 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    'projects',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
                   ],
                 ],
               ],
@@ -1424,25 +1473,9 @@ class GameDevelopmentConfig
               'name' => 'remove',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'DELETE',
                   'orig' => '/projects/{projectId}',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1451,18 +1484,34 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    'projects',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
                   ],
                 ],
               ],
@@ -1472,25 +1521,9 @@ class GameDevelopmentConfig
               'name' => 'update',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'PUT',
                   'orig' => '/projects/{projectId}',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1499,18 +1532,34 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    'projects',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
                   ],
                 ],
               ],
@@ -1523,90 +1572,105 @@ class GameDevelopmentConfig
         'test' => [
           'fields' => [
             [
-              'format' => 'date-time',
               'name' => 'completedAt',
+              'title' => 'Completed At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'duration',
-              'short' => 'Test duration in seconds',
+              'title' => 'Duration',
               'type' => '`$NUMBER`',
+              'short' => 'Test duration in seconds',
             ],
             [
               'name' => 'environment',
+              'title' => 'Environment',
+              'type' => '`$STRING`',
+              'req' => true,
               'op' => [
                 'list' => [
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => true,
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'failed',
+              'title' => 'Failed',
               'type' => '`$INTEGER`',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'name',
+              'title' => 'Name',
+              'type' => '`$STRING`',
+              'req' => true,
               'op' => [
                 'list' => [
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => true,
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'passed',
+              'title' => 'Passed',
               'type' => '`$INTEGER`',
             ],
             [
               'name' => 'platform',
+              'title' => 'Platform',
+              'type' => '`$STRING`',
+              'req' => true,
               'op' => [
                 'list' => [
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => true,
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'projectId',
+              'title' => 'Project Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'results',
+              'title' => 'Results',
               'type' => '`$OBJECT`',
             ],
             [
               'name' => 'skipped',
+              'title' => 'Skipped',
               'type' => '`$INTEGER`',
             ],
             [
-              'format' => 'date-time',
               'name' => 'startedAt',
+              'title' => 'Started At',
               'type' => '`$STRING`',
+              'format' => 'date-time',
             ],
             [
               'name' => 'status',
+              'title' => 'Status',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'testSuite',
+              'title' => 'Test Suite',
+              'type' => '`$STRING`',
+              'req' => true,
               'op' => [
                 'list' => [
                   'type' => '`$STRING`',
                 ],
               ],
-              'req' => true,
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'totalTests',
+              'title' => 'Total Tests',
               'type' => '`$INTEGER`',
             ],
           ],
@@ -1621,25 +1685,9 @@ class GameDevelopmentConfig
               'name' => 'create',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/projects/{projectId}/tests',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1651,19 +1699,35 @@ class GameDevelopmentConfig
                       'lit' => 'tests',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'tests',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.results`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'tests',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -1673,33 +1737,9 @@ class GameDevelopmentConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                    'query' => [
-                      [
-                        'kind' => 'query',
-                        'name' => 'status',
-                        'orig' => 'status',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/tests',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1711,20 +1751,44 @@ class GameDevelopmentConfig
                       'lit' => 'tests',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'project_id',
-                      'status',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'tests',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.tests`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'tests',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                    'query' => [
+                      [
+                        'name' => 'status',
+                        'orig' => 'status',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'project_id',
+                      'status',
+                    ],
                   ],
                 ],
               ],
@@ -1734,33 +1798,9 @@ class GameDevelopmentConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'test_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'param',
-                        'name' => 'project_id',
-                        'orig' => 'project_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/projects/{projectId}/tests/{testId}',
-                  'rename' => [
-                    'param' => [
-                      'projectId' => 'project_id',
-                      'testId' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'projects',
@@ -1775,21 +1815,45 @@ class GameDevelopmentConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
-                      'project_id',
+                  'parts' => [
+                    'projects',
+                    '{project_id}',
+                    'tests',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'projectId' => 'project_id',
+                      'testId' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body.results`',
                   ],
-                  'parts' => [
-                    'projects',
-                    '{project_id}',
-                    'tests',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'test_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                      [
+                        'name' => 'project_id',
+                        'orig' => 'project_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                      'project_id',
+                    ],
                   ],
                 ],
               ],
@@ -1798,7 +1862,7 @@ class GameDevelopmentConfig
           'relations' => [
             'ancestors' => [
               [
-                'project',
+                '$.main.kit.entity.project',
               ],
             ],
           ],

@@ -45,7 +45,7 @@ local analyticss, err = client:Analytics():list()
 if err then error(err) end
 
 for _, item in ipairs(analyticss) do
-  print(item["name"])
+  print(item)
 end
 ```
 

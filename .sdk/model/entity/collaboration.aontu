@@ -1,0 +1,188 @@
+# Entity: collaboration
+
+main: kit: entity: collaboration: {
+
+  alias: field: {}
+
+  fields: {
+    addedAt: {
+      fo: "date-time"
+      h: "Added At"
+      n: "addedAt"
+      r: false
+      t: "`$STRING`"
+    }
+    email: {
+      fo: "email"
+      h: "Email"
+      n: "email"
+      r: false
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    lastActive: {
+      fo: "date-time"
+      h: "Last Active"
+      n: "lastActive"
+      r: false
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      t: "`$STRING`"
+    }
+    role: {
+      h: "Role"
+      n: "role"
+      r: false
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: false
+      t: "`$STRING`"
+    }
+    userId: {
+      h: "User Id"
+      n: "userId"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "collaboration"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/collaborators"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/collaborators"
+          q: {
+            exist: [
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "collaborators"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.collaborators`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /projects/{projectId}/collaborators/{userId}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "user_id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/projects/{projectId}/collaborators/{userId}"
+          q: {
+            exist: [
+              "project_id"
+              "user_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+              userId: "user_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "collaborators"
+            }
+            {
+              var: "user_id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.project")]
+    [path("$.main.kit.entity.project") path("$.main.kit.entity.collaborator")]
+  ]
+
+}

@@ -1,0 +1,313 @@
+# Entity: test
+
+main: kit: entity: test: {
+
+  alias: field: {}
+
+  fields: {
+    completedAt: {
+      fo: "date-time"
+      h: "Completed At"
+      n: "completedAt"
+      r: false
+      t: "`$STRING`"
+    }
+    duration: {
+      h: "Duration"
+      n: "duration"
+      r: false
+      sh: "Test duration in seconds"
+      t: "`$NUMBER`"
+    }
+    environment: {
+      h: "Environment"
+      n: "environment"
+      op: {
+        list: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      t: "`$STRING`"
+    }
+    failed: {
+      h: "Failed"
+      n: "failed"
+      r: false
+      t: "`$INTEGER`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      op: {
+        list: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      t: "`$STRING`"
+    }
+    passed: {
+      h: "Passed"
+      n: "passed"
+      r: false
+      t: "`$INTEGER`"
+    }
+    platform: {
+      h: "Platform"
+      n: "platform"
+      op: {
+        list: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      t: "`$STRING`"
+    }
+    projectId: {
+      h: "Project Id"
+      n: "projectId"
+      r: false
+      t: "`$STRING`"
+    }
+    results: {
+      h: "Results"
+      n: "results"
+      r: false
+      t: "`$OBJECT`"
+    }
+    skipped: {
+      h: "Skipped"
+      n: "skipped"
+      r: false
+      t: "`$INTEGER`"
+    }
+    startedAt: {
+      fo: "date-time"
+      h: "Started At"
+      n: "startedAt"
+      r: false
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: false
+      t: "`$STRING`"
+    }
+    testSuite: {
+      h: "Test Suite"
+      n: "testSuite"
+      op: {
+        list: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      t: "`$STRING`"
+    }
+    totalTests: {
+      h: "Total Tests"
+      n: "totalTests"
+      r: false
+      t: "`$INTEGER`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "test"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /projects/{projectId}/tests"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/projects/{projectId}/tests"
+          q: {
+            exist: [
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.results`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/tests"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/tests"
+          q: {
+            exist: [
+              "project_id"
+              "status"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.tests`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /projects/{projectId}/tests/{testId}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                k: "param"
+                n: "id"
+                or: "test_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "param"
+                n: "project_id"
+                or: "project_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/projects/{projectId}/tests/{testId}"
+          q: {
+            exist: [
+              "id"
+              "project_id"
+            ]
+          }
+          r: {
+            param: {
+              projectId: "project_id"
+              testId: "id"
+            }
+          }
+          s: [
+            {
+              lit: "projects"
+            }
+            {
+              var: "project_id"
+            }
+            {
+              lit: "tests"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.results`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.project")]
+  ]
+
+}

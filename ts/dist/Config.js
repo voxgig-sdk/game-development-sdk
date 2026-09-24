@@ -11,19 +11,12 @@ const FEATURE_CLASS = {
     test: TestFeature_1.TestFeature,
     timeout: TimeoutFeature_1.TimeoutFeature,
 };
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS = {};
 exports.FEATURE_PLUGINS = FEATURE_PLUGINS;
 class Config {
     makeFeature(fn) {
         const fc = FEATURE_CLASS[fn];
         const fi = new fc();
-        // TODO: errors etc
         return fi;
     }
     // False for a feature added at runtime via options.extend (station's
@@ -124,10 +117,12 @@ class Config {
             "fields": [
                 {
                     "name": "count",
+                    "title": "Count",
                     "type": "`$INTEGER`"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
                     "type": "`$STRING`"
                 }
             ],
@@ -138,25 +133,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/analytics/events",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -171,22 +150,38 @@ class Config {
                                     "lit": "events"
                                 }
                             ],
-                            "select": {
-                                "$action": "event",
-                                "exist": [
-                                    "project_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "analytics",
                                 "events"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "$action": "event",
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -195,45 +190,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "end_date",
-                                        "orig": "end_date",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "metric",
-                                        "orig": "metric",
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "start_date",
-                                        "orig": "start_date",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/analytics",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -245,6 +204,51 @@ class Config {
                                     "lit": "analytics"
                                 }
                             ],
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "analytics"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "end_date",
+                                        "orig": "end_date",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "metric",
+                                        "orig": "metric",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    },
+                                    {
+                                        "name": "start_date",
+                                        "orig": "start_date",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "end_date",
@@ -252,16 +256,7 @@ class Config {
                                     "project_id",
                                     "start_date"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "analytics"
-                            ]
+                            }
                         }
                     ]
                 }
@@ -269,7 +264,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
@@ -277,48 +272,58 @@ class Config {
         "asset": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "createdAt",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "mimeType",
+                    "title": "Mime Type",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "projectId",
+                    "title": "Project Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "size",
-                    "short": "File size in bytes",
-                    "type": "`$INTEGER`"
+                    "title": "Size",
+                    "type": "`$INTEGER`",
+                    "short": "File size in bytes"
                 },
                 {
                     "name": "tags",
+                    "title": "Tags",
                     "type": "`$ARRAY`"
                 },
                 {
                     "name": "type",
+                    "title": "Type",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "updatedAt",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "uri",
                     "name": "url",
-                    "type": "`$STRING`"
+                    "title": "Url",
+                    "type": "`$STRING`",
+                    "format": "uri"
                 }
             ],
             "id": {
@@ -332,25 +337,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/assets",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -362,20 +351,36 @@ class Config {
                                     "lit": "assets"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "assets"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "assets"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -384,40 +389,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "example": 50,
-                                        "kind": "query",
-                                        "name": "limit",
-                                        "orig": "limit",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "type",
-                                        "orig": "type",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/assets",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -429,22 +403,53 @@ class Config {
                                     "lit": "assets"
                                 }
                             ],
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "assets"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.assets`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "limit",
+                                        "orig": "limit",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 50
+                                    },
+                                    {
+                                        "name": "type",
+                                        "orig": "type",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "limit",
                                     "project_id",
                                     "type"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.assets`"
-                            },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "assets"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -453,33 +458,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "asset_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/assets/{assetId}",
-                            "rename": {
-                                "param": {
-                                    "assetId": "id",
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -494,22 +475,46 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "project_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "assets",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "assetId": "id",
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "asset_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -518,33 +523,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "asset_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/projects/{projectId}/assets/{assetId}",
-                            "rename": {
-                                "param": {
-                                    "assetId": "id",
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -559,22 +540,46 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "project_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "assets",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "assetId": "id",
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "asset_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -582,7 +587,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
@@ -591,18 +596,21 @@ class Config {
             "fields": [
                 {
                     "name": "configuration",
-                    "req": true,
-                    "type": "`$STRING`"
+                    "title": "Configuration",
+                    "type": "`$STRING`",
+                    "req": true
                 },
                 {
                     "name": "platform",
-                    "req": true,
-                    "type": "`$STRING`"
+                    "title": "Platform",
+                    "type": "`$STRING`",
+                    "req": true
                 },
                 {
                     "name": "version",
-                    "req": true,
-                    "type": "`$STRING`"
+                    "title": "Version",
+                    "type": "`$STRING`",
+                    "req": true
                 }
             ],
             "name": "build",
@@ -612,25 +620,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/builds",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -642,20 +634,36 @@ class Config {
                                     "lit": "builds"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "builds"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "builds"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -663,7 +671,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
@@ -671,38 +679,46 @@ class Config {
         "collaboration": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "addedAt",
-                    "type": "`$STRING`"
+                    "title": "Added At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "email",
                     "name": "email",
-                    "type": "`$STRING`"
+                    "title": "Email",
+                    "type": "`$STRING`",
+                    "format": "email"
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "lastActive",
-                    "type": "`$STRING`"
+                    "title": "Last Active",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "role",
+                    "title": "Role",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "status",
+                    "title": "Status",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "userId",
+                    "title": "User Id",
                     "type": "`$STRING`"
                 }
             ],
@@ -717,25 +733,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/collaborators",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -747,20 +747,36 @@ class Config {
                                     "lit": "collaborators"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "collaborators"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.collaborators`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "collaborators"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -769,33 +785,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "user_id",
-                                        "orig": "user_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/projects/{projectId}/collaborators/{userId}",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id",
-                                    "userId": "user_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -810,22 +802,46 @@ class Config {
                                     "var": "user_id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id",
-                                    "user_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "collaborators",
                                 "{user_id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id",
+                                    "userId": "user_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "user_id",
+                                        "orig": "user_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id",
+                                    "user_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -833,11 +849,11 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ],
                     [
-                        "project",
-                        "collaborator"
+                        "$.main.kit.entity.project",
+                        "$.main.kit.entity.collaborator"
                     ]
                 ]
             }
@@ -845,15 +861,17 @@ class Config {
         "collaborator": {
             "fields": [
                 {
-                    "format": "email",
                     "name": "email",
+                    "title": "Email",
+                    "type": "`$STRING`",
                     "req": true,
-                    "type": "`$STRING`"
+                    "format": "email"
                 },
                 {
                     "name": "role",
-                    "req": true,
-                    "type": "`$STRING`"
+                    "title": "Role",
+                    "type": "`$STRING`",
+                    "req": true
                 }
             ],
             "name": "collaborator",
@@ -863,25 +881,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/collaborators",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -893,20 +895,36 @@ class Config {
                                     "lit": "collaborators"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "collaborators"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "collaborators"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -914,7 +932,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
@@ -923,81 +941,95 @@ class Config {
             "fields": [
                 {
                     "name": "buildVersion",
+                    "title": "Build Version",
+                    "type": "`$STRING`",
                     "op": {
                         "create": {
                             "req": true,
                             "type": "`$STRING`"
                         }
-                    },
-                    "type": "`$STRING`"
+                    }
                 },
                 {
-                    "format": "date-time",
                     "name": "completedAt",
-                    "type": "`$STRING`"
+                    "title": "Completed At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "configuration",
+                    "title": "Configuration",
                     "type": "`$STRING`"
                 },
                 {
-                    "format": "date-time",
                     "name": "createdAt",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
-                    "format": "uri",
                     "name": "deploymentUrl",
-                    "type": "`$STRING`"
+                    "title": "Deployment Url",
+                    "type": "`$STRING`",
+                    "format": "uri"
                 },
                 {
-                    "format": "uri",
                     "name": "downloadUrl",
-                    "type": "`$STRING`"
+                    "title": "Download Url",
+                    "type": "`$STRING`",
+                    "format": "uri"
                 },
                 {
                     "name": "environment",
+                    "title": "Environment",
+                    "type": "`$STRING`",
                     "op": {
                         "create": {
                             "req": true,
                             "type": "`$STRING`"
                         }
-                    },
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "platform",
+                    "title": "Platform",
+                    "type": "`$STRING`",
                     "op": {
                         "create": {
                             "req": true,
                             "type": "`$STRING`"
                         }
-                    },
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "projectId",
+                    "title": "Project Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "releaseNotes",
+                    "title": "Release Notes",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "size",
-                    "short": "Build size in bytes",
-                    "type": "`$INTEGER`"
+                    "title": "Size",
+                    "type": "`$INTEGER`",
+                    "short": "Build size in bytes"
                 },
                 {
                     "name": "status",
+                    "title": "Status",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "version",
+                    "title": "Version",
                     "type": "`$STRING`"
                 }
             ],
@@ -1012,25 +1044,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/deployments",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1042,20 +1058,36 @@ class Config {
                                     "lit": "deployments"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "deployments"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "deployments"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1064,33 +1096,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "status",
-                                        "orig": "status",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/deployments",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1102,42 +1110,50 @@ class Config {
                                     "lit": "deployments"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id",
-                                    "status"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.deployments`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "deployments"
-                            ]
-                        },
-                        {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
-                            "kind": "http",
-                            "method": "GET",
-                            "orig": "/projects/{projectId}/builds",
+                            ],
                             "rename": {
                                 "param": {
                                     "projectId": "project_id"
                                 }
                             },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.deployments`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "status",
+                                        "orig": "status",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id",
+                                    "status"
+                                ]
+                            }
+                        },
+                        {
+                            "kind": "http",
+                            "method": "GET",
+                            "orig": "/projects/{projectId}/builds",
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1149,20 +1165,36 @@ class Config {
                                     "lit": "builds"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "builds"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.builds`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "builds"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1171,33 +1203,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "deployment_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/deployments/{deploymentId}",
-                            "rename": {
-                                "param": {
-                                    "deploymentId": "id",
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1212,22 +1220,46 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "project_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "deployments",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "deploymentId": "id",
+                                    "projectId": "project_id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "deployment_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1235,7 +1267,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
@@ -1243,48 +1275,56 @@ class Config {
         "project": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "createdAt",
-                    "type": "`$STRING`"
+                    "title": "Created At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "description",
-                    "short": "Detailed description of the project",
-                    "type": "`$STRING`"
+                    "title": "Description",
+                    "type": "`$STRING`",
+                    "short": "Detailed description of the project"
                 },
                 {
                     "name": "id",
-                    "short": "Unique identifier for the project",
-                    "type": "`$STRING`"
+                    "title": "Id",
+                    "type": "`$STRING`",
+                    "short": "Unique identifier for the project"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
+                    "type": "`$STRING`",
                     "op": {
                         "create": {
                             "req": true,
                             "type": "`$STRING`"
                         }
                     },
-                    "short": "Name of the game project",
-                    "type": "`$STRING`"
+                    "short": "Name of the game project"
                 },
                 {
                     "name": "owner",
+                    "title": "Owner",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "settings",
+                    "title": "Settings",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "status",
-                    "short": "Current status of the project",
-                    "type": "`$STRING`"
+                    "title": "Status",
+                    "type": "`$STRING`",
+                    "short": "Current status of the project"
                 },
                 {
-                    "format": "date-time",
                     "name": "updatedAt",
-                    "type": "`$STRING`"
+                    "title": "Updated At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 }
             ],
             "id": {
@@ -1298,7 +1338,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects",
@@ -1307,14 +1346,16 @@ class Config {
                                     "lit": "projects"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "projects"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects"
-                            ]
+                            "args": {},
+                            "select": {}
                         }
                     ]
                 },
@@ -1323,30 +1364,6 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "query": [
-                                    {
-                                        "example": 20,
-                                        "kind": "query",
-                                        "name": "limit",
-                                        "orig": "limit",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "example": 0,
-                                        "kind": "query",
-                                        "name": "offset",
-                                        "orig": "offset",
-                                        "type": "`$INTEGER`"
-                                    },
-                                    {
-                                        "kind": "query",
-                                        "name": "status",
-                                        "orig": "status",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects",
@@ -1355,20 +1372,45 @@ class Config {
                                     "lit": "projects"
                                 }
                             ],
+                            "parts": [
+                                "projects"
+                            ],
+                            "rename": {},
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.projects`"
+                            },
+                            "args": {
+                                "query": [
+                                    {
+                                        "name": "limit",
+                                        "orig": "limit",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 20
+                                    },
+                                    {
+                                        "name": "offset",
+                                        "orig": "offset",
+                                        "type": "`$INTEGER`",
+                                        "kind": "query",
+                                        "example": 0
+                                    },
+                                    {
+                                        "name": "status",
+                                        "orig": "status",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
                             "select": {
                                 "exist": [
                                     "limit",
                                     "offset",
                                     "status"
                                 ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.projects`"
-                            },
-                            "parts": [
-                                "projects"
-                            ]
+                            }
                         }
                     ]
                 },
@@ -1377,25 +1419,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}",
-                            "rename": {
-                                "param": {
-                                    "projectId": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1404,19 +1430,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1425,25 +1467,9 @@ class Config {
                     "name": "remove",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "DELETE",
                             "orig": "/projects/{projectId}",
-                            "rename": {
-                                "param": {
-                                    "projectId": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1452,19 +1478,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1473,25 +1515,9 @@ class Config {
                     "name": "update",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "PUT",
                             "orig": "/projects/{projectId}",
-                            "rename": {
-                                "param": {
-                                    "projectId": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1500,19 +1526,35 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{id}"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "projects",
-                                "{id}"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1524,90 +1566,105 @@ class Config {
         "test": {
             "fields": [
                 {
-                    "format": "date-time",
                     "name": "completedAt",
-                    "type": "`$STRING`"
+                    "title": "Completed At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "duration",
-                    "short": "Test duration in seconds",
-                    "type": "`$NUMBER`"
+                    "title": "Duration",
+                    "type": "`$NUMBER`",
+                    "short": "Test duration in seconds"
                 },
                 {
                     "name": "environment",
+                    "title": "Environment",
+                    "type": "`$STRING`",
+                    "req": true,
                     "op": {
                         "list": {
                             "type": "`$STRING`"
                         }
-                    },
-                    "req": true,
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "failed",
+                    "title": "Failed",
                     "type": "`$INTEGER`"
                 },
                 {
                     "name": "id",
+                    "title": "Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "name",
+                    "title": "Name",
+                    "type": "`$STRING`",
+                    "req": true,
                     "op": {
                         "list": {
                             "type": "`$STRING`"
                         }
-                    },
-                    "req": true,
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "passed",
+                    "title": "Passed",
                     "type": "`$INTEGER`"
                 },
                 {
                     "name": "platform",
+                    "title": "Platform",
+                    "type": "`$STRING`",
+                    "req": true,
                     "op": {
                         "list": {
                             "type": "`$STRING`"
                         }
-                    },
-                    "req": true,
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "projectId",
+                    "title": "Project Id",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "results",
+                    "title": "Results",
                     "type": "`$OBJECT`"
                 },
                 {
                     "name": "skipped",
+                    "title": "Skipped",
                     "type": "`$INTEGER`"
                 },
                 {
-                    "format": "date-time",
                     "name": "startedAt",
-                    "type": "`$STRING`"
+                    "title": "Started At",
+                    "type": "`$STRING`",
+                    "format": "date-time"
                 },
                 {
                     "name": "status",
+                    "title": "Status",
                     "type": "`$STRING`"
                 },
                 {
                     "name": "testSuite",
+                    "title": "Test Suite",
+                    "type": "`$STRING`",
+                    "req": true,
                     "op": {
                         "list": {
                             "type": "`$STRING`"
                         }
-                    },
-                    "req": true,
-                    "type": "`$STRING`"
+                    }
                 },
                 {
                     "name": "totalTests",
+                    "title": "Total Tests",
                     "type": "`$INTEGER`"
                 }
             ],
@@ -1622,25 +1679,9 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "POST",
                             "orig": "/projects/{projectId}/tests",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1652,20 +1693,36 @@ class Config {
                                     "lit": "tests"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "tests"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.results`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "tests"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1674,33 +1731,9 @@ class Config {
                     "name": "list",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ],
-                                "query": [
-                                    {
-                                        "kind": "query",
-                                        "name": "status",
-                                        "orig": "status",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/tests",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1712,21 +1745,45 @@ class Config {
                                     "lit": "tests"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "project_id",
-                                    "status"
-                                ]
+                            "parts": [
+                                "projects",
+                                "{project_id}",
+                                "tests"
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id"
+                                }
                             },
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.tests`"
                             },
-                            "parts": [
-                                "projects",
-                                "{project_id}",
-                                "tests"
-                            ]
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ],
+                                "query": [
+                                    {
+                                        "name": "status",
+                                        "orig": "status",
+                                        "type": "`$STRING`",
+                                        "kind": "query"
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "project_id",
+                                    "status"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -1735,33 +1792,9 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "params": [
-                                    {
-                                        "kind": "param",
-                                        "name": "id",
-                                        "orig": "test_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    },
-                                    {
-                                        "kind": "param",
-                                        "name": "project_id",
-                                        "orig": "project_id",
-                                        "reqd": true,
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/projects/{projectId}/tests/{testId}",
-                            "rename": {
-                                "param": {
-                                    "projectId": "project_id",
-                                    "testId": "id"
-                                }
-                            },
                             "segments": [
                                 {
                                     "lit": "projects"
@@ -1776,22 +1809,46 @@ class Config {
                                     "var": "id"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "id",
-                                    "project_id"
-                                ]
-                            },
-                            "transform": {
-                                "req": "`reqdata`",
-                                "res": "`body.results`"
-                            },
                             "parts": [
                                 "projects",
                                 "{project_id}",
                                 "tests",
                                 "{id}"
-                            ]
+                            ],
+                            "rename": {
+                                "param": {
+                                    "projectId": "project_id",
+                                    "testId": "id"
+                                }
+                            },
+                            "transform": {
+                                "req": "`reqdata`",
+                                "res": "`body.results`"
+                            },
+                            "args": {
+                                "params": [
+                                    {
+                                        "name": "id",
+                                        "orig": "test_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    },
+                                    {
+                                        "name": "project_id",
+                                        "orig": "project_id",
+                                        "type": "`$STRING`",
+                                        "kind": "param",
+                                        "reqd": true
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "id",
+                                    "project_id"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1799,7 +1856,7 @@ class Config {
             "relations": {
                 "ancestors": [
                     [
-                        "project"
+                        "$.main.kit.entity.project"
                     ]
                 ]
             }
